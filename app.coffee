@@ -15,8 +15,8 @@ io = require("socket.io")
 app = express()
 
 app.configure ->
-  app.use(express["static"](path.join(__dirname, 'public'))) # sw add
-  #app.use express.staticProvider(__dirname + "/static")
+  #app.use(express["static"](path.join(__dirname, 'public'))) # sw add
+  app.use express.staticProvider(__dirname + "/public")
   app.set('port', process.env.PORT || 3000)    #sw add
   app.set "view engine", "ejs"
 ###
@@ -35,7 +35,6 @@ app.get "/", (req, res) ->
 
 #swadd express
 server = http.createServer(app)
-
 server.listen(app.get('port'), ->
   console.log("SW port " + app.get('port'))
 )
