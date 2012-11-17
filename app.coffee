@@ -4,6 +4,8 @@
 
 # http://d.hatena.ne.jp/sugyan/20101227/1293455185
 express = require("express")
+routes = require('./routes')
+user = require('./routes/user')
 http = require('http')
 path = require('path')
 ejs = require("ejs")
