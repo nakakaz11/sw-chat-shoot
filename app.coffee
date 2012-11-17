@@ -33,18 +33,19 @@ app.get "/", (req, res) ->
       port  :app.get('port')
 
 #swadd express
-http.createServer(app).listen( app.get('port'), ->
+server = http.createServer(app).listen(app.get('port'), ->
   console.log("SW port " + app.get('port'))
-  #app.listen port
-  socket = io.listen(app)
-  socket.on "connection", (client) ->
-    client.on "message", (msg) ->
-      client.send msg
-      client.broadcast msg
-
-    client.on "disconnect", ->
-      console.log "disconnect"
 )
 
+
+#app.listen port
+socket = io.listen(server)
+socket.on "connection", (client) ->
+  client.on "message", (msg) ->
+    client.send msg
+    client.broadcast msg
+
+  client.on "disconnect", ->
+    console.log "disconnect"
 
 
