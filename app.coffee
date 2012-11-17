@@ -20,11 +20,16 @@ app.configure ->
   app.set "view options",
     layout: false
 
+app.get('/', routes.index)
+app.get('/users', user.list)
+
+###
 app.get "/", (req, res) ->
   console.log "/"
   res.render "index",
     locals:
       port: app.get('port')
+###
 
 #swadd express
 http.createServer(app).listen(app.get('port'), ->
