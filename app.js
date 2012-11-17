@@ -22,14 +22,18 @@ app.configure(function() {
   });
 });
 
-app.get("/", function(req, res) {
-  console.log("/");
-  return res.render("index", {
-    locals: {
+app.get('/', routes.index);
+
+app.get('/users', user.list);
+
+/*
+app.get "/", (req, res) ->
+  console.log "/"
+  res.render "index",
+    locals:
       port: app.get('port')
-    }
-  });
-});
+*/
+
 
 http.createServer(app).listen(app.get('port'), function() {
   return console.log("SW port " + app.get('port'));
