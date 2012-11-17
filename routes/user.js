@@ -3,7 +3,7 @@
  * GET users listing.
  */
 
-exports.list = function(request, response){
+exports.list = function(req, res){
 
 
 };
