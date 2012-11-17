@@ -33,20 +33,20 @@ app.get('/', routes.index);
 
 app.get('/users', user.list);
 
+server = http.createServer(app);
+
+server.listen(app.get('port'), function() {
+  return console.log("SW port " + app.get('port'));
+});
+
 app.get("/", function(req, res) {
   return res.render("index", {
     title: 'SW (node.js+express+socket.io ChatApp)use ejs+coffee',
     desc: 'SW chat App Test',
     locals: {
-      port: app.get('port')
+      port: server.listen(app.get('port'))
     }
   });
-});
-
-server = http.createServer(app);
-
-server.listen(app.get('port'), function() {
-  return console.log("SW port " + app.get('port'));
 });
 
 socket = io.listen(server);

@@ -26,18 +26,19 @@ app.configure ->
 app.get('/', routes.index)
 app.get('/users', user.list)
 
-app.get "/", (req, res) ->
-  res.render "index",
-    title : 'SW (node.js+express+socket.io ChatApp)use ejs+coffee'
-    desc  : 'SW chat App Test'
-    locals:
-      port  :app.get('port')
 
 #swadd express
 server = http.createServer(app)
 server.listen(app.get('port'), ->
   console.log("SW port " + app.get('port'))
 )
+
+app.get "/", (req, res) ->
+  res.render "index",
+    title : 'SW (node.js+express+socket.io ChatApp)use ejs+coffee'
+    desc  : 'SW chat App Test'
+    locals:
+        port:server.listen(app.get('port'))
 
 #app.listen port
 socket = io.listen(server)
