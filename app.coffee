@@ -19,9 +19,10 @@ app.configure ->
   #app.use express.staticProvider(__dirname + "/static")
   app.set('port', process.env.PORT || 3000)    #sw add
   app.set "view engine", "ejs"
+###
   app.set "view options",
     layout: false
-
+###
 app.get('/', routes.index)
 app.get('/users', user.list)
 
@@ -33,10 +34,11 @@ app.get "/", (req, res) ->
       port  :app.get('port')
 
 #swadd express
-server = http.createServer(app).listen(app.get('port'), ->
+server = http.createServer(app)
+
+server.listen(app.get('port'), ->
   console.log("SW port " + app.get('port'))
 )
-
 
 #app.listen port
 socket = io.listen(server)

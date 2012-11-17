@@ -20,11 +20,14 @@ app = express();
 app.configure(function() {
   app.use(express["static"](path.join(__dirname, 'public')));
   app.set('port', process.env.PORT || 3000);
-  app.set("view engine", "ejs");
-  return app.set("view options", {
-    layout: false
-  });
+  return app.set("view engine", "ejs");
 });
+
+/*
+  app.set "view options",
+    layout: false
+*/
+
 
 app.get('/', routes.index);
 
@@ -40,7 +43,9 @@ app.get("/", function(req, res) {
   });
 });
 
-server = http.createServer(app).listen(app.get('port'), function() {
+server = http.createServer(app);
+
+server.listen(app.get('port'), function() {
   return console.log("SW port " + app.get('port'));
 });
 
