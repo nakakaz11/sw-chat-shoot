@@ -30,14 +30,15 @@ app.get('/', routes.index);
 
 app.get('/users', user.list);
 
-/*
-app.get "/", (req, res) ->
-  console.log "/"
-  res.render "index",
-    locals:
+app.get("/", function(req, res) {
+  return res.render("index", {
+    title: 'SW (node.js+express+socket.io ChatApp)use ejs+coffee',
+    desc: 'SW chat App Test',
+    locals: {
       port: app.get('port')
-*/
-
+    }
+  });
+});
 
 http.createServer(app).listen(app.get('port'), function() {
   return console.log("SW port " + app.get('port'));
