@@ -22,20 +22,19 @@ app.configure ->
   app.set "view options",
     layout: false
 ###
-#app.get('/', routes.index)
+app.get('/', routes.index)
 #app.get('/users', user.list)
 
 #swadd express3.0
 server = http.createServer(app)
 io = require("socket.io").listen(server)
-server.listen(app.get('port'))
-console.log("SW isPort " + server.listen(app.get('port')))
-
+server.listen app.get('port') ->
+  console.log("SW isPort " + app.get('port'))
+###
 app.get "/", (req, res) ->
   res.render "index",
     title : 'SW (node.js+express+socket.io ChatApp)use ejs+coffee'
     desc  : 'SW chat App Test'
-###
     locals:
         port:port  # portは要検証
 ###

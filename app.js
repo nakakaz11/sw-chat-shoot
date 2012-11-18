@@ -27,22 +27,21 @@ app.configure(function() {
 */
 
 
+app.get('/', routes.index);
+
 server = http.createServer(app);
 
 io = require("socket.io").listen(server);
 
-server.listen(app.get('port'));
-
-console.log("SW isPort " + server.listen(app.get('port')));
-
-app.get("/", function(req, res) {
-  return res.render("index", {
-    title: 'SW (node.js+express+socket.io ChatApp)use ejs+coffee',
-    desc: 'SW chat App Test'
-  });
-});
+server.listen(app.get('port')(function() {
+  return console.log("SW isPort " + app.get('port'));
+}));
 
 /*
+app.get "/", (req, res) ->
+  res.render "index",
+    title : 'SW (node.js+express+socket.io ChatApp)use ejs+coffee'
+    desc  : 'SW chat App Test'
     locals:
         port:port  # portは要検証
 */
