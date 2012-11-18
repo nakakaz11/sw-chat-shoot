@@ -46,7 +46,7 @@ escapeHTML = (str) ->
   str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;")
 
 #app.listen port
-socket.on "connection", (client) ->   # ユーザが接続して来たら実行される
+io.on "connection", (client) ->   # ユーザが接続して来たら実行される
 # 接続時の初期化処理を書く
   client.on "message", (msg) ->  # クライアントがメッセージを送って来たら実行。
     sanitized = escapeHTML(msg)

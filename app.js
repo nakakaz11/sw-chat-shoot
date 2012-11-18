@@ -46,7 +46,7 @@ escapeHTML = function(str) {
   return str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;");
 };
 
-socket.on("connection", function(client) {
+io.on("connection", function(client) {
   client.on("message", function(msg) {
     var sanitized;
     sanitized = escapeHTML(msg);
