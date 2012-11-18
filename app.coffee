@@ -1,6 +1,4 @@
 # coffee -wcb *.coffee
-# js2coffee app.js > app.coffee
-
 # http://d.hatena.ne.jp/sugyan/20101227/1293455185
 express = require("express")
 #routes = require('./routes')
@@ -9,7 +7,12 @@ http = require('http')
 path = require('path')
 ejs = require("ejs")
 #swadd express3.0
-#io = require("socket.io")
+server = http.createServer(app)
+io = require("socket.io").listen(server)
+port = server.listen(app.get('port'))
+#port = app.get('port')
+
+console.log("SW isPort " + port)
 
 app = express()
 
@@ -17,8 +20,6 @@ app.configure ->
   app.use(express["static"](path.join(__dirname, 'public'))) # sw add
   app.set('port', process.env.PORT || 3000)    #sw add
   app.set "view engine", "ejs"
-  app.use(express.favicon())
-
 ###
   app.set "view options",
     layout: false
@@ -26,13 +27,6 @@ app.configure ->
 
 #app.get('/', routes.index)
 #app.get('/users', user.list)
-
-server = http.createServer(app)
-io = require("socket.io").listen(server)
-port = server.listen(app.get('port'))
-#port = app.get('port')
-
-console.log("SW isPort " + port)
 
 app.get "/", (req, res) ->
   res.render "index",

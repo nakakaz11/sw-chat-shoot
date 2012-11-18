@@ -9,21 +9,6 @@ path = require('path');
 
 ejs = require("ejs");
 
-app = express();
-
-app.configure(function() {
-  app.use(express["static"](path.join(__dirname, 'public')));
-  app.set('port', process.env.PORT || 3000);
-  app.set("view engine", "ejs");
-  return app.use(express.favicon());
-});
-
-/*
-  app.set "view options",
-    layout: false
-*/
-
-
 server = http.createServer(app);
 
 io = require("socket.io").listen(server);
@@ -31,6 +16,20 @@ io = require("socket.io").listen(server);
 port = server.listen(app.get('port'));
 
 console.log("SW isPort " + port);
+
+app = express();
+
+app.configure(function() {
+  app.use(express["static"](path.join(__dirname, 'public')));
+  app.set('port', process.env.PORT || 3000);
+  return app.set("view engine", "ejs");
+});
+
+/*
+  app.set "view options",
+    layout: false
+*/
+
 
 app.get("/", function(req, res) {
   return res.render("index", {
