@@ -22,10 +22,9 @@ app.configure ->
     layout: false
 ###
 # Using Socket.IO with Node.js on Heroku
-io.configure( ->
-  io.set("transports", ["xhr-polling"])
-  io.set("polling duration", 10)
-)
+@io.configure =>
+  @io.set("transports", ["xhr-polling"])
+  @io.set("polling duration", 10)
 
 #app.get('/', routes.index)
 #app.get('/users', user.list)
