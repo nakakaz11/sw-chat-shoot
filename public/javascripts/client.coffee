@@ -2,9 +2,9 @@
 # js2coffee client.js > client.coffee
 # socket.io.jsファイルを読んでおく
 $ ->
-  port = server.listen(app.get("port"))
-  socket = new io.Socket(null,
-    port: port
+  #port = server.listen(app.get("port"))
+  socket = new io.Socket(#null,
+    #port: port
   )
   socket.connect()
   socket.on "connect", ->
