@@ -21,6 +21,12 @@ app.configure ->
   app.set "view options",
     layout: false
 ###
+# Using Socket.IO with Node.js on Heroku
+io.configure( ->
+  io.set("transports", ["xhr-polling"])
+  io.set("polling duration", 10)
+)
+
 #app.get('/', routes.index)
 #app.get('/users', user.list)
 
@@ -39,13 +45,6 @@ app.get "/", (req, res) ->
     locals:
         port:port  # portは要検証
 
-# Using Socket.IO with Node.js on Heroku
-###
-io.configure( ->
-  io.set("transports", ["xhr-polling"])
-  io.set("polling duration", 10)
-)
-###
 
 escapeHTML = (str) ->
   str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;")
