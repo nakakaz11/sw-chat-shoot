@@ -9,7 +9,7 @@ http = require('http')
 path = require('path')
 ejs = require("ejs")
 #swadd express3.0
-io = require("socket.io")
+#io = require("socket.io")
 
 app = express()
 
@@ -28,11 +28,9 @@ app.configure ->
 #app.get('/users', user.list)
 
 server = http.createServer(app)
-socket = io.listen(app)
-port = app.get('port')
-
-#server.listen app.get('port'), ->    # リスニングするポート
-  #console.log("SW isPort " + app.get('port'))
+io = require("socket.io").listen(server)
+port = server.listen(app.get('port'))
+#port = app.get('port')
 
 console.log("SW isPort " + port)
 
