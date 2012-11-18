@@ -21,7 +21,7 @@ app.configure ->
   app.set "view options",
     layout: false
 ###
-#app.get('/', routes.index)
+app.get('/', routes.index)
 #app.get('/users', user.list)
 
 

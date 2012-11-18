@@ -29,6 +29,8 @@ app.configure(function() {
 */
 
 
+app.get('/', routes.index);
+
 server = http.createServer(app);
 
 server.listen(app.get('port'), function() {
