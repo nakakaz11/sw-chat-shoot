@@ -25,6 +25,8 @@
     return false;
   });
 */
+  // new socket.io
+  var socket = io.connect();
   socket.on('message:receive', function (data) {
     var date;
     date = new Date();
