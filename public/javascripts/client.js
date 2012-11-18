@@ -1,6 +1,8 @@
 $(function() {
-    var socket = new io.Socket(null, { port: app.get('port') });
-    var port = app.get('port')
+    express = require("express");
+    app = express();
+    var port = app.get('port');
+    var socket = new io.Socket(null, { port: port });
     socket.connect();
     socket.on('connect', function() {
         console.log('connect');
