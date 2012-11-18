@@ -11,7 +11,7 @@ app = express()
 
 app.configure ->
   app.set('port', process.env.PORT || 3000)    #sw add
-#  app.set "view engine", "ejs"
+  app.set "view engine", "ejs"
   app.use express.logger 'dev'
   app.use express.bodyParser()
   app.use express.methodOverride()
