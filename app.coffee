@@ -8,6 +8,8 @@ user = require('./routes/user')
 http = require('http')
 path = require('path')
 ejs = require("ejs")
+#swadd express3.0
+server = http.createServer(app)
 io = require("socket.io")
 #port = 3000
 app = express()
@@ -31,10 +33,6 @@ app.configure ->
 #app.get('/', routes.index)
 #app.get('/users', user.list)
 
-
-#swadd express
-server = http.createServer(app)
-
 server.listen app.get('port'), ->    # リスニングするポート
   console.log("SW isPort " + app.get('port'))
   return
@@ -51,7 +49,7 @@ escapeHTML = (str) ->
   str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;")
 
 #app.listen port
-socket = io.listen(server)  # socketの取得
+socket = io.listen(server)  # socketの取得 3.0
 socket.on "connection", (client) ->   # ユーザが接続して来たら実行される
 # 接続時の初期化処理を書く
   client.on "message", (msg) ->  # クライアントがメッセージを送って来たら実行。

@@ -13,6 +13,8 @@ path = require('path');
 
 ejs = require("ejs");
 
+server = http.createServer(app);
+
 io = require("socket.io");
 
 app = express();
@@ -35,8 +37,6 @@ app.configure(function() {
   @io.set("polling duration", 10)
 */
 
-
-server = http.createServer(app);
 
 server.listen(app.get('port'), function() {
   console.log("SW isPort " + app.get('port'));
