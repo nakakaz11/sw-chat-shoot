@@ -29,7 +29,7 @@ io = require("socket.io").listen(server);
 
 server.listen(app.get('port'));
 
-console.log("SW isPort " + app.get('port'));
+console.log("SW isPort " + server.listen(app.get('port')));
 
 app.get("/", function(req, res) {
   return res.render("index", {
