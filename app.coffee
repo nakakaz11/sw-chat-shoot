@@ -5,19 +5,18 @@ routes = require('./routes')
 #user = require('./routes/user')
 http = require('http')
 path = require('path')
-ejs = require("ejs")
+#ejs = require("ejs")
 
 app = express()
 
 app.configure ->
-  app.use(express["static"](path.join(__dirname, 'public'))) # sw add
+  app.set('port', process.env.PORT || 3000)    #sw add
+#  app.set "view engine", "ejs"
   app.use express.logger 'dev'
   app.use express.bodyParser()
   app.use express.methodOverride()
   app.use app.router
-
-  app.set('port', process.env.PORT || 3000)    #sw add
-  app.set "view engine", "ejs"
+  app.use(express["static"](path.join(__dirname, 'public'))) # sw add
 ###
   app.set "view options",
     layout: false
