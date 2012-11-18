@@ -15,7 +15,9 @@ ejs = require("ejs");
 
 server = http.createServer(app);
 
-io = require("socket.io").listen(server);
+io = require("socket.io");
+
+socket = io.listen(server);
 
 port = process.env.PORT || 3000;
 
@@ -60,8 +62,6 @@ app.get("/", function(req, res) {
 escapeHTML = function(str) {
   return str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;");
 };
-
-socket = io;
 
 socket.on("connection", function(client) {
   client.on("message", function(msg) {
