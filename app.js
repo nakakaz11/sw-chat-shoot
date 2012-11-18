@@ -31,7 +31,7 @@ app.configure(function() {
 
 server = http.createServer(app);
 
-port = server.listen(app.get('port'));
+port = server.listen(app.get('port'), function() {});
 
 app.get("/", function(req, res) {
   return res.render("index", {

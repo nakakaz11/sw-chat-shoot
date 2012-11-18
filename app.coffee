@@ -28,9 +28,8 @@ app.configure ->
 #swadd express
 server = http.createServer(app)
 
-#server.listen app.get('port'), ->
- #
-port = server.listen(app.get('port'))
+port = server.listen app.get('port'), -> return
+#port = server.listen(app.get('port'))
 
 app.get "/", (req, res) ->
   res.render "index",
