@@ -3,15 +3,13 @@
 
 # http://d.hatena.ne.jp/sugyan/20101227/1293455185
 express = require("express")
-routes = require('./routes')
-user = require('./routes/user')
+#routes = require('./routes')
+#user = require('./routes/user')
 http = require('http')
 path = require('path')
 ejs = require("ejs")
 #swadd express3.0
-server = http.createServer(app)
 io = require("socket.io")
-socket = io.listen(server)
 port = process.env.PORT || 3000
 app = express()
 
@@ -34,10 +32,12 @@ app.configure ->
 #app.get('/', routes.index)
 #app.get('/users', user.list)
 
-###
-server.listen app.get('port'), ->    # リスニングするポート
-  console.log("SW isPort " + app.get('port'))
-###
+server = http.createServer(app)
+socket = io.listen(server)
+
+#server.listen app.get('port'), ->    # リスニングするポート
+  #console.log("SW isPort " + app.get('port'))
+
 console.log("SW isPort " + port)
 
 app.get "/", (req, res) ->
