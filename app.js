@@ -11,12 +11,11 @@ ejs = require("ejs");
 
 io = require("socket.io");
 
-port = process.env.PORT || 3000;
-
 app = express();
 
 app.configure(function() {
   app.use(express["static"](path.join(__dirname, 'public')));
+  app.set('port', process.env.PORT || 3000);
   return app.set("view engine", "ejs");
 });
 
@@ -35,7 +34,9 @@ app.configure(function() {
 
 server = http.createServer(app);
 
-socket = io.listen(server);
+socket = server.listen(app);
+
+port = app.get('port');
 
 console.log("SW isPort " + port);
 

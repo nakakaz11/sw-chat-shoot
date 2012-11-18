@@ -10,13 +10,11 @@ path = require('path')
 ejs = require("ejs")
 #swadd express3.0
 io = require("socket.io")
-port = process.env.PORT || 3000
 app = express()
 
 app.configure ->
   app.use(express["static"](path.join(__dirname, 'public'))) # sw add
-  #app.use express.staticProvider(__dirname + "/static")
-  #app.set('port', process.env.PORT || 3000)    #sw add
+  app.set('port', process.env.PORT || 3000)    #sw add
   app.set "view engine", "ejs"
 ###
   app.set "view options",
@@ -33,7 +31,8 @@ app.configure ->
 #app.get('/users', user.list)
 
 server = http.createServer(app)
-socket = io.listen(server)
+socket = server.listen(app)
+port = app.get('port')
 
 #server.listen app.get('port'), ->    # リスニングするポート
   #console.log("SW isPort " + app.get('port'))
