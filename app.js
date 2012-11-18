@@ -35,9 +35,7 @@ server = http.createServer(app);
 
 io = require("socket.io").listen(server);
 
-server.listen(app.get('port')(function() {
-  return console.log("SW isPort " + app.get('port'));
-}));
+server.listen(app.get('port'));
 
 /*
 app.get "/", (req, res) ->

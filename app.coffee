@@ -28,8 +28,7 @@ app.get('/', routes.index)
 #swadd express3.0
 server = http.createServer(app)
 io = require("socket.io").listen(server)
-server.listen app.get('port') ->
-  console.log("SW isPort " + app.get('port'))
+server.listen app.get('port')
 ###
 app.get "/", (req, res) ->
   res.render "index",
