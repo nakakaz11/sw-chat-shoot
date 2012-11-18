@@ -40,21 +40,17 @@ server = http.createServer(app);
 
 server.listen(app.get('port'), function() {
   console.log("SW isPort " + app.get('port'));
-  return app.get('port');
 });
 
 app.get("/", function(req, res) {
   return res.render("index", {
     title: 'SW (node.js+express+socket.io ChatApp)use ejs+coffee',
-    desc: 'SW chat App Test'
+    desc: 'SW chat App Test',
+    locals: {
+      port: app.get('port')
+    }
   });
 });
-
-/*
-    locals:
-        port:port  # portは要検証
-*/
-
 
 escapeHTML = function(str) {
   return str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;");
