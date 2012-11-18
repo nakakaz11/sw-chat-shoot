@@ -46,12 +46,15 @@ port = server.listen(app.get('port'), function() {
 app.get("/", function(req, res) {
   return res.render("index", {
     title: 'SW (node.js+express+socket.io ChatApp)use ejs+coffee',
-    desc: 'SW chat App Test',
-    locals: {
-      port: port
-    }
+    desc: 'SW chat App Test'
   });
 });
+
+/*
+    locals:
+        port:port  # portは要検証
+*/
+
 
 escapeHTML = function(str) {
   return str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;");
