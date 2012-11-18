@@ -16,7 +16,8 @@ app = express();
 app.configure(function() {
   app.use(express["static"](path.join(__dirname, 'public')));
   app.set('port', process.env.PORT || 3000);
-  return app.set("view engine", "ejs");
+  app.set("view engine", "ejs");
+  return app.use(express.favicon());
 });
 
 /*
@@ -25,16 +26,9 @@ app.configure(function() {
 */
 
 
-/*
-@io.configure =>    # this バインド要る？
-  @io.set("transports", ["xhr-polling"])
-  @io.set("polling duration", 10)
-*/
-
-
 server = http.createServer(app);
 
-socket = server.listen(app);
+socket = io.listen(app);
 
 port = app.get('port');
 

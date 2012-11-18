@@ -10,28 +10,25 @@ path = require('path')
 ejs = require("ejs")
 #swadd express3.0
 io = require("socket.io")
+
 app = express()
 
 app.configure ->
   app.use(express["static"](path.join(__dirname, 'public'))) # sw add
   app.set('port', process.env.PORT || 3000)    #sw add
   app.set "view engine", "ejs"
+  app.use(express.favicon())
+
 ###
   app.set "view options",
     layout: false
-###
-# Using Socket.IO with Node.js on Heroku
-###
-@io.configure =>    # this バインド要る？
-  @io.set("transports", ["xhr-polling"])
-  @io.set("polling duration", 10)
 ###
 
 #app.get('/', routes.index)
 #app.get('/users', user.list)
 
 server = http.createServer(app)
-socket = server.listen(app)
+socket = io.listen(app)
 port = app.get('port')
 
 #server.listen app.get('port'), ->    # リスニングするポート
