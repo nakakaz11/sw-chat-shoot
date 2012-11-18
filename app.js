@@ -21,7 +21,6 @@ app = express();
 
 app.configure(function() {
   app.use(express["static"](path.join(__dirname, 'public')));
-  app.set('port', process.env.PORT || 3000);
   return app.set("view engine", "ejs");
 });
 
@@ -33,9 +32,11 @@ app.configure(function() {
 
 server = http.createServer(app);
 
-server.listen(app.get('port'), function() {
-  return console.log("SW isPort " + app.get('port'));
-});
+/*
+server.listen app.get('port'), ->    # リスニングするポート
+  console.log("SW isPort " + app.get('port'))
+*/
+
 
 app.get("/", function(req, res) {
   return res.render("index", {
@@ -47,10 +48,13 @@ app.get("/", function(req, res) {
   });
 });
 
-io.configure(function() {
-  io.set("transports", ["xhr-polling"]);
-  return io.set("polling duration", 10);
-});
+/*
+io.configure( ->
+  io.set("transports", ["xhr-polling"])
+  io.set("polling duration", 10)
+)
+*/
+
 
 socket = io.listen(server);
 
