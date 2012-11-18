@@ -9,6 +9,8 @@ path = require('path');
 
 ejs = require("ejs");
 
+app = express();
+
 server = http.createServer(app);
 
 io = require("socket.io").listen(server);
@@ -16,8 +18,6 @@ io = require("socket.io").listen(server);
 port = server.listen(app.get('port'));
 
 console.log("SW isPort " + port);
-
-app = express();
 
 app.configure(function() {
   app.use(express["static"](path.join(__dirname, 'public')));

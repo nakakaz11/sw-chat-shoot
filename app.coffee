@@ -6,15 +6,14 @@ express = require("express")
 http = require('http')
 path = require('path')
 ejs = require("ejs")
+
+app = express()
 #swadd express3.0
 server = http.createServer(app)
 io = require("socket.io").listen(server)
 port = server.listen(app.get('port'))
-#port = app.get('port')
 
 console.log("SW isPort " + port)
-
-app = express()
 
 app.configure ->
   app.use(express["static"](path.join(__dirname, 'public'))) # sw add
