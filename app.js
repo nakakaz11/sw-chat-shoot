@@ -50,10 +50,11 @@ app.get "/", (req, res) ->
 
 
 io.sockets.on("connection", function(socket) {
-  socket.emit('message:receive', {
-    message: data.message
+  return socket.on('message:send', function(data) {
+    return io.sockets.emit('message:receive', {
+      message: data.message
+    });
   });
-  return socket.on('message:send', data);
 });
 
 /*

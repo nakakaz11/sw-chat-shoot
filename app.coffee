@@ -43,9 +43,8 @@ app.get "/", (req, res) ->
 
 io.sockets.on "connection", (socket) ->   # ユーザが接続して来たら実行される
 # 接続時の初期化処理を書く
-  socket.emit 'message:receive', { message: data.message }
-  socket.on 'message:send', (data)# ->  # クライアントがメッセージを送って来たら実行。
-    #io.sockets.emit 'message:receive', { message: data.message }
+  socket.on 'message:send', (data) ->  # クライアントがメッセージを送って来たら実行。
+    io.sockets.emit 'message:receive', { message: data.message }
     #sanitized = escapeHTML(msg)
     #socket.send msg              # 送って来た本人だけに送る。
     #socket.broadcast msg         # 送って来た人以外全員に送る。
