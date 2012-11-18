@@ -11,13 +11,13 @@ ejs = require("ejs")
 #swadd express3.0
 server = http.createServer(app)
 io = require("socket.io")
-#port = 3000
+port = process.env.PORT || 3000
 app = express()
 
 app.configure ->
   app.use(express["static"](path.join(__dirname, 'public'))) # sw add
   #app.use express.staticProvider(__dirname + "/static")
-  app.set('port', process.env.PORT || 3000)    #sw add
+  #app.set('port', process.env.PORT || 3000)    #sw add
   app.set "view engine", "ejs"
 ###
   app.set "view options",
@@ -42,7 +42,7 @@ app.get "/", (req, res) ->
     title : 'SW (node.js+express+socket.io ChatApp)use ejs+coffee'
     desc  : 'SW chat App Test'
     locals:
-        port:app.get('port')  # portは要検証
+        port:port  # portは要検証
 
 
 escapeHTML = (str) ->
