@@ -45,12 +45,14 @@ server.listen app.get('port'), ->    # リスニングするポート
 */
 
 
+console.log("SW isPort " + port);
+
 app.get("/", function(req, res) {
   return res.render("index", {
     title: 'SW (node.js+express+socket.io ChatApp)use ejs+coffee',
     desc: 'SW chat App Test',
     locals: {
-      port: io
+      port: port
     }
   });
 });

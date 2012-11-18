@@ -37,13 +37,14 @@ app.configure ->
 server.listen app.get('port'), ->    # リスニングするポート
   console.log("SW isPort " + app.get('port'))
 ###
+console.log("SW isPort " + port)
 
 app.get "/", (req, res) ->
   res.render "index",
     title : 'SW (node.js+express+socket.io ChatApp)use ejs+coffee'
     desc  : 'SW chat App Test'
     locals:
-        port:io  # portは要検証
+        port:port  # portは要検証
 
 
 escapeHTML = (str) ->
