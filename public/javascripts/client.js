@@ -35,7 +35,7 @@
   });
 
   function send() {
-    var msg = $("input#message").text();  //$("input#message").val();
+    var msg = $("input#message").val();  //$("input#message").val();
     $("input#message").val("");
     socket.emit('message:send', { message: msg });
   }
