@@ -31,7 +31,8 @@ app.configure(function() {
 server = http.createServer(app);
 
 port = server.listen(app.get('port'), function() {
-  return console.log("SW isPort " + app.get('port'));
+  console.log("SW isPort " + app.get('port'));
+  return app.get('port');
 });
 
 app.get("/", function(req, res) {
@@ -44,10 +45,13 @@ app.get("/", function(req, res) {
   });
 });
 
-io.configure(function() {
-  io.set("transports", ["xhr-polling"]);
-  return io.set("polling duration", 10);
-});
+/*
+io.configure( ->
+  io.set("transports", ["xhr-polling"])
+  io.set("polling duration", 10)
+)
+*/
+
 
 escapeHTML = function(str) {
   return str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;");

@@ -30,6 +30,7 @@ server = http.createServer(app)
 
 port = server.listen app.get('port'), ->    # リスニングするポート
   console.log("SW isPort " + app.get('port'))
+  return app.get('port')
 
 app.get "/", (req, res) ->
   res.render "index",
@@ -39,10 +40,12 @@ app.get "/", (req, res) ->
         port:port  # portは要検証
 
 # Using Socket.IO with Node.js on Heroku
+###
 io.configure( ->
   io.set("transports", ["xhr-polling"])
   io.set("polling duration", 10)
 )
+###
 
 escapeHTML = (str) ->
   str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;")
