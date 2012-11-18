@@ -16,7 +16,7 @@ app = express()
 app.configure ->
   app.use(express["static"](path.join(__dirname, 'public'))) # sw add
   #app.use express.staticProvider(__dirname + "/static")
-  #app.set('port', process.env.PORT || 3000)    #sw add
+  app.set('port', process.env.PORT || 3000)    #sw add
   app.set "view engine", "ejs"
 ###
   app.set "view options",
