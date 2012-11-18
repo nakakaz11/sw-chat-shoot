@@ -11,14 +11,6 @@ ejs = require("ejs");
 
 app = express();
 
-server = http.createServer(app);
-
-io = require("socket.io").listen(server);
-
-port = server.listen(app.get('port'));
-
-console.log("SW isPort " + port);
-
 app.configure(function() {
   app.use(express["static"](path.join(__dirname, 'public')));
   app.set('port', process.env.PORT || 3000);
@@ -30,6 +22,14 @@ app.configure(function() {
     layout: false
 */
 
+
+server = http.createServer(app);
+
+io = require("socket.io").listen(server);
+
+port = server.listen(app.get('port'));
+
+console.log("SW isPort " + port);
 
 app.get("/", function(req, res) {
   return res.render("index", {

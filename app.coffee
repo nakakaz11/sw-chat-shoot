@@ -8,12 +8,6 @@ path = require('path')
 ejs = require("ejs")
 
 app = express()
-#swadd express3.0
-server = http.createServer(app)
-io = require("socket.io").listen(server)
-port = server.listen(app.get('port'))
-
-console.log("SW isPort " + port)
 
 app.configure ->
   app.use(express["static"](path.join(__dirname, 'public'))) # sw add
@@ -23,9 +17,14 @@ app.configure ->
   app.set "view options",
     layout: false
 ###
-
 #app.get('/', routes.index)
 #app.get('/users', user.list)
+
+#swadd express3.0
+server = http.createServer(app)
+io = require("socket.io").listen(server)
+port = server.listen(app.get('port'))
+console.log("SW isPort " + port)
 
 app.get "/", (req, res) ->
   res.render "index",
@@ -34,11 +33,9 @@ app.get "/", (req, res) ->
     locals:
         port:port  # portは要検証
 
-
 escapeHTML = (str) ->
   str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;")
 
-#app.listen port
 io.on "connection", (client) ->   # ユーザが接続して来たら実行される
 # 接続時の初期化処理を書く
   client.on "message", (msg) ->  # クライアントがメッセージを送って来たら実行。
