@@ -1,5 +1,5 @@
 $(function() {
-    var socket = new io.Socket(null, { port: isPort });
+    var socket = new io.Socket(null, { port: port });
     socket.connect();
     socket.on('connect', function() {
         console.log('connect');
