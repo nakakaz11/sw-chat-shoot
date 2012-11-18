@@ -35,7 +35,7 @@ app.get "/", (req, res) ->
     title : 'SW (node.js+express+socket.io ChatApp)use ejs+coffee'
     desc  : 'SW chat App Test'
     locals:
-        port:app.get('port')   # portは要検証
+        port:server.listen app.get('port')  # portは要検証
 
 
 
