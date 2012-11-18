@@ -13,6 +13,10 @@ app = express();
 
 app.configure(function() {
   app.use(express["static"](path.join(__dirname, 'public')));
+  app.use(express.logger('dev'));
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(app.router);
   app.set('port', process.env.PORT || 3000);
   return app.set("view engine", "ejs");
 });
