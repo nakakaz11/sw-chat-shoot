@@ -30,11 +30,10 @@ app.get "/", (req, res) ->
   res.render "index",
     title : 'SW (node.js+express+socket.io ChatApp)use ejs+coffee'
     desc  : 'SW chat App Test'
+###
     locals:
         port:port  # portは要検証
-
-escapeHTML = (str) ->
-  str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;")
+###
 
 io.on "connection", (client) ->   # ユーザが接続して来たら実行される
 # 接続時の初期化処理を書く
@@ -47,3 +46,7 @@ io.on "connection", (client) ->   # ユーザが接続して来たら実行さ�
     console.log "disconnect"
     client.broadcast client.sessionId + ' disconnected'
     # 他全員に切断した人のsessionIdを送る。
+
+# サニタイズ
+escapeHTML = (str) ->
+  str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;")
