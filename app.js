@@ -19,6 +19,7 @@ app = express();
 
 app.configure(function() {
   app.use(express["static"](path.join(__dirname, 'public')));
+  app.set('port', process.env.PORT || 3000);
   return app.set("view engine", "ejs");
 });
 
