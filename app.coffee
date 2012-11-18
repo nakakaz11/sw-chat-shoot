@@ -1,7 +1,6 @@
 # coffee -wcb *.coffee
 # js2coffee app.js > app.coffee
 
-
 # http://d.hatena.ne.jp/sugyan/20101227/1293455185
 express = require("express")
 routes = require('./routes')
@@ -29,9 +28,8 @@ app.configure ->
 #swadd express
 server = http.createServer(app)
 
-server.listen(app.get('port'), ->
-  console.log("SW port " + app.get('port'))
-)
+server.listen app.get('port'), ->
+ #
 
 app.get "/", (req, res) ->
   res.render "index",
@@ -39,6 +37,8 @@ app.get "/", (req, res) ->
     desc  : 'SW chat App Test'
     locals:
         port:server.listen(app.get('port'))   # portは要検証
+  console.log("SW isPort " + app.get('port'))
+
 
 #app.listen port
 socket = io.listen(server)
