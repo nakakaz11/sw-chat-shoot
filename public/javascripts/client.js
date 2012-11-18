@@ -2,11 +2,6 @@
 
 $(function() {
   var socket;
-  // Using Socket.IO with Node.js on Heroku
-  /*io.configure(function () {
-    io.set("transports", ["xhr-polling"]);
-    io.set("polling duration", 10);
-  });*/
   //socket.ioのインスタンスもportを指定しちゃだめ。
   //var socket = new io.Socket(null, { port: port });
   socket = new io.Socket();

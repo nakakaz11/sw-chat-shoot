@@ -16,7 +16,7 @@ app = express()
 app.configure ->
   app.use(express["static"](path.join(__dirname, 'public'))) # sw add
   #app.use express.staticProvider(__dirname + "/static")
-  app.set('port', process.env.PORT || 3000)    #sw add
+  #app.set('port', process.env.PORT || 3000)    #sw add
   app.set "view engine", "ejs"
 ###
   app.set "view options",
@@ -29,8 +29,10 @@ app.configure ->
 #swadd express
 server = http.createServer(app)
 
+###
 server.listen app.get('port'), ->    # リスニングするポート
   console.log("SW isPort " + app.get('port'))
+###
 
 app.get "/", (req, res) ->
   res.render "index",
@@ -39,6 +41,11 @@ app.get "/", (req, res) ->
     locals:
         port:port  # portは要検証
 
+# Using Socket.IO with Node.js on Heroku
+io.configure( ->
+  io.set("transports", ["xhr-polling"])
+  io.set("polling duration", 10)
+)
 
 
 #app.listen port
