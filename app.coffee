@@ -35,7 +35,7 @@ app.configure ->
 #swadd express
 server = http.createServer(app)
 
-port = server.listen app.get('port'), ->    # リスニングするポート
+server.listen app.get('port'), ->    # リスニングするポート
   console.log("SW isPort " + app.get('port'))
   return app.get('port')
 
