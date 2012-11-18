@@ -20,7 +20,7 @@ $(function() {
   return $("#form").submit(function() {
     var message;
     message = $("#message");
-    socket.emit(message.val());
+    socket.send(message.val());
     message.attr("value", "");
     return false;
   });
