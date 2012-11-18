@@ -28,16 +28,18 @@ app.configure ->
 #swadd express
 server = http.createServer(app)
 
-server.listen app.get('port'), ->
+#server.listen app.get('port'), ->
  #
+
+isPort = app.get('port')  #sw Add
+console.log("SW isPort " + isPort)
 
 app.get "/", (req, res) ->
   res.render "index",
     title : 'SW (node.js+express+socket.io ChatApp)use ejs+coffee'
     desc  : 'SW chat App Test'
     locals:
-        port:server.listen(app.get('port'))   # portは要検証
-  console.log("SW isPort " + app.get('port'))
+        port:isPort  # portは要検証
 
 
 #app.listen port
