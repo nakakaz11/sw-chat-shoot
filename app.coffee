@@ -1,7 +1,7 @@
 # coffee -wcb *.coffee
 # http://d.hatena.ne.jp/sugyan/20101227/1293455185
 express = require("express")
-#routes = require('./routes')
+routes = require('./routes')
 #user = require('./routes/user')
 http = require('http')
 path = require('path')
@@ -39,7 +39,7 @@ app.get "/", (req, res) ->
         port:port  # portは要検証
 ###
 
-io.on "connection", (client) ->   # ユーザが接続して来たら実行される
+io.sockets.on "connection", (client) ->   # ユーザが接続して来たら実行される
 # 接続時の初期化処理を書く
   client.on "message", (msg) ->  # クライアントがメッセージを送って来たら実行。
     sanitized = escapeHTML(msg)
