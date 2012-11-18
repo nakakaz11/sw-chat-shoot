@@ -21,6 +21,10 @@ app.configure(function() {
   return app.use(express["static"](path.join(__dirname, 'public')));
 });
 
+app.configure('development', function() {
+  return app.use(express.errorHandler());
+});
+
 /*
   app.set "view options",
     layout: false
