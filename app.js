@@ -33,11 +33,9 @@ app.configure(function() {
 
 server = http.createServer(app);
 
-/*
-server.listen app.get('port'), ->    # リスニングするポート
-  console.log("SW isPort " + app.get('port'))
-*/
-
+server.listen(app.get('port'), function() {
+  return console.log("SW isPort " + app.get('port'));
+});
 
 app.get("/", function(req, res) {
   return res.render("index", {

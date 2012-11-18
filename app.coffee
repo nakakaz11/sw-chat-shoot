@@ -29,10 +29,8 @@ app.configure ->
 #swadd express
 server = http.createServer(app)
 
-###
 server.listen app.get('port'), ->    # リスニングするポート
   console.log("SW isPort " + app.get('port'))
-###
 
 app.get "/", (req, res) ->
   res.render "index",
