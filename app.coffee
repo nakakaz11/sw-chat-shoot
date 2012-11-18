@@ -27,7 +27,8 @@ app.configure ->
 
 #swadd express
 server = http.createServer(app)
-server.listen app.get('port'), ->
+
+server.listen app.get('port'), ->    # リスニングするポート
   console.log("SW isPort " + app.get('port'))
 
 app.get "/", (req, res) ->
@@ -41,13 +42,14 @@ app.get "/", (req, res) ->
 
 
 #app.listen port
-socket = io.listen(server)
-socket.on "connection", (client) ->
-  client.on "message", (msg) ->
-    client.send msg
-    client.broadcast msg
+socket = io.listen(server)  # socketの取得
+socket.on "connection", (client) ->   # ユーザが接続して来たら実行される
+# 接続時の初期化処理を書く
+  client.on "message", (msg) ->  # クライアントがメッセージを送って来たら実行。
+    client.send msg              # 送って来た本人だけに送る。
+    client.broadcast msg         # 送って来た人以外全員に送る。
 
-  client.on "disconnect", ->
+  client.on "disconnect", ->    # クライアントが切断したら実行される。
     console.log "disconnect"
-
-
+    client.broadcast client.sessionId + ' disconnected'
+    # 他全員に切断した人のsessionIdを送る。
