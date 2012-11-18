@@ -31,15 +31,15 @@ app.configure(function() {
 
 server = http.createServer(app);
 
-port = server.listen(app.get('port'), function() {});
-
-app.get("/", function(req, res) {
-  return res.render("index", {
-    title: 'SW (node.js+express+socket.io ChatApp)use ejs+coffee',
-    desc: 'SW chat App Test',
-    locals: {
-      port: port
-    }
+port = server.listen(app.get('port'), function() {
+  return app.get("/", function(req, res) {
+    return res.render("index", {
+      title: 'SW (node.js+express+socket.io ChatApp)use ejs+coffee',
+      desc: 'SW chat App Test',
+      locals: {
+        port: port
+      }
+    });
   });
 });
 
