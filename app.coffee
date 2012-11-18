@@ -9,6 +9,7 @@ http = require('http')
 path = require('path')
 ejs = require("ejs")
 io = require("socket.io")
+port = process.env.PORT || 3000
 #port = 3000
 app = express()
 
@@ -36,8 +37,7 @@ app.get "/", (req, res) ->
     title : 'SW (node.js+express+socket.io ChatApp)use ejs+coffee'
     desc  : 'SW chat App Test'
     locals:
-        port:server.listen app.get('port')  # portは要検証
-
+        port:port  # portは要検証
 
 
 
@@ -46,10 +46,13 @@ socket = io.listen(server)  # socketの取得
 socket.on "connection", (client) ->   # ユーザが接続して来たら実行される
 # 接続時の初期化処理を書く
   client.on "message", (msg) ->  # クライアントがメッセージを送って来たら実行。
-    client.send msg              # 送って来た本人だけに送る。
-    client.broadcast msg         # 送って来た人以外全員に送る。
+    sanitized = escapeHTML(msg)
+    client.send sanitized              # 送って来た本人だけに送る。
+    client.broadcast sanitized         # 送って来た人以外全員に送る。
 
   client.on "disconnect", ->    # クライアントが切断したら実行される。
     console.log "disconnect"
     client.broadcast client.sessionId + ' disconnected'
     # 他全員に切断した人のsessionIdを送る。
+escapeHTML = (str) ->
+  str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;")
