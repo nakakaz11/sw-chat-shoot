@@ -10,7 +10,7 @@ path = require('path')
 ejs = require("ejs")
 #swadd express3.0
 server = http.createServer(app)
-io = require("socket.io")
+io = require("socket.io").listen(server)
 port = process.env.PORT || 3000
 app = express()
 
@@ -43,14 +43,14 @@ app.get "/", (req, res) ->
     title : 'SW (node.js+express+socket.io ChatApp)use ejs+coffee'
     desc  : 'SW chat App Test'
     locals:
-        port:port  # portは要検証
+        port:io  # portは要検証
 
 
 escapeHTML = (str) ->
   str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;")
 
 #app.listen port
-socket = io.listen(server)  # socketの取得 3.0
+socket = io  # socketの取得 3.0
 socket.on "connection", (client) ->   # ユーザが接続して来たら実行される
 # 接続時の初期化処理を書く
   client.on "message", (msg) ->  # クライアントがメッセージを送って来たら実行。
