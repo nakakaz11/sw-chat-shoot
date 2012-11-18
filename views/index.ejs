@@ -2,8 +2,8 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel="stylesheet" href="/stylesheets/style.css" type="text/css">
-    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/stylesheets/style.css" type="text/css" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">google.load("jquery", "1.7.1");</script>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
@@ -13,9 +13,9 @@
     <h1><%= title %></h1>
     <p><%= desc %></p>
     <form action="" id="form">
-      <input type="text" name="message" id="message" />
-      <input type="submit" />
-    </form>
+      <input type="text" name="message" placeholder="入力して..." id="message" />
+      <button type="button" onclick="send()">送信</button>
+      </form>
     <hr />
     <dl id="list"></dl>
   </body>

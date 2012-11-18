@@ -37,17 +37,16 @@ app.get "/", (req, res) ->
         port:port  # portは要検証
 ###
 
-io.sockets.on "connection", (socket) ->   # ユーザが接続して来たら実行される
+io.sockets.on "connection", (client) ->   # ユーザが接続して来たら実行される
 # 接続時の初期化処理を書く
-  socket.on 'message:send', (data) ->  # クライアントがメッセージを送って来たら実行。
-    io.sockets.emit 'message:receive', { message: data.message }
+  client.on "message", (msg) ->  # クライアントがメッセージを送って来たら実行。
     #sanitized = escapeHTML(msg)
-    #socket.send msg              # 送って来た本人だけに送る。
-    #socket.broadcast msg         # 送って来た人以外全員に送る。
+    client.send msg              # 送って来た本人だけに送る。
+    client.broadcast msg         # 送って来た人以外全員に送る。
 
-  #socket.on "disconnect", ->    # クライアントが切断したら実行される。
-    #console.log "disconnect"
-    #socket.broadcast socket.sessionId + ' disconnected'
+  client.on "disconnect", ->    # クライアントが切断したら実行される。
+    console.log "disconnect"
+    client.broadcast client.sessionId + ' disconnected'
     # 他全員に切断した人のsessionIdを送る。
 
 # サニタイズ
