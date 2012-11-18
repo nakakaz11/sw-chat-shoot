@@ -40,9 +40,9 @@ app.get "/", (req, res) ->
 io.sockets.on "connection", (client) ->   # ユーザが接続して来たら実行される
 # 接続時の初期化処理を書く
   client.on "message", (msg) ->  # クライアントがメッセージを送って来たら実行。
-    sanitized = escapeHTML(msg)
-    client.send sanitized              # 送って来た本人だけに送る。
-    client.broadcast sanitized         # 送って来た人以外全員に送る。
+    #sanitized = escapeHTML(msg)
+    client.send msg              # 送って来た本人だけに送る。
+    client.broadcast msg         # 送って来た人以外全員に送る。
 
   client.on "disconnect", ->    # クライアントが切断したら実行される。
     console.log "disconnect"
@@ -50,5 +50,7 @@ io.sockets.on "connection", (client) ->   # ユーザが接続して来たら実
     # 他全員に切断した人のsessionIdを送る。
 
 # サニタイズ
+###
 escapeHTML = (str) ->
   str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;")
+###
