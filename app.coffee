@@ -9,7 +9,6 @@ http = require('http')
 path = require('path')
 ejs = require("ejs")
 io = require("socket.io")
-#port = process.env.PORT || 3000
 #port = 3000
 app = express()
 
@@ -29,17 +28,15 @@ app.configure ->
 #swadd express
 server = http.createServer(app)
 
-###
-server.listen app.get('port'), ->    # リスニングするポート
+port = server.listen app.get('port'), ->    # リスニングするポート
   console.log("SW isPort " + app.get('port'))
-###
 
 app.get "/", (req, res) ->
   res.render "index",
     title : 'SW (node.js+express+socket.io ChatApp)use ejs+coffee'
     desc  : 'SW chat App Test'
     locals:
-        port:server.listen app.get('port')  # portは要検証
+        port:port  # portは要検証
 
 # Using Socket.IO with Node.js on Heroku
 io.configure( ->
@@ -47,6 +44,8 @@ io.configure( ->
   io.set("polling duration", 10)
 )
 
+escapeHTML = (str) ->
+  str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;")
 
 #app.listen port
 socket = io.listen(server)  # socketの取得
@@ -61,5 +60,3 @@ socket.on "connection", (client) ->   # ユーザが接続して来たら実行�
     console.log "disconnect"
     client.broadcast client.sessionId + ' disconnected'
     # 他全員に切断した人のsessionIdを送る。
-escapeHTML = (str) ->
-  str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;")
