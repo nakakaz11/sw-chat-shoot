@@ -29,15 +29,17 @@ app.configure ->
 server = http.createServer(app)
 
 port = server.listen app.get('port'), ->
-  app.get "/", (req, res) ->
-    res.render "index",
-      title : 'SW (node.js+express+socket.io ChatApp)use ejs+coffee'
-      desc  : 'SW chat App Test'
-      locals:
-          port:port   # portは要検証
-
-
+  app.get('port')
 console.log("SW isPort " + port)
+
+app.get "/", (req, res) ->
+  res.render "index",
+    title : 'SW (node.js+express+socket.io ChatApp)use ejs+coffee'
+    desc  : 'SW chat App Test'
+    locals:
+        port:port   # portは要検証
+
+
 
 
 #app.listen port
