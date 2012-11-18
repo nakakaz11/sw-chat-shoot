@@ -28,7 +28,7 @@ $(function() {
   socket.on('message:receive', function (data) {
     var date;
     date = new Date();
-    return $("#list").prepend($("<dt>" + date + "</dt><dd>" + msg + "</dd>"));
+    return $("#list").prepend($("<dt>" + date + "</dt><dd>" + data.message + "</dd>"));
     //$("div#chat-area").prepend("<div>" + data.message + "</div>");
   });
 
