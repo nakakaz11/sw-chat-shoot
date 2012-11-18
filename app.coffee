@@ -9,7 +9,7 @@ http = require('http')
 path = require('path')
 ejs = require("ejs")
 io = require("socket.io")
-port = process.env.PORT || 3000
+#port = process.env.PORT || 3000
 #port = 3000
 app = express()
 
@@ -39,15 +39,13 @@ app.get "/", (req, res) ->
     title : 'SW (node.js+express+socket.io ChatApp)use ejs+coffee'
     desc  : 'SW chat App Test'
     locals:
-        port:port  # portは要検証
+        port:server.listen app.get('port')  # portは要検証
 
 # Using Socket.IO with Node.js on Heroku
-###
 io.configure( ->
   io.set("transports", ["xhr-polling"])
   io.set("polling duration", 10)
 )
-###
 
 
 #app.listen port
