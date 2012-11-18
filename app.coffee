@@ -33,9 +33,10 @@ app.configure ->
 #app.get('/', routes.index)
 #app.get('/users', user.list)
 
+###
 server.listen app.get('port'), ->    # リスニングするポート
   console.log("SW isPort " + app.get('port'))
-  return
+###
 
 app.get "/", (req, res) ->
   res.render "index",

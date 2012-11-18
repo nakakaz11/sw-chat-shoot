@@ -39,9 +39,11 @@ app.configure(function() {
 */
 
 
-server.listen(app.get('port'), function() {
-  console.log("SW isPort " + app.get('port'));
-});
+/*
+server.listen app.get('port'), ->    # リスニングするポート
+  console.log("SW isPort " + app.get('port'))
+*/
+
 
 app.get("/", function(req, res) {
   return res.render("index", {
