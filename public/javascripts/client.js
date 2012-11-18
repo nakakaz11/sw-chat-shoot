@@ -1,5 +1,7 @@
 $(function() {
-/*
+    app.configure(function() {
+      app.set('port', process.env.PORT || 3000);
+    });
     var port = app.get('port');
     var socket = new io.Socket(null, { port: port });
 
@@ -21,5 +23,4 @@ $(function() {
         message.attr('value', '');
         return false;
     });
-*/
 });
