@@ -168,12 +168,12 @@ jQuery(function($) {
       user = {
         userId: data.userId
       };
-      user.element = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>").attr("data-user-id", user.userId);
-      return $("#list").prepend(user.element);
+      user.txt = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>").attr("data-user-id", user.userId);
+      return $("#list").prepend(user.txt);
     } else {
       user = _userMap[data.userId];
-      user.element = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>").attr("data-user-id", user.userId);
-      return $("#list").prepend(user.element);
+      user.txt = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>").attr("data-user-id", user.userId);
+      return $("#list").prepend(user.txt);
     }
   });
   /*  DB仕込むときにはfs使って入れるかな〜

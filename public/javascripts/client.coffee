@@ -152,14 +152,14 @@ jQuery ($) ->
       console.log "SW-createUser:" + data.userId, data.message
       user =    # userのjson make
         userId: data.userId
-      user.element = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>")
+      user.txt = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>")
         .attr("data-user-id", user.userId)
-      $("#list").prepend(user.element)  # リストDOM挿入
+      $("#list").prepend(user.txt)  # リストDOM挿入
     else                                        # あったらoverride
       user = _userMap[data.userId]
-      user.element = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>")
+      user.txt = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>")
         .attr("data-user-id", user.userId)
-      $("#list").prepend(user.element)  # リストDOM挿入
+      $("#list").prepend(user.txt)  # リストDOM挿入
 
   ###  DB仕込むときにはfs使って入れるかな〜
   _socket.on "data updateDB", (data) ->
