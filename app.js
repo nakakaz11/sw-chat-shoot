@@ -34,10 +34,12 @@ io = require("socket.io").listen(server);
 
 server.listen(app.get('port'));
 
-io.configure(function() {
-  io.set("transports", ["xhr-polling"]);
-  return io.set("polling duration", 10);
-});
+/*
+io.configure ->
+  io.set("transports", ["xhr-polling"])
+  io.set("polling duration", 10)
+*/
+
 
 io.sockets.on("connection", function(socket) {
   socket.on('message:send', function(data) {
@@ -50,7 +52,7 @@ io.sockets.on("connection", function(socket) {
   });
   return socket.on("disconnect", function() {
     console.log("disconnect");
-    return socket.broadcast(socket.sessionId + ' disconnected');
+    return socket.broadcast(socket.id + ' disconnected');
   });
 });
 

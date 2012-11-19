@@ -30,9 +30,11 @@ io = require("socket.io").listen(server)
 server.listen app.get('port')
 
 # ioはSocket.IOサーバオブジェクトであると仮定
+###
 io.configure ->
   io.set("transports", ["xhr-polling"])
   io.set("polling duration", 10)
+###
 
 #実装部分
 io.sockets.on "connection", (socket) ->   # ユーザが接続して来たら実行される
@@ -44,7 +46,7 @@ io.sockets.on "connection", (socket) ->   # ユーザが接続して来たら実
 
   socket.on "disconnect", ->    # クライアントが切断したら実行される。
     console.log "disconnect"
-    socket.broadcast socket.sessionId + ' disconnected'
+    socket.broadcast socket.id + ' disconnected'
     # 他全員に切断した人のsessionIdを送る。
 
 # サニタイズ
