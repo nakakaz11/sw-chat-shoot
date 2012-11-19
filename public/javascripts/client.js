@@ -19,7 +19,7 @@ jQuery(function($) {
         userId: data.userId
       };
       user.element = $("<img src=\"/images/unit.png\" class=\"player\" />").attr("data-user-id", user.userId);
-      $("#game").append(user.element);
+      $("body").append(user.element);
       _userMap[data.userId] = user;
       bullet = {
         x: -100,
@@ -29,7 +29,7 @@ jQuery(function($) {
         userId: data.userId
       };
       bullet.element = $("<img src=\"/images/bullet.png\" class=\"bullet\" />").attr("data-user-id", user.userId);
-      $("#game").append(bullet.element);
+      $("body").append(bullet.element);
       _bulletMap[data.userId] = bullet;
     } else {
       user = _userMap[data.userId];
@@ -117,8 +117,8 @@ jQuery(function($) {
     }
     _player.v *= 0.95;
     updatePosition(_player);
-    w_width = $("#game").width();
-    w_height = $("#game").height();
+    w_width = $(window).width();
+    w_height = $(window).height();
     if (_player.x < -50) {
       _player.x = w_width;
     }

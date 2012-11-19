@@ -20,7 +20,7 @@ jQuery ($) ->
 
       user.element = $("<img src=\"/images/unit.png\" class=\"player\" />")
         .attr("data-user-id", user.userId)
-      $("#game").append(user.element)
+      $("body").append(user.element)
       _userMap[data.userId] = user
       bullet =                            # bullet弾 作成/初期化
         x: -100
@@ -31,7 +31,7 @@ jQuery ($) ->
 
       bullet.element = $("<img src=\"/images/bullet.png\" class=\"bullet\" />")
         .attr("data-user-id", user.userId)
-      $("#game").append(bullet.element)
+      $("body").append(bullet.element)
       _bulletMap[data.userId] = bullet
     else                                        # あったらoverride
       user = _userMap[data.userId]
@@ -112,8 +112,8 @@ jQuery ($) ->
     _player.v *= 0.95
     # ここはMapのループ出現処理？
     updatePosition(_player)
-    w_width = $("#game").width()
-    w_height = $("#game").height()
+    w_width = $(window).width()
+    w_height = $(window).height()
     _player.x = w_width  if _player.x < -50
     _player.y = w_height  if _player.y < -50
     _player.x = -50  if _player.x > w_width
