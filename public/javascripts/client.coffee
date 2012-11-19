@@ -7,15 +7,15 @@ jQuery ($) -> # new socket.io
   _socket.on "data-send", (data) ->
     date = new Date()
     if _userMap[data.userId] is `undefined`     # なかったら作る
-      console.log "SW-createUser:" + data.userId, data
+      console.log "SW-createUser:" + data.userId, data.message
       user =    # userのjson make
         userId: data.userId
-      user.element = $("<dt>" + date + "</dt><dd>" + data.message.innerText + "</dd>")
+      user.element = $("<dt>" + date + "</dt><dd>" + data.innerText + "</dd>")
         .attr("data-user-id", user.userId)
       $("#list").prepend(user.element)  # リストDOM挿入
     else                                        # あったらoverride
       user = _userMap[data.userId]
-      user.element = $("<dt>" + date + "</dt><dd>" + data.message.innerText + "</dd>")
+      user.element = $("<dt>" + date + "</dt><dd>" + data.innerText + "</dd>")
         .attr("data-user-id", user.userId)
       $("#list").prepend(user.element)  # リストDOM挿入
 

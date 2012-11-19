@@ -8,15 +8,15 @@ jQuery(function($) {
     var date, user;
     date = new Date();
     if (_userMap[data.userId] === undefined) {
-      console.log("SW-createUser:" + data.userId, data);
+      console.log("SW-createUser:" + data.userId, data.message);
       user = {
         userId: data.userId
       };
-      user.element = $("<dt>" + date + "</dt><dd>" + data.message.innerText + "</dd>").attr("data-user-id", user.userId);
+      user.element = $("<dt>" + date + "</dt><dd>" + data.innerText + "</dd>").attr("data-user-id", user.userId);
       return $("#list").prepend(user.element);
     } else {
       user = _userMap[data.userId];
-      user.element = $("<dt>" + date + "</dt><dd>" + data.message.innerText + "</dd>").attr("data-user-id", user.userId);
+      user.element = $("<dt>" + date + "</dt><dd>" + data.innerText + "</dd>").attr("data-user-id", user.userId);
       return $("#list").prepend(user.element);
     }
   });
