@@ -40,8 +40,8 @@ io.configure ->
 io.sockets.on "connection", (socket) ->   # ユーザが接続して来たら実行される
 # 接続時の初期化処理を書く
   socket.on 'message:send', (data) ->  # クライアント側からのイベントを受取
-    socket.emit 'message:push', { message: data.message }  # 送って来た本人に送る
-    socket.broadcast.emit 'message:push', { message: data.message } # 送って来た人以外全員に送る
+    socket.emit 'message:push', data  # 送って来た本人に送る  .message
+    socket.broadcast.emit 'message:push', data # 送って来た人以外全員に送る .message
     #sanitized = escapeHTML(msg)
 
   socket.on "disconnect", ->    # クライアントが切断したら実行される。

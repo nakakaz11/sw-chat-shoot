@@ -31,7 +31,7 @@ $(function() {  // new socket.io
   //サーバーが受け取ったメッセージを返して実行する
   socket.on('message:push', function (data) {
     var date = new Date();
-    return $("#list").prepend($("<dt>" + date + "</dt><dd>" + data.message + "</dd>"));
+    return $("#list").prepend($("<dt>" + date + "</dt><dd>" + data + "</dd>"));
   });
   socket.on('message:updateDB', function(data){
  		console.log(data);
@@ -41,6 +41,7 @@ $(function() {  // new socket.io
   $('button#btn').click(function() {
     var msg = $("input#message").val();
     $("input#message").val("");
-    socket.emit('message:send', { message: msg });
+    //socket.emit('message:send', { message: msg });
+    socket.emit('message:send', msg );
   });
 });
