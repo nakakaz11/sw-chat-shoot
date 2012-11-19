@@ -29,6 +29,11 @@ server = http.createServer(app)
 io = require("socket.io").listen(server)
 server.listen app.get('port')
 
+# ioはSocket.IOサーバオブジェクトであると仮定
+io.configure ->
+  io.set("transports", ["xhr-polling"])
+  io.set("polling duration", 10)
+
 #実装部分
 io.sockets.on "connection", (socket) ->   # ユーザが接続して来たら実行される
 # 接続時の初期化処理を書く
