@@ -1,6 +1,6 @@
 # coffee -wcb *.coffee
 # http://d.hatena.ne.jp/sugyan/20101227/1293455185
-#"use strict"
+"use strict"
 express = require("express")
 routes = require('./routes')
 #user = require('./routes/user')
@@ -11,7 +11,7 @@ path = require('path')
 app = express()
 
 app.configure ->
-  app.set('port', process.env.PORT || 8080)    #sw add
+  app.set('port', process.env.PORT || 3000)    #sw add
   app.set "view engine", "ejs"
   app.use express.favicon()
   app.use express.logger 'dev'
@@ -33,19 +33,18 @@ app.get('/', routes.index)
 server = http.createServer(app)
 server.listen app.get('port'), ->
   console.log "SW-portLog " + app.get("port")
-io = require("socket.io").listen(server ,
+io = require("socket.io").listen(server,
   "log level": 1 )
 
 #実装部分
 _userId = 0
 io.sockets.on "connection", (socket) ->   # ユーザが接続して来たら実行される
-# 接続時の初期化処理を書く
+  # 接続時の初期化処理を書く
   socket.handshake.userId = _userId
   _userId++    #複数人のuserIdを管理
   # jsonでやりとりに変更〜1119
   socket.on 'data-send', (data) ->  # クライアント側からのイベントを受取
-    socket.emit 'data-push', data  # 送って来た本人に送る  .message
-    socket.broadcast.json.emit 'data-push', data # 送って来た人以外全員に送る .message
+    socket.broadcast.json.emit 'data-send', # handshake io
     #sanitized = escapeHTML(msg)
       userId: socket.handshake.userId
       data: data

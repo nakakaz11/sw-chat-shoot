@@ -4,11 +4,11 @@ $(function() {
   var _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
-  _socket.on("data-push", function(data) {
+  _socket.on("data-send", function(data) {
     var date, user;
     date = new Date();
     if (_userMap[data.userId] === undefined) {
-      console.log("create user " + data.userId, data);
+      console.log("SW-createUser:" + data.userId, data);
       user = {
         userId: data.userId
       };

@@ -4,10 +4,10 @@ $ -> # new socket.io
   _socket = io.connect()
   _userMap = {} # userのjson make
   #サーバーが受け取ったメッセージを返して実行する
-  _socket.on "data-push", (data) ->
+  _socket.on "data-send", (data) ->
     date = new Date()
     if _userMap[data.userId] is `undefined`     # なかったら作る
-      console.log "create user " + data.userId, data
+      console.log "SW-createUser:" + data.userId, data
       user =    # userのjson make
         userId: data.userId
       $("#list").prepend $("<dt>" + date + "</dt><dd>" + data + "</dd>")
