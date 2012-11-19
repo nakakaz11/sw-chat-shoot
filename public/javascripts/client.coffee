@@ -10,11 +10,11 @@ jQuery ($) -> # new socket.io
       console.log "SW-createUser:" + data.userId, data
       user =    # userのjson make
         userId: data.userId
-      $("#list").prepend $("<dt>" + date + "</dt><dd>" + data.message + "</dd>").attr("data-user-id", user.userId)
+      $("#list").prepend $("<dt>" + date + "</dt><dd>" + data + "</dd>").attr("data-user-id", user.userId)
       #user.element = $("#list").prepend $("<dt>" + date + "</dt><dd>" + data + "</dd>")
     else                                        # あったらoverride
       user = _userMap[data.userId]
-      $("#list").prepend $("<dt>" + date + "</dt><dd>" + data.message + "</dd>").attr("data-user-id", user.userId)
+      $("#list").prepend $("<dt>" + date + "</dt><dd>" + data + "</dd>").attr("data-user-id", user.userId)
       #user.element = $("#list").prepend $("<dt>" + date + "</dt><dd>" + data + "</dd>")
 
   ###  DB仕込むときにはfs使って入れるかな〜
