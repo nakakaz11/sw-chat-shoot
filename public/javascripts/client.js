@@ -12,10 +12,12 @@ jQuery(function($) {
       user = {
         userId: data.userId
       };
-      return $("#list").prepend($("<dt>" + date + "</dt><dd>" + data + "</dd>").attr("data-user-id", user.userId));
+      user.element = $("<dt>" + date + "</dt><dd>" + data.message[0] + "</dd>").attr("data-user-id", user.userId);
+      return $("#list").prepend(user.element);
     } else {
       user = _userMap[data.userId];
-      return $("#list").prepend($("<dt>" + date + "</dt><dd>" + data + "</dd>").attr("data-user-id", user.userId));
+      user.element = $("<dt>" + date + "</dt><dd>" + data.message[0] + "</dd>").attr("data-user-id", user.userId);
+      return $("#list").prepend(user.element);
     }
   });
   /*  DB仕込むときにはfs使って入れるかな〜
