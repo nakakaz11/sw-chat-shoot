@@ -17,15 +17,7 @@ app.configure ->
   app.use express.methodOverride()
   app.use app.router
   app.use(express["static"](path.join(__dirname, 'public'))) # sw add
-<<<<<<< HEAD
   ###
-=======
-
-app.configure('development', ->
-  app.use( express.errorHandler() )
-)
-###
->>>>>>> bb31433884cd24a0343aac9ba0a0da1aa4156526
   app.set "view options",
     layout: false
   ###
