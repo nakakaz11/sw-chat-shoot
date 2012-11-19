@@ -18,6 +18,7 @@ a {
     height: 20%;
     background-color: #aad8d5;
 }
+hr {margin:0; padding:0;}
 
 img.player{
 	width:50px;
