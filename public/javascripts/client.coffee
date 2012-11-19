@@ -181,5 +181,5 @@ jQuery ($) ->
     _socket.emit "data-send", msg
   $("button#btn").click = (e) ->
     setTimeout(chat, 30)         # 押し下げ判定（タイムラグ付）
-    #(e).preventDefault()
+    (e).preventDefault()
 
