@@ -19,10 +19,23 @@ app.configure(function() {
   app.use(express.methodOverride());
   app.use(app.router);
   return app.use(express["static"](path.join(__dirname, 'public')));
+<<<<<<< HEAD
   /*
     app.set "view options",
       layout: false
   */
+=======
+});
+
+app.configure('development', function() {
+  return app.use(express.errorHandler());
+});
+
+/*
+  app.set "view options",
+    layout: false
+*/
+>>>>>>> bb31433884cd24a0343aac9ba0a0da1aa4156526
 
 });
 

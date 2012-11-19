@@ -25,12 +25,20 @@
     return false;
   });
 */
+<<<<<<< HEAD
 $(function() {  // new socket.io
   //socket.ioのインスタンスもportを指定しちゃだめ。
   var socket = io.connect();
   //サーバーが受け取ったメッセージを返して実行する
   socket.on('message:push', function (data) {
     var date = new Date();
+=======
+  // new socket.io
+  var socket = io.connect();
+  socket.on('message:receive', function (data) {
+    var date;
+    date = new Date();
+>>>>>>> bb31433884cd24a0343aac9ba0a0da1aa4156526
     return $("#list").prepend($("<dt>" + date + "</dt><dd>" + data.message + "</dd>"));
   });
   socket.on('message:updateDB', function(data){
