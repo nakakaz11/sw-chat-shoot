@@ -26,13 +26,19 @@ app.configure(function() {
 
 });
 
+app.configure("development", function() {
+  return app.use(express.errorHandler());
+});
+
 app.get('/', routes.index);
 
 server = http.createServer(app);
 
-io = require("socket.io").listen(server);
-
 server.listen(app.get('port'));
+
+io = require("socket.io").listen(server, {
+  "log level": 1
+});
 
 io.configure('herokuset', function() {
   io.set("transports", ["xhr-polling"]);
