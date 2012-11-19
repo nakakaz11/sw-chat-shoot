@@ -36,11 +36,9 @@ jQuery(function($) {
     var msg;
     msg = $("input#message").val();
     $("input#message").val("");
-    _socket.emit("data-send", msg);
-    return setTimeout(f, 30);
+    return _socket.emit("data-send", msg);
   };
-  setTimeout(f, 30);
   return $("button#btn").click(function() {
-    return f();
+    return setTimeout(f, 30);
   });
 });
