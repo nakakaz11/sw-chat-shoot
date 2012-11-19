@@ -47,7 +47,7 @@ io.sockets.on "connection", (socket) ->   # ユーザが接続して来たら実
     socket.broadcast.json.emit 'data-send', # handshake io
     #sanitized = escapeHTML(msg)
       userId: socket.handshake.userId
-      data: data
+      data: data.message
 
   socket.on "disconnect", ->    # クライアントが切断したら実行される。
     console.log "disconnect"

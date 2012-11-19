@@ -12,10 +12,10 @@ jQuery(function($) {
       user = {
         userId: data.userId
       };
-      return $("#list").prepend($("<dt>" + date + "</dt><dd>" + data + "</dd>").attr("data-user-id", user.userId));
+      return $("#list").prepend($("<dt>" + date + "</dt><dd>" + data.message + "</dd>").attr("data-user-id", user.userId));
     } else {
       user = _userMap[data.userId];
-      return $("#list").prepend($("<dt>" + date + "</dt><dd>" + data + "</dd>").attr("data-user-id", user.userId));
+      return $("#list").prepend($("<dt>" + date + "</dt><dd>" + data.message + "</dd>").attr("data-user-id", user.userId));
     }
   });
   /*  DB仕込むときにはfs使って入れるかな〜
@@ -34,6 +34,8 @@ jQuery(function($) {
     var msg;
     msg = $("input#message").val();
     $("input#message").val("");
-    return _socket.emit("data-send", msg);
+    return _socket.emit("data-send", {
+      message: msg
+    });
   });
 });
