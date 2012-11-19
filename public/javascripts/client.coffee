@@ -7,6 +7,7 @@ jQuery ($) ->
   _socket = io.connect()
   _userMap = {}
   _bulletMap = {}
+# game
   _socket.on "player-update", (data) ->   # userオブジェクト作成/初期化
     if _userMap[data.userId] is `undefined`     # なかったら作る
       console.log "SW-createUser:" + data.userId, data
@@ -19,7 +20,7 @@ jQuery ($) ->
 
       user.element = $("<img src=\"/images/unit.png\" class=\"player\" />")
         .attr("data-user-id", user.userId)
-      $("body").append(user.element)
+      $("#game").append(user.element)
       _userMap[data.userId] = user
       bullet =                            # bullet弾 作成/初期化
         x: -100
@@ -30,7 +31,7 @@ jQuery ($) ->
 
       bullet.element = $("<img src=\"/images/bullet.png\" class=\"bullet\" />")
         .attr("data-user-id", user.userId)
-      $("body").append(bullet.element)
+      $("#game").append(bullet.element)
       _bulletMap[data.userId] = bullet
     else                                        # あったらoverride
       user = _userMap[data.userId]
@@ -111,8 +112,8 @@ jQuery ($) ->
     _player.v *= 0.95
     # ここはMapのループ出現処理？
     updatePosition(_player)
-    w_width = $(window).width()
-    w_height = $(window).height()
+    w_width = $("#game").width()
+    w_height = $("#game").height()
     _player.x = w_width  if _player.x < -50
     _player.y = w_height  if _player.y < -50
     _player.x = -50  if _player.x > w_width
@@ -142,3 +143,42 @@ jQuery ($) ->
   $(window).keyup (e) ->
     _isSpaceKeyUp = true  if e.keyCode is 32
     _keyMap[e.keyCode] = false
+
+# chat
+  #サーバーが受け取ったメッセージを返して実行する
+  _socket.on "data-send", (data) ->
+    date = new Date()
+    if _userMap[data.userId] is `undefined`     # なかったら作る
+      console.log "SW-createUser:" + data.userId, data.message
+      user =    # userのjson make
+        userId: data.userId
+      user.element = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>")
+        .attr("data-user-id", user.userId)
+      $("#list").prepend(user.element)  # リストDOM挿入
+    else                                        # あったらoverride
+      user = _userMap[data.userId]
+      user.element = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>")
+        .attr("data-user-id", user.userId)
+      $("#list").prepend(user.element)  # リストDOM挿入
+
+  ###  DB仕込むときにはfs使って入れるかな〜
+  _socket.on "data updateDB", (data) ->
+    console.log data
+  ###
+  # セッション切断時（今は使わん）
+  _socket.on "disconnected", (data) ->
+    user = _userMap[data.userId]
+    if user isnt `undefined`
+      user.element.remove()
+      #delete _bulletMap[data.userId]
+
+
+  #サーバーにメッセージを引数にイベントを実行する----- clickEvent
+  chat = ->
+    msg = $("input#message").val()
+    $("input#message").val ""
+    #_socket.emit('message:send', { message: msg });
+    _socket.emit "data-send", msg
+  $("button#btn").click ->
+    setTimeout(chat, 30)         # 押し下げ判定（タイムラグ付）
+
