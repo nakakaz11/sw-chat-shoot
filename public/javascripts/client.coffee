@@ -10,10 +10,10 @@ $ -> # new socket.io
       console.log "SW-createUser:" + data.userId, data
       user =    # userのjson make
         userId: data.userId
-      $("#list").prepend $("<dt>" + date + "</dt><dd>" + data + "</dd>")
+      user.element = $("#list").prepend $("<dt>" + date + "</dt><dd>" + data + "</dd>")
     else                                        # あったらoverride
       user = _userMap[data.userId]
-
+      user.element = $("#list").prepend $("<dt>" + date + "</dt><dd>" + data + "</dd>")
 
   ###  DB仕込むときにはfs使って入れるかな〜
   _socket.on "data updateDB", (data) ->

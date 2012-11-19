@@ -1,6 +1,6 @@
 # coffee -wcb *.coffee
 # http://d.hatena.ne.jp/sugyan/20101227/1293455185
-"use strict"
+#"use strict"
 express = require("express")
 routes = require('./routes')
 #user = require('./routes/user')

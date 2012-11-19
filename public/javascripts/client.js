@@ -12,9 +12,10 @@ $(function() {
       user = {
         userId: data.userId
       };
-      return $("#list").prepend($("<dt>" + date + "</dt><dd>" + data + "</dd>"));
+      return user.element = $("#list").prepend($("<dt>" + date + "</dt><dd>" + data + "</dd>"));
     } else {
-      return user = _userMap[data.userId];
+      user = _userMap[data.userId];
+      return user.element = $("#list").prepend($("<dt>" + date + "</dt><dd>" + data + "</dd>"));
     }
   });
   /*  DB仕込むときにはfs使って入れるかな〜
