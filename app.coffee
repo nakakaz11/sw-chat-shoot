@@ -10,7 +10,7 @@ path = require('path')
 app = express()
 
 app.configure ->
-  app.set('port', process.env.PORT || 3000)    #sw add
+  app.set('port', process.env.PORT || 8080)    #sw add
   app.set "view engine", "ejs"
   app.use express.logger 'dev'
   app.use express.bodyParser()

@@ -12,7 +12,7 @@ path = require('path');
 app = express();
 
 app.configure(function() {
-  app.set('port', process.env.PORT || 3000);
+  app.set('port', process.env.PORT || 8080);
   app.set("view engine", "ejs");
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
