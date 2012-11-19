@@ -1,5 +1,6 @@
 # coffee -wcb *.coffee
 # http://d.hatena.ne.jp/sugyan/20101227/1293455185
+#"use strict"
 express = require("express")
 routes = require('./routes')
 #user = require('./routes/user')
@@ -30,15 +31,10 @@ app.get('/', routes.index)
 
 #swadd express3.0
 server = http.createServer(app)
-server.listen app.get('port')
+server.listen app.get('port'), ->
+  console.log "SW-portLog " + app.get("port")
 io = require("socket.io").listen(server ,
   "log level": 1 )
-
-
-# ioはSocket.IOサーバオブジェクトであると仮定
-io.configure 'herokuset', ->
-  io.set("transports", ["xhr-polling"])
-  io.set("polling duration", 10)
 
 #実装部分
 _userId = 0

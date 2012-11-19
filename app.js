@@ -35,15 +35,12 @@ app.get('/', routes.index);
 
 server = http.createServer(app);
 
-server.listen(app.get('port'));
+server.listen(app.get('port'), function() {
+  return console.log("SW-portLog " + app.get("port"));
+});
 
 io = require("socket.io").listen(server, {
   "log level": 1
-});
-
-io.configure('herokuset', function() {
-  io.set("transports", ["xhr-polling"]);
-  return io.set("polling duration", 10);
 });
 
 _userId = 0;
