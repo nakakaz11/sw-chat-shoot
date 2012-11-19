@@ -1,5 +1,5 @@
 # coffee -wcb *.coffee
-$ -> # new socket.io
+jQuery ($) -> # new socket.io
   #socket.ioのインスタンスもportを指定しちゃだめ。
   _socket = io.connect()
   _userMap = {} # userのjson make
@@ -10,10 +10,12 @@ $ -> # new socket.io
       console.log "SW-createUser:" + data.userId, data
       user =    # userのjson make
         userId: data.userId
-      user.element = $("#list").prepend $("<dt>" + date + "</dt><dd>" + data + "</dd>")
+      $("#list").prepend $("<dt>" + date + "</dt><dd>" + data + "</dd>").attr("data-user-id", user.userId)
+      #user.element = $("#list").prepend $("<dt>" + date + "</dt><dd>" + data + "</dd>")
     else                                        # あったらoverride
       user = _userMap[data.userId]
-      user.element = $("#list").prepend $("<dt>" + date + "</dt><dd>" + data + "</dd>")
+      $("#list").prepend $("<dt>" + date + "</dt><dd>" + data + "</dd>").attr("data-user-id", user.userId)
+      #user.element = $("#list").prepend $("<dt>" + date + "</dt><dd>" + data + "</dd>")
 
   ###  DB仕込むときにはfs使って入れるかな〜
   _socket.on "data updateDB", (data) ->
