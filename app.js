@@ -42,9 +42,9 @@ io.configure ->
 
 
 io.sockets.on("connection", function(socket) {
-  socket.on('message:send', function(data) {
-    socket.emit('message:push', data);
-    return socket.broadcast.emit('message:push', data);
+  socket.on('data send', function(data) {
+    socket.emit('data push', data);
+    return socket.broadcast.emit('data push', data);
   });
   return socket.on("disconnect", function() {
     console.log("disconnect");

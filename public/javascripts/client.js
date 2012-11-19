@@ -29,11 +29,11 @@ $(function() {  // new socket.io
   //socket.ioのインスタンスもportを指定しちゃだめ。
   var socket = io.connect();
   //サーバーが受け取ったメッセージを返して実行する
-  socket.on('message:push', function (data) {
+  socket.on('data push', function (data) {
     var date = new Date();
     return $("#list").prepend($("<dt>" + date + "</dt><dd>" + data + "</dd>"));
   });
-  socket.on('message:updateDB', function(data){
+  socket.on('data updateDB', function(data){
  		console.log(data);
  	});
 
@@ -42,6 +42,6 @@ $(function() {  // new socket.io
     var msg = $("input#message").val();
     $("input#message").val("");
     //socket.emit('message:send', { message: msg });
-    socket.emit('message:send', msg );
+    socket.emit('data send', msg );
   });
 });
