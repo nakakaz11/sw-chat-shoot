@@ -194,8 +194,7 @@ jQuery(function($) {
     $("input#message").val("");
     return _socket.emit("data-send", msg);
   };
-  return $("button#btn").click = function(e) {
-    setTimeout(chat, 30);
-    return e.preventDefault();
-  };
+  return $("button#btn").click(function() {
+    return setTimeout(chat, 30);
+  });
 });
