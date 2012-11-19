@@ -2,7 +2,8 @@ body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   overflow:hidden;
-    background-color: #e8d8c3;
+  background-color: #e8dfd8;
+    color: #98918a;
 }
 
 a {
@@ -13,7 +14,7 @@ a {
 }
 #form input#message {
 	border:1px solid #CCCCCC;
-	color:#666666;
+	color: #98918a;
 	font-size:1em;
 	padding:3px 4px;
 	width:50%;
@@ -21,9 +22,8 @@ a {
 #chat{
     padding: 5px;
     width: 100%;
-    background-color: #e9dede;
+    background-color: #f4e8da;
 }
-hr {margin:0; padding:0;}
 
 img.player{
 	width:50px;
