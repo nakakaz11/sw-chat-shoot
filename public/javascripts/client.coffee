@@ -10,12 +10,12 @@ jQuery ($) -> # new socket.io
       console.log "SW-createUser:" + data.userId, data
       user =    # userのjson make
         userId: data.userId
-      user.element = $("<dt>" + date + "</dt><dd>" + data.message.get(0) + "</dd>")
+      user.element = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>")
         .attr("data-user-id", user.userId)
       $("#list").prepend(user.element)  # リストDOM挿入
     else                                        # あったらoverride
       user = _userMap[data.userId]
-      user.element = $("<dt>" + date + "</dt><dd>" + data.message.get(0) + "</dd>")
+      user.element = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>")
         .attr("data-user-id", user.userId)
       $("#list").prepend(user.element)  # リストDOM挿入
 
