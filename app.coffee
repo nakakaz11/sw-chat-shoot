@@ -61,6 +61,8 @@ io.sockets.on "connection", (socket) ->
   _userId++    #複数人のuserIdを管理
   # jsonでやりとりに変更〜1119
   socket.on 'data-send', (data) ->  # クライアント側からのイベントを受取
+    socket.json.emit 'data-send', # handshake io
+      message: data
     socket.broadcast.json.emit 'data-send', # handshake io
       userId: socket.handshake.userId
       message: data
