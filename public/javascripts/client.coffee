@@ -32,11 +32,14 @@ jQuery ($) -> # new socket.io
 
   
   #サーバーにメッセージを引数にイベントを実行する----- clickEvent
-  $("button#btn").click ->
+  f = ->
     msg = $("input#message").val()
     $("input#message").val ""
-    
     #_socket.emit('message:send', { message: msg });
     _socket.emit "data-send", msg
+    return setTimeout(f, 30)
+  setTimeout(f, 30)         # f 押し下げ判定（タイムラグ付）
+  $("button#btn").click ->
+    f()
 
 
