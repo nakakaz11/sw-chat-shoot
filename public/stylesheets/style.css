@@ -2,6 +2,7 @@ body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   overflow:hidden;
+    background-color: #e8d8c3;
 }
 
 a {
@@ -9,9 +10,6 @@ a {
 }
 
 #game{
-    width: 100%;
-    height: 80%;
-    background-color: #e8d8c3;
 }
 #chat{
     width: 100%;
