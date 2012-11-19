@@ -34,12 +34,10 @@ io = require("socket.io").listen(server);
 
 server.listen(app.get('port'));
 
-/*
-io.configure ->
-  io.set("transports", ["xhr-polling"])
-  io.set("polling duration", 10)
-*/
-
+io.configure('herokuset', function() {
+  io.set("transports", ["xhr-polling"]);
+  return io.set("polling duration", 10);
+});
 
 io.sockets.on("connection", function(socket) {
   socket.on('data send', function(data) {
