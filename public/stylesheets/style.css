@@ -11,10 +11,17 @@ a {
 
 #game{
 }
+#form input#message {
+	border:1px solid #CCCCCC;
+	color:#666666;
+	font-size:1em;
+	padding:3px 4px;
+	width:50%;
+}
 #chat{
+    padding: 5px;
     width: 100%;
-    height: 20%;
-    background-color: #aad8d5;
+    background-color: #e9dede;
 }
 hr {margin:0; padding:0;}
 
