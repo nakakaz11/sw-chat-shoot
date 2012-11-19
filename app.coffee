@@ -21,13 +21,18 @@ app.configure ->
   app.set "view options",
     layout: false
   ###
+app.configure "development", ->
+  app.use express.errorHandler()
+
 app.get('/', routes.index)
 #app.get('/users', user.list)
 
 #swadd express3.0
 server = http.createServer(app)
-io = require("socket.io").listen(server)
 server.listen app.get('port')
+io = require("socket.io").listen(server ,
+  "log level": 1 )
+
 
 # ioはSocket.IOサーバオブジェクトであると仮定
 io.configure 'herokuset', ->
