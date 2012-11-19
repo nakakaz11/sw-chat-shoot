@@ -25,18 +25,22 @@
     return false;
   });
 */
-  // new socket.io
-  var socket = new io.connect();
-  socket.on('message:receive', function (data) {
-    var date;
-    date = new Date();
+$(function() {  // new socket.io
+  //socket.ioのインスタンスもportを指定しちゃだめ。
+  var socket = io.connect();
+  //サーバーが受け取ったメッセージを返して実行する
+  socket.on('message:push', function (data) {
+    var date = new Date();
     return $("#list").prepend($("<dt>" + date + "</dt><dd>" + data.message + "</dd>"));
-    //$("div#chat-area").prepend("<div>" + data.message + "</div>");
   });
+  socket.on('message:updateDB', function(data){
+ 		console.log(data);
+ 	});
 
-  function send() {
-    var msg = $("input#message").val();  //$("input#message").val();
+  //サーバーにメッセージを引数にイベントを実行する
+  $('button#btn').click(function() {
+    var msg = $("input#message").val();
     $("input#message").val("");
     socket.emit('message:send', { message: msg });
-  }
-// });
+  });
+});

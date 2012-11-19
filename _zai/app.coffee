@@ -17,10 +17,10 @@ app.configure ->
   app.use express.methodOverride()
   app.use app.router
   app.use(express["static"](path.join(__dirname, 'public'))) # sw add
-  ###
+###
   app.set "view options",
     layout: false
-  ###
+###
 app.get('/', routes.index)
 #app.get('/users', user.list)
 
@@ -28,18 +28,26 @@ app.get('/', routes.index)
 server = http.createServer(app)
 io = require("socket.io").listen(server)
 server.listen app.get('port')
+###
+app.get "/", (req, res) ->
+  res.render "index",
+    title : 'SW (node.js+express+socket.io ChatApp)use ejs+coffee'
+    desc  : 'SW chat App Test'
+    locals:
+        port:port  # portは要検証
+###
 
-#実装部分
 io.sockets.on "connection", (socket) ->   # ユーザが接続して来たら実行される
 # 接続時の初期化処理を書く
-  socket.on 'message:send', (data) ->  # クライアント側からのイベントを受取
-    socket.emit 'message:push', { message: data.message }  # 送って来た本人に送る
-    socket.broadcast.emit 'message:push', { message: data.message } # 送って来た人以外全員に送る
+  socket.on 'message:send', (data) ->  # クライアントがメッセージを送って来たら実行。
+    io.sockets.emit 'message:receive', { message: data.message }
     #sanitized = escapeHTML(msg)
+    #socket.send msg              # 送って来た本人だけに送る。
+    #socket.broadcast msg         # 送って来た人以外全員に送る。
 
-  socket.on "disconnect", ->    # クライアントが切断したら実行される。
-    console.log "disconnect"
-    socket.broadcast socket.sessionId + ' disconnected'
+  #socket.on "disconnect", ->    # クライアントが切断したら実行される。
+    #console.log "disconnect"
+    #socket.broadcast socket.sessionId + ' disconnected'
     # 他全員に切断した人のsessionIdを送る。
 
 # サニタイズ
