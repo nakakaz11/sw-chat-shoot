@@ -12,11 +12,11 @@ jQuery(function($) {
       user = {
         userId: data.userId
       };
-      user.element = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>").attr("data-user-id", user.userId);
+      user.element = $("<dt>" + date + "</dt><dd>" + data.message.innerText + "</dd>").attr("data-user-id", user.userId);
       return $("#list").prepend(user.element);
     } else {
       user = _userMap[data.userId];
-      user.element = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>").attr("data-user-id", user.userId);
+      user.element = $("<dt>" + date + "</dt><dd>" + data.message.innerText + "</dd>").attr("data-user-id", user.userId);
       return $("#list").prepend(user.element);
     }
   });
