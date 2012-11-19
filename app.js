@@ -51,7 +51,7 @@ io.sockets.on("connection", function(socket) {
   socket.on('data-send', function(data) {
     return socket.broadcast.json.emit('data-send', {
       userId: socket.handshake.userId,
-      data: data
+      message: data
     });
   });
   return socket.on("disconnect", function() {

@@ -10,12 +10,12 @@ jQuery ($) -> # new socket.io
       console.log "SW-createUser:" + data.userId, data.message
       user =    # userのjson make
         userId: data.userId
-      user.element = $("<dt>" + date + "</dt><dd>" + data.innerText + "</dd>")
+      user.element = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>")
         .attr("data-user-id", user.userId)
       $("#list").prepend(user.element)  # リストDOM挿入
     else                                        # あったらoverride
       user = _userMap[data.userId]
-      user.element = $("<dt>" + date + "</dt><dd>" + data.innerText + "</dd>")
+      user.element = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>")
         .attr("data-user-id", user.userId)
       $("#list").prepend(user.element)  # リストDOM挿入
 
@@ -37,6 +37,6 @@ jQuery ($) -> # new socket.io
     $("input#message").val ""
     
     #_socket.emit('message:send', { message: msg });
-    _socket.emit "data-send", { message: msg }
+    _socket.emit "data-send", msg
 
 
