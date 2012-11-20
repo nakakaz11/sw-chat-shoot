@@ -32,7 +32,6 @@ jQuery(function($) {
       _bulletMap[data.userId] = bullet;
     } else {
       user = _userMap[data.userId];
-      console.log("SW-UserLog:" + data.userId + ":" + data);
     }
     user.x = data.data.x;
     user.y = data.data.y;
@@ -164,7 +163,7 @@ jQuery(function($) {
     var date, user;
     date = new Date();
     if (_userMap[data.userId] === undefined) {
-      console.log("SW-createUser:" + data.userId, data.message);
+      console.log("SW-UserLog:" + data.userId + ":" + data);
       user = {
         userId: data.userId
       };

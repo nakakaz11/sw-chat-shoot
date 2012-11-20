@@ -32,7 +32,6 @@ jQuery ($) ->
       _bulletMap[data.userId] = bullet
     else                                        # あったらoverride
       user = _userMap[data.userId]
-      console.log("SW-UserLog:"+data.userId+ ":" +data) # log -----------#
 
     user.x = data.data.x
     user.y = data.data.y
@@ -150,7 +149,7 @@ jQuery ($) ->
   _socket.on "data-send", (data) ->
     date = new Date()
     if _userMap[data.userId] is `undefined`     # なかったら作る
-      console.log "SW-createUser:" + data.userId, data.message
+      console.log("SW-UserLog:"+data.userId+ ":" +data) # log -----------#
       user =    # userのjson make
         userId: data.userId
       user.txt = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>")
@@ -184,4 +183,5 @@ jQuery ($) ->
     _socket.emit "data-send", msg
   $("button#btn").click ->
     setTimeout(chat, 30)         # 押し下げ判定（タイムラグ付）
+
 
