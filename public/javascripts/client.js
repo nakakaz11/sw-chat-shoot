@@ -3,7 +3,7 @@
 jQuery(function($) {
   "use strict";
 
-  var chat, f, remEle, updateCss, updatePosition, _bullet, _bulletMap, _isSpaceKeyUp, _keyMap, _player, _socket, _userMap;
+  var chat, f, updateCss, updatePosition, _bullet, _bulletMap, _isSpaceKeyUp, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
@@ -161,9 +161,9 @@ jQuery(function($) {
   });
   _socket.on("data-send", function(data) {
     var date, user;
+    console.log("SW-UserLog:" + data.userId + ":" + data);
     date = new Date();
     if (_userMap[data.userId] === undefined) {
-      console.log("SW-UserLog:" + data.userId + ":" + data);
       user = {
         userId: data.userId
       };
@@ -176,20 +176,17 @@ jQuery(function($) {
     }
   });
   /*  DB仕込むときにはfs使って入れるかな〜
-  _socket.on "data updateDB", (data) ->
+  _socket.on "data-updateDB", (data) ->
     console.log data
   */
 
-  remEle = function(data) {
+  _socket.on("disconnected", function(data) {
     var user;
     user = _userMap[data.userId];
     if (user !== undefined) {
       user.element.remove();
       return delete _bulletMap[data.userId];
     }
-  };
-  _socket.on("disconnected", function(data) {
-    return remEle();
   });
   chat = function() {
     var msg;

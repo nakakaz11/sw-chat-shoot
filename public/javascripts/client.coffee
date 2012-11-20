@@ -143,13 +143,12 @@ jQuery ($) ->
   $(window).keyup (e) ->
     _isSpaceKeyUp = true  if e.keyCode is 32
     _keyMap[e.keyCode] = false
-
   #chat -------------------------#
   #サーバーが受け取ったメッセージを返して実行する
   _socket.on "data-send", (data) ->
+    console.log("SW-UserLog:"+data.userId+ ":" +data) # log -----------#
     date = new Date()
     if _userMap[data.userId] is `undefined`     # なかったら作る
-      console.log("SW-UserLog:"+data.userId+ ":" +data) # log -----------#
       user =    # userのjson make
         userId: data.userId
       user.txt = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>")
@@ -162,18 +161,15 @@ jQuery ($) ->
       $("#list").prepend(user.txt)  # リストDOM挿入
 
   ###  DB仕込むときにはfs使って入れるかな〜
-  _socket.on "data updateDB", (data) ->
+  _socket.on "data-updateDB", (data) ->
     console.log data
   ###
-  # 負けた時と切断時にelementをremove
-  remEle = (data) ->
+  # セッション切断時
+  _socket.on "disconnected", (data) ->
     user = _userMap[data.userId]
     if user isnt `undefined`
       user.element.remove()
       delete _bulletMap[data.userId]
-  # セッション切断時
-  _socket.on "disconnected", (data) ->
-    remEle()
 
   #サーバーにメッセージを引数にイベントを実行する----- clickEvent
   chat = ->
