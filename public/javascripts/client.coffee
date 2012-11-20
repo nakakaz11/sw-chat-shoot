@@ -146,7 +146,7 @@ jQuery ($) ->
   #chat -------------------------#
   #サーバーが受け取ったメッセージを返して実行する
   _socket.on "data-send", (data) ->
-    console.log("SW-UserLog:"+data.userId+ ":" +data) # log -----------#
+    console.log("SW-UserLog:"+data.userId+ ":" +data.message) # log -----------#
     date = new Date()
     if _userMap[data.userId] is `undefined`     # なかったら作る
       user =    # userのjson make

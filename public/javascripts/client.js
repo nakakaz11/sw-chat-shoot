@@ -161,7 +161,7 @@ jQuery(function($) {
   });
   _socket.on("data-send", function(data) {
     var date, user;
-    console.log("SW-UserLog:" + data.userId + ":" + data);
+    console.log("SW-UserLog:" + data.userId + ":" + data.message);
     date = new Date();
     if (_userMap[data.userId] === undefined) {
       user = {
