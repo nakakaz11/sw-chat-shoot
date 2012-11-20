@@ -17,8 +17,7 @@ jQuery ($) ->
         rotate: 0
         userId: data.userId
 
-      user.element = $("<img src=\"/images/unit.png\" class=\"player\" />")
-        .attr("data-user-id", user.userId)
+      user.element = $("<img src=\"/images/unit.png\" class=\"player\" />").attr("data-user-id", user.userId)
       $("body").append(user.element)
       _userMap[data.userId] = user
       bullet =                            # bullet弾 作成/初期化
@@ -28,13 +27,12 @@ jQuery ($) ->
         rotate: 0
         userId: data.userId
 
-      bullet.element = $("<img src=\"/images/bullet.png\" class=\"bullet\" />")
-        .attr("data-user-id", user.userId)
+      bullet.element = $("<img src=\"/images/bullet.png\" class=\"bullet\" />").attr("data-user-id", user.userId)
       $("body").append(bullet.element)
       _bulletMap[data.userId] = bullet
     else                                        # あったらoverride
       user = _userMap[data.userId]
-      console.log("SW-createUser:" + data.userId, data)# log -----------#
+      console.log("SW-UserLog:"+data.userId+ ":" +data) # log -----------#
 
     user.x = data.data.x
     user.y = data.data.y

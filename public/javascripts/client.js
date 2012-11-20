@@ -32,7 +32,7 @@ jQuery(function($) {
       _bulletMap[data.userId] = bullet;
     } else {
       user = _userMap[data.userId];
-      console.log("SW-createUser:" + data.userId, data);
+      console.log("SW-UserLog:" + data.userId + ":" + data);
     }
     user.x = data.data.x;
     user.y = data.data.y;
