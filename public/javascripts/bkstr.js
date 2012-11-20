@@ -3,9 +3,9 @@
 //jQuery(function($) {
 
     var images = [
-        "../images/bks_s01.jpg",
-        "../images/bks_s02.jpg",
-        "../images/bks_s02.jpg"
+        "/images/bks_s01.jpg",
+        "/images/bks_s02.jpg",
+        "/images/bks_s02.jpg"
     ];
 
     $(images).each(function(){
