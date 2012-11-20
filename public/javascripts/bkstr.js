@@ -9,7 +9,7 @@
     ];
 
     $(images).each(function(){
-       $('')[0].src = this;
+       $('<img/>')[0].src = this;
     });
 
     var index = 0;
