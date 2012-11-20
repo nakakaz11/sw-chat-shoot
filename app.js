@@ -72,8 +72,6 @@ io.sockets.on("connection", function(socket) {
       userId: socket.handshake.userId
     });
   });
-  socket.handshake.userId = _userId;
-  _userId++;
   socket.on('data-send', function(data) {
     socket.json.emit('data-send', {
       message: data

@@ -126,6 +126,8 @@ jQuery ($) ->
       updateCss(bullet)
       # 衝突判定
       location.href = "/gameover"  if _player.x < bullet.x and bullet.x < _player.x + 50 and _player.y < bullet.y and bullet.y < _player.y + 50
+      # removeEle(swadd)
+      remEle()
     updateCss(_bullet)
     updateCss(_player)
     _socket.emit "player-update",
@@ -165,13 +167,15 @@ jQuery ($) ->
   _socket.on "data updateDB", (data) ->
     console.log data
   ###
-  # セッション切断時（今は使わん）
-  _socket.on "disconnected", (data) ->
+  # 負けた時と切断時にelementをremove
+  remEle = ->
     user = _userMap[data.userId]
     if user isnt `undefined`
       user.element.remove()
-      #delete _bulletMap[data.userId]
-
+      delete _bulletMap[data.userId]
+  # セッション切断時
+  _socket.on "disconnected", (data) ->
+    remEle()
 
   #サーバーにメッセージを引数にイベントを実行する----- clickEvent
   chat = ->

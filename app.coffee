@@ -57,9 +57,6 @@ io.sockets.on "connection", (socket) ->
       userId: socket.handshake.userId
 
   #chat
-  # 接続時の初期化処理を書く
-  socket.handshake.userId = _userId
-  _userId++    #複数人のuserIdを管理
   # jsonでやりとりに変更〜1119
   socket.on 'data-send', (data) ->  # クライアント側からのイベントを受取
     socket.json.emit 'data-send', # handshake io
