@@ -127,7 +127,7 @@ jQuery ($) ->
       # 衝突判定
       location.href = "/gameover"  if _player.x < bullet.x and bullet.x < _player.x + 50 and _player.y < bullet.y and bullet.y < _player.y + 50
       # removeEle(swadd)
-      remEle()
+
     updateCss(_bullet)
     updateCss(_player)
     _socket.emit "player-update",
@@ -168,7 +168,7 @@ jQuery ($) ->
     console.log data
   ###
   # 負けた時と切断時にelementをremove
-  remEle = ->
+  remEle = (data) ->
     user = _userMap[data.userId]
     if user isnt `undefined`
       user.element.remove()

@@ -139,7 +139,6 @@ jQuery(function($) {
       if (_player.x < bullet.x && bullet.x < _player.x + 50 && _player.y < bullet.y && bullet.y < _player.y + 50) {
         location.href = "/gameover";
       }
-      remEle();
     }
     updateCss(_bullet);
     updateCss(_player);
@@ -182,7 +181,7 @@ jQuery(function($) {
     console.log data
   */
 
-  remEle = function() {
+  remEle = function(data) {
     var user;
     user = _userMap[data.userId];
     if (user !== undefined) {

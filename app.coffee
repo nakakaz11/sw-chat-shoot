@@ -40,8 +40,7 @@ _userId = 0
 io.sockets.on "connection", (socket) ->
   socket.handshake.userId = _userId
   _userId++
-
-  # game
+  # game -------------------------#
   socket.on "player-update", (data) ->
     socket.broadcast.json.emit "player-update",
       userId: socket.handshake.userId
@@ -55,8 +54,7 @@ io.sockets.on "connection", (socket) ->
   socket.on "disconnect", ->
     socket.broadcast.json.emit "disconnect-user",
       userId: socket.handshake.userId
-
-  #chat
+  #chat -------------------------#
   # jsonでやりとりに変更〜1119
   socket.on 'data-send', (data) ->  # クライアント側からのイベントを受取
     socket.json.emit 'data-send', # handshake io
