@@ -7,10 +7,9 @@ jQuery ($) ->
   _socket = io.connect()
   _userMap = {}
   _bulletMap = {}
-# game
+  # game -------------------------#
   _socket.on "player-update", (data) ->   # userオブジェクト作成/初期化
     if _userMap[data.userId] is `undefined`     # なかったら作る
-      console.log "SW-createUser:" + data.userId, data
       user =
         x: 0
         y: 0
@@ -35,6 +34,8 @@ jQuery ($) ->
       _bulletMap[data.userId] = bullet
     else                                        # あったらoverride
       user = _userMap[data.userId]
+      console.log("SW-createUser:" + data.userId, data)# log -----------#
+
     user.x = data.data.x
     user.y = data.data.y
     user.rotate = data.data.rotate
@@ -146,7 +147,7 @@ jQuery ($) ->
     _isSpaceKeyUp = true  if e.keyCode is 32
     _keyMap[e.keyCode] = false
 
-# chat
+  #chat -------------------------#
   #サーバーが受け取ったメッセージを返して実行する
   _socket.on "data-send", (data) ->
     date = new Date()
