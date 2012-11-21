@@ -1,12 +1,11 @@
 # coffee -wcb *.coffee
-# sw-chat-shoot 冗長部分を基底class+extends化 1121
+# sw-chat-shoot
 "use strict"
 express = require("express")
 routes = require("./routes")
 http = require("http")
 path = require("path")
 app = express()
-# settings -------#
 app.configure ->
   app.set('port', process.env.PORT || 3000)
   app.set "views", __dirname + "/views"
@@ -17,55 +16,30 @@ app.configure ->
   app.use express.methodOverride()
   app.use app.router
   app.use(express["static"](path.join(__dirname, 'public')))
+
 app.configure "development", ->
   app.use express.errorHandler()
 
 app.get "/", routes.index
 app.get "/game", routes.game
 app.get "/gameover", routes.gameover
-# createServer -------#
 server = http.createServer(app)
 server.listen app.get("port"), ->
   console.log "listening on port " + app.get("port")
 
-io = require("socket.io").listen(server, "log level": 1)
-io.configure ->  # heroku Only Use Socket.IO server object
+io = require("socket.io").listen(server,
+  "log level": 1
+)
+# assuming io is the Socket.IO server object
+io.configure ->
   io.set("transports", ["xhr-polling"])
   io.set("polling duration", 10)
+
 # http://www.atmarkit.co.jp/ait/articles/1210/10/news115_2.html
 _userId = 0
-# 基底class -------------------------#
-class SwSocket
-  constructor: (socket,keyname) ->
-    socket.on keyname, (data) ->
-      socket.broadcast.json.emit keyname ,
-        userId: socket.handshake.userId
-        data: data
-class SwSockClient # extends SwSocket
-  constructor: (socket,keyname) ->
-    #super(socket,keyname)   # message:dataだから super()しない？
-    socket.on keyname, (data) ->  # クライアント以外にイベント送
-      socket.broadcast.json.emit keyname ,
-        userId: socket.handshake.userId
-        message: data
-    socket.on keyname, (data) ->  # クライアント側にイベント送
-      socket.json.emit keyname,
-        message: data
-# DO it -------#
 io.sockets.on "connection", (socket) ->
   socket.handshake.userId = _userId
   _userId++
-  # override -------#
-  p_u = new SwSocket
-  b_c = new SwSocket
-  d_u = new SwSocket
-  d_s = new SwSockClient
-# connection -------------------------#
-  p_u(socket,'player-update')
-  b_c(socket,'bullet-create')
-  d_u(socket,'disconnect-user')
-  d_s(socket,'player-message')
-  ###
   # game -------------------------#
   socket.on "player-update", (data) ->
     socket.broadcast.json.emit "player-update",
@@ -74,11 +48,10 @@ io.sockets.on "connection", (socket) ->
 
   socket.on "bullet-create", (data) ->
     socket.broadcast.json.emit "bullet-create",
-      # 他全員に切断した人のsessionIdを送る。
       userId: socket.handshake.userId
       data: data
 
-  socket.on "disconnect-user", ->    # クライアントが切断したら実行される
+  socket.on "disconnect", ->
     socket.broadcast.json.emit "disconnect-user",
       userId: socket.handshake.userId
   #chat -------------------------#
@@ -89,7 +62,15 @@ io.sockets.on "connection", (socket) ->
     socket.broadcast.json.emit 'player-message', # handshake io
       userId: socket.handshake.userId
       message: data
+
   ###
+  socket.on "disconnect", ->    # クライアントが切断したら実行される。
+    console.log "disconnect"
+    socket.broadcast.json.emit 'disconnect',
+    # 他全員に切断した人のsessionIdを送る。
+      userId: socket.handshake.userId
+  ###
+
 
 # サニタイズ（いまは使わん）
 #sanitized = escapeHTML(msg)
