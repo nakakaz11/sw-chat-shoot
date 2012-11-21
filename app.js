@@ -56,7 +56,7 @@ _userId = 0;
 
 SwSocket = (function() {
 
-  function SwSocket(keyname) {
+  function SwSocket(socket, keyname) {
     socket.on(keyname, function(data) {
       return socket.broadcast.json.emit(keyname, {
         userId: socket.handshake.userId,
@@ -73,8 +73,8 @@ SwSockClient = (function(_super) {
 
   __extends(SwSockClient, _super);
 
-  function SwSockClient(keyname) {
-    SwSockClient.__super__.constructor.call(this, keyname);
+  function SwSockClient(socket, keyname) {
+    SwSockClient.__super__.constructor.call(this, socket, keyname);
     socket.on(keyname, function(data) {
       return socket.json.emit(keyname, {
         message: data
@@ -94,11 +94,12 @@ io.sockets.on("connection", function(socket) {
   b_c = new SwSocket;
   d_u = new SwSocket;
   d_s = new SwSockClient;
-  p_u('player-update');
-  b_c('bullet-create');
-  d_u('disconnect-user');
-  return d_s('data-send');
+  p_u(socket, 'player-update');
+  b_c(socket, 'bullet-create');
+  d_u(socket, 'disconnect-user');
+  return d_s(socket, 'data-send');
   /*
+    # game -------------------------#
     socket.on "player-update", (data) ->
       socket.broadcast.json.emit "player-update",
         userId: socket.handshake.userId
@@ -113,9 +114,8 @@ io.sockets.on("connection", function(socket) {
     socket.on "disconnect-user", ->    # クライアントが切断したら実行される
       socket.broadcast.json.emit "disconnect-user",
         userId: socket.handshake.userId
-  */
-
-  /*
+    #chat -------------------------#
+    # jsonでやりとりに変更〜1119
     socket.on 'data-send', (data) ->  # クライアント側からのイベントを受取
       socket.json.emit 'data-send', # handshake io
         message: data
