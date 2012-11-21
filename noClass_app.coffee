@@ -51,7 +51,7 @@ io.sockets.on "connection", (socket) ->
       userId: socket.handshake.userId
       data: data
 
-  socket.on "disconnect", ->
+  socket.on "disconnect-user", ->
     socket.broadcast.json.emit "disconnect-user",
       userId: socket.handshake.userId
   #chat -------------------------#

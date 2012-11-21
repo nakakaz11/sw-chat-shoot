@@ -59,12 +59,12 @@ io.sockets.on "connection", (socket) ->
   p_u = new SwSocket
   b_c = new SwSocket
   d_u = new SwSocket
-  d_s = new SwSockClient
+  p_m = new SwSockClient
 # connection -------------------------#
-  p_u(socket,'player-update')
-  b_c(socket,'bullet-create')
+  #p_u(socket,'player-update')
+  #b_c(socket,'bullet-create')
   d_u(socket,'disconnect-user')
-  d_s(socket,'player-message')
+  p_m(socket,'player-message')
   ###
   # game -------------------------#
   socket.on "player-update", (data) ->

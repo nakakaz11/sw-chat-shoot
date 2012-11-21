@@ -67,7 +67,7 @@ io.sockets.on("connection", function(socket) {
       data: data
     });
   });
-  socket.on("disconnect", function() {
+  socket.on("disconnect-user", function() {
     return socket.broadcast.json.emit("disconnect-user", {
       userId: socket.handshake.userId
     });
