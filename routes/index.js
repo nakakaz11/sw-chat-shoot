@@ -1,6 +1,7 @@
 /* GET home page. */
 var title = 'SW ShootingApp+ChatApp(node.js+express+socket.io+ejs+coffee)'
-var desc = 'SW App Test 121119'
+var date = new Date();
+var desc = '>SW App Test:'+ date;
 exports.index = function(req, res){
   res.render('index',{
       title:  title,
