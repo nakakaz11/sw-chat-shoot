@@ -56,7 +56,9 @@ _userId = 0;
 
 SwSocket = (function() {
 
-  function SwSocket() {}
+  function SwSocket(keyname) {
+    this.keyname = keyname;
+  }
 
   SwSocket.prototype.make = function(socket, keyname) {
     return socket.on(keyname, function(data) {

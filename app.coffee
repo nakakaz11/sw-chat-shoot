@@ -32,10 +32,11 @@ io = require("socket.io").listen(server, "log level": 1)
 io.configure ->  # heroku Only Use Socket.IO server object
   io.set("transports", ["xhr-polling"])
   io.set("polling duration", 10)
-# http://www.atmarkit.co.jp/ait/articles/1210/10/news115_2.html
 _userId = 0
 # 基底class -------------------------#
 class SwSocket
+  constructor: (@keyname) ->
+    # @keyname = keynameと等価
   make: (socket,keyname) ->
     socket.on keyname, (data) ->  # クライアント以外にイベント送
       socket.broadcast.json.emit keyname ,
@@ -48,11 +49,13 @@ class SwSockClient extends SwSocket
     socket.on keyname, (data) ->  # クライアント側にイベント送
       socket.json.emit keyname,
         message: data
+
 # override -------#
 p_u = new SwSocket
 b_c = new SwSocket
 d_u = new SwSocket
 p_m = new SwSockClient
+
 # DO it -------#
 io.sockets.on "connection", (socket) ->
   socket.handshake.userId = _userId
@@ -62,6 +65,7 @@ io.sockets.on "connection", (socket) ->
   b_c.make(socket,'bullet-create')
   d_u.make(socket,'disconnect-user')
   p_m.make(socket,'player-message')
+
   ###
   # game -------------------------#
   socket.on "player-update", (data) ->
@@ -88,8 +92,7 @@ io.sockets.on "connection", (socket) ->
       message: data
   ###
 
-# サニタイズ（いまは使わん）
-#sanitized = escapeHTML(msg)
+# サニタイズ（いまは使わん）sanitized = escapeHTML(msg)
 ###
 escapeHTML = (str) ->
   str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;")
