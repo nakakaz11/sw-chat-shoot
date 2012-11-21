@@ -33,6 +33,7 @@ io.configure ->  # heroku Only Use Socket.IO server object
   io.set("transports", ["xhr-polling"])
   io.set("polling duration", 10)
 # http://www.atmarkit.co.jp/ait/articles/1210/10/news115_2.html
+_userId = 0
 # 基底class -------------------------#
 class SwSocket
   make: (socket,keyname) ->
@@ -55,14 +56,13 @@ b_c = new SwSocket
 d_u = new SwSocket
 p_m = new SwSockClient
 # DO it -------#
-_userId = 0
 io.sockets.on "connection", (socket) ->
   socket.handshake.userId = _userId
   _userId++
 # connection -------------------------#
   #p_u.make(socket,'player-update')
   #b_c.make(socket,'bullet-create')
-  #d_u.make(socket,'disconnect-user')
+  d_u.make(socket,'disconnect-user')
   p_m.make(socket,'player-message')
   ###
   # game -------------------------#

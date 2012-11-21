@@ -50,6 +50,8 @@ io.configure(function() {
   return io.set("polling duration", 10);
 });
 
+_userId = 0;
+
 SwSocket = (function() {
 
   function SwSocket() {}
@@ -97,11 +99,10 @@ d_u = new SwSocket;
 
 p_m = new SwSockClient;
 
-_userId = 0;
-
 io.sockets.on("connection", function(socket) {
   socket.handshake.userId = _userId;
   _userId++;
+  d_u.make(socket, 'disconnect-user');
   return p_m.make(socket, 'player-message');
   /*
     # game -------------------------#
