@@ -165,7 +165,7 @@ jQuery ($) ->
     console.log data
   ###
   # セッション切断時
-  _socket.on "disconnected", (data) ->
+  _socket.on "disconnect-user", (data) ->
     user = _userMap[data.userId]
     if user isnt `undefined`
       user.element.remove()

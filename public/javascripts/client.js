@@ -180,7 +180,7 @@ jQuery(function($) {
     console.log data
   */
 
-  _socket.on("disconnected", function(data) {
+  _socket.on("disconnect-user", function(data) {
     var user;
     user = _userMap[data.userId];
     if (user !== undefined) {
