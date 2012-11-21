@@ -44,20 +44,20 @@ class SwSocket
         data: data
 class SwSocket extends SwSockClient
   emitsOn: (keyname) ->
-    super(keyname)
+    super(keyname)                #super() 親関数呼出
   clientOn: (keyname) ->
     socket.on keyname, (data) ->  # クライアント側からのイベントを受取
       socket.json.emit keyname, # handshake io
         message: data
-# override -------#
-p_u = new SwSocket
-b_c = new SwSocket
-d_u = new SwSocket
-d_s = new SwSockClient
 # DO it -------#
 io.sockets.on "connection", (socket) ->
   socket.handshake.userId = _userId
   _userId++
+# override -------#
+  p_u = new SwSocket
+  b_c = new SwSocket
+  d_u = new SwSocket
+  d_s = new SwSockClient
 # connection -------------------------#
   p_u('player-update')
   b_c('bullet-create')
