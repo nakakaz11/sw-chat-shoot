@@ -34,29 +34,20 @@ io.configure ->  # heroku Only Use Socket.IO server object
   io.set("polling duration", 10)
 # http://www.atmarkit.co.jp/ait/articles/1210/10/news115_2.html
 _userId = 0
-# DO it -------#
-io.sockets.on "connection", (socket) ->
-  socket.handshake.userId = _userId
-  _userId++
-  # override -------#
-  p_u = new SwSocket
-  b_c = new SwSocket
-  d_u = new SwSocket
-  p_m = new SwSockClient
-# connection -------------------------#
-  #p_u(socket,'player-update')
-  #b_c(socket,'bullet-create')
-  #d_u(socket,'disconnect-user')
-  p_m.mesOn(socket,'player-message')
-
 # 基底class -------------------------#
+###
 class SwSocket
   constructor: (socket,keyname) ->
     socket.on keyname, (data) ->
       socket.broadcast.json.emit keyname ,
         userId: socket.handshake.userId
         data: data
+###
 class SwSockClient # extends SwSocket
+  # DO it -------#
+  io.sockets.on "connection", (socket) ->
+    socket.handshake.userId = _userId
+    _userId++
   mesOn: (socket,keyname) ->
     #super(socket,keyname)   # message:dataだから super()しない？
     socket.on keyname, (data) ->  # クライアント以外にイベント送
@@ -66,6 +57,17 @@ class SwSockClient # extends SwSocket
     socket.on keyname, (data) ->  # クライアント側にイベント送
       socket.json.emit keyname,
         message: data
+# override -------#
+p_u = new SwSocket
+b_c = new SwSocket
+d_u = new SwSocket
+p_m = new SwSockClient
+# connection -------------------------#
+#p_u(socket,'player-update')
+#b_c(socket,'bullet-create')
+#d_u(socket,'disconnect-user')
+p_m(socket,'player-message')
+
 
 
   ###
