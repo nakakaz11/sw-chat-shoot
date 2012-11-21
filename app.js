@@ -78,9 +78,7 @@ SwSockClient = (function(_super) {
 
   __extends(SwSockClient, _super);
 
-  function SwSockClient() {
-    return SwSockClient.__super__.constructor.apply(this, arguments);
-  }
+  function SwSockClient() {}
 
   SwSockClient.prototype.make = function(socket, keyname) {
     SwSockClient.__super__.make.call(this, socket, keyname);

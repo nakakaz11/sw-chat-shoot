@@ -44,6 +44,8 @@ class SwSocket
         data: data
         message: data
 class SwSockClient extends SwSocket
+  constructor: ->
+    # super(@keyname)と等価
   make: (socket,keyname) ->
     super(socket,keyname)  # 親make()
     socket.on keyname, (data) ->  # クライアント側にイベント送
