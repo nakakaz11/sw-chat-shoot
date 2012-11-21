@@ -63,7 +63,7 @@ io.sockets.on "connection", (socket) ->
 # connection -------------------------#
   #p_u(socket,'player-update')
   #b_c(socket,'bullet-create')
-  d_u(socket,'disconnect-user')
+  #d_u(socket,'disconnect-user')
   p_m(socket,'player-message')
   ###
   # game -------------------------#

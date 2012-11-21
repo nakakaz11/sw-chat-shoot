@@ -95,7 +95,6 @@ io.sockets.on("connection", function(socket) {
   b_c = new SwSocket;
   d_u = new SwSocket;
   p_m = new SwSockClient;
-  d_u(socket, 'disconnect-user');
   return p_m(socket, 'player-message');
   /*
     # game -------------------------#
