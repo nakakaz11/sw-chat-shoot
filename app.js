@@ -103,6 +103,7 @@ io.sockets.on("connection", function(socket) {
   socket.handshake.userId = _userId;
   _userId++;
   p_u.make(socket, 'player-update');
+  b_c.make(socket, 'bullet-create');
   d_u.make(socket, 'disconnect-user');
   return p_m.make(socket, 'player-message');
   /*
