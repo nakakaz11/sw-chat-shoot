@@ -65,7 +65,7 @@ io.sockets.on "connection", (socket) ->
 # connection -------------------------#
   p_u.make(socket,'player-update')
   b_c.make(socket,'bullet-create')
-  d_u.make(socket,'disconnect-user')
+  d_u.make(socket,'disconnect')
   p_m.make(socket,'player-message')
 
   ###
@@ -81,8 +81,8 @@ io.sockets.on "connection", (socket) ->
       userId: socket.handshake.userId
       data: data
 
-  socket.on "disconnect-user", ->    # クライアントが切断したら実行される
-    socket.broadcast.json.emit "disconnect-user",
+  socket.on "disconnect", ->    # クライアントが切断したら実行される
+    socket.broadcast.json.emit "disconnect",
       userId: socket.handshake.userId
   #chat -------------------------#
   # jsonでやりとりに変更〜1119

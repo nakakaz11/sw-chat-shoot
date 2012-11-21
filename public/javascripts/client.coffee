@@ -47,7 +47,7 @@ jQuery ($) ->
       bullet.rotate = data.data.rotate
       bullet.v = data.data.v
 
-  _socket.on "disconnect-user", (data) ->
+  _socket.on "disconnect", (data) ->
     user = _userMap[data.userId]
     if user isnt `undefined`
       user.element.remove()
@@ -165,7 +165,7 @@ jQuery ($) ->
     console.log data
   ###
   # セッション切断時
-  _socket.on "disconnect-user", (data) ->
+  _socket.on "disconnect", (data) ->
     user = _userMap[data.userId]
     if user isnt `undefined`
       user.element.remove()
