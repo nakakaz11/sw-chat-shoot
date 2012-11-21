@@ -67,21 +67,19 @@ SwSocket = (function() {
 
 SwSockClient = (function() {
 
-  function SwSockClient() {}
-
-  SwSockClient.prototype.make = function(socket, keyname) {
+  function SwSockClient(socket, keyname) {
     socket.on(keyname, function(data) {
       return socket.broadcast.json.emit(keyname, {
         userId: socket.handshake.userId,
         message: data
       });
     });
-    return socket.on(keyname, function(data) {
+    socket.on(keyname, function(data) {
       return socket.json.emit(keyname, {
         message: data
       });
     });
-  };
+  }
 
   return SwSockClient;
 
@@ -94,7 +92,7 @@ _userId = 0;
 io.sockets.on("connection", function(socket) {
   socket.handshake.userId = _userId;
   _userId++;
-  return p_m.make(socket, 'player-message');
+  return p_m(socket, 'player-message');
   /*
     # game -------------------------#
     socket.on "player-update", (data) ->
