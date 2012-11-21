@@ -52,6 +52,17 @@ io.configure(function() {
 
 _userId = 0;
 
+io.sockets.on("connection", function(socket) {
+  var b_c, d_u, p_m, p_u;
+  socket.handshake.userId = _userId;
+  _userId++;
+  p_u = new SwSocket;
+  b_c = new SwSocket;
+  d_u = new SwSocket;
+  p_m = new SwSockClient;
+  return p_m.mesOn(socket, 'player-message');
+});
+
 SwSocket = (function() {
 
   function SwSocket(socket, keyname) {
@@ -85,19 +96,6 @@ SwSockClient = (function() {
     });
   };
 
-  return SwSockClient;
-
-})();
-
-io.sockets.on("connection", function(socket) {
-  var b_c, d_u, p_m, p_u;
-  socket.handshake.userId = _userId;
-  _userId++;
-  p_u = new SwSocket;
-  b_c = new SwSocket;
-  d_u = new SwSocket;
-  p_m = new SwSockClient;
-  return p_m.mesOn(socket, 'player-message');
   /*
     # game -------------------------#
     socket.on "player-update", (data) ->
@@ -124,7 +122,10 @@ io.sockets.on("connection", function(socket) {
         message: data
   */
 
-});
+
+  return SwSockClient;
+
+})();
 
 /*
 escapeHTML = (str) ->
