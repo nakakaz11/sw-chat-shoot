@@ -35,14 +35,13 @@ io.configure ->  # heroku Only Use Socket.IO server object
 # http://www.atmarkit.co.jp/ait/articles/1210/10/news115_2.html
 # 基底class -------------------------#
 class SwSocket
-  constructor: (socket,keyname) ->
+  make: (socket,keyname) ->
     socket.on keyname, (data) ->
       socket.broadcast.json.emit keyname ,
         userId: socket.handshake.userId
         data: data
 class SwSockClient # extends SwSocket
-  constructor: (socket,keyname) ->
-    #super(socket,keyname)   # message:dataだから super()しない？
+  make: (socket,keyname) ->
     socket.on keyname, (data) ->  # クライアント以外にイベント送
       socket.broadcast.json.emit keyname ,
         userId: socket.handshake.userId
@@ -50,21 +49,21 @@ class SwSockClient # extends SwSocket
     socket.on keyname, (data) ->  # クライアント側にイベント送
       socket.json.emit keyname,
         message: data
-# DO it -------#
 # override -------#
-#p_u = new SwSocket
-#b_c = new SwSocket
-#d_u = new SwSocket
+p_u = new SwSocket
+b_c = new SwSocket
+d_u = new SwSocket
 p_m = new SwSockClient
+# DO it -------#
 _userId = 0
 io.sockets.on "connection", (socket) ->
   socket.handshake.userId = _userId
   _userId++
 # connection -------------------------#
-  #p_u(socket,'player-update')
-  #b_c(socket,'bullet-create')
-  #d_u(socket,'disconnect-user')
-  p_m(socket,'player-message')
+  p_u.make(socket,'player-update')
+  b_c.make(socket,'bullet-create')
+  d_u.make(socket,'disconnect-user')
+  p_m.make(socket,'player-message')
   ###
   # game -------------------------#
   socket.on "player-update", (data) ->
