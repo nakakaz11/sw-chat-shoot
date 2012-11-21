@@ -42,12 +42,9 @@ class SwSocket
         userId: socket.handshake.userId
         data: data
         message: data
-class SwSockClient # extends SwSocket
+class SwSockClient extends SwSocket
   make: (socket,keyname) ->
-    socket.on keyname, (data) ->  # クライアント以外にイベント送
-      socket.broadcast.json.emit keyname ,
-        userId: socket.handshake.userId
-        message: data
+    super(socket,keyname)  # 親make()
     socket.on keyname, (data) ->  # クライアント側にイベント送
       socket.json.emit keyname,
         message: data
