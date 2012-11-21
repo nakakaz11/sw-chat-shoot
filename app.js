@@ -60,7 +60,8 @@ SwSocket = (function() {
     return socket.on(keyname, function(data) {
       return socket.broadcast.json.emit(keyname, {
         userId: socket.handshake.userId,
-        data: data
+        data: data,
+        message: data
       });
     });
   };

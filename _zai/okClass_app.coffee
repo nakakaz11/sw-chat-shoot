@@ -37,11 +37,10 @@ _userId = 0
 # 基底class -------------------------#
 class SwSocket
   make: (socket,keyname) ->
-    socket.on keyname, (data) ->  # クライアント以外にイベント送
+    socket.on keyname, (data) ->
       socket.broadcast.json.emit keyname ,
         userId: socket.handshake.userId
         data: data
-        message: data
 class SwSockClient # extends SwSocket
   make: (socket,keyname) ->
     socket.on keyname, (data) ->  # クライアント以外にイベント送
