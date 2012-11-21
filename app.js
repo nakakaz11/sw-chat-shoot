@@ -69,19 +69,21 @@ SwSocket = (function() {
 
 SwSockClient = (function() {
 
-  function SwSockClient(socket, keyname) {
+  function SwSockClient() {}
+
+  SwSockClient.prototype.mesOn = function(socket, keyname) {
     socket.on(keyname, function(data) {
       return socket.broadcast.json.emit(keyname, {
         userId: socket.handshake.userId,
         message: data
       });
     });
-    socket.on(keyname, function(data) {
+    return socket.on(keyname, function(data) {
       return socket.json.emit(keyname, {
         message: data
       });
     });
-  }
+  };
 
   return SwSockClient;
 
@@ -95,7 +97,7 @@ io.sockets.on("connection", function(socket) {
   b_c = new SwSocket;
   d_u = new SwSocket;
   p_m = new SwSockClient;
-  return p_m(socket, 'player-message');
+  return p_m.mesOn(socket, 'player-message');
   /*
     # game -------------------------#
     socket.on "player-update", (data) ->

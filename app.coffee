@@ -42,7 +42,7 @@ class SwSocket
         userId: socket.handshake.userId
         data: data
 class SwSockClient # extends SwSocket
-  constructor: (socket,keyname) ->
+  mesOn: (socket,keyname) ->
     #super(socket,keyname)   # message:dataだから super()しない？
     socket.on keyname, (data) ->  # クライアント以外にイベント送
       socket.broadcast.json.emit keyname ,
@@ -64,7 +64,7 @@ io.sockets.on "connection", (socket) ->
   #p_u(socket,'player-update')
   #b_c(socket,'bullet-create')
   #d_u(socket,'disconnect-user')
-  p_m(socket,'player-message')
+  p_m.mesOn(socket,'player-message')
   ###
   # game -------------------------#
   socket.on "player-update", (data) ->
