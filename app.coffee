@@ -41,6 +41,7 @@ class SwSocket
       socket.broadcast.json.emit keyname ,
         userId: socket.handshake.userId
         data: data
+        message: data
 class SwSockClient extends SwSocket
   constructor: (socket,keyname) ->
     super(socket,keyname)                #super() 親関数呼出
