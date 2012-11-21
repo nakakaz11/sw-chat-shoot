@@ -56,13 +56,19 @@ io.sockets.on "connection", (socket) ->
   p_u = new SwSocket
   b_c = new SwSocket
   d_u = new SwSocket
-  d_s = new SwSocket
+  #d_s = new SwSockClient
 # connection -------------------------#
   p_u(socket,'player-update')
   b_c(socket,'bullet-create')
   d_u(socket,'disconnect-user')
-  d_s(socket,'data-send')
-
+  #d_s(socket,'data-send')
+  # jsonでやりとりに変更〜1119
+  socket.on 'data-send', (data) ->  # クライアント側からのイベントを受取
+    socket.json.emit 'data-send', # handshake io
+      message: data
+    socket.broadcast.json.emit 'data-send', # handshake io
+      userId: socket.handshake.userId
+      message: data
   ###
   # game -------------------------#
   socket.on "player-update", (data) ->
@@ -80,13 +86,6 @@ io.sockets.on "connection", (socket) ->
     socket.broadcast.json.emit "disconnect-user",
       userId: socket.handshake.userId
   #chat -------------------------#
-  # jsonでやりとりに変更〜1119
-  socket.on 'data-send', (data) ->  # クライアント側からのイベントを受取
-    socket.json.emit 'data-send', # handshake io
-      message: data
-    socket.broadcast.json.emit 'data-send', # handshake io
-      userId: socket.handshake.userId
-      message: data
   ###
 
 # サニタイズ（いまは使わん）
