@@ -56,19 +56,20 @@ io.sockets.on "connection", (socket) ->
       userId: socket.handshake.userId
   #chat -------------------------#
   # jsonでやりとりに変更〜1119
-  socket.on 'player-update', (data) ->  # クライアント側からのイベントを受取
-    socket.json.emit 'player-update', # handshake io
+  socket.on 'player-message', (data) ->  # クライアント側からのイベントを受取
+    socket.json.emit 'player-message', # handshake io
       message: data
-    socket.broadcast.json.emit 'data-send', # handshake io
+    socket.broadcast.json.emit 'player-message', # handshake io
       userId: socket.handshake.userId
       message: data
 
+  ###
   socket.on "disconnect", ->    # クライアントが切断したら実行される。
     console.log "disconnect"
     socket.broadcast.json.emit 'disconnect',
     # 他全員に切断した人のsessionIdを送る。
       userId: socket.handshake.userId
-
+  ###
 
 
 # サニタイズ（いまは使わん）

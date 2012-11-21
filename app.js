@@ -72,21 +72,23 @@ io.sockets.on("connection", function(socket) {
       userId: socket.handshake.userId
     });
   });
-  socket.on('player-update', function(data) {
-    socket.json.emit('player-update', {
+  return socket.on('player-message', function(data) {
+    socket.json.emit('player-message', {
       message: data
     });
-    return socket.broadcast.json.emit('data-send', {
+    return socket.broadcast.json.emit('player-message', {
       userId: socket.handshake.userId,
       message: data
     });
   });
-  return socket.on("disconnect", function() {
-    console.log("disconnect");
-    return socket.broadcast.json.emit('disconnect', {
-      userId: socket.handshake.userId
-    });
-  });
+  /*
+    socket.on "disconnect", ->    # クライアントが切断したら実行される。
+      console.log "disconnect"
+      socket.broadcast.json.emit 'disconnect',
+      # 他全員に切断した人のsessionIdを送る。
+        userId: socket.handshake.userId
+  */
+
 });
 
 /*

@@ -159,7 +159,7 @@ jQuery(function($) {
     }
     return _keyMap[e.keyCode] = false;
   });
-  _socket.on("player-update", function(data) {
+  _socket.on("player-message", function(data) {
     var date, user;
     console.log("SW-UserLog:" + data.userId + ":" + data.message);
     date = new Date();
@@ -192,7 +192,7 @@ jQuery(function($) {
     var msg;
     msg = $("input#message").val();
     $("input#message").val("");
-    return _socket.emit("player-update", msg);
+    return _socket.emit("player-message", msg);
   };
   return $("button#btn").click(function() {
     return setTimeout(chat, 30);

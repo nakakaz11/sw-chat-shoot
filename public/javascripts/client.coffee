@@ -145,7 +145,7 @@ jQuery ($) ->
     _keyMap[e.keyCode] = false
   #chat -------------------------#
   #サーバーが受け取ったメッセージを返して実行する
-  _socket.on "player-update", (data) ->
+  _socket.on "player-message", (data) ->
     console.log("SW-UserLog:"+data.userId+ ":" +data.message) # log -----------#
     date = new Date()
     if _userMap[data.userId] is `undefined`     # なかったら作る
@@ -176,7 +176,7 @@ jQuery ($) ->
     msg = $("input#message").val()
     $("input#message").val ""
     #_socket.emit('message:send', { message: msg });
-    _socket.emit "player-update", msg
+    _socket.emit "player-message", msg
   $("button#btn").click ->
     setTimeout(chat, 30)         # 押し下げ判定（タイムラグ付）
 
