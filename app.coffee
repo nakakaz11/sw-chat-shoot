@@ -1,5 +1,5 @@
 # coffee -wcb *.coffee
-# sw-chat-shoot 冗長部分をclass化 1121
+# sw-chat-shoot 冗長部分を基底class+extends化 1121
 "use strict"
 express = require("express")
 routes = require("./routes")
@@ -36,24 +36,22 @@ io.configure ->  # heroku Only Use Socket.IO server object
 _userId = 0
 # 基底class -------------------------#
 class SwSocket
-  #constructor: (@keyname) ->
-  emitsOn: (keyname) ->
+  constructor: (keyname) ->
     socket.on keyname, (data) ->
       socket.broadcast.json.emit keyname ,
         userId: socket.handshake.userId
         data: data
-class SwSocket extends SwSockClient
-  emitsOn: (keyname) ->
+class SwSockClient extends SwSocket
+  constructor: (keyname) ->
     super(keyname)                #super() 親関数呼出
-  clientOn: (keyname) ->
     socket.on keyname, (data) ->  # クライアント側からのイベントを受取
-      socket.json.emit keyname, # handshake io
+      socket.json.emit keyname,
         message: data
 # DO it -------#
 io.sockets.on "connection", (socket) ->
   socket.handshake.userId = _userId
   _userId++
-# override -------#
+  # override -------#
   p_u = new SwSocket
   b_c = new SwSocket
   d_u = new SwSocket
