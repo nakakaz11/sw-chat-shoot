@@ -87,17 +87,15 @@ SwSockClient = (function(_super) {
 })(SwSocket);
 
 io.sockets.on("connection", function(socket) {
-  var b_c, d_s, d_u, p_u;
+  var b_c, d_u, p_u;
   socket.handshake.userId = _userId;
   _userId++;
   p_u = new SwSocket;
   b_c = new SwSocket;
   d_u = new SwSocket;
-  d_s = new SwSockClient;
   p_u(socket, 'player-update');
   b_c(socket, 'bullet-create');
-  d_u(socket, 'disconnect-user');
-  return d_s(socket, 'data-send');
+  return d_u(socket, 'disconnect-user');
   /*
     # game -------------------------#
     socket.on "player-update", (data) ->
