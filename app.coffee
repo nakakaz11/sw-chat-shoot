@@ -36,13 +36,13 @@ io.configure ->  # heroku Only Use Socket.IO server object
 _userId = 0
 # 基底class -------------------------#
 class SwSocket
-  constructor: (keyname) ->
+  constructor: (socket,keyname) ->
     socket.on keyname, (data) ->
       socket.broadcast.json.emit keyname ,
         userId: socket.handshake.userId
         data: data
 class SwSockClient extends SwSocket
-  constructor: (keyname) ->
+  constructor: (socket,keyname) ->
     super(keyname)                #super() 親関数呼出
     socket.on keyname, (data) ->  # クライアント側からのイベントを受取
       socket.json.emit keyname,
@@ -57,13 +57,13 @@ io.sockets.on "connection", (socket) ->
   d_u = new SwSocket
   d_s = new SwSockClient
 # connection -------------------------#
-  p_u('player-update')
-  b_c('bullet-create')
-  d_u('disconnect-user')
-  d_s('data-send')
+  p_u(socket,'player-update')
+  b_c(socket,'bullet-create')
+  d_u(socket,'disconnect-user')
+  d_s(socket,'data-send')
 
-  # game -------------------------#
   ###
+  # game -------------------------#
   socket.on "player-update", (data) ->
     socket.broadcast.json.emit "player-update",
       userId: socket.handshake.userId
@@ -78,10 +78,8 @@ io.sockets.on "connection", (socket) ->
   socket.on "disconnect-user", ->    # クライアントが切断したら実行される
     socket.broadcast.json.emit "disconnect-user",
       userId: socket.handshake.userId
-  ###
   #chat -------------------------#
   # jsonでやりとりに変更〜1119
-  ###
   socket.on 'data-send', (data) ->  # クライアント側からのイベントを受取
     socket.json.emit 'data-send', # handshake io
       message: data
