@@ -74,6 +74,7 @@ SwSockClient = (function(_super) {
   __extends(SwSockClient, _super);
 
   function SwSockClient(socket, keyname) {
+    SwSockClient.__super__.constructor.call(this, socket, keyname);
     socket.on(keyname, function(data) {
       return socket.json.emit(keyname, {
         message: data

@@ -43,7 +43,7 @@ class SwSocket
         data: data
 class SwSockClient extends SwSocket
   constructor: (socket,keyname) ->
-    #super(socket,keyname)                #super() 親関数呼出
+    super(socket,keyname)                #super() 親関数呼出
     socket.on keyname, (data) ->  # クライアント側からのイベントを受取
       socket.json.emit keyname,
         message: data
