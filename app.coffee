@@ -47,15 +47,15 @@ class SwSockClient extends SwSocket
     socket.on keyname, (data) ->  # クライアント側からのイベントを受取
       socket.json.emit keyname,
         message: data
-# override -------#
-p_u = new SwSocket
-b_c = new SwSocket
-d_u = new SwSocket
-#d_s = new SwSockClient
 # DO it -------#
 io.sockets.on "connection", (socket) ->
   socket.handshake.userId = _userId
   _userId++
+  # override -------#
+  p_u = new SwSocket
+  b_c = new SwSocket
+  d_u = new SwSocket
+  #d_s = new SwSockClient
 # connection -------------------------#
   p_u(socket,'player-update')
   b_c(socket,'bullet-create')
