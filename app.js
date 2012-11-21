@@ -102,6 +102,7 @@ p_m = new SwSockClient;
 io.sockets.on("connection", function(socket) {
   socket.handshake.userId = _userId;
   _userId++;
+  p_u.make(socket, 'player-update');
   d_u.make(socket, 'disconnect-user');
   return p_m.make(socket, 'player-message');
   /*

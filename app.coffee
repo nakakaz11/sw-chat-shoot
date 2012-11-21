@@ -60,7 +60,7 @@ io.sockets.on "connection", (socket) ->
   socket.handshake.userId = _userId
   _userId++
 # connection -------------------------#
-  #p_u.make(socket,'player-update')
+  p_u.make(socket,'player-update')
   #b_c.make(socket,'bullet-create')
   d_u.make(socket,'disconnect-user')
   p_m.make(socket,'player-message')
