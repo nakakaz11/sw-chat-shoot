@@ -94,11 +94,11 @@ io.sockets.on("connection", function(socket) {
   p_u = new SwSocket;
   b_c = new SwSocket;
   d_u = new SwSocket;
-  return socket.on('data-send', function(data) {
-    socket.json.emit('data-send', {
+  return socket.on('player-update', function(data) {
+    socket.json.emit('player-update', {
       message: data
     });
-    return socket.broadcast.json.emit('data-send', {
+    return socket.broadcast.json.emit('player-update', {
       userId: socket.handshake.userId,
       message: data
     });

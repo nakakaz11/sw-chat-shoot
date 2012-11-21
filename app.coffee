@@ -63,10 +63,10 @@ io.sockets.on "connection", (socket) ->
   #d_u(socket,'disconnect-user')
   #d_s(socket,'data-send')
   # jsonでやりとりに変更〜1119
-  socket.on 'data-send', (data) ->  # クライアント側からのイベントを受取
-    socket.json.emit 'data-send', # handshake io
+  socket.on 'player-update', (data) ->  # クライアント側からのイベントを受取
+    socket.json.emit 'player-update', # handshake io
       message: data
-    socket.broadcast.json.emit 'data-send', # handshake io
+    socket.broadcast.json.emit 'player-update', # handshake io
       userId: socket.handshake.userId
       message: data
   ###
