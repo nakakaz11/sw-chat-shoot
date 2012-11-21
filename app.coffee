@@ -58,9 +58,9 @@ io.sockets.on "connection", (socket) ->
   d_u = new SwSocket
   #d_s = new SwSockClient
 # connection -------------------------#
-  p_u(socket,'player-update')
-  b_c(socket,'bullet-create')
-  d_u(socket,'disconnect-user')
+  #p_u(socket,'player-update')
+  #b_c(socket,'bullet-create')
+  #d_u(socket,'disconnect-user')
   #d_s(socket,'data-send')
   # jsonでやりとりに変更〜1119
   socket.on 'data-send', (data) ->  # クライアント側からのイベントを受取

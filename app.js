@@ -94,9 +94,6 @@ io.sockets.on("connection", function(socket) {
   p_u = new SwSocket;
   b_c = new SwSocket;
   d_u = new SwSocket;
-  p_u(socket, 'player-update');
-  b_c(socket, 'bullet-create');
-  d_u(socket, 'disconnect-user');
   return socket.on('data-send', function(data) {
     socket.json.emit('data-send', {
       message: data
