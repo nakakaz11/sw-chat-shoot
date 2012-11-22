@@ -35,7 +35,7 @@ io.configure ->  # heroku Only Use Socket.IO server object
 _userId = 0
 # 基底class -------------------------#
 class SwSocket
-  constructor: (@keyname) ->
+  #constructor: (@keyname) ->
     # @keyname = keynameと等価
   make: (socket,keyname) ->
     socket.on keyname, (data) ->  # クライアント以外にイベント送
@@ -44,7 +44,7 @@ class SwSocket
         data: data
         message: data
 class SwSockClient extends SwSocket
-  constructor: ->
+  #constructor: ->
     # super(@keyname)と等価
   make: (socket,keyname) ->
     super(socket,keyname)  # 親make()
@@ -67,7 +67,7 @@ io.sockets.on "connection", (socket) ->
   b_c.make(socket,'bullet-create')
   d_u.make(socket,'disconnect')
   p_m.make(socket,'player-message')
-
+  return
   ###
   # game -------------------------#
   socket.on "player-update", (data) ->
