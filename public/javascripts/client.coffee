@@ -19,7 +19,7 @@ jQuery ($) ->
     canvasY -= gCanvasElement.offsetTop
   return { c_x:canvasX, c_y:canvasY }
 
-  canvas = document.getElementById("body")
+  canvas = document.getElementById("canvas")
   coord = document.getElementById("coord")
   ctx = canvas.getContext("2d")  # get 2D context
 
