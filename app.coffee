@@ -43,6 +43,8 @@ class SwSocket
         userId: socket.handshake.userId
         data: data
         message: data
+        c_x: data   # canvs add
+        c_y: data   # canvs add
 class SwSockClient extends SwSocket
   #constructor: ->
     # super(@keyname)と等価
@@ -55,6 +57,7 @@ class SwSockClient extends SwSocket
 # override -------#
 p_u = new SwSocket
 b_c = new SwSocket
+c_c = new SwSocket
 d_u = new SwSocket
 p_m = new SwSockClient
 
@@ -65,6 +68,8 @@ io.sockets.on "connection", (socket) ->
 # connection -------------------------#
   p_u.make(socket,'player-update')
   b_c.make(socket,'bullet-create')
+  # canvs add
+  c_c.make(socket,'canvas-create')
   d_u.make(socket,'disconnect')
   p_m.make(socket,'player-message')
   return

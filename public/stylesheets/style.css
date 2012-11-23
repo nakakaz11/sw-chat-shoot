@@ -48,3 +48,10 @@ img.bullet{
 	top:-100px;
 	left:-100px;
 }
+#canvasBase {
+    width : 300px;
+}
+#canvas {
+    height : 300px;
+    border: 1px solid #f1e2a3;
+}

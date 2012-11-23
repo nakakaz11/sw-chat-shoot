@@ -7,15 +7,6 @@ jQuery ($) ->
   _socket = io.connect()
   _userMap = {}
   _bulletMap = {}
-  _canvasMap = {}
-  # canvs add -------------------------#
-  _canvasHtml = "<div id=\"canvasBase\">
-  <canvas id=\"canvas\"></canvas>
-  <div id=\"coord\"></div></div>"
-  canvas = document.getElementById("canvas")
-  coord = document.getElementById("coord")
-  ctx = canvas.getContext("2d")  # get 2D context
-  # /canvs add -------------------------#
   # game -------------------------#
   _socket.on "player-update", (data) ->   # userオブジェクト作成/初期化
     # game Engine  -------------------------#
@@ -26,6 +17,7 @@ jQuery ($) ->
         v: 0
         rotate: 0
         userId: data.userId
+
       user.element = $("<img src=\"/images/unit.png\" class=\"player\" />").attr("data-user-id", user.userId)
       $("body").append(user.element)
       _userMap[data.userId] = user
@@ -36,28 +28,16 @@ jQuery ($) ->
         rotate: 0
         userId: data.userId
 
-      userCanvas =
-         c_x: 0  # canvs add
-         c_y: 0  # canvs add
-         userId: data.userId
-      userCanvas.canvases =  $(_canvasHtml).attr("data-user-id", user.userId)
-      $("body").append(userCanvas.userCanvas)
-      _canvasMap[data.userId] = userCanvas
-
-
-
       bullet.element = $("<img src=\"/images/bullet.png\" class=\"bullet\" />").attr("data-user-id", user.userId)
       $("body").append(bullet.element)
       _bulletMap[data.userId] = bullet
-    else                                        # あったらoverride更新
+    else                                        # あったらoverride
       user = _userMap[data.userId]
 
     user.x = data.data.x
     user.y = data.data.y
     user.rotate = data.data.rotate
     user.v = data.data.v
-    user.c_x = data.data.c_x  # canvs add
-    user.c_y = data.data.c_y  # canvs add
     updateCss(user)
 
   _socket.on "bullet-create", (data) ->
@@ -94,18 +74,18 @@ jQuery ($) ->
     rotate: 0
     element: $("#my-bullet")
 
-  updatePosition = (unit) -> # user用のTween
+  updatePosition = (unit) ->
     unit.x += unit.v * Math.cos(unit.rotate * Math.PI / 180)
     unit.y += unit.v * Math.sin(unit.rotate * Math.PI / 180)
 
-  updateCss = (unit) ->  # CSSで動的アニメート用にアップデート
+  updateCss = (unit) ->  # CSSで動的アニメート
     unit.element.css
       left: unit.x | 0 + "px"
       top: unit.y | 0 + "px"
       transform: "rotate(" + unit.rotate + "deg)"
 
-  _isSpaceKeyUp = true    # スペースキー用判定
   #メインループ
+  _isSpaceKeyUp = true    # スペースキー用判定
   f = ->                  # key判定
     #left
     _player.rotate -= 3  if _keyMap[37] is true
@@ -145,65 +125,25 @@ jQuery ($) ->
       updateCss(bullet)
       # 衝突判定
       location.href = "/gameover"  if _player.x < bullet.x and bullet.x < _player.x + 50 and _player.y < bullet.y and bullet.y < _player.y + 50
+      # removeEle(swadd)
 
     updateCss(_bullet)
     updateCss(_player)
-
-    # ここでuser Update!
     _socket.emit "player-update",
-      x: _player.x | 0   # ビット演算子 | or
+      x: _player.x | 0
       y: _player.y | 0
       rotate: _player.rotate | 0
       v: _player.v
 
     return setTimeout(f, 30)
 
-  # canvs add -- Like f -------------------#
-  fixPosition = (e, gCanvasElement) ->
-    if e.pageX or e.pageY
-      canvasX = e.pageX
-      canvasY = e.pageY
-    else
-      canvasX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft
-      canvasY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop
-    canvasX -= gCanvasElement.offsetLeft
-    canvasY -= gCanvasElement.offsetTop
-
-    # ここでuser Update!
-    _socket.emit "player-update",
-      c_x:canvasX
-      c_y:canvasY
-  return setTimeout(fixPosition, 50)
-
   setTimeout(f, 30)         # key 押し下げ判定（タイムラグ付）
   $(window).keydown (e) ->
     _keyMap[e.keyCode] = true
+
   $(window).keyup (e) ->
     _isSpaceKeyUp = true  if e.keyCode is 32
     _keyMap[e.keyCode] = false
-
-  # canvs add -------------------------#
-  _socket.on "canvas-create", (data) ->
-    canvasPos = _canvasMap[data.userId]
-    # handle mouse events on canvas
-    mousedown = false
-    ctx.strokeStyle = "#00B7FF"    #Fill Color
-    ctx.lineWidth = 5
-    canvas.onmousedown = (e) ->
-      pos = fixPosition(e, canvasPos)
-      mousedown = true
-      ctx.beginPath()
-      ctx.moveTo pos.c_x, pos.c_y
-      false
-    canvas.onmousemove = (e) ->
-      pos = fixPosition(e, canvasPos)
-      coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")"
-      if mousedown
-        ctx.lineTo pos.c_x, pos.c_y
-        ctx.stroke()
-    canvas.onmouseup = (e) ->
-      mousedown = false
-
   #chat -------------------------#
   #サーバーが受け取ったメッセージを返して実行する
   _socket.on "player-message", (data) ->
