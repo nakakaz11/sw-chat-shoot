@@ -52,6 +52,7 @@ img.bullet{
     /*width : 300px;*/
 }
 #canvas {
-    /*height : 300px;
-    border: 1px solid #f1e2a3;*/
+    height : 100%;
+    width: 100px;
+    border: 1px solid #f1e2a3;
 }
