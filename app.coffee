@@ -69,7 +69,7 @@ io.sockets.on "connection", (socket) ->
   p_u.make(socket,'player-update')
   b_c.make(socket,'bullet-create')
   # canvs add
-  c_c.make(socket,'canvas-create')
+  #c_c.make(socket,'canvas-create')
   d_u.make(socket,'disconnect')
   p_m.make(socket,'player-message')
   return

@@ -7,16 +7,15 @@ jQuery ($) ->
   _socket = io.connect()
   _userMap = {}
   _bulletMap = {}
-  _canvasMap = {}
+#  _canvasMap = {}
   # canvs add -------------------------#
   _canvasHtml = "<div id=\"canvasBase\">
   <canvas id=\"canvas\"></canvas>
   <div id=\"coord\"></div></div>"
-  canvas = document.getElementById("canvas")
+  canvas = document.getElementById("body")
   coord = document.getElementById("coord")
   ctx = canvas.getContext("2d")  # get 2D context
   # /canvs add -------------------------#
-  # game -------------------------#
   _socket.on "player-update", (data) ->   # userオブジェクト作成/初期化
     # game Engine  -------------------------#
     if _userMap[data.userId] is `undefined`     # なかったら作る
@@ -25,6 +24,8 @@ jQuery ($) ->
         y: 0
         v: 0
         rotate: 0
+        c_x: 0  # canvs add
+        c_y: 0  # canvs add
         userId: data.userId
       user.element = $("<img src=\"/images/unit.png\" class=\"player\" />").attr("data-user-id", user.userId)
       $("body").append(user.element)
@@ -35,29 +36,26 @@ jQuery ($) ->
         v: 0
         rotate: 0
         userId: data.userId
-
-      userCanvas =
+      bullet.element = $("<img src=\"/images/bullet.png\" class=\"bullet\" />").attr("data-user-id", user.userId)
+      $("body").append(bullet.element)
+      _bulletMap[data.userId] = bullet
+      # canvs add -------------------------#
+      ###userCanvas =                        # userCanvas 作成/初期化
          c_x: 0  # canvs add
          c_y: 0  # canvs add
          userId: data.userId
       userCanvas.canvases =  $(_canvasHtml).attr("data-user-id", user.userId)
       $("body").append(userCanvas.userCanvas)
-      _canvasMap[data.userId] = userCanvas
-
-
-
-      bullet.element = $("<img src=\"/images/bullet.png\" class=\"bullet\" />").attr("data-user-id", user.userId)
-      $("body").append(bullet.element)
-      _bulletMap[data.userId] = bullet
-    else                                        # あったらoverride更新
+      _canvasMap[data.userId] = userCanvas###
+    else                                   # あったらoverride更新
       user = _userMap[data.userId]
 
     user.x = data.data.x
     user.y = data.data.y
     user.rotate = data.data.rotate
     user.v = data.data.v
-    user.c_x = data.data.c_x  # canvs add
-    user.c_y = data.data.c_y  # canvs add
+    user.c_x = data.data.c_x
+    user.c_y = data.data.c_y
     updateCss(user)
 
   _socket.on "bullet-create", (data) ->
@@ -67,6 +65,15 @@ jQuery ($) ->
       bullet.y = data.data.y
       bullet.rotate = data.data.rotate
       bullet.v = data.data.v
+
+  # canvs add -------------------------#
+  ###
+  _socket.on "canvas-create", (data) ->
+    userCanvas = _canvasMap[data.userId]
+    if userCanvas isnt `undefined`
+      userCanvas.c_x = data.data.c_x
+      userCanvas.c_y = data.data.c_y
+  ###
 
   _socket.on "disconnect", (data) ->
     user = _userMap[data.userId]
@@ -78,6 +85,8 @@ jQuery ($) ->
       bullet.element.remove()
       delete _bulletMap[data.userId]
 
+      # あとでcanvas消去処理
+
   # myの初期値
   _keyMap = []
   _player =
@@ -86,7 +95,6 @@ jQuery ($) ->
     v: 0
     rotate: 0
     element: $("#my-player")
-
   _bullet =
     x: -100
     y: -100
@@ -183,26 +191,26 @@ jQuery ($) ->
     _keyMap[e.keyCode] = false
 
   # canvs add -------------------------#
-  _socket.on "canvas-create", (data) ->
-    canvasPos = _canvasMap[data.userId]
-    # handle mouse events on canvas
+  #_socket.on "canvas-create", (data) ->
+  #  canvasPos = _canvasMap[data.userId]
+  # handle mouse events on canvas
+  mousedown = false
+  ctx.strokeStyle = "#00B7FF"    #Fill Color
+  ctx.lineWidth = 5
+  canvas.onmousedown = (e) ->
+    pos = fixPosition(e, canvas)
+    mousedown = true
+    ctx.beginPath()
+    ctx.moveTo pos.c_x, pos.c_y
+    false
+  canvas.onmousemove = (e) ->
+    pos = fixPosition(e, canvas)
+    coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")"
+    if mousedown
+      ctx.lineTo pos.c_x, pos.c_y
+      ctx.stroke()
+  canvas.onmouseup = (e) ->
     mousedown = false
-    ctx.strokeStyle = "#00B7FF"    #Fill Color
-    ctx.lineWidth = 5
-    canvas.onmousedown = (e) ->
-      pos = fixPosition(e, canvasPos)
-      mousedown = true
-      ctx.beginPath()
-      ctx.moveTo pos.c_x, pos.c_y
-      false
-    canvas.onmousemove = (e) ->
-      pos = fixPosition(e, canvasPos)
-      coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")"
-      if mousedown
-        ctx.lineTo pos.c_x, pos.c_y
-        ctx.stroke()
-    canvas.onmouseup = (e) ->
-      mousedown = false
 
   #chat -------------------------#
   #サーバーが受け取ったメッセージを返して実行する

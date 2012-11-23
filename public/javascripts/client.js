@@ -3,23 +3,24 @@
 jQuery(function($) {
   "use strict";
 
-  var canvas, chat, coord, ctx, f, fixPosition, updateCss, updatePosition, _bullet, _bulletMap, _canvasHtml, _canvasMap, _isSpaceKeyUp, _keyMap, _player, _socket, _userMap;
+  var canvas, chat, coord, ctx, f, fixPosition, mousedown, updateCss, updatePosition, _bullet, _bulletMap, _canvasHtml, _isSpaceKeyUp, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
-  _canvasMap = {};
   _canvasHtml = "<div id=\"canvasBase\">  <canvas id=\"canvas\"></canvas>  <div id=\"coord\"></div></div>";
-  canvas = document.getElementById("canvas");
+  canvas = document.getElementById("body");
   coord = document.getElementById("coord");
   ctx = canvas.getContext("2d");
   _socket.on("player-update", function(data) {
-    var bullet, user, userCanvas;
+    var bullet, user;
     if (_userMap[data.userId] === undefined) {
       user = {
         x: 0,
         y: 0,
         v: 0,
         rotate: 0,
+        c_x: 0,
+        c_y: 0,
         userId: data.userId
       };
       user.element = $("<img src=\"/images/unit.png\" class=\"player\" />").attr("data-user-id", user.userId);
@@ -32,17 +33,18 @@ jQuery(function($) {
         rotate: 0,
         userId: data.userId
       };
-      userCanvas = {
-        c_x: 0,
-        c_y: 0,
-        userId: data.userId
-      };
-      userCanvas.canvases = $(_canvasHtml).attr("data-user-id", user.userId);
-      $("body").append(userCanvas.userCanvas);
-      _canvasMap[data.userId] = userCanvas;
       bullet.element = $("<img src=\"/images/bullet.png\" class=\"bullet\" />").attr("data-user-id", user.userId);
       $("body").append(bullet.element);
       _bulletMap[data.userId] = bullet;
+      /*userCanvas =                        # userCanvas 作成/初期化
+         c_x: 0  # canvs add
+         c_y: 0  # canvs add
+         userId: data.userId
+      userCanvas.canvases =  $(_canvasHtml).attr("data-user-id", user.userId)
+      $("body").append(userCanvas.userCanvas)
+      _canvasMap[data.userId] = userCanvas
+      */
+
     } else {
       user = _userMap[data.userId];
     }
@@ -64,6 +66,14 @@ jQuery(function($) {
       return bullet.v = data.data.v;
     }
   });
+  /*
+    _socket.on "canvas-create", (data) ->
+      userCanvas = _canvasMap[data.userId]
+      if userCanvas isnt `undefined`
+        userCanvas.c_x = data.data.c_x
+        userCanvas.c_y = data.data.c_y
+  */
+
   _socket.on("disconnect", function(data) {
     var bullet, user;
     user = _userMap[data.userId];
@@ -191,33 +201,29 @@ jQuery(function($) {
     }
     return _keyMap[e.keyCode] = false;
   });
-  _socket.on("canvas-create", function(data) {
-    var canvasPos, mousedown;
-    canvasPos = _canvasMap[data.userId];
-    mousedown = false;
-    ctx.strokeStyle = "#00B7FF";
-    ctx.lineWidth = 5;
-    canvas.onmousedown = function(e) {
-      var pos;
-      pos = fixPosition(e, canvasPos);
-      mousedown = true;
-      ctx.beginPath();
-      ctx.moveTo(pos.c_x, pos.c_y);
-      return false;
-    };
-    canvas.onmousemove = function(e) {
-      var pos;
-      pos = fixPosition(e, canvasPos);
-      coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")";
-      if (mousedown) {
-        ctx.lineTo(pos.c_x, pos.c_y);
-        return ctx.stroke();
-      }
-    };
-    return canvas.onmouseup = function(e) {
-      return mousedown = false;
-    };
-  });
+  mousedown = false;
+  ctx.strokeStyle = "#00B7FF";
+  ctx.lineWidth = 5;
+  canvas.onmousedown = function(e) {
+    var pos;
+    pos = fixPosition(e, canvas);
+    mousedown = true;
+    ctx.beginPath();
+    ctx.moveTo(pos.c_x, pos.c_y);
+    return false;
+  };
+  canvas.onmousemove = function(e) {
+    var pos;
+    pos = fixPosition(e, canvas);
+    coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")";
+    if (mousedown) {
+      ctx.lineTo(pos.c_x, pos.c_y);
+      return ctx.stroke();
+    }
+  };
+  canvas.onmouseup = function(e) {
+    return mousedown = false;
+  };
   _socket.on("player-message", function(data) {
     var date, user;
     console.log("SW-UserLog:" + data.userId + ":" + data.message);
