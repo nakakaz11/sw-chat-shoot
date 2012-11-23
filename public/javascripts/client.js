@@ -17,11 +17,11 @@ jQuery(function($) {
       canvasY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
     }
     canvasX -= gCanvasElement.offsetLeft;
-    return canvasY -= gCanvasElement.offsetTop;
-  };
-  return {
-    c_x: canvasX,
-    c_y: canvasY
+    canvasY -= gCanvasElement.offsetTop;
+    return {
+      c_x: canvasX,
+      c_y: canvasY
+    };
   };
   canvas = document.getElementById("canvas");
   coord = document.getElementById("coord");
