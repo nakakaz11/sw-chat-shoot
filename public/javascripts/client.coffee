@@ -7,14 +7,43 @@ jQuery ($) ->
   _socket = io.connect()
   _userMap = {}
   _bulletMap = {}
-#  _canvasMap = {}
-  # canvs add -------------------------#
-  _canvasHtml = "<div id=\"canvasBase\">
-  <canvas id=\"canvas\"></canvas>
-  <div id=\"coord\"></div></div>"
+  # canvs add -- Like f -------------------#
+  fixPosition = (e, gCanvasElement) ->
+    if e.pageX or e.pageY
+      canvasX = e.pageX
+      canvasY = e.pageY
+    else
+      canvasX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft
+      canvasY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop
+    canvasX -= gCanvasElement.offsetLeft
+    canvasY -= gCanvasElement.offsetTop
+  return { c_x:canvasX, c_y:canvasY }
+
   canvas = document.getElementById("body")
   coord = document.getElementById("coord")
   ctx = canvas.getContext("2d")  # get 2D context
+
+  #_socket.on "canvas-create", (data) ->
+  #  canvasPos = _canvasMap[data.userId]
+  # handle mouse events on canvas
+  mousedown = false
+  ctx.strokeStyle = "#00B7FF"    #Fill Color
+  ctx.lineWidth = 5
+  canvas.onmousedown = (e) ->
+    pos = fixPosition(e, canvas)
+    mousedown = true
+    ctx.beginPath()
+    ctx.moveTo pos.c_x, pos.c_y
+    false
+  canvas.onmousemove = (e) ->
+    pos = fixPosition(e, canvas)
+    coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")"
+    if mousedown
+      ctx.lineTo pos.c_x, pos.c_y
+      ctx.stroke()
+  canvas.onmouseup = (e) ->
+    mousedown = false
+
   # /canvs add -------------------------#
   _socket.on "player-update", (data) ->   # userオブジェクト作成/初期化
     # game Engine  -------------------------#
@@ -166,22 +195,6 @@ jQuery ($) ->
 
     return setTimeout(f, 30)
 
-  # canvs add -- Like f -------------------#
-  fixPosition = (e, gCanvasElement) ->
-    if e.pageX or e.pageY
-      canvasX = e.pageX
-      canvasY = e.pageY
-    else
-      canvasX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft
-      canvasY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop
-    canvasX -= gCanvasElement.offsetLeft
-    canvasY -= gCanvasElement.offsetTop
-
-    # ここでuser Update!
-    _socket.emit "player-update",
-      c_x:canvasX
-      c_y:canvasY
-  return setTimeout(fixPosition, 50)
 
   setTimeout(f, 30)         # key 押し下げ判定（タイムラグ付）
   $(window).keydown (e) ->
@@ -190,27 +203,6 @@ jQuery ($) ->
     _isSpaceKeyUp = true  if e.keyCode is 32
     _keyMap[e.keyCode] = false
 
-  # canvs add -------------------------#
-  #_socket.on "canvas-create", (data) ->
-  #  canvasPos = _canvasMap[data.userId]
-  # handle mouse events on canvas
-  mousedown = false
-  ctx.strokeStyle = "#00B7FF"    #Fill Color
-  ctx.lineWidth = 5
-  canvas.onmousedown = (e) ->
-    pos = fixPosition(e, canvas)
-    mousedown = true
-    ctx.beginPath()
-    ctx.moveTo pos.c_x, pos.c_y
-    false
-  canvas.onmousemove = (e) ->
-    pos = fixPosition(e, canvas)
-    coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")"
-    if mousedown
-      ctx.lineTo pos.c_x, pos.c_y
-      ctx.stroke()
-  canvas.onmouseup = (e) ->
-    mousedown = false
 
   #chat -------------------------#
   #サーバーが受け取ったメッセージを返して実行する

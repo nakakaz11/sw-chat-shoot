@@ -3,14 +3,52 @@
 jQuery(function($) {
   "use strict";
 
-  var canvas, chat, coord, ctx, f, fixPosition, mousedown, updateCss, updatePosition, _bullet, _bulletMap, _canvasHtml, _isSpaceKeyUp, _keyMap, _player, _socket, _userMap;
+  var canvas, chat, coord, ctx, f, fixPosition, mousedown, updateCss, updatePosition, _bullet, _bulletMap, _isSpaceKeyUp, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
-  _canvasHtml = "<div id=\"canvasBase\">  <canvas id=\"canvas\"></canvas>  <div id=\"coord\"></div></div>";
+  fixPosition = function(e, gCanvasElement) {
+    var canvasX, canvasY;
+    if (e.pageX || e.pageY) {
+      canvasX = e.pageX;
+      canvasY = e.pageY;
+    } else {
+      canvasX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+      canvasY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+    }
+    canvasX -= gCanvasElement.offsetLeft;
+    return canvasY -= gCanvasElement.offsetTop;
+  };
+  return {
+    c_x: canvasX,
+    c_y: canvasY
+  };
   canvas = document.getElementById("body");
   coord = document.getElementById("coord");
   ctx = canvas.getContext("2d");
+  mousedown = false;
+  ctx.strokeStyle = "#00B7FF";
+  ctx.lineWidth = 5;
+  canvas.onmousedown = function(e) {
+    var pos;
+    pos = fixPosition(e, canvas);
+    mousedown = true;
+    ctx.beginPath();
+    ctx.moveTo(pos.c_x, pos.c_y);
+    return false;
+  };
+  canvas.onmousemove = function(e) {
+    var pos;
+    pos = fixPosition(e, canvas);
+    coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")";
+    if (mousedown) {
+      ctx.lineTo(pos.c_x, pos.c_y);
+      return ctx.stroke();
+    }
+  };
+  canvas.onmouseup = function(e) {
+    return mousedown = false;
+  };
   _socket.on("player-update", function(data) {
     var bullet, user;
     if (_userMap[data.userId] === undefined) {
@@ -174,23 +212,6 @@ jQuery(function($) {
     });
     return setTimeout(f, 30);
   };
-  fixPosition = function(e, gCanvasElement) {
-    var canvasX, canvasY;
-    if (e.pageX || e.pageY) {
-      canvasX = e.pageX;
-      canvasY = e.pageY;
-    } else {
-      canvasX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-      canvasY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-    }
-    canvasX -= gCanvasElement.offsetLeft;
-    canvasY -= gCanvasElement.offsetTop;
-    return _socket.emit("player-update", {
-      c_x: canvasX,
-      c_y: canvasY
-    });
-  };
-  return setTimeout(fixPosition, 50);
   setTimeout(f, 30);
   $(window).keydown(function(e) {
     return _keyMap[e.keyCode] = true;
@@ -201,29 +222,6 @@ jQuery(function($) {
     }
     return _keyMap[e.keyCode] = false;
   });
-  mousedown = false;
-  ctx.strokeStyle = "#00B7FF";
-  ctx.lineWidth = 5;
-  canvas.onmousedown = function(e) {
-    var pos;
-    pos = fixPosition(e, canvas);
-    mousedown = true;
-    ctx.beginPath();
-    ctx.moveTo(pos.c_x, pos.c_y);
-    return false;
-  };
-  canvas.onmousemove = function(e) {
-    var pos;
-    pos = fixPosition(e, canvas);
-    coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")";
-    if (mousedown) {
-      ctx.lineTo(pos.c_x, pos.c_y);
-      return ctx.stroke();
-    }
-  };
-  canvas.onmouseup = function(e) {
-    return mousedown = false;
-  };
   _socket.on("player-message", function(data) {
     var date, user;
     console.log("SW-UserLog:" + data.userId + ":" + data.message);
