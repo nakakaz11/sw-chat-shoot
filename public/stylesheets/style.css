@@ -49,7 +49,7 @@ img.bullet{
 	left:-100px;
 }
 #canvasBase {
-    /*width : 300px;*/
+    width : 100%;
 }
 #canvas {
     height : 250px;
