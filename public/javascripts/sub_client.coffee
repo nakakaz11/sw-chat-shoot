@@ -17,12 +17,15 @@ jQuery ($) ->
   ctx = canvas.getContext("2d")  # get 2D context
   ctx.strokeStyle = "#DE3D9C"    #Fill Color
   ctx.lineWidth = 5
-  # user
-  ctxUid =  document.getElementById("user-canvas")
-  # 複数の時どうすんだ ctxUser =  ctxUid.attr("data-user-id")
-  ctxU = ctxUid.getContext("2d")  # get 2D context
-  ctxU.strokeStyle = "#83B14E"    #Fill Color
-  ctxU.lineWidth = 5
+  _isUserCanvas = false
+  createCtxU = ->
+    if _isUserCanvas
+      ctxUid =  document.getElementById("user-canvas")
+      # 複数の時どうすんだ ctxUser =  ctxUid.attr("data-user-id")
+      ctxU = ctxUid.getContext("2d")  # get 2D context
+      ctxU.strokeStyle = "#83B14E"    #Fill Color
+      ctxU.lineWidth = 5
+    ctxU.stroke()
   ###canvas.onmousedown = (e) ->
     # handle mouse events on canvas
     pos = fixPosCanv(e, canvas)
@@ -72,6 +75,8 @@ jQuery ($) ->
       uCanv.element = $(canvasHtml).attr("data-user-id", user.userId)
       $("#canvasUser").append(uCanv.element)
       _canvasMap[data.userId] = uCanv    # 対戦相手のobj代入
+      _isUserCanvas = true   # flag
+
     else                                   # あったらoverride更新
       user = _userMap[data.userId]
 
@@ -165,8 +170,7 @@ jQuery ($) ->
       if mousedown
         ctx.lineTo pos.c_x, pos.c_y
         ctx.stroke()
-
-        ctxU.stroke()
+    createCtxU()
 
     canvas.onmouseup = (e) ->
       mousedown = false

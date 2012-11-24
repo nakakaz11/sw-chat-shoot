@@ -3,7 +3,7 @@
 jQuery(function($) {
   "use strict";
 
-  var canvas, canvasHtml, chat, coord, ctx, ctxU, ctxUid, f, fixPosCanv, mousedown, updateCss, updatePosition, _bullet, _bulletMap, _canvasMap, _isSpaceKeyUp, _keyMap, _player, _socket, _userMap;
+  var canvas, canvasHtml, chat, coord, createCtxU, ctx, f, fixPosCanv, mousedown, updateCss, updatePosition, _bullet, _bulletMap, _canvasMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
@@ -15,10 +15,17 @@ jQuery(function($) {
   ctx = canvas.getContext("2d");
   ctx.strokeStyle = "#DE3D9C";
   ctx.lineWidth = 5;
-  ctxUid = document.getElementById("user-canvas");
-  ctxU = ctxUid.getContext("2d");
-  ctxU.strokeStyle = "#83B14E";
-  ctxU.lineWidth = 5;
+  _isUserCanvas = false;
+  createCtxU = function() {
+    var ctxU, ctxUid;
+    if (_isUserCanvas) {
+      ctxUid = document.getElementById("user-canvas");
+      ctxU = ctxUid.getContext("2d");
+      ctxU.strokeStyle = "#83B14E";
+      ctxU.lineWidth = 5;
+    }
+    return ctxU.stroke();
+  };
   /*canvas.onmousedown = (e) ->
     # handle mouse events on canvas
     pos = fixPosCanv(e, canvas)
@@ -69,6 +76,7 @@ jQuery(function($) {
       uCanv.element = $(canvasHtml).attr("data-user-id", user.userId);
       $("#canvasUser").append(uCanv.element);
       _canvasMap[data.userId] = uCanv;
+      _isUserCanvas = true;
     } else {
       user = _userMap[data.userId];
     }
@@ -171,10 +179,10 @@ jQuery(function($) {
       coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")";
       if (mousedown) {
         ctx.lineTo(pos.c_x, pos.c_y);
-        ctx.stroke();
-        return ctxU.stroke();
+        return ctx.stroke();
       }
     };
+    createCtxU();
     canvas.onmouseup = function(e) {
       return mousedown = false;
     };
