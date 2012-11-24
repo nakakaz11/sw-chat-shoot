@@ -49,9 +49,12 @@ img.bullet{
 	left:-100px;
 }
 #canvasBase {
-    width : 100%;
+    /*width : 100%;*/
 }
-#canvas {
+#canvasUser {
+    float:right;
+}
+#my-canvas, .user-canvas {
     /*height : 450px;
     width:   450px;
     margin: 3em auto;*/

@@ -3,54 +3,38 @@
 jQuery(function($) {
   "use strict";
 
-  var canvas, chat, coord, ctx, f, fixPosition, mousedown, updateCss, updatePosition, _bullet, _bulletMap, _isSpaceKeyUp, _keyMap, _player, _socket, _userMap;
+  var canvas, canvasHtml, chat, coord, ctx, f, fixPosCanv, mousedown, updateCss, updatePosition, _bullet, _bulletMap, _canvasMap, _isSpaceKeyUp, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
-  fixPosition = function(e, gCanvasElement) {
-    var canvasX, canvasY;
-    if (e.pageX || e.pageY) {
-      canvasX = e.pageX;
-      canvasY = e.pageY;
-    } else {
-      canvasX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-      canvasY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-    }
-    canvasX -= gCanvasElement.offsetLeft;
-    canvasY -= gCanvasElement.offsetTop;
-    return {
-      c_x: canvasX,
-      c_y: canvasY
-    };
-  };
+  _canvasMap = {};
+  canvasHtml = "<div id=\"coord\"></div>                <canvas class=\"user-canvas\" width=\"200\" height=\"200\"</canvas>";
+  mousedown = false;
   canvas = document.getElementById("my-canvas");
   coord = document.getElementById("coord");
   ctx = canvas.getContext("2d");
-  mousedown = false;
   ctx.strokeStyle = "#00B7FF";
   ctx.lineWidth = 5;
-  canvas.onmousedown = function(e) {
-    var pos;
-    pos = fixPosition(e, canvas);
-    mousedown = true;
-    ctx.beginPath();
-    ctx.moveTo(pos.c_x, pos.c_y);
-    return false;
-  };
-  canvas.onmousemove = function(e) {
-    var pos;
-    pos = fixPosition(e, canvas);
-    coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")";
-    if (mousedown) {
-      ctx.lineTo(pos.c_x, pos.c_y);
-      return ctx.stroke();
-    }
-  };
-  canvas.onmouseup = function(e) {
-    return mousedown = false;
-  };
+  /*canvas.onmousedown = (e) ->
+    # handle mouse events on canvas
+    pos = fixPosCanv(e, canvas)
+    mousedown = true
+    ctx.beginPath()
+    ctx.moveTo pos.c_x, pos.c_y
+    false
+  canvas.onmousemove = (e) ->
+    pos = fixPosCanv(e, canvas)
+    coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")"
+    if mousedown
+      ctx.lineTo pos.c_x, pos.c_y
+      ctx.stroke()
+  canvas.onmouseup = (e) ->
+    mousedown = false
+  */
+
   _socket.on("player-update", function(data) {
-    var bullet, user;
+    var bullet, uCanv, user;
+    console.log("SW-UserLog:" + data.userId + ":" + data.c_x + ":" + data.c_y);
     if (_userMap[data.userId] === undefined) {
       user = {
         x: 0,
@@ -74,15 +58,13 @@ jQuery(function($) {
       bullet.element = $("<img src=\"/images/bullet.png\" class=\"bullet\" />").attr("data-user-id", user.userId);
       $("body").append(bullet.element);
       _bulletMap[data.userId] = bullet;
-      /*userCanvas =                        # userCanvas 作成/初期化
-         c_x: 0  # canvs add
-         c_y: 0  # canvs add
-         userId: data.userId
-      userCanvas.canvases =  $(_canvasHtml).attr("data-user-id", user.userId)
-      $("body").append(userCanvas.userCanvas)
-      _canvasMap[data.userId] = userCanvas
-      */
-
+      uCanv = {
+        c_x: 0,
+        c_y: 0,
+        userId: data.userId
+      };
+      uCanv.element = $(canvasHtml).attr("data-user-id", user.userId);
+      _canvasMap[data.userId] = uCanv;
     } else {
       user = _userMap[data.userId];
     }
@@ -104,14 +86,14 @@ jQuery(function($) {
       return bullet.v = data.data.v;
     }
   });
-  /*
-    _socket.on "canvas-create", (data) ->
-      userCanvas = _canvasMap[data.userId]
-      if userCanvas isnt `undefined`
-        userCanvas.c_x = data.data.c_x
-        userCanvas.c_y = data.data.c_y
-  */
-
+  _socket.on("canvas-create", function(data) {
+    var uCanv;
+    uCanv = _canvasMap[data.userId];
+    if (uCanv !== undefined) {
+      uCanv.c_x = data.data.c_x;
+      return uCanv.c_y = data.data.c_y;
+    }
+  });
   _socket.on("disconnect", function(data) {
     var bullet, user;
     user = _userMap[data.userId];
@@ -149,9 +131,45 @@ jQuery(function($) {
       transform: "rotate(" + unit.rotate + "deg)"
     });
   };
+  fixPosCanv = function(e, gCanvasEle) {
+    var canvasX, canvasY;
+    if (e.pageX || e.pageY) {
+      canvasX = e.pageX;
+      canvasY = e.pageY;
+    } else {
+      canvasX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+      canvasY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+    }
+    canvasX -= gCanvasEle.offsetLeft;
+    canvasY -= gCanvasEle.offsetTop;
+    return {
+      c_x: canvasX,
+      c_y: canvasY
+    };
+  };
   _isSpaceKeyUp = true;
   f = function() {
     var bullet, key, w_height, w_width;
+    canvas.onmousedown = function(e) {
+      var pos;
+      pos = fixPosCanv(e, canvas);
+      mousedown = true;
+      ctx.beginPath();
+      ctx.moveTo(pos.c_x, pos.c_y);
+      return false;
+    };
+    canvas.onmousemove = function(e) {
+      var pos;
+      pos = fixPosCanv(e, canvas);
+      coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")";
+      if (mousedown) {
+        ctx.lineTo(pos.c_x, pos.c_y);
+        return ctx.stroke();
+      }
+    };
+    canvas.onmouseup = function(e) {
+      return mousedown = false;
+    };
     if (_keyMap[37] === true) {
       _player.rotate -= 3;
     }
@@ -208,7 +226,9 @@ jQuery(function($) {
       x: _player.x | 0,
       y: _player.y | 0,
       rotate: _player.rotate | 0,
-      v: _player.v
+      v: _player.v,
+      c_x: fixPosCanv.c_x,
+      c_y: fixPosCanv.c_y
     });
     return setTimeout(f, 30);
   };
@@ -247,8 +267,7 @@ jQuery(function($) {
     var user;
     user = _userMap[data.userId];
     if (user !== undefined) {
-      user.element.remove();
-      return delete _bulletMap[data.userId];
+      return user.element.remove();
     }
   });
   chat = function() {

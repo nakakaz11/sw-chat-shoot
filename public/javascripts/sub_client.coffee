@@ -7,45 +7,36 @@ jQuery ($) ->
   _socket = io.connect()
   _userMap = {}
   _bulletMap = {}
-  # canvs add -- Like f -------------------#
-  fixPosition = (e, gCanvasElement) ->
-    if e.pageX or e.pageY
-      canvasX = e.pageX
-      canvasY = e.pageY
-    else
-      canvasX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft
-      canvasY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop
-    canvasX -= gCanvasElement.offsetLeft
-    canvasY -= gCanvasElement.offsetTop
-    return { c_x:canvasX, c_y:canvasY }
-
+  _canvasMap = {}
+  # canvs add -------------------------#
+  canvasHtml = "<div id=\"coord\"></div>
+                <canvas class=\"user-canvas\" width=\"200\" height=\"200\"</canvas>"
+  mousedown = false
   canvas = document.getElementById("my-canvas")
   coord = document.getElementById("coord")
   ctx = canvas.getContext("2d")  # get 2D context
-
-  #_socket.on "canvas-create", (data) ->
-  #  canvasPos = _canvasMap[data.userId]
-  # handle mouse events on canvas
-  mousedown = false
   ctx.strokeStyle = "#00B7FF"    #Fill Color
   ctx.lineWidth = 5
-  canvas.onmousedown = (e) ->
-    pos = fixPosition(e, canvas)
+
+
+  ###canvas.onmousedown = (e) ->
+    # handle mouse events on canvas
+    pos = fixPosCanv(e, canvas)
     mousedown = true
     ctx.beginPath()
     ctx.moveTo pos.c_x, pos.c_y
     false
   canvas.onmousemove = (e) ->
-    pos = fixPosition(e, canvas)
+    pos = fixPosCanv(e, canvas)
     coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")"
     if mousedown
       ctx.lineTo pos.c_x, pos.c_y
       ctx.stroke()
   canvas.onmouseup = (e) ->
-    mousedown = false
-
+    mousedown = false  ###
   # /canvs add -------------------------#
   _socket.on "player-update", (data) ->   # userオブジェクト作成/初期化
+    console.log("SW-UserLog:"+data.userId+":"+data.c_x+":"+data.c_y) # log -----------#
     # game Engine  -------------------------#
     if _userMap[data.userId] is `undefined`     # なかったら作る
       user =
@@ -59,6 +50,7 @@ jQuery ($) ->
       user.element = $("<img src=\"/images/unit.png\" class=\"player\" />").attr("data-user-id", user.userId)
       $("body").append(user.element)
       _userMap[data.userId] = user
+
       bullet =                            # bullet弾 作成/初期化
         x: -100
         y: -100
@@ -68,14 +60,14 @@ jQuery ($) ->
       bullet.element = $("<img src=\"/images/bullet.png\" class=\"bullet\" />").attr("data-user-id", user.userId)
       $("body").append(bullet.element)
       _bulletMap[data.userId] = bullet
-      # canvs add -------------------------#
-      ###userCanvas =                        # userCanvas 作成/初期化
-         c_x: 0  # canvs add
-         c_y: 0  # canvs add
+
+      uCanv =                        # uCanv 作成/初期化
+         c_x: 0
+         c_y: 0
          userId: data.userId
-      userCanvas.canvases =  $(_canvasHtml).attr("data-user-id", user.userId)
-      $("body").append(userCanvas.userCanvas)
-      _canvasMap[data.userId] = userCanvas###
+      uCanv.element = $(canvasHtml).attr("data-user-id", user.userId)
+
+      _canvasMap[data.userId] = uCanv
     else                                   # あったらoverride更新
       user = _userMap[data.userId]
 
@@ -85,6 +77,7 @@ jQuery ($) ->
     user.v = data.data.v
     user.c_x = data.data.c_x
     user.c_y = data.data.c_y
+
     updateCss(user)
 
   _socket.on "bullet-create", (data) ->
@@ -96,13 +89,11 @@ jQuery ($) ->
       bullet.v = data.data.v
 
   # canvs add -------------------------#
-  ###
   _socket.on "canvas-create", (data) ->
-    userCanvas = _canvasMap[data.userId]
-    if userCanvas isnt `undefined`
-      userCanvas.c_x = data.data.c_x
-      userCanvas.c_y = data.data.c_y
-  ###
+    uCanv = _canvasMap[data.userId]
+    if uCanv isnt `undefined`
+      uCanv.c_x = data.data.c_x
+      uCanv.c_y = data.data.c_y
 
   _socket.on "disconnect", (data) ->
     user = _userMap[data.userId]
@@ -140,10 +131,40 @@ jQuery ($) ->
       left: unit.x | 0 + "px"
       top: unit.y | 0 + "px"
       transform: "rotate(" + unit.rotate + "deg)"
+  # canvs add -- mouseEV -------------------#
+  fixPosCanv = (e, gCanvasEle) ->  # canvasのMousePosを取得
+    if e.pageX or e.pageY
+      canvasX = e.pageX
+      canvasY = e.pageY
+    else
+      canvasX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft
+      canvasY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop
+    canvasX -= gCanvasEle.offsetLeft
+    canvasY -= gCanvasEle.offsetTop
+    c_x:canvasX
+    c_y:canvasY   # objに代入
+  # canvs add -- mouseEV -------------------#
 
   _isSpaceKeyUp = true    # スペースキー用判定
   #メインループ
-  f = ->                  # key判定
+  f = ->
+    # handle mouse events on canvas  -------------------------#
+    canvas.onmousedown = (e) ->
+      pos = fixPosCanv(e, canvas)
+      mousedown = true
+      ctx.beginPath()
+      ctx.moveTo pos.c_x, pos.c_y
+      false
+    canvas.onmousemove = (e) ->
+      pos = fixPosCanv(e, canvas)
+      coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")"
+      if mousedown
+        ctx.lineTo pos.c_x, pos.c_y
+        ctx.stroke()
+    canvas.onmouseup = (e) ->
+      mousedown = false
+    # handle mouse events on canvas  -------------------------#
+
     #left
     _player.rotate -= 3  if _keyMap[37] is true
     #up
@@ -186,15 +207,15 @@ jQuery ($) ->
     updateCss(_bullet)
     updateCss(_player)
 
-    # ここでuser Update!
+    # ここでuser Update!  [emit]
     _socket.emit "player-update",
       x: _player.x | 0   # ビット演算子 | or
       y: _player.y | 0
       rotate: _player.rotate | 0
       v: _player.v
-
+      c_x:fixPosCanv.c_x
+      c_y:fixPosCanv.c_y
     return setTimeout(f, 30)
-
 
   setTimeout(f, 30)         # key 押し下げ判定（タイムラグ付）
   $(window).keydown (e) ->
@@ -202,7 +223,6 @@ jQuery ($) ->
   $(window).keyup (e) ->
     _isSpaceKeyUp = true  if e.keyCode is 32
     _keyMap[e.keyCode] = false
-
 
   #chat -------------------------#
   #サーバーが受け取ったメッセージを返して実行する
@@ -230,7 +250,7 @@ jQuery ($) ->
     user = _userMap[data.userId]
     if user isnt `undefined`
       user.element.remove()
-      delete _bulletMap[data.userId]
+      #delete _bulletMap[data.userId]
 
   #サーバーにメッセージを引数にイベントを実行する----- clickEvent
   chat = ->
