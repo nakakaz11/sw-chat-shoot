@@ -10,14 +10,19 @@ jQuery ($) ->
   _canvasMap = {}
   # canvs add -------------------------#
   canvasHtml = "<div id=\"coord\"></div>
-                <canvas class=\"user-canvas\" width=\"200\" height=\"200\"></canvas>"
+                <canvas id=\"user-canvas\" width=\"200\" height=\"200\"></canvas>"
   mousedown = false
   canvas = document.getElementById("my-canvas")
   coord = document.getElementById("coord")
   ctx = canvas.getContext("2d")  # get 2D context
-  ctx.strokeStyle = "#00B7FF"    #Fill Color
+  ctx.strokeStyle = "#DE3D9C"    #Fill Color
   ctx.lineWidth = 5
-
+  # user
+  ctxUid =  document.getElementById("user-canvas")
+  # 複数の時どうすんだ ctxUser =  ctxUid.attr("data-user-id")
+  ctxU = ctxUid.getContext("2d")  # get 2D context
+  ctxU.strokeStyle = "#83B14E"    #Fill Color
+  ctxU.lineWidth = 5
   ###canvas.onmousedown = (e) ->
     # handle mouse events on canvas
     pos = fixPosCanv(e, canvas)
@@ -35,7 +40,7 @@ jQuery ($) ->
     mousedown = false  ###
   # /canvs add -------------------------#
   _socket.on "player-update", (data) ->   # userオブジェクト作成/初期化
-    console.log("SW-UserLog:"+data.userId+":"+data.c_x+":"+data.c_y) # log -----------#
+    #console.log("SW-UserLog:"+data.userId+":"+data.c_x+":"+data.c_y) # log -----------#
     # game Engine  -------------------------#
     if _userMap[data.userId] is `undefined`     # なかったら作る
       user =
@@ -126,13 +131,13 @@ jQuery ($) ->
     unit.y += unit.v * Math.sin(unit.rotate * Math.PI / 180)
 
   updateCss = (unit) ->  # CSSで動的アニメート用にアップデート
-    unit.element.css
+    unit.element.css( #jQ css obj update
       left: unit.x | 0 + "px"
       top: unit.y | 0 + "px"
-      transform: "rotate(" + unit.rotate + "deg)"
+      transform: "rotate(" + unit.rotate + "deg)" )
   # canvs add -- mouseEV -------------------#
   fixPosCanv = (e, gCanvasEle) ->  # canvasのMousePosを取得
-    if e.pageX or e.pageY
+    if e.pageX or e.pageY  # たぶんIE処理だろうな。
       canvasX = e.pageX
       canvasY = e.pageY
     else
@@ -160,6 +165,9 @@ jQuery ($) ->
       if mousedown
         ctx.lineTo pos.c_x, pos.c_y
         ctx.stroke()
+
+        ctxU.stroke()
+
     canvas.onmouseup = (e) ->
       mousedown = false
     # handle mouse events on canvas  -------------------------#

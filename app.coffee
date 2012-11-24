@@ -43,8 +43,8 @@ class SwSocket
         userId: socket.handshake.userId
         data: data
         message: data
-        c_x: data   # canvs add
-        c_y: data   # canvs add
+        #c_x: data   # canvs add
+        #c_y: data   # canvs add
 class SwSockClient extends SwSocket
   #constructor: ->
     # super(@keyname)と等価

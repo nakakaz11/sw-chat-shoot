@@ -3,18 +3,22 @@
 jQuery(function($) {
   "use strict";
 
-  var canvas, canvasHtml, chat, coord, ctx, f, fixPosCanv, mousedown, updateCss, updatePosition, _bullet, _bulletMap, _canvasMap, _isSpaceKeyUp, _keyMap, _player, _socket, _userMap;
+  var canvas, canvasHtml, chat, coord, ctx, ctxU, ctxUid, f, fixPosCanv, mousedown, updateCss, updatePosition, _bullet, _bulletMap, _canvasMap, _isSpaceKeyUp, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
   _canvasMap = {};
-  canvasHtml = "<div id=\"coord\"></div>                <canvas class=\"user-canvas\" width=\"200\" height=\"200\"></canvas>";
+  canvasHtml = "<div id=\"coord\"></div>                <canvas id=\"user-canvas\" width=\"200\" height=\"200\"></canvas>";
   mousedown = false;
   canvas = document.getElementById("my-canvas");
   coord = document.getElementById("coord");
   ctx = canvas.getContext("2d");
-  ctx.strokeStyle = "#00B7FF";
+  ctx.strokeStyle = "#DE3D9C";
   ctx.lineWidth = 5;
+  ctxUid = document.getElementById("user-canvas");
+  ctxU = ctxUid.getContext("2d");
+  ctxU.strokeStyle = "#83B14E";
+  ctxU.lineWidth = 5;
   /*canvas.onmousedown = (e) ->
     # handle mouse events on canvas
     pos = fixPosCanv(e, canvas)
@@ -34,7 +38,6 @@ jQuery(function($) {
 
   _socket.on("player-update", function(data) {
     var bullet, uCanv, user;
-    console.log("SW-UserLog:" + data.userId + ":" + data.c_x + ":" + data.c_y);
     if (_userMap[data.userId] === undefined) {
       user = {
         x: 0,
@@ -168,7 +171,8 @@ jQuery(function($) {
       coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")";
       if (mousedown) {
         ctx.lineTo(pos.c_x, pos.c_y);
-        return ctx.stroke();
+        ctx.stroke();
+        return ctxU.stroke();
       }
     };
     canvas.onmouseup = function(e) {

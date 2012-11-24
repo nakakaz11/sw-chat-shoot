@@ -63,9 +63,7 @@ SwSocket = (function() {
       return socket.broadcast.json.emit(keyname, {
         userId: socket.handshake.userId,
         data: data,
-        message: data,
-        c_x: data,
-        c_y: data
+        message: data
       });
     });
   };
