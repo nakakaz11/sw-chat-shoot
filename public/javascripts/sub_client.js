@@ -8,7 +8,7 @@ jQuery(function($) {
   _userMap = {};
   _bulletMap = {};
   _canvasMap = {};
-  canvasHtml = "<canvas id=\"user-canvas\" width=\"200\" height=\"200\"></canvas>";
+  canvasHtml = "<div id=\"coord\"></div><canvas id=\"user-canvas\" width=\"200\" height=\"200\"></canvas>";
   mousedown = false;
   canvas = document.getElementById("my-canvas");
   coord = document.getElementById("coord");
@@ -54,8 +54,6 @@ jQuery(function($) {
         y: 0,
         v: 0,
         rotate: 0,
-        c_x: 0,
-        c_y: 0,
         userId: data.userId
       };
       user.element = $("<img src=\"/images/unit.png\" class=\"player\" />").attr("data-user-id", user.userId);

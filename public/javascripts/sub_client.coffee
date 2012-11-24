@@ -9,7 +9,7 @@ jQuery ($) ->
   _bulletMap = {}
   _canvasMap = {}
   # canvs add -------------------------#
-  canvasHtml = "<canvas id=\"user-canvas\" width=\"200\" height=\"200\"></canvas>"
+  canvasHtml = "<div id=\"coord\"></div><canvas id=\"user-canvas\" width=\"200\" height=\"200\"></canvas>"
   mousedown = false
   canvas = document.getElementById("my-canvas")
   coord = document.getElementById("coord")
@@ -53,8 +53,8 @@ jQuery ($) ->
         y: 0
         v: 0
         rotate: 0
-        c_x: 0  # canvs add
-        c_y: 0  # canvs add
+        #c_x: 0  # canvs add
+        #c_y: 0  # canvs add
         userId: data.userId
       user.element = $("<img src=\"/images/unit.png\" class=\"player\" />").attr("data-user-id", user.userId)   # 対戦相手のエレメントappend
       $("body").append(user.element)
