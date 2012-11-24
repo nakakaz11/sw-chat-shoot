@@ -181,11 +181,11 @@ jQuery(function($) {
       if (mousedown) {
         ctx.lineTo(pos.c_x, pos.c_y);
         ctx.stroke();
-        if (_isUserCanvas) {
-          createCtxU();
-          ctxU.lineTo(pos.c_x, pos.c_y);
-          return ctxU.stroke();
-        }
+      }
+      if (_isUserCanvas && mousedown) {
+        createCtxU();
+        ctxU.lineTo(pos.c_x, pos.c_y);
+        return ctxU.stroke();
       }
     };
     canvas.onmouseup = function(e) {

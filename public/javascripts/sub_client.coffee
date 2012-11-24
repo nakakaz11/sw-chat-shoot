@@ -17,7 +17,7 @@ jQuery ($) ->
   ctx.strokeStyle = "#DE3D9C"    #Fill Color
   ctx.lineWidth = 5
   _isUserCanvas = false
-  ctxU = {}
+  ctxU = {}  # userCanvas用のオブジェクト
   createCtxU = ->
     if _isUserCanvas is true
       ctxUid =  document.getElementById("user-canvas")
@@ -101,7 +101,7 @@ jQuery ($) ->
 
   # canvs add -------------------------#
   _socket.on "canvas-create", (data) ->
-    uCanv = _canvasMap[data.userId]
+    uCanv = _canvasMap[data.userId]   # いまのところ使っていない
     if uCanv isnt `undefined`
       uCanv.c_x = data.data.c_x
       uCanv.c_y = data.data.c_y
@@ -172,10 +172,10 @@ jQuery ($) ->
       if mousedown
         ctx.lineTo pos.c_x, pos.c_y
         ctx.stroke()
-        if _isUserCanvas
-          createCtxU()
-          ctxU.lineTo pos.c_x, pos.c_y
-          ctxU.stroke()
+      if _isUserCanvas and mousedown
+        createCtxU()
+        ctxU.lineTo pos.c_x, pos.c_y
+        ctxU.stroke()
     canvas.onmouseup = (e) ->
       mousedown = false
     # handle mouse events on canvas  -------------------------#
