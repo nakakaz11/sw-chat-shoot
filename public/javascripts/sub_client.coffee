@@ -25,7 +25,10 @@ jQuery ($) ->
       ctxU = ctxUid.getContext("2d")  # get 2D context
       ctxU.strokeStyle = "#83B14E"    #Fill Color
       ctxU.lineWidth = 5
-    ctxU.stroke()
+      ctxU.stroke()
+      return ctxU
+    else
+      false
   ###canvas.onmousedown = (e) ->
     # handle mouse events on canvas
     pos = fixPosCanv(e, canvas)
@@ -170,7 +173,8 @@ jQuery ($) ->
       if mousedown
         ctx.lineTo pos.c_x, pos.c_y
         ctx.stroke()
-    createCtxU()
+    if _isUserCanvas
+      createCtxU()
 
     canvas.onmouseup = (e) ->
       mousedown = false

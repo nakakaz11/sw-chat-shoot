@@ -23,8 +23,11 @@ jQuery(function($) {
       ctxU = ctxUid.getContext("2d");
       ctxU.strokeStyle = "#83B14E";
       ctxU.lineWidth = 5;
+      ctxU.stroke();
+      return ctxU;
+    } else {
+      return false;
     }
-    return ctxU.stroke();
   };
   /*canvas.onmousedown = (e) ->
     # handle mouse events on canvas
@@ -182,7 +185,9 @@ jQuery(function($) {
         return ctx.stroke();
       }
     };
-    createCtxU();
+    if (_isUserCanvas) {
+      createCtxU();
+    }
     canvas.onmouseup = function(e) {
       return mousedown = false;
     };
