@@ -114,9 +114,11 @@ jQuery ($) ->
       bullet = _bulletMap[data.userId]
       bullet.element.remove()
       delete _bulletMap[data.userId]
+
       uCanv = _canvasMap[data.userId]
       uCanv.element.remove()
       delete _canvasMap[data.userId]
+      _isUserCanvas = false   # flag
 
   # myの初期値
   _keyMap = []
@@ -262,7 +264,7 @@ jQuery ($) ->
   ###
   # セッション切断時
   _socket.on "disconnect", (data) ->
-    user = _userMap[data.userId]
+    #user = _userMap[data.userId]
     #if user isnt `undefined`
       #user.element.remove()  # chatに関してはまだremove処理がない
       #delete _bulletMap[data.userId]

@@ -118,7 +118,8 @@ jQuery(function($) {
       delete _bulletMap[data.userId];
       uCanv = _canvasMap[data.userId];
       uCanv.element.remove();
-      return delete _canvasMap[data.userId];
+      delete _canvasMap[data.userId];
+      return _isUserCanvas = false;
     }
   });
   _keyMap = [];
@@ -284,10 +285,7 @@ jQuery(function($) {
     console.log data
   */
 
-  _socket.on("disconnect", function(data) {
-    var user;
-    return user = _userMap[data.userId];
-  });
+  _socket.on("disconnect", function(data) {});
   chat = function() {
     var msg;
     msg = $("input#message").val();
