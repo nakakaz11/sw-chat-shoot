@@ -66,7 +66,7 @@ jQuery ($) ->
          c_y: 0
          userId: data.userId
       uCanv.element = $(canvasHtml).attr("data-user-id", user.userId)
-
+      $("#canvasUser").append(uCanv.element)
       _canvasMap[data.userId] = uCanv
     else                                   # あったらoverride更新
       user = _userMap[data.userId]

@@ -64,6 +64,7 @@ jQuery(function($) {
         userId: data.userId
       };
       uCanv.element = $(canvasHtml).attr("data-user-id", user.userId);
+      $("#canvasUser").append(uCanv.element);
       _canvasMap[data.userId] = uCanv;
     } else {
       user = _userMap[data.userId];
