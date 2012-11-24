@@ -18,7 +18,6 @@ jQuery ($) ->
   ctx.strokeStyle = "#00B7FF"    #Fill Color
   ctx.lineWidth = 5
 
-
   ###canvas.onmousedown = (e) ->
     # handle mouse events on canvas
     pos = fixPosCanv(e, canvas)
@@ -47,9 +46,9 @@ jQuery ($) ->
         c_x: 0  # canvs add
         c_y: 0  # canvs add
         userId: data.userId
-      user.element = $("<img src=\"/images/unit.png\" class=\"player\" />").attr("data-user-id", user.userId)
+      user.element = $("<img src=\"/images/unit.png\" class=\"player\" />").attr("data-user-id", user.userId)   # 対戦相手のエレメントappend
       $("body").append(user.element)
-      _userMap[data.userId] = user
+      _userMap[data.userId] = user  # 対戦相手のobj代入
 
       bullet =                            # bullet弾 作成/初期化
         x: -100
@@ -59,7 +58,7 @@ jQuery ($) ->
         userId: data.userId
       bullet.element = $("<img src=\"/images/bullet.png\" class=\"bullet\" />").attr("data-user-id", user.userId)
       $("body").append(bullet.element)
-      _bulletMap[data.userId] = bullet
+      _bulletMap[data.userId] = bullet   # 対戦相手のobj代入
 
       uCanv =                        # uCanv 作成/初期化
          c_x: 0
@@ -67,7 +66,7 @@ jQuery ($) ->
          userId: data.userId
       uCanv.element = $(canvasHtml).attr("data-user-id", user.userId)
       $("#canvasUser").append(uCanv.element)
-      _canvasMap[data.userId] = uCanv
+      _canvasMap[data.userId] = uCanv    # 対戦相手のobj代入
     else                                   # あったらoverride更新
       user = _userMap[data.userId]
 
@@ -100,12 +99,12 @@ jQuery ($) ->
     if user isnt `undefined`
       user.element.remove()
       delete _userMap[data.userId]
-
       bullet = _bulletMap[data.userId]
       bullet.element.remove()
       delete _bulletMap[data.userId]
-
-      # あとでcanvas消去処理
+      uCanv = _canvasMap[data.userId]
+      uCanv.element.remove()
+      delete _canvasMap[data.userId]
 
   # myの初期値
   _keyMap = []
@@ -248,8 +247,8 @@ jQuery ($) ->
   # セッション切断時
   _socket.on "disconnect", (data) ->
     user = _userMap[data.userId]
-    if user isnt `undefined`
-      user.element.remove()
+    #if user isnt `undefined`
+      #user.element.remove()  # chatに関してはまだremove処理がない
       #delete _bulletMap[data.userId]
 
   #サーバーにメッセージを引数にイベントを実行する----- clickEvent

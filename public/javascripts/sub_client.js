@@ -96,14 +96,17 @@ jQuery(function($) {
     }
   });
   _socket.on("disconnect", function(data) {
-    var bullet, user;
+    var bullet, uCanv, user;
     user = _userMap[data.userId];
     if (user !== undefined) {
       user.element.remove();
       delete _userMap[data.userId];
       bullet = _bulletMap[data.userId];
       bullet.element.remove();
-      return delete _bulletMap[data.userId];
+      delete _bulletMap[data.userId];
+      uCanv = _canvasMap[data.userId];
+      uCanv.element.remove();
+      return delete _canvasMap[data.userId];
     }
   });
   _keyMap = [];
@@ -266,10 +269,7 @@ jQuery(function($) {
 
   _socket.on("disconnect", function(data) {
     var user;
-    user = _userMap[data.userId];
-    if (user !== undefined) {
-      return user.element.remove();
-    }
+    return user = _userMap[data.userId];
   });
   chat = function() {
     var msg;

@@ -21,6 +21,7 @@ a {
 	width:50%;
 }
 #chat{
+    clear: both;
     padding: 5px;
     width: 100%;
     background-color: #f4e8da;
@@ -55,12 +56,12 @@ img.bullet{
 #canvasUser {
     float:right;
 }
-#my-canvas, {
+#my-canvas {
     /*height : 450px;
     width:   450px;
     margin: 3em auto;*/
-    border: 1px solid #f1e2a3;
+    border: 3px solid #bbe68a;
 }
-.user-canvas{
-    border: 1px solid #de3d9c;
+.user-canvas {
+    border: 3px solid #eb98d9;
 }
