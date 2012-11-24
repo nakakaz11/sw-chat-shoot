@@ -3,12 +3,12 @@
 jQuery(function($) {
   "use strict";
 
-  var canvas, canvasHtml, chat, coord, createCtxU, ctx, f, fixPosCanv, mousedown, updateCss, updatePosition, _bullet, _bulletMap, _canvasMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
+  var canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, f, fixPosCanv, mousedown, updateCss, updatePosition, _bullet, _bulletMap, _canvasMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
   _canvasMap = {};
-  canvasHtml = "<div id=\"coord\"></div>                <canvas id=\"user-canvas\" width=\"200\" height=\"200\"></canvas>";
+  canvasHtml = "<canvas id=\"user-canvas\" width=\"200\" height=\"200\"></canvas>";
   mousedown = false;
   canvas = document.getElementById("my-canvas");
   coord = document.getElementById("coord");
@@ -16,14 +16,14 @@ jQuery(function($) {
   ctx.strokeStyle = "#DE3D9C";
   ctx.lineWidth = 5;
   _isUserCanvas = false;
+  ctxU = {};
   createCtxU = function() {
-    var ctxU, ctxUid;
-    if (_isUserCanvas) {
+    var ctxUid;
+    if (_isUserCanvas === true) {
       ctxUid = document.getElementById("user-canvas");
       ctxU = ctxUid.getContext("2d");
       ctxU.strokeStyle = "#83B14E";
       ctxU.lineWidth = 5;
-      ctxU.stroke();
       return ctxU;
     } else {
       return false;
@@ -182,12 +182,14 @@ jQuery(function($) {
       coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")";
       if (mousedown) {
         ctx.lineTo(pos.c_x, pos.c_y);
-        return ctx.stroke();
+        ctx.stroke();
+        if (_isUserCanvas) {
+          createCtxU();
+          ctxU.lineTo(pos.c_x, pos.c_y);
+          return ctxU.stroke();
+        }
       }
     };
-    if (_isUserCanvas) {
-      createCtxU();
-    }
     canvas.onmouseup = function(e) {
       return mousedown = false;
     };

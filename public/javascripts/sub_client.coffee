@@ -9,8 +9,7 @@ jQuery ($) ->
   _bulletMap = {}
   _canvasMap = {}
   # canvs add -------------------------#
-  canvasHtml = "<div id=\"coord\"></div>
-                <canvas id=\"user-canvas\" width=\"200\" height=\"200\"></canvas>"
+  canvasHtml = "<canvas id=\"user-canvas\" width=\"200\" height=\"200\"></canvas>"
   mousedown = false
   canvas = document.getElementById("my-canvas")
   coord = document.getElementById("coord")
@@ -18,14 +17,14 @@ jQuery ($) ->
   ctx.strokeStyle = "#DE3D9C"    #Fill Color
   ctx.lineWidth = 5
   _isUserCanvas = false
+  ctxU = {}
   createCtxU = ->
-    if _isUserCanvas
+    if _isUserCanvas is true
       ctxUid =  document.getElementById("user-canvas")
       # 複数の時どうすんだ ctxUser =  ctxUid.attr("data-user-id")
       ctxU = ctxUid.getContext("2d")  # get 2D context
       ctxU.strokeStyle = "#83B14E"    #Fill Color
       ctxU.lineWidth = 5
-      ctxU.stroke()
       return ctxU
     else
       false
@@ -173,9 +172,10 @@ jQuery ($) ->
       if mousedown
         ctx.lineTo pos.c_x, pos.c_y
         ctx.stroke()
-    if _isUserCanvas
-      createCtxU()
-
+        if _isUserCanvas
+          createCtxU()
+          ctxU.lineTo pos.c_x, pos.c_y
+          ctxU.stroke()
     canvas.onmouseup = (e) ->
       mousedown = false
     # handle mouse events on canvas  -------------------------#
