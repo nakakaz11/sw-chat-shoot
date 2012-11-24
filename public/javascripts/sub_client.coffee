@@ -10,7 +10,7 @@ jQuery ($) ->
   _canvasMap = {}
   # canvs add -------------------------#
   canvasHtml = "<div id=\"coord\"></div>
-                <canvas class=\"user-canvas\" width=\"200\" height=\"200\"</canvas>"
+                <canvas class=\"user-canvas\" width=\"200\" height=\"200\"></canvas>"
   mousedown = false
   canvas = document.getElementById("my-canvas")
   coord = document.getElementById("coord")
