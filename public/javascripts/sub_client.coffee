@@ -103,7 +103,7 @@ jQuery ($) ->
   # canvs add -------------------------#
   _socket.on "canvas-create", (data) ->
     uCanv = _canvasMap[data.userId]
-    console.info("SW-UserLog:"+data.userId+":"+data.ca_cr.c_x+":"+data.ca_cr.c_y) # log -----------#
+    console.info("SW-UserLog:"+data.userId+":"+data.ca_cr.c_x+":"+data.ca_cr.c_y+":"+ctxUMousedown) # log -----------#
     if uCanv isnt `undefined`
       uCanv.c_x = data.ca_cr.c_x
       uCanv.c_y = data.ca_cr.c_y
