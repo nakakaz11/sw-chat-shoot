@@ -9,7 +9,7 @@ jQuery ($) ->
   _bulletMap = {}
   _canvasMap = {}
   # canvs add -------------------------#
-  canvasHtml = "<div id=\"coord\">UserCanvas</div><canvas id=\"user-canvas\" width=\"200\" height=\"200\"></canvas>"
+  canvasHtml = "<div id=\"user-coord\">UserCanvas</div><canvas id=\"user-canvas\" width=\"200\" height=\"200\"></canvas>"
   mousedown = false
   canvas = document.getElementById("my-canvas")
   coord = document.getElementById("coord")
@@ -77,7 +77,7 @@ jQuery ($) ->
       uCanv.element = $(canvasHtml).attr("data-user-id", user.userId)
       $("#canvasUser").append(uCanv.element)
       _canvasMap[data.userId] = uCanv    # 対戦相手のobj代入
-      _isUserCanvas = true   # flag
+      return _isUserCanvas = true   # flag
 
     else                                   # あったらoverride更新
       user = _userMap[data.userId]
@@ -118,7 +118,7 @@ jQuery ($) ->
       uCanv = _canvasMap[data.userId]
       uCanv.element.remove()
       delete _canvasMap[data.userId]
-      _isUserCanvas = false   # flag
+      return _isUserCanvas = false   # flag
 
   # myの初期値
   _keyMap = []
@@ -167,6 +167,8 @@ jQuery ($) ->
       mousedown = true
       ctx.beginPath()
       ctx.moveTo pos.c_x, pos.c_y
+
+      ctxU.moveTo pos.c_x, pos.c_y
       false
     canvas.onmousemove = (e) ->
       pos = fixPosCanv(e, canvas)
@@ -174,10 +176,11 @@ jQuery ($) ->
       if mousedown
         ctx.lineTo pos.c_x, pos.c_y
         ctx.stroke()
-      if _isUserCanvas and mousedown
-        createCtxU()
-        ctxU.lineTo pos.c_x, pos.c_y
-        ctxU.stroke()
+        if _isUserCanvas
+          _socket.emit "canvas-create", ->
+            createCtxU()
+            ctxU.lineTo pos.c_x, pos.c_y
+            ctxU.stroke()
     canvas.onmouseup = (e) ->
       mousedown = false
     # handle mouse events on canvas  -------------------------#

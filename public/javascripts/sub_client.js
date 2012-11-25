@@ -8,7 +8,7 @@ jQuery(function($) {
   _userMap = {};
   _bulletMap = {};
   _canvasMap = {};
-  canvasHtml = "<div id=\"coord\">UserCanvas</div><canvas id=\"user-canvas\" width=\"200\" height=\"200\"></canvas>";
+  canvasHtml = "<div id=\"user-coord\">UserCanvas</div><canvas id=\"user-canvas\" width=\"200\" height=\"200\"></canvas>";
   mousedown = false;
   canvas = document.getElementById("my-canvas");
   coord = document.getElementById("coord");
@@ -77,7 +77,7 @@ jQuery(function($) {
       uCanv.element = $(canvasHtml).attr("data-user-id", user.userId);
       $("#canvasUser").append(uCanv.element);
       _canvasMap[data.userId] = uCanv;
-      _isUserCanvas = true;
+      return _isUserCanvas = true;
     } else {
       user = _userMap[data.userId];
     }
@@ -173,6 +173,7 @@ jQuery(function($) {
       mousedown = true;
       ctx.beginPath();
       ctx.moveTo(pos.c_x, pos.c_y);
+      ctxU.moveTo(pos.c_x, pos.c_y);
       return false;
     };
     canvas.onmousemove = function(e) {
@@ -182,11 +183,13 @@ jQuery(function($) {
       if (mousedown) {
         ctx.lineTo(pos.c_x, pos.c_y);
         ctx.stroke();
-      }
-      if (_isUserCanvas && mousedown) {
-        createCtxU();
-        ctxU.lineTo(pos.c_x, pos.c_y);
-        return ctxU.stroke();
+        if (_isUserCanvas) {
+          return _socket.emit("canvas-create", function() {
+            createCtxU();
+            ctxU.lineTo(pos.c_x, pos.c_y);
+            return ctxU.stroke();
+          });
+        }
       }
     };
     canvas.onmouseup = function(e) {
