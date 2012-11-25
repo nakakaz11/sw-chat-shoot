@@ -9,7 +9,7 @@ jQuery ($) ->
   _bulletMap = {}
   _canvasMap = {}
   # canvs add -------------------------#
-  canvasHtml = (uid) -> "<div id=\"user-coord\">UserCanvas (ID) #{ uid }</div><canvas id=\"user-canvas\" width=\"200\" height=\"200\"></canvas>"
+  canvasHtml = (uid) -> "<div id='user-coord#{uid}'>UserCanvas (ID) #{ uid }</div><canvas id='user-canvas#{uid}' width=\"200\" height=\"200\"></canvas>"
   mousedown = false
   #ctxUMousedown = null
   canvas = document.getElementById("my-canvas")
