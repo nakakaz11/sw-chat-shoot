@@ -30,13 +30,13 @@ jQuery ($) ->
       false
   ###canvas.onmousedown = (e) ->
     # handle mouse events on canvas
-    pos = fixPosCanv(e, canvas)
+    pos = updatePosCanv(e, canvas)
     mousedown = true
     ctx.beginPath()
     ctx.moveTo pos.c_x, pos.c_y
     false
   canvas.onmousemove = (e) ->
-    pos = fixPosCanv(e, canvas)
+    pos = updatePosCanv(e, canvas)
     coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")"
     if mousedown
       ctx.lineTo pos.c_x, pos.c_y
@@ -89,7 +89,7 @@ jQuery ($) ->
     user.c_x = data.data.c_x
     user.c_y = data.data.c_y
 
-    updateCss(user)
+    updateCss(user)  # 相手のplayer
 
   _socket.on "bullet-create", (data) ->
     bullet = _bulletMap[data.userId]
@@ -101,10 +101,16 @@ jQuery ($) ->
 
   # canvs add -------------------------#
   _socket.on "canvas-create", (data) ->
-    uCanv = _canvasMap[data.userId]   # いまのところ使っていない
+    uCanv = _canvasMap[data.userId]
     if uCanv isnt `undefined`
       uCanv.c_x = data.data.c_x
       uCanv.c_y = data.data.c_y
+      if _isUserCanvas
+          createCtxU()
+          ctx.beginPath()
+          ctxU.moveTo uCanv.c_x, uCanv.c_y
+          ctxU.lineTo uCanv.c_x, uCanv.c_y
+          ctxU.stroke()
 
   _socket.on "disconnect", (data) ->
     user = _userMap[data.userId]
@@ -122,30 +128,30 @@ jQuery ($) ->
 
   # myの初期値
   _keyMap = []
-  _player =
+  _player =  # 自分のplayer
     x: Math.random() * 1000 | 0
     y: Math.random() * 500 | 0
     v: 0
     rotate: 0
     element: $("#my-player")
-  _bullet =
+  _bullet =  # 自分のbullet
     x: -100
     y: -100
     v: 0
     rotate: 0
     element: $("#my-bullet")
 
-  updatePosition = (unit) -> # user用のTween
+  updatePosition = (unit) -> # user用のTween  Class
     unit.x += unit.v * Math.cos(unit.rotate * Math.PI / 180)
     unit.y += unit.v * Math.sin(unit.rotate * Math.PI / 180)
 
-  updateCss = (unit) ->  # CSSで動的アニメート用にアップデート
+  updateCss = (unit) ->  # CSSで動的アニメート用にアップデート Class
     unit.element.css( #jQ css obj update
       left: unit.x | 0 + "px"
       top: unit.y | 0 + "px"
       transform: "rotate(" + unit.rotate + "deg)" )
   # canvs add -- mouseEV -------------------#
-  fixPosCanv = (e, gCanvasEle) ->  # canvasのMousePosを取得
+  updatePosCanv = (e, gCanvasEle) ->  # canvasのMousePosを取得
     if e.pageX or e.pageY  # たぶんIE処理だろうな。
       canvasX = e.pageX
       canvasY = e.pageY
@@ -159,29 +165,23 @@ jQuery ($) ->
   # canvs add -- mouseEV -------------------#
 
   _isSpaceKeyUp = true    # スペースキー用判定
-  #メインループ
+
+  #メインループ　自分の部分
   f = ->
     # handle mouse events on canvas  -------------------------#
     canvas.onmousedown = (e) ->
-      pos = fixPosCanv(e, canvas)
+      pos = updatePosCanv(e, canvas)
       mousedown = true
       ctx.beginPath()
       ctx.moveTo pos.c_x, pos.c_y
 
       false
     canvas.onmousemove = (e) ->
-      pos = fixPosCanv(e, canvas)
+      pos = updatePosCanv(e, canvas)
       coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")"
       if mousedown
         ctx.lineTo pos.c_x, pos.c_y
         ctx.stroke()
-        if _isUserCanvas
-          _socket.emit "canvas-create", ->
-            createCtxU()
-            ctx.beginPath()
-            ctxU.moveTo pos.c_x, pos.c_y
-            ctxU.lineTo pos.c_x, pos.c_y
-            ctxU.stroke()
     canvas.onmouseup = (e) ->
       mousedown = false
     # handle mouse events on canvas  -------------------------#
@@ -206,10 +206,10 @@ jQuery ($) ->
         y: _bullet.y | 0
         rotate: _bullet.rotate | 0
         v: _bullet.v
-
     _player.v *= 0.95
-    # ここはMapのループ出現処理？
     updatePosition(_player)
+
+    # ここはMapのループ出現処理？
     w_width = $(window).width()
     w_height = $(window).height()
     _player.x = w_width  if _player.x < -50
@@ -217,16 +217,17 @@ jQuery ($) ->
     _player.x = -50  if _player.x > w_width
     _player.y = -50  if _player.y > w_height
     updatePosition(_bullet)
-    # 衝突判定まわし
+
+    # bullet 判定まわし
     for key of _bulletMap
       bullet = _bulletMap[key]
       updatePosition(bullet)
       updateCss(bullet)
-      # 衝突判定
+      # 衝突判定 jump
       location.href = "/gameover"  if _player.x < bullet.x and bullet.x < _player.x + 50 and _player.y < bullet.y and bullet.y < _player.y + 50
 
-    updateCss(_bullet)
-    updateCss(_player)
+    updateCss(_bullet) # 自分のbullet
+    updateCss(_player) # 自分のplayer
 
     # ここでuser Update!  [emit]
     _socket.emit "player-update",
@@ -234,8 +235,9 @@ jQuery ($) ->
       y: _player.y | 0
       rotate: _player.rotate | 0
       v: _player.v
-      c_x:fixPosCanv.c_x
-      c_y:fixPosCanv.c_y
+    _socket.emit "canvas-create",
+      c_x:updatePosCanv.c_x
+      c_y:updatePosCanv.c_y
     return setTimeout(f, 30)
 
   setTimeout(f, 30)         # key 押し下げ判定（タイムラグ付）
