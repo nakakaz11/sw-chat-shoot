@@ -100,10 +100,10 @@ jQuery(function($) {
   _socket.on("canvas-create", function(data) {
     var uCanv;
     uCanv = _canvasMap[data.userId];
-    console.log("SW-UserLog:" + data.userId + ":" + data.d_c_x.c_x + ":" + data.d_c_y.c_y);
+    console.log("SW-UserLog:" + data.userId + ":" + data.d_c_x + ":" + data.d_c_y);
     if (uCanv !== undefined) {
-      uCanv.c_x = data.d_c_x.c_x;
-      uCanv.c_y = data.d_c_y.c_y;
+      uCanv.c_x = data.d_c_x;
+      uCanv.c_y = data.d_c_y;
       if (_isUserCanvas) {
         createCtxU();
         ctxU.lineTo(uCanv.c_x, uCanv.c_y);
