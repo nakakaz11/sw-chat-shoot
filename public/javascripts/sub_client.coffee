@@ -11,6 +11,7 @@ jQuery ($) ->
   # canvs add -------------------------#
   canvasHtml = "<div id=\"user-coord\">UserCanvas</div><canvas id=\"user-canvas\" width=\"200\" height=\"200\"></canvas>"
   mousedown = false
+  ctxUMousedown = null
   canvas = document.getElementById("my-canvas")
   coord = document.getElementById("coord")
   ctx = canvas.getContext("2d")  # get 2D context
@@ -78,13 +79,14 @@ jQuery ($) ->
       _canvasMap[data.userId] = uCanv    # 対戦相手のobj代入
       return _isUserCanvas = true   # flag
 
-    else                                   # あったらoverride更新
-      user = _userMap[data.userId]
+    else
+      user = _userMap[data.userId]      # もうあったら廻してuserObj更新
 
     user.x = data.data.x
     user.y = data.data.y
     user.rotate = data.data.rotate
     user.v = data.data.v
+    # 共通socket"player-update"の場合はObj構築しないとね。
     #user.c_x = data.data.c_x
     #user.c_y = data.data.c_y
 
@@ -106,11 +108,16 @@ jQuery ($) ->
       uCanv.c_x = data.ca_cr.c_x
       uCanv.c_y = data.ca_cr.c_y
       if _isUserCanvas
-          createCtxU()
-          #ctx.beginPath()
-          ctxU.moveTo uCanv.c_x, uCanv.c_y
-          ctxU.lineTo uCanv.c_x, uCanv.c_y
-          ctxU.stroke()
+        createCtxU()
+        switch ctxUMousedown   # switch文 sw
+          when "onmousedown"
+            ctxU.beginPath()
+            ctxU.moveTo uCanv.c_x, uCanv.c_y
+          when "onmousemove","onmouseup"
+            ctxU.lineTo uCanv.c_x, uCanv.c_y
+            ctxU.stroke()
+          else null
+
 
   _socket.on "disconnect", (data) ->
     user = _userMap[data.userId]
@@ -126,7 +133,7 @@ jQuery ($) ->
       delete _canvasMap[data.userId]
       return _isUserCanvas = false   # flag
 
-  # myの初期値
+  # myPlayerの初期値
   _keyMap = []
   _player =  # 自分のplayer
     x: Math.random() * 1000 | 0
@@ -166,7 +173,7 @@ jQuery ($) ->
 
   _isSpaceKeyUp = true    # スペースキー用判定
 
-  #メインループ　自分の部分
+  #メインループ　myPlayer自分の部分
   f = ->
     # handle mouse events on canvas  -------------------------#
     canvas.onmousedown = (e) ->
@@ -174,7 +181,7 @@ jQuery ($) ->
       mousedown = true
       ctx.beginPath()
       ctx.moveTo pos.c_x, pos.c_y
-
+      ctxUMousedown = "onmousedown"    # switch文flag
       false
     canvas.onmousemove = (e) ->
       pos = updatePosCanv(e, canvas)
@@ -182,12 +189,14 @@ jQuery ($) ->
       _socket.emit "canvas-create",
         c_x:pos.c_x
         c_y:pos.c_y
-
+      ctxUMousedown = "onmousemove"     # switch文flag
       if mousedown
         ctx.lineTo pos.c_x, pos.c_y
         ctx.stroke()
     canvas.onmouseup = (e) ->
       mousedown = false
+      ctxUMousedown = "onmouseup"        # switch文flag
+
     # handle mouse events on canvas  -------------------------#
 
     #left

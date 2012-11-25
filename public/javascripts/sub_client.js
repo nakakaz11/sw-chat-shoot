@@ -3,13 +3,14 @@
 jQuery(function($) {
   "use strict";
 
-  var canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, f, mousedown, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
+  var canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, ctxUMousedown, f, mousedown, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
   _canvasMap = {};
   canvasHtml = "<div id=\"user-coord\">UserCanvas</div><canvas id=\"user-canvas\" width=\"200\" height=\"200\"></canvas>";
   mousedown = false;
+  ctxUMousedown = null;
   canvas = document.getElementById("my-canvas");
   coord = document.getElementById("coord");
   ctx = canvas.getContext("2d");
@@ -106,9 +107,17 @@ jQuery(function($) {
       uCanv.c_y = data.ca_cr.c_y;
       if (_isUserCanvas) {
         createCtxU();
-        ctxU.moveTo(uCanv.c_x, uCanv.c_y);
-        ctxU.lineTo(uCanv.c_x, uCanv.c_y);
-        return ctxU.stroke();
+        switch (ctxUMousedown) {
+          case "onmousedown":
+            ctxU.beginPath();
+            return ctxU.moveTo(uCanv.c_x, uCanv.c_y);
+          case "onmousemove":
+          case "onmouseup":
+            ctxU.lineTo(uCanv.c_x, uCanv.c_y);
+            return ctxU.stroke();
+          default:
+            return null;
+        }
       }
     }
   });
@@ -178,6 +187,7 @@ jQuery(function($) {
       mousedown = true;
       ctx.beginPath();
       ctx.moveTo(pos.c_x, pos.c_y);
+      ctxUMousedown = "onmousedown";
       return false;
     };
     canvas.onmousemove = function(e) {
@@ -188,13 +198,15 @@ jQuery(function($) {
         c_x: pos.c_x,
         c_y: pos.c_y
       });
+      ctxUMousedown = "onmousemove";
       if (mousedown) {
         ctx.lineTo(pos.c_x, pos.c_y);
         return ctx.stroke();
       }
     };
     canvas.onmouseup = function(e) {
-      return mousedown = false;
+      mousedown = false;
+      return ctxUMousedown = "onmouseup";
     };
     if (_keyMap[37] === true) {
       _player.rotate -= 3;
