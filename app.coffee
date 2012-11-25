@@ -42,9 +42,8 @@ class SwSocket
       socket.broadcast.json.emit keyname ,
         userId: socket.handshake.userId
         data: data
-        messages: data
-        d_c_x: data   # canvs add
-        d_c_y: data   # canvs add
+        playmess: data
+        ca_cr: data   # canvs add
 class SwSockClient extends SwSocket
   #constructor: ->
     # super(@keyname)と等価
@@ -52,7 +51,7 @@ class SwSockClient extends SwSocket
     super(socket,keyname)  # 親make()
     socket.on keyname, (data) ->  # クライアント側にイベント送
       socket.json.emit keyname,
-        messages: data
+        playmess: data
 
 # override -------#
 p_u = new SwSocket

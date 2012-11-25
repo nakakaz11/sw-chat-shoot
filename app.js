@@ -63,9 +63,8 @@ SwSocket = (function() {
       return socket.broadcast.json.emit(keyname, {
         userId: socket.handshake.userId,
         data: data,
-        messages: data,
-        d_c_x: data,
-        d_c_y: data
+        playmess: data,
+        ca_cr: data
       });
     });
   };
@@ -86,7 +85,7 @@ SwSockClient = (function(_super) {
     SwSockClient.__super__.make.call(this, socket, keyname);
     return socket.on(keyname, function(data) {
       return socket.json.emit(keyname, {
-        messages: data
+        playmess: data
       });
     });
   };

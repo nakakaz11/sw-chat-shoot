@@ -100,10 +100,10 @@ jQuery(function($) {
   _socket.on("canvas-create", function(data) {
     var uCanv;
     uCanv = _canvasMap[data.userId];
-    console.info("SW-UserLog:" + data.userId + ":" + data.d_c_x + ":" + data.d_c_y);
+    console.info("SW-UserLog:" + data.userId + ":" + data.ca_cr.c_x + ":" + data.ca_cr.c_x);
     if (uCanv !== undefined) {
-      uCanv.c_x = data.d_c_x;
-      uCanv.c_y = data.d_c_y;
+      uCanv.c_x = data.ca_cr.c_x;
+      uCanv.c_y = data.ca_cr.c_x;
       if (_isUserCanvas) {
         createCtxU();
         ctxU.lineTo(uCanv.c_x, uCanv.c_y);
@@ -184,8 +184,8 @@ jQuery(function($) {
       pos = updatePosCanv(e, canvas);
       coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")";
       _socket.emit("canvas-create", {
-        d_c_x: pos.c_x,
-        d_c_y: pos.c_y
+        c_x: pos.c_x,
+        c_y: pos.c_y
       });
       if (mousedown) {
         ctx.lineTo(pos.c_x, pos.c_y);
@@ -267,17 +267,17 @@ jQuery(function($) {
   });
   _socket.on("player-message", function(data) {
     var date, user;
-    console.log("SW-UserLog:" + data.userId + ":" + data.messages);
+    console.log("SW-UserLog:" + data.userId + ":" + data.playmess);
     date = new Date();
     if (_userMap[data.userId] === undefined) {
       user = {
         userId: data.userId
       };
-      user.txt = $("<dt>" + date + "</dt><dd>" + data.messages + "</dd>").attr("data-user-id", user.userId);
+      user.txt = $("<dt>" + date + "</dt><dd>" + data.playmess + "</dd>").attr("data-user-id", user.userId);
       return $("#list").prepend(user.txt);
     } else {
       user = _userMap[data.userId];
-      user.txt = $("<dt>" + date + "</dt><dd>" + data.messages + "</dd>").attr("data-user-id", user.userId);
+      user.txt = $("<dt>" + date + "</dt><dd>" + data.playmess + "</dd>").attr("data-user-id", user.userId);
       return $("#list").prepend(user.txt);
     }
   });

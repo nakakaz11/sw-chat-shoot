@@ -101,11 +101,10 @@ jQuery ($) ->
   # canvs add -------------------------#
   _socket.on "canvas-create", (data) ->
     uCanv = _canvasMap[data.userId]
-    console.info("SW-UserLog:"+data.userId+":"+data.d_c_x+":"+data.d_c_y) # log -----------#
-
+    console.info("SW-UserLog:"+data.userId+":"+data.ca_cr.c_x+":"+data.ca_cr.c_x) # log -----------#
     if uCanv isnt `undefined`
-      uCanv.c_x = data.d_c_x
-      uCanv.c_y = data.d_c_y
+      uCanv.c_x = data.ca_cr.c_x
+      uCanv.c_y = data.ca_cr.c_x
       if _isUserCanvas
           createCtxU()
           #ctx.beginPath()
@@ -181,8 +180,8 @@ jQuery ($) ->
       pos = updatePosCanv(e, canvas)
       coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")"
       _socket.emit "canvas-create",
-        d_c_x:pos.c_x
-        d_c_y:pos.c_y
+        c_x:pos.c_x
+        c_y:pos.c_y
 
       if mousedown
         ctx.lineTo pos.c_x, pos.c_y
@@ -252,17 +251,17 @@ jQuery ($) ->
   #chat -------------------------#
   #サーバーが受け取ったメッセージを返して実行する
   _socket.on "player-message", (data) ->
-    console.log("SW-UserLog:"+data.userId+ ":" +data.messages) # log -----------#
+    console.log("SW-UserLog:"+data.userId+ ":" +data.playmess) # log -----------#
     date = new Date()
     if _userMap[data.userId] is `undefined`     # なかったら作る
       user =    # userのjson make
         userId: data.userId
-      user.txt = $("<dt>" + date + "</dt><dd>" + data.messages + "</dd>")
+      user.txt = $("<dt>" + date + "</dt><dd>" + data.playmess + "</dd>")
         .attr("data-user-id", user.userId)
       $("#list").prepend(user.txt)  # リストDOM挿入
     else                                        # あったらoverride
       user = _userMap[data.userId]
-      user.txt = $("<dt>" + date + "</dt><dd>" + data.messages + "</dd>")
+      user.txt = $("<dt>" + date + "</dt><dd>" + data.playmess + "</dd>")
         .attr("data-user-id", user.userId)
       $("#list").prepend(user.txt)  # リストDOM挿入
 
