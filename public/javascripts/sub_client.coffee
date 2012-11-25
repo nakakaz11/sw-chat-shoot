@@ -107,8 +107,8 @@ jQuery ($) ->
       uCanv.c_y = data.data.c_y
       if _isUserCanvas
           createCtxU()
-          ctx.beginPath()
-          ctxU.moveTo uCanv.c_x, uCanv.c_y
+          #ctx.beginPath()
+          #ctxU.moveTo uCanv.c_x, uCanv.c_y
           ctxU.lineTo uCanv.c_x, uCanv.c_y
           ctxU.stroke()
 
