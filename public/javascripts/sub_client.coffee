@@ -19,9 +19,9 @@ jQuery ($) ->
   ctx.lineWidth = 5
   _isUserCanvas = false
   ctxU = {}  # userCanvas用のオブジェクト
-  createCtxU = ->
+  createCtxU = (uid) ->
     if _isUserCanvas is true
-      ctxUid =  document.getElementById("user-canvas")
+      ctxUid =  document.getElementById("user-canvas#{uid}")
       # 複数の時どうすんだ ctxUser =  ctxUid.attr("data-user-id")
       ctxU = ctxUid.getContext("2d")  # get 2D context
       ctxU.strokeStyle = "#83B14E"    #Fill Color
@@ -74,7 +74,7 @@ jQuery ($) ->
          c_x: 0
          c_y: 0
          userId: data.userId
-      uCanv.element = $(canvasHtml(data.userId)).attr("data-user-id", user.userId)
+      uCanv.element = $(canvasHtml(user.userId)).attr("data-user-id", user.userId)
       $("#canvasUser").append(uCanv.element)
       _canvasMap[data.userId] = uCanv    # 対戦相手のobj代入
       return _isUserCanvas = true   # flag
@@ -108,7 +108,7 @@ jQuery ($) ->
       uCanv.c_x = data.ca_cr.c_x
       uCanv.c_y = data.ca_cr.c_y
       if _isUserCanvas
-        createCtxU()
+        createCtxU(data.userId)
         switch data.ca_cr.c_UM   # switch文 sw
           when "onmousedown"
             ctxU.beginPath()

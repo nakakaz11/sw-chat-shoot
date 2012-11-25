@@ -19,10 +19,10 @@ jQuery(function($) {
   ctx.lineWidth = 5;
   _isUserCanvas = false;
   ctxU = {};
-  createCtxU = function() {
+  createCtxU = function(uid) {
     var ctxUid;
     if (_isUserCanvas === true) {
-      ctxUid = document.getElementById("user-canvas");
+      ctxUid = document.getElementById("user-canvas" + uid);
       ctxU = ctxUid.getContext("2d");
       ctxU.strokeStyle = "#83B14E";
       ctxU.lineWidth = 5;
@@ -76,7 +76,7 @@ jQuery(function($) {
         c_y: 0,
         userId: data.userId
       };
-      uCanv.element = $(canvasHtml(data.userId)).attr("data-user-id", user.userId);
+      uCanv.element = $(canvasHtml(user.userId)).attr("data-user-id", user.userId);
       $("#canvasUser").append(uCanv.element);
       _canvasMap[data.userId] = uCanv;
       return _isUserCanvas = true;
@@ -107,7 +107,7 @@ jQuery(function($) {
       uCanv.c_x = data.ca_cr.c_x;
       uCanv.c_y = data.ca_cr.c_y;
       if (_isUserCanvas) {
-        createCtxU();
+        createCtxU(data.userId);
         switch (data.ca_cr.c_UM) {
           case "onmousedown":
             ctxU.beginPath();
