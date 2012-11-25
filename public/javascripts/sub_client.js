@@ -100,10 +100,10 @@ jQuery(function($) {
   _socket.on("canvas-create", function(data) {
     var uCanv;
     uCanv = _canvasMap[data.userId];
-    console.log("SW-UserLog:" + data.userId + ":" + data.data.d_c_x + ":" + data.data.d_c_y);
+    console.log("SW-UserLog:" + data.userId + ":" + data.d_c_x + ":" + data.d_c_y);
     if (uCanv !== undefined) {
-      uCanv.c_x = data.data.d_c_x;
-      uCanv.c_y = data.data.d_c_y;
+      uCanv.c_x = data.d_c_x;
+      uCanv.c_y = data.d_c_y;
       if (_isUserCanvas) {
         createCtxU();
         ctxU.lineTo(uCanv.c_x, uCanv.c_y);
@@ -183,6 +183,10 @@ jQuery(function($) {
       var pos;
       pos = updatePosCanv(e, canvas);
       coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")";
+      _socket.emit("canvas-create", {
+        d_c_x: pos.c_x,
+        d_c_y: pos.c_y
+      });
       if (mousedown) {
         ctx.lineTo(pos.c_x, pos.c_y);
         return ctx.stroke();
@@ -248,10 +252,6 @@ jQuery(function($) {
       y: _player.y | 0,
       rotate: _player.rotate | 0,
       v: _player.v
-    });
-    _socket.emit("canvas-create", {
-      d_c_x: updatePosCanv.c_x,
-      d_c_y: updatePosCanv.c_y
     });
     return setTimeout(f, 30);
   };

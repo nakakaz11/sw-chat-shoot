@@ -101,11 +101,11 @@ jQuery ($) ->
   # canvs add -------------------------#
   _socket.on "canvas-create", (data) ->
     uCanv = _canvasMap[data.userId]
-    console.log("SW-UserLog:"+data.userId+":"+data.data.d_c_x+":"+data.data.d_c_y) # log -----------#
+    console.log("SW-UserLog:"+data.userId+":"+data.d_c_x+":"+data.d_c_y) # log -----------#
 
     if uCanv isnt `undefined`
-      uCanv.c_x = data.data.d_c_x
-      uCanv.c_y = data.data.d_c_y
+      uCanv.c_x = data.d_c_x
+      uCanv.c_y = data.d_c_y
       if _isUserCanvas
           createCtxU()
           #ctx.beginPath()
@@ -180,6 +180,10 @@ jQuery ($) ->
     canvas.onmousemove = (e) ->
       pos = updatePosCanv(e, canvas)
       coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")"
+      _socket.emit "canvas-create",
+        d_c_x:pos.c_x
+        d_c_y:pos.c_y
+
       if mousedown
         ctx.lineTo pos.c_x, pos.c_y
         ctx.stroke()
@@ -236,9 +240,6 @@ jQuery ($) ->
       y: _player.y | 0
       rotate: _player.rotate | 0
       v: _player.v
-    _socket.emit "canvas-create",
-      d_c_x:updatePosCanv.c_x
-      d_c_y:updatePosCanv.c_y
     return setTimeout(f, 30)
 
   setTimeout(f, 30)         # key 押し下げ判定（タイムラグ付）
