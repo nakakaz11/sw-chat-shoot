@@ -9,7 +9,7 @@ jQuery(function($) {
   _bulletMap = {};
   _canvasMap = {};
   canvasHtml = function(uid) {
-    return "<div id='user-coord" + uid + "'>UserCanvas (ID) " + uid + "</div><canvas id='user-canvas" + uid + "' width=\"200\" height=\"200\"></canvas>";
+    return "<div id='user-coord" + uid + "'>UserCanvas (ID) " + uid + "</div><canvas id='user-canvas" + uid + "' class='user-canvas' width='200' height='200'></canvas>";
   };
   mousedown = false;
   canvas = document.getElementById("my-canvas");
