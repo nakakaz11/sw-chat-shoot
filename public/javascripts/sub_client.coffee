@@ -168,7 +168,6 @@ jQuery ($) ->
       ctx.beginPath()
       ctx.moveTo pos.c_x, pos.c_y
 
-      ctxU.moveTo pos.c_x, pos.c_y
       false
     canvas.onmousemove = (e) ->
       pos = fixPosCanv(e, canvas)
@@ -179,6 +178,8 @@ jQuery ($) ->
         if _isUserCanvas
           _socket.emit "canvas-create", ->
             createCtxU()
+            ctx.beginPath()
+            ctxU.moveTo pos.c_x, pos.c_y
             ctxU.lineTo pos.c_x, pos.c_y
             ctxU.stroke()
     canvas.onmouseup = (e) ->

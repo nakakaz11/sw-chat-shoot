@@ -173,7 +173,6 @@ jQuery(function($) {
       mousedown = true;
       ctx.beginPath();
       ctx.moveTo(pos.c_x, pos.c_y);
-      ctxU.moveTo(pos.c_x, pos.c_y);
       return false;
     };
     canvas.onmousemove = function(e) {
@@ -186,6 +185,8 @@ jQuery(function($) {
         if (_isUserCanvas) {
           return _socket.emit("canvas-create", function() {
             createCtxU();
+            ctx.beginPath();
+            ctxU.moveTo(pos.c_x, pos.c_y);
             ctxU.lineTo(pos.c_x, pos.c_y);
             return ctxU.stroke();
           });
