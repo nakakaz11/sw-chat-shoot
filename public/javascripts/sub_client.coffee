@@ -45,7 +45,6 @@ jQuery ($) ->
     mousedown = false  ###
   # /canvs add -------------------------#
   _socket.on "player-update", (data) ->   # userオブジェクト作成/初期化
-    #console.log("SW-UserLog:"+data.userId+":"+data.c_x+":"+data.c_y) # log -----------#
     # game Engine  -------------------------#
     if _userMap[data.userId] is `undefined`     # なかったら作る
       user =
@@ -102,6 +101,8 @@ jQuery ($) ->
   # canvs add -------------------------#
   _socket.on "canvas-create", (data) ->
     uCanv = _canvasMap[data.userId]
+    console.log("SW-UserLog:"+data.userId+":"+data.c_x+":"+data.c_y) # log -----------#
+
     if uCanv isnt `undefined`
       uCanv.c_x = data.data.c_x
       uCanv.c_y = data.data.c_y

@@ -102,6 +102,7 @@ jQuery(function($) {
   _socket.on("canvas-create", function(data) {
     var uCanv;
     uCanv = _canvasMap[data.userId];
+    console.log("SW-UserLog:" + data.userId + ":" + data.c_x + ":" + data.c_y);
     if (uCanv !== undefined) {
       uCanv.c_x = data.data.c_x;
       uCanv.c_y = data.data.c_y;
