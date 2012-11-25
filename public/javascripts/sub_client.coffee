@@ -237,8 +237,8 @@ jQuery ($) ->
       rotate: _player.rotate | 0
       v: _player.v
     _socket.emit "canvas-create",
-      c_x:updatePosCanv.c_x
-      c_y:updatePosCanv.c_y
+      d_c_x:updatePosCanv.c_x
+      d_c_y:updatePosCanv.c_y
     return setTimeout(f, 30)
 
   setTimeout(f, 30)         # key 押し下げ判定（タイムラグ付）
@@ -251,17 +251,17 @@ jQuery ($) ->
   #chat -------------------------#
   #サーバーが受け取ったメッセージを返して実行する
   _socket.on "player-message", (data) ->
-    console.log("SW-UserLog:"+data.userId+ ":" +data.message) # log -----------#
+    console.log("SW-UserLog:"+data.userId+ ":" +data.messages) # log -----------#
     date = new Date()
     if _userMap[data.userId] is `undefined`     # なかったら作る
       user =    # userのjson make
         userId: data.userId
-      user.txt = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>")
+      user.txt = $("<dt>" + date + "</dt><dd>" + data.messages + "</dd>")
         .attr("data-user-id", user.userId)
       $("#list").prepend(user.txt)  # リストDOM挿入
     else                                        # あったらoverride
       user = _userMap[data.userId]
-      user.txt = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>")
+      user.txt = $("<dt>" + date + "</dt><dd>" + data.messages + "</dd>")
         .attr("data-user-id", user.userId)
       $("#list").prepend(user.txt)  # リストDOM挿入
 

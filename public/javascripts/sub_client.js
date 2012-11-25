@@ -250,8 +250,8 @@ jQuery(function($) {
       v: _player.v
     });
     _socket.emit("canvas-create", {
-      c_x: updatePosCanv.c_x,
-      c_y: updatePosCanv.c_y
+      d_c_x: updatePosCanv.c_x,
+      d_c_y: updatePosCanv.c_y
     });
     return setTimeout(f, 30);
   };
@@ -267,17 +267,17 @@ jQuery(function($) {
   });
   _socket.on("player-message", function(data) {
     var date, user;
-    console.log("SW-UserLog:" + data.userId + ":" + data.message);
+    console.log("SW-UserLog:" + data.userId + ":" + data.messages);
     date = new Date();
     if (_userMap[data.userId] === undefined) {
       user = {
         userId: data.userId
       };
-      user.txt = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>").attr("data-user-id", user.userId);
+      user.txt = $("<dt>" + date + "</dt><dd>" + data.messages + "</dd>").attr("data-user-id", user.userId);
       return $("#list").prepend(user.txt);
     } else {
       user = _userMap[data.userId];
-      user.txt = $("<dt>" + date + "</dt><dd>" + data.message + "</dd>").attr("data-user-id", user.userId);
+      user.txt = $("<dt>" + date + "</dt><dd>" + data.messages + "</dd>").attr("data-user-id", user.userId);
       return $("#list").prepend(user.txt);
     }
   });
