@@ -101,20 +101,21 @@ jQuery(function($) {
   _socket.on("canvas-create", function(data) {
     var uCanv;
     uCanv = _canvasMap[data.userId];
-    console.info("SW-UserLog:" + data.userId + ":" + data.ca_cr.c_x + ":" + data.ca_cr.c_y + ":" + ctxUMousedown);
+    console.info("SW-UserLog:" + data.userId + ":" + data.ca_cr.c_x + ":" + data.ca_cr.c_y + ":" + data.ca_cr.c_UM);
     if (uCanv !== undefined) {
       uCanv.c_x = data.ca_cr.c_x;
       uCanv.c_y = data.ca_cr.c_y;
       if (_isUserCanvas) {
         createCtxU();
-        switch (ctxUMousedown) {
+        switch (data.ca_cr.c_UM) {
           case "onmousedown":
             ctxU.beginPath();
             return ctxU.moveTo(uCanv.c_x, uCanv.c_y);
           case "onmousemove":
-          case "onmouseup":
             ctxU.lineTo(uCanv.c_x, uCanv.c_y);
             return ctxU.stroke();
+          case "onmouseup":
+            break;
           default:
             return null;
         }
@@ -187,26 +188,32 @@ jQuery(function($) {
       mousedown = true;
       ctx.beginPath();
       ctx.moveTo(pos.c_x, pos.c_y);
-      ctxUMousedown = "onmousedown";
+      _socket.emit("canvas-create", {
+        c_x: pos.c_x,
+        c_y: pos.c_y,
+        c_UM: "onmousedown"
+      });
       return false;
     };
     canvas.onmousemove = function(e) {
       var pos;
       pos = updatePosCanv(e, canvas);
       coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")";
-      _socket.emit("canvas-create", {
-        c_x: pos.c_x,
-        c_y: pos.c_y
-      });
-      ctxUMousedown = "onmousemove";
       if (mousedown) {
+        _socket.emit("canvas-create", {
+          c_x: pos.c_x,
+          c_y: pos.c_y,
+          c_UM: "onmousemove"
+        });
         ctx.lineTo(pos.c_x, pos.c_y);
         return ctx.stroke();
       }
     };
     canvas.onmouseup = function(e) {
       mousedown = false;
-      return ctxUMousedown = "onmouseup";
+      return _socket.emit("canvas-create", {
+        c_UM: "onmouseup"
+      });
     };
     if (_keyMap[37] === true) {
       _player.rotate -= 3;

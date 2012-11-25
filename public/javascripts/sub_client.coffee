@@ -103,19 +103,20 @@ jQuery ($) ->
   # canvs add -------------------------#
   _socket.on "canvas-create", (data) ->
     uCanv = _canvasMap[data.userId]
-    console.info("SW-UserLog:"+data.userId+":"+data.ca_cr.c_x+":"+data.ca_cr.c_y+":"+ctxUMousedown) # log -----------#
+    console.info("SW-UserLog:"+data.userId+":"+data.ca_cr.c_x+":"+data.ca_cr.c_y+":"+data.ca_cr.c_UM) # log -----------#
     if uCanv isnt `undefined`
       uCanv.c_x = data.ca_cr.c_x
       uCanv.c_y = data.ca_cr.c_y
       if _isUserCanvas
         createCtxU()
-        switch ctxUMousedown   # switch文 sw
+        switch data.ca_cr.c_UM   # switch文 sw
           when "onmousedown"
             ctxU.beginPath()
             ctxU.moveTo uCanv.c_x, uCanv.c_y
-          when "onmousemove","onmouseup"
+          when "onmousemove"
             ctxU.lineTo uCanv.c_x, uCanv.c_y
             ctxU.stroke()
+          when "onmouseup"
           else null
 
 
@@ -181,21 +182,25 @@ jQuery ($) ->
       mousedown = true
       ctx.beginPath()
       ctx.moveTo pos.c_x, pos.c_y
-      ctxUMousedown = "onmousedown"    # switch文flag
+      _socket.emit "canvas-create",
+        c_x:pos.c_x
+        c_y:pos.c_y
+        c_UM:"onmousedown"   # switch文flag
       false
     canvas.onmousemove = (e) ->
       pos = updatePosCanv(e, canvas)
       coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")"
-      _socket.emit "canvas-create",
-        c_x:pos.c_x
-        c_y:pos.c_y
-      ctxUMousedown = "onmousemove"     # switch文flag
       if mousedown
+        _socket.emit "canvas-create",
+          c_x:pos.c_x
+          c_y:pos.c_y
+          c_UM:"onmousemove"  # switch文flag
         ctx.lineTo pos.c_x, pos.c_y
         ctx.stroke()
     canvas.onmouseup = (e) ->
       mousedown = false
-      ctxUMousedown = "onmouseup"        # switch文flag
+      _socket.emit "canvas-create",
+        c_UM:"onmouseup"       # switch文flag
 
     # handle mouse events on canvas  -------------------------#
 
