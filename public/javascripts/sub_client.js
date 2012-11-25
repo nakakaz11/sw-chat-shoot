@@ -294,11 +294,11 @@ jQuery(function($) {
       user = {
         userId: data.userId
       };
-      user.txt = $("<dt>" + date + "</dt><dd>" + data.playmess + ":id" + data.userId + "</dd>").attr("data-user-id", user.userId);
+      user.txt = $("<dt>" + date + "</dt><dd>" + data.playmess + ":ID" + user.userId + "</dd>").attr("data-user-id", user.userId);
       return $("#list").prepend(user.txt);
     } else {
       user = _userMap[data.userId];
-      user.txt = $("<dt>" + date + "</dt><dd>" + data.playmess + "</dd>").attr("data-user-id", user.userId);
+      user.txt = $("<dt>" + date + "</dt><dd>" + data.playmess + ":ID" + user.userId + "</dd>").attr("data-user-id", user.userId);
       return $("#list").prepend(user.txt);
     }
   });

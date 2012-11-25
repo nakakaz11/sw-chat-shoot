@@ -270,12 +270,12 @@ jQuery ($) ->
     if _userMap[data.userId] is `undefined`     # なかったら作る
       user =    # userのjson make
         userId: data.userId
-      user.txt = $("<dt>" + date + "</dt><dd>" + data.playmess+":id"+data.userId + "</dd>")
+      user.txt = $("<dt>" + date + "</dt><dd>" +data.playmess+":ID"+user.userId+"</dd>")
         .attr("data-user-id", user.userId)
       $("#list").prepend(user.txt)  # リストDOM挿入
     else                                        # あったらoverride
       user = _userMap[data.userId]
-      user.txt = $("<dt>" + date + "</dt><dd>" + data.playmess + "</dd>")
+      user.txt = $("<dt>" + date + "</dt><dd>" +data.playmess+":ID"+user.userId+"</dd>")
         .attr("data-user-id", user.userId)
       $("#list").prepend(user.txt)  # リストDOM挿入
 
