@@ -9,9 +9,9 @@ jQuery ($) ->
   _bulletMap = {}
   _canvasMap = {}
   # canvs add -------------------------#
-  canvasHtml = "<div id=\"user-coord\">UserCanvas</div><canvas id=\"user-canvas\" width=\"200\" height=\"200\"></canvas>"
+  canvasHtml = (uid) -> "<div id=\"user-coord\">UserCanvas (ID) #{ uid }</div><canvas id=\"user-canvas\" width=\"200\" height=\"200\"></canvas>"
   mousedown = false
-  ctxUMousedown = null
+  #ctxUMousedown = null
   canvas = document.getElementById("my-canvas")
   coord = document.getElementById("coord")
   ctx = canvas.getContext("2d")  # get 2D context
@@ -74,7 +74,7 @@ jQuery ($) ->
          c_x: 0
          c_y: 0
          userId: data.userId
-      uCanv.element = $(canvasHtml).attr("data-user-id", user.userId)
+      uCanv.element = $(canvasHtml(data.userId)).attr("data-user-id", user.userId)
       $("#canvasUser").append(uCanv.element)
       _canvasMap[data.userId] = uCanv    # 対戦相手のobj代入
       return _isUserCanvas = true   # flag
@@ -270,7 +270,7 @@ jQuery ($) ->
     if _userMap[data.userId] is `undefined`     # なかったら作る
       user =    # userのjson make
         userId: data.userId
-      user.txt = $("<dt>" + date + "</dt><dd>" + data.playmess + "</dd>")
+      user.txt = $("<dt>" + date + "</dt><dd>" + data.playmess+":id"+data.userId + "</dd>")
         .attr("data-user-id", user.userId)
       $("#list").prepend(user.txt)  # リストDOM挿入
     else                                        # あったらoverride

@@ -3,14 +3,15 @@
 jQuery(function($) {
   "use strict";
 
-  var canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, ctxUMousedown, f, mousedown, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
+  var canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, f, mousedown, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
   _canvasMap = {};
-  canvasHtml = "<div id=\"user-coord\">UserCanvas</div><canvas id=\"user-canvas\" width=\"200\" height=\"200\"></canvas>";
+  canvasHtml = function(uid) {
+    return "<div id=\"user-coord\">UserCanvas (ID) " + uid + "</div><canvas id=\"user-canvas\" width=\"200\" height=\"200\"></canvas>";
+  };
   mousedown = false;
-  ctxUMousedown = null;
   canvas = document.getElementById("my-canvas");
   coord = document.getElementById("coord");
   ctx = canvas.getContext("2d");
@@ -75,7 +76,7 @@ jQuery(function($) {
         c_y: 0,
         userId: data.userId
       };
-      uCanv.element = $(canvasHtml).attr("data-user-id", user.userId);
+      uCanv.element = $(canvasHtml(data.userId)).attr("data-user-id", user.userId);
       $("#canvasUser").append(uCanv.element);
       _canvasMap[data.userId] = uCanv;
       return _isUserCanvas = true;
@@ -293,7 +294,7 @@ jQuery(function($) {
       user = {
         userId: data.userId
       };
-      user.txt = $("<dt>" + date + "</dt><dd>" + data.playmess + "</dd>").attr("data-user-id", user.userId);
+      user.txt = $("<dt>" + date + "</dt><dd>" + data.playmess + ":id" + data.userId + "</dd>").attr("data-user-id", user.userId);
       return $("#list").prepend(user.txt);
     } else {
       user = _userMap[data.userId];
