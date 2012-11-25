@@ -85,8 +85,8 @@ jQuery ($) ->
     user.y = data.data.y
     user.rotate = data.data.rotate
     user.v = data.data.v
-    user.c_x = data.data.c_x
-    user.c_y = data.data.c_y
+    #user.c_x = data.data.c_x
+    #user.c_y = data.data.c_y
 
     updateCss(user)  # 相手のplayer
 
@@ -104,8 +104,8 @@ jQuery ($) ->
     console.log("SW-UserLog:"+data.userId+":"+data.c_x+":"+data.c_y) # log -----------#
 
     if uCanv isnt `undefined`
-      uCanv.c_x = data.data.c_x
-      uCanv.c_y = data.data.c_y
+      uCanv.c_x = data.d_c_x.c_x
+      uCanv.c_y = data.d_c_y.c_y
       if _isUserCanvas
           createCtxU()
           #ctx.beginPath()

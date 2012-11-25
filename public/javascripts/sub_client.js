@@ -85,8 +85,6 @@ jQuery(function($) {
     user.y = data.data.y;
     user.rotate = data.data.rotate;
     user.v = data.data.v;
-    user.c_x = data.data.c_x;
-    user.c_y = data.data.c_y;
     return updateCss(user);
   });
   _socket.on("bullet-create", function(data) {
@@ -104,8 +102,8 @@ jQuery(function($) {
     uCanv = _canvasMap[data.userId];
     console.log("SW-UserLog:" + data.userId + ":" + data.c_x + ":" + data.c_y);
     if (uCanv !== undefined) {
-      uCanv.c_x = data.data.c_x;
-      uCanv.c_y = data.data.c_y;
+      uCanv.c_x = data.d_c_x.c_x;
+      uCanv.c_y = data.d_c_y.c_y;
       if (_isUserCanvas) {
         createCtxU();
         ctxU.lineTo(uCanv.c_x, uCanv.c_y);
