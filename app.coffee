@@ -66,10 +66,10 @@ class SwSockClient extends SwSocket
       # mongoose - 1127 ------#
       @makeMongoDB(data)
   makeMongoDB: (data) ->  # DB登録
-    user = new User
-    user.message = data
-    user.date = new Date()
-    user?.save (err) ->
+    userMG = new User
+    userMG.message = data
+    userMG.date = new Date()
+    userMG.save (err) ->
       if err then console.info err # log
     User.find (err,userData) ->
       socket.json.emit keyname userData

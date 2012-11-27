@@ -107,17 +107,15 @@ SwSockClient = (function(_super) {
   };
 
   SwSockClient.prototype.makeMongoDB = function(data) {
-    var keyname, user;
-    user = new User;
-    user.message = data;
-    user.date = new Date();
-    if (user != null) {
-      user.save(function(err) {
-        if (err) {
-          return console.info(err);
-        }
-      });
-    }
+    var keyname, userMG;
+    userMG = new User;
+    userMG.message = data;
+    userMG.date = new Date();
+    userMG.save(function(err) {
+      if (err) {
+        return console.info(err);
+      }
+    });
     User.find(function(err, userData) {
       return socket.json.emit(keyname(userData));
     });
