@@ -54,9 +54,12 @@ UserSchema = new Schema({
 
 uri = process.env.MONGOHQ_URL || 'mongodb://localhost/makeMongoDB';
 
-mongoose.connect(uri);
+app.configure(function() {
+  mongoose.model('User', UserSchema);
+  return mongoose.connect(uri);
+});
 
-User = mongoose.model('User', UserSchema);
+User = mongoose.model('User');
 
 io = require("socket.io").listen(server, {
   "log level": 1

@@ -35,8 +35,10 @@ UserSchema = new Schema
   message: String
   date: Date
 uri = process.env.MONGOHQ_URL || 'mongodb://localhost/makeMongoDB' #for HEROKU
-mongoose.connect(uri)
-User = mongoose.model('User', UserSchema)  #スキーマの設定
+app.configure ->
+  mongoose.model('User', UserSchema)  #スキーマの設定
+  mongoose.connect(uri)
+User = mongoose.model('User')
 # mongoose - 1127 ------#
 
 io = require("socket.io").listen(server, "log level": 1)
