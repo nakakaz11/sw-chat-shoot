@@ -65,8 +65,8 @@ class SwSockClient extends SwSocket
     socket.on keyname, (data) ->  # クライアント側にイベント送
       socket.json.emit keyname,
         playmess: data
-      # mongoose - 1127 ------#
-      @makeMongoDB(data)
+        # mongoose - 1127 ------#
+        @makeMongoDB(data)
   makeMongoDB: (data) ->  # DB登録
     sanitized = escapeHTML(data)
     userMG = new User

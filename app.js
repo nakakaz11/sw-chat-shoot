@@ -102,10 +102,9 @@ SwSockClient = (function(_super) {
   SwSockClient.prototype.make = function(socket, keyname) {
     SwSockClient.__super__.make.call(this, socket, keyname);
     return socket.on(keyname, function(data) {
-      socket.json.emit(keyname, {
+      return socket.json.emit(keyname, {
         playmess: data
-      });
-      return this.makeMongoDB(data);
+      }, this.makeMongoDB(data));
     });
   };
 
