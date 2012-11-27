@@ -106,7 +106,7 @@ SwSockClient = (function(_super) {
     });
   };
 
-  SwSockClient.prototype.makeMongoDB = function(data) {
+  SwSockClient.prototype.make.makeMongoDB = function(data) {
     var keyname, sanitized, userMG;
     sanitized = escapeHTML(data);
     userMG = new User;
