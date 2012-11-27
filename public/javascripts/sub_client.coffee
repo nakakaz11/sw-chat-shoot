@@ -267,7 +267,8 @@ jQuery ($) ->
   _socket.on "player-message", (data) ->
     console.log("SW-UserLog:"+data.userId+ ":" +data.playmess) # log -----------#
     if data.length isnt 0
-      user = _userMap[data.userId]
+      user =    # userのjson make
+        userId: data.userId
       user.txt = $("<dt>" + data.date + "</dt><dd>" +data.playmess+":ID"+data.userId+"</dd>")
         .attr("data-user-id", data.userId)
       $("#list").prepend(user.txt)  # リストDOM挿入
