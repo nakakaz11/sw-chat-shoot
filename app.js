@@ -108,7 +108,7 @@ SwSockClient = (function(_super) {
   };
 
   makeMongoDB = function(data) {
-    var keyname, sanitized, userMG;
+    var sanitized, userMG;
     sanitized = escapeHTML(data);
     userMG = new User;
     userMG.playmess = sanitized;
@@ -121,7 +121,7 @@ SwSockClient = (function(_super) {
     User.find(function(err, userMGData) {
       return socket.json.emit(keyname(userMGData));
     });
-    if (keyname = "deleteDB") {
+    if (keyname === "deleteDB") {
       return deleteMongoDB();
     }
   };
