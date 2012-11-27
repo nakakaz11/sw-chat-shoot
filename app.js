@@ -103,7 +103,7 @@ SwSockClient = (function(_super) {
       socket.json.emit(keyname, {
         playmess: data
       });
-      return makeMongoDB(socket, data);
+      return makeMongoDB(socket, keyname, data);
     });
   };
 
