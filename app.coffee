@@ -67,9 +67,9 @@ class SwSockClient extends SwSocket
       # mongoose - 1127 ------#
       makeMongoDB(socket,data)
   makeMongoDB = (socket,keyname,data) ->  # DB登録
-    sanitized = escapeHTML(data)
+    #sanitized = escapeHTML(data)
     userMG = new User
-    userMG.playmess = sanitized
+    userMG.playmess = data
     userMG.date = new Date()
     userMG.save (err) ->
       if err then console.info "swMongoSave:"+err # log
@@ -102,5 +102,7 @@ io.sockets.on "connection", (socket) ->
   return
 
 # サニタイズ sanitized = escapeHTML(msg)
+###
 escapeHTML = (str) ->
   str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;")
+###
