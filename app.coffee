@@ -68,13 +68,14 @@ class SwSockClient extends SwSocket
       # mongoose - 1127 ------#
       @makeMongoDB(data)
   makeMongoDB: (data) ->  # DB登録
+    sanitized = escapeHTML(data)
     userMG = new User
-    userMG.message = data
+    userMG.message = sanitized
     userMG.date = new Date()
     userMG.save (err) ->
       if err then console.info err # log
-    User.find (err,userData) ->
-      socket.json.emit keyname userData
+    User.find (err,userMGData) ->
+      socket.json.emit keyname userMGData
     if keyname = "deleteDB" then @deleteMongoDB()
   deleteMongoDB: (socket,keyname) ->   # DB削除
     socket.emit keyname
@@ -100,8 +101,6 @@ io.sockets.on "connection", (socket) ->
   p_m.make(socket,'player-message')
   return
 
-# サニタイズ（いまは使わん）sanitized = escapeHTML(msg)
-###
+# サニタイズ sanitized = escapeHTML(msg)
 escapeHTML = (str) ->
   str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;")
-###

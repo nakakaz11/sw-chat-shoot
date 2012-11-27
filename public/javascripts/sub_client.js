@@ -287,22 +287,31 @@ jQuery(function($) {
     return _keyMap[e.keyCode] = false;
   });
   _socket.on("player-message", function(data) {
-    var date, user;
     console.log("SW-UserLog:" + data.userId + ":" + data.playmess);
-    date = new Date();
-    if (_userMap[data.userId] === undefined) {
-      user = {
-        userId: data.userId
-      };
-      user.txt = $("<dt>" + date + "</dt><dd>" + data.playmess + ":ID" + user.userId + "</dd>").attr("data-user-id", user.userId);
-      $("#list").prepend(user.txt);
-      return _userMap[data.userId] = user;
+    if (data.length === 0) {
+
     } else {
-      user = _userMap[data.userId];
-      user.txt = $("<dt>" + date + "</dt><dd>" + data.playmess + ":ID" + user.userId + "</dd>").attr("data-user-id", user.userId);
-      $("#list").prepend(user.txt);
-      return _userMap[data.userId] = user;
+      $('#list').empty();
+      return $.each(function(k, val) {
+        return $('#list').prepend($("<dt>" + val.date + "</dt><dd>" + val.message + ":ID" + data.userId + "</dd>"));
+      });
     }
+    /*date = new Date()
+    if _userMap[data.userId] is `undefined`     # なかったら作る
+      user =    # userのjson make
+        userId: data.userId
+      user.txt = $("<dt>" + date + "</dt><dd>" +data.playmess+":ID"+user.userId+"</dd>")
+        .attr("data-user-id", user.userId)
+      $("#list").prepend(user.txt)  # リストDOM挿入
+      _userMap[data.userId] = user
+    else                                        # あったらoverride
+      user = _userMap[data.userId]
+      user.txt = $("<dt>" + date + "</dt><dd>" +data.playmess+":ID"+user.userId+"</dd>")
+        .attr("data-user-id", user.userId)
+      $("#list").prepend(user.txt)  # リストDOM挿入
+      _userMap[data.userId] = user
+    */
+
   });
   _socket.on("disconnect", function(data) {});
   chat = function() {
