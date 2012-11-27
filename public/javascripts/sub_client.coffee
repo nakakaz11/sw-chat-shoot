@@ -299,7 +299,8 @@ jQuery ($) ->
   chat = ->
     msg = $("input#message").val()
     $("input#message").val ""
-    _socket.emit "player-message", msg
+    _socket.json.emit "player-message",
+      playmess:msg
   $("button#btn").click ->
     setTimeout(chat, 30)         # 押し下げ判定（タイムラグ付）
 

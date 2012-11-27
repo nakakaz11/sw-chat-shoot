@@ -317,7 +317,9 @@ jQuery(function($) {
     var msg;
     msg = $("input#message").val();
     $("input#message").val("");
-    return _socket.emit("player-message", msg);
+    return _socket.json.emit("player-message", {
+      playmess: msg
+    });
   };
   $("button#btn").click(function() {
     return setTimeout(chat, 30);
