@@ -27,7 +27,16 @@ app.get "/gameover", routes.gameover
 server = http.createServer(app)
 server.listen app.get("port"), ->
   console.log "listening on port " + app.get("port")
-
+# mongoose - 1127 ------#
+mongoose = require('mongoose')
+Schema = mongoose.Schema   # スキーマ定義
+UserSchema = new Schema
+  message: String
+  date: Date
+uri = process.env.MONGOHQ_URL || 'mongodb://localhost/mongo_data' #for HEROKU
+mongoose.connect(uri)
+User = mongoose.model('User', UserSchema)  #スキーマの設定
+# mongoose - 1127 ------#
 io = require("socket.io").listen(server, "log level": 1)
 io.configure ->  # heroku Only Use Socket.IO server object
   io.set("transports", ["xhr-polling"])
@@ -51,7 +60,24 @@ class SwSockClient extends SwSocket
     super(socket,keyname)  # 親make()
     socket.on keyname, (data) ->  # クライアント側にイベント送
       socket.json.emit keyname,
+        userId: socket.handshake.userId
         playmess: data
+      @makeMongoDB(data)
+  # mongoose - 1127 ------#
+  makeMongoDB: (data) ->  # DB登録
+    user = new User
+    user.MOID = data.userId
+    user.playmess = data.playmess
+    user.date = new Date()
+    user?.save (err) ->
+      if err then console.info err # log
+    User.find (err,userData) ->
+      socket.json.emit keyname userData
+    if keyname = "deleteDB" then @deleteMongoDB()
+  deleteMongoDB: (socket,keyname) ->   # DB削除
+    socket.emit keyname
+    socket.broadcast.json.emit keyname
+    User.find().remove()
 
 # override -------#
 p_u = new SwSocket
@@ -59,7 +85,6 @@ b_c = new SwSocket
 c_c = new SwSocket
 d_u = new SwSocket
 p_m = new SwSockClient
-
 # DO it -------#
 io.sockets.on "connection", (socket) ->
   socket.handshake.userId = _userId
@@ -72,31 +97,6 @@ io.sockets.on "connection", (socket) ->
   d_u.make(socket,'disconnect')
   p_m.make(socket,'player-message')
   return
-  ###
-  # game -------------------------#
-  socket.on "player-update", (data) ->
-    socket.broadcast.json.emit "player-update",
-      userId: socket.handshake.userId
-      data: data
-
-  socket.on "bullet-create", (data) ->
-    socket.broadcast.json.emit "bullet-create",
-      # 他全員に切断した人のsessionIdを送る。
-      userId: socket.handshake.userId
-      data: data
-
-  socket.on "disconnect", ->    # クライアントが切断したら実行される
-    socket.broadcast.json.emit "disconnect",
-      userId: socket.handshake.userId
-  #chat -------------------------#
-  # jsonでやりとりに変更〜1119
-  socket.on 'player-message', (data) ->  # クライアント側からのイベントを受取
-    socket.json.emit 'player-message', # handshake io
-      message: data
-    socket.broadcast.json.emit 'player-message', # handshake io
-      userId: socket.handshake.userId
-      message: data
-  ###
 
 # サニタイズ（いまは使わん）sanitized = escapeHTML(msg)
 ###

@@ -273,14 +273,16 @@ jQuery ($) ->
       user.txt = $("<dt>" + date + "</dt><dd>" +data.playmess+":ID"+user.userId+"</dd>")
         .attr("data-user-id", user.userId)
       $("#list").prepend(user.txt)  # リストDOM挿入
-      _userMap[data.userId] = user
     else                                        # あったらoverride
       user = _userMap[data.userId]
       user.txt = $("<dt>" + date + "</dt><dd>" +data.playmess+":ID"+user.userId+"</dd>")
         .attr("data-user-id", user.userId)
       $("#list").prepend(user.txt)  # リストDOM挿入
-      _userMap[data.userId] = user
 
+  ###  DB仕込むときにはfs使って入れるかな〜
+  _socket.on "data-updateDB", (data) ->
+    console.log data
+  ###
   # セッション切断時
   _socket.on "disconnect", (data) ->
     #user = _userMap[data.userId]
@@ -292,11 +294,9 @@ jQuery ($) ->
   chat = ->
     msg = $("input#message").val()
     $("input#message").val ""
+    #_socket.emit('message:send', { message: msg });
     _socket.emit "player-message", msg
   $("button#btn").click ->
     setTimeout(chat, 30)         # 押し下げ判定（タイムラグ付）
-  $("button#btnDbDel").click ->
-    _socket.emit('deleteDB')
-    $('#list').empty() # 表示も消す (仮)
 
 
