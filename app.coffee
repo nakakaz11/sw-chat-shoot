@@ -75,7 +75,7 @@ class SwSockClient extends SwSocket
       if err then console.info err # log
     User.find (err,userMGData) ->
       socket.json.emit keyname userMGData
-    if keyname is "deleteDB" then deleteMongoDB()
+    #if keyname is "deleteDB" then deleteMongoDB()
   deleteMongoDB = (socket,keyname) ->   # DB削除
     socket.emit keyname
     socket.broadcast.json.emit keyname
