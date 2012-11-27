@@ -52,7 +52,7 @@ UserSchema = new Schema({
   date: Date
 });
 
-uri = process.env.MONGOHQ_URL;
+uri = process.env.MONGOHQ_URL || 'mongodb://localhost/makeMongoDB';
 
 mongoose.connect(uri);
 

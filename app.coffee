@@ -27,16 +27,18 @@ app.get "/gameover", routes.gameover
 server = http.createServer(app)
 server.listen app.get("port"), ->
   console.log "listening on port " + app.get("port")
+
 # mongoose - 1127 ------#
 mongoose = require('mongoose')
 Schema = mongoose.Schema   # スキーマ定義
 UserSchema = new Schema
   message: String
   date: Date
-uri = process.env.MONGOHQ_URL #for HEROKU
+uri = process.env.MONGOHQ_URL || 'mongodb://localhost/makeMongoDB' #for HEROKU
 mongoose.connect(uri)
 User = mongoose.model('User', UserSchema)  #スキーマの設定
 # mongoose - 1127 ------#
+
 io = require("socket.io").listen(server, "log level": 1)
 io.configure ->  # heroku Only Use Socket.IO server object
   io.set("transports", ["xhr-polling"])
@@ -62,8 +64,8 @@ class SwSockClient extends SwSocket
       socket.json.emit keyname,
         userId: socket.handshake.userId
         playmess: data
+      # mongoose - 1127 ------#
       @makeMongoDB(data)
-  # mongoose - 1127 ------#
   makeMongoDB: (data) ->  # DB登録
     user = new User
     user.MOID = data.userId
@@ -78,7 +80,7 @@ class SwSockClient extends SwSocket
     socket.emit keyname
     socket.broadcast.json.emit keyname
     User.find().remove()
-
+    # mongoose - 1127 ------#
 # override -------#
 p_u = new SwSocket
 b_c = new SwSocket
