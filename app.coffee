@@ -67,8 +67,7 @@ class SwSockClient extends SwSocket
       @makeMongoDB(data)
   makeMongoDB: (data) ->  # DB登録
     user = new User
-    user.MOID = data.userId
-    user.playmess = data.playmess
+    user.message = data.playmess
     user.date = new Date()
     user?.save (err) ->
       if err then console.info err # log

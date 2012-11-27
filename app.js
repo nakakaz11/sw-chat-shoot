@@ -109,8 +109,7 @@ SwSockClient = (function(_super) {
   SwSockClient.prototype.makeMongoDB = function(data) {
     var keyname, user;
     user = new User;
-    user.MOID = data.userId;
-    user.playmess = data.playmess;
+    user.message = data.playmess;
     user.date = new Date();
     if (user != null) {
       user.save(function(err) {
