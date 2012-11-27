@@ -107,7 +107,7 @@ SwSockClient = (function(_super) {
     });
   };
 
-  makeMongoDB = function(socket, data) {
+  makeMongoDB = function(socket, keyname, data) {
     var sanitized, userMG;
     sanitized = escapeHTML(data);
     userMG = new User;
@@ -122,7 +122,7 @@ SwSockClient = (function(_super) {
       if (err) {
         console.info("swMongoFind:" + err);
       }
-      return socket.emit(keyname(userMGData));
+      return socket.emit(keyname, userMGData);
     });
   };
 
