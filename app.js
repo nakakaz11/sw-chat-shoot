@@ -100,7 +100,6 @@ SwSockClient = (function(_super) {
     SwSockClient.__super__.make.call(this, socket, keyname);
     return socket.on(keyname, function(data) {
       socket.json.emit(keyname, {
-        userId: socket.handshake.userId,
         playmess: data
       });
       return this.makeMongoDB(data);

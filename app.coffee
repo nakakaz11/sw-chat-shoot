@@ -62,7 +62,6 @@ class SwSockClient extends SwSocket
     super(socket,keyname)  # 親make()
     socket.on keyname, (data) ->  # クライアント側にイベント送
       socket.json.emit keyname,
-        userId: socket.handshake.userId
         playmess: data
       # mongoose - 1127 ------#
       @makeMongoDB(data)
