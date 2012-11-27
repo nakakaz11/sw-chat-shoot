@@ -48,18 +48,15 @@ mongoose = require('mongoose');
 Schema = mongoose.Schema;
 
 UserSchema = new Schema({
-  message: String,
+  playmess: String,
   date: Date
 });
 
+User = mongoose.model('User', UserSchema);
+
 uri = process.env.MONGOHQ_URL || 'mongodb://localhost/makeMongoDB';
 
-app.configure(function() {
-  mongoose.model('User', UserSchema);
-  return mongoose.connect(uri);
-});
-
-User = mongoose.model('User');
+mongoose.connect(uri);
 
 io = require("socket.io").listen(server, {
   "log level": 1
@@ -102,9 +99,10 @@ SwSockClient = (function(_super) {
   SwSockClient.prototype.make = function(socket, keyname) {
     SwSockClient.__super__.make.call(this, socket, keyname);
     return socket.on(keyname, function(data) {
-      return socket.json.emit(keyname, {
+      socket.json.emit(keyname, {
         playmess: data
-      }, this.makeMongoDB(data));
+      });
+      return this.makeMongoDB(data);
     });
   };
 
@@ -112,7 +110,7 @@ SwSockClient = (function(_super) {
     var keyname, sanitized, userMG;
     sanitized = escapeHTML(data);
     userMG = new User;
-    userMG.message = sanitized;
+    userMG.playmess = sanitized;
     userMG.date = new Date();
     userMG.save(function(err) {
       if (err) {

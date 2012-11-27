@@ -32,13 +32,12 @@ server.listen app.get("port"), ->
 mongoose = require('mongoose')
 Schema = mongoose.Schema   # スキーマ定義
 UserSchema = new Schema
-  message: String
+  #userId: Number
+  playmess: String
   date: Date
-uri = process.env.MONGOHQ_URL || 'mongodb://localhost/makeMongoDB' #for HEROKU
-app.configure ->
-  mongoose.model('User', UserSchema)  #スキーマの設定
-  mongoose.connect(uri)
-User = mongoose.model('User')
+User = mongoose.model('User', UserSchema)  #スキーマの設定
+uri = process.env.MONGOHQ_URL || 'mongodb://localhost/makeMongoDB' #Connect for HEROKU
+mongoose.connect(uri)
 # mongoose - 1127 ------#
 
 io = require("socket.io").listen(server, "log level": 1)
@@ -65,12 +64,12 @@ class SwSockClient extends SwSocket
     socket.on keyname, (data) ->  # クライアント側にイベント送
       socket.json.emit keyname,
         playmess: data
-        # mongoose - 1127 ------#
-        @makeMongoDB(data)
+      # mongoose - 1127 ------#
+      @makeMongoDB(data)
   makeMongoDB: (data) ->  # DB登録
     sanitized = escapeHTML(data)
     userMG = new User
-    userMG.message = sanitized
+    userMG.playmess = sanitized
     userMG.date = new Date()
     userMG.save (err) ->
       if err then console.info err # log

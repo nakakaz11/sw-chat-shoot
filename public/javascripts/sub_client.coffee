@@ -270,7 +270,7 @@ jQuery ($) ->
     else
       $('#list').empty()
       $.each (k,val) ->
-       $('#list').prepend($("<dt>" + val.date + "</dt><dd>" +val.message+":ID"+data.userId+"</dd>"))
+       $('#list').prepend($("<dt>" + val.date + "</dt><dd>" +val.playmess+"</dd>"))
 
     ###date = new Date()
     if _userMap[data.userId] is `undefined`     # なかったら作る

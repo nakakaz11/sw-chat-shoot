@@ -293,7 +293,7 @@ jQuery(function($) {
     } else {
       $('#list').empty();
       return $.each(function(k, val) {
-        return $('#list').prepend($("<dt>" + val.date + "</dt><dd>" + val.message + ":ID" + data.userId + "</dd>"));
+        return $('#list').prepend($("<dt>" + val.date + "</dt><dd>" + val.playmess + "</dd>"));
       });
     }
     /*date = new Date()
