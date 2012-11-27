@@ -266,12 +266,12 @@ jQuery ($) ->
   #サーバーが受け取ったメッセージを返して実行する
   _socket.on "player-message", (data) ->
     console.log("SW-UserLog:"+data.userId+ ":" +data.playmess) # log -----------#
-    if data.length is 0 then return
-    else
-      $('#list').empty()
-      $.each (k,val) ->
-       $('#list').prepend($("<dt>" + val.date + "</dt><dd>" +val.playmess+"</dd>"))
-
+    if data.length isnt 0
+      user = _userMap[data.userId]
+      user.txt = $("<dt>" + date + "</dt><dd>" +data.playmess+":ID"+user.userId+"</dd>")
+        .attr("data-user-id", user.userId)
+      $("#list").prepend(user.txt)  # リストDOM挿入
+      _userMap[data.userId] = user
     ###date = new Date()
     if _userMap[data.userId] is `undefined`     # なかったら作る
       user =    # userのjson make

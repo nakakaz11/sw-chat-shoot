@@ -287,14 +287,13 @@ jQuery(function($) {
     return _keyMap[e.keyCode] = false;
   });
   _socket.on("player-message", function(data) {
+    var user;
     console.log("SW-UserLog:" + data.userId + ":" + data.playmess);
-    if (data.length === 0) {
-
-    } else {
-      $('#list').empty();
-      return $.each(function(k, val) {
-        return $('#list').prepend($("<dt>" + val.date + "</dt><dd>" + val.playmess + "</dd>"));
-      });
+    if (data.length !== 0) {
+      user = _userMap[data.userId];
+      user.txt = $("<dt>" + date + "</dt><dd>" + data.playmess + ":ID" + user.userId + "</dd>").attr("data-user-id", user.userId);
+      $("#list").prepend(user.txt);
+      return _userMap[data.userId] = user;
     }
     /*date = new Date()
     if _userMap[data.userId] is `undefined`     # なかったら作る
