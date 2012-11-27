@@ -65,8 +65,8 @@ class SwSockClient extends SwSocket
       socket.json.emit keyname,
         playmess: data
       # mongoose - 1127 ------#
-      @makeMongoDB(data)
-  makeMongoDB: (data) ->  # DB登録
+      makeMongoDB(data)
+  makeMongoDB = (data) ->  # DB登録
     sanitized = escapeHTML(data)
     userMG = new User
     userMG.playmess = sanitized
@@ -75,8 +75,8 @@ class SwSockClient extends SwSocket
       if err then console.info err # log
     User.find (err,userMGData) ->
       socket.json.emit keyname userMGData
-    if keyname = "deleteDB" then @deleteMongoDB()
-  deleteMongoDB: (socket,keyname) ->   # DB削除
+    if keyname = "deleteDB" then deleteMongoDB()
+  deleteMongoDB = (socket,keyname) ->   # DB削除
     socket.emit keyname
     socket.broadcast.json.emit keyname
     User.find().remove()

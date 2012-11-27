@@ -89,6 +89,7 @@ SwSocket = (function() {
 })();
 
 SwSockClient = (function(_super) {
+  var deleteMongoDB, makeMongoDB;
 
   __extends(SwSockClient, _super);
 
@@ -102,11 +103,11 @@ SwSockClient = (function(_super) {
       socket.json.emit(keyname, {
         playmess: data
       });
-      return this.makeMongoDB(data);
+      return makeMongoDB(data);
     });
   };
 
-  SwSockClient.prototype.make.makeMongoDB = function(data) {
+  makeMongoDB = function(data) {
     var keyname, sanitized, userMG;
     sanitized = escapeHTML(data);
     userMG = new User;
@@ -121,11 +122,11 @@ SwSockClient = (function(_super) {
       return socket.json.emit(keyname(userMGData));
     });
     if (keyname = "deleteDB") {
-      return this.deleteMongoDB();
+      return deleteMongoDB();
     }
   };
 
-  SwSockClient.prototype.deleteMongoDB = function(socket, keyname) {
+  deleteMongoDB = function(socket, keyname) {
     socket.emit(keyname);
     socket.broadcast.json.emit(keyname);
     return User.find().remove();
