@@ -268,6 +268,7 @@ jQuery ($) ->
     console.log("SW-UserLog:"+data.userId+ ":" +data.playmess) # log -----------#
     if data.length isnt 0
       user = _userMap[data.userId]
+      date = new Date()
       user.txt = $("<dt>" + date + "</dt><dd>" +data.playmess+":ID"+user.userId+"</dd>")
         .attr("data-user-id", user.userId)
       $("#list").prepend(user.txt)  # リストDOM挿入
