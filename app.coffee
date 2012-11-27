@@ -72,13 +72,14 @@ class SwSockClient extends SwSocket
     userMG.playmess = sanitized
     userMG.date = new Date()
     userMG.save (err) ->
-      if err then console.info err # log
+      if err then console.info "swMongoSave:"+err # log
     User.find (err,userMGData) ->
-      socket.json.emit keyname userMGData
+      if err then console.info "swMongoFind:"+err # log
+      socket.emit keyname userMGData
     #if keyname is "deleteDB" then deleteMongoDB()
   deleteMongoDB = (socket,keyname) ->   # DB削除
     socket.emit keyname
-    socket.broadcast.json.emit keyname
+    socket.broadcast.emit keyname
     User.find().remove()
     # mongoose - 1127 ------#
 # override -------#

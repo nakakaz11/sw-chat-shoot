@@ -115,17 +115,20 @@ SwSockClient = (function(_super) {
     userMG.date = new Date();
     userMG.save(function(err) {
       if (err) {
-        return console.info(err);
+        return console.info("swMongoSave:" + err);
       }
     });
     return User.find(function(err, userMGData) {
-      return socket.json.emit(keyname(userMGData));
+      if (err) {
+        console.info("swMongoFind:" + err);
+      }
+      return socket.emit(keyname(userMGData));
     });
   };
 
   deleteMongoDB = function(socket, keyname) {
     socket.emit(keyname);
-    socket.broadcast.json.emit(keyname);
+    socket.broadcast.emit(keyname);
     return User.find().remove();
   };
 
