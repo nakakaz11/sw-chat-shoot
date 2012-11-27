@@ -32,7 +32,7 @@ server.listen app.get("port"), ->
 mongoose = require('mongoose')
 Schema = mongoose.Schema   # スキーマ定義
 UserSchema = new Schema
-  #userId: Number
+  userId: Number
   playmess: String
   date: Date
 User = mongoose.model('User', UserSchema)  #スキーマの設定
@@ -66,22 +66,25 @@ class SwSockClient extends SwSocket
         playmess: data
       # mongoose - 1127 ------#
       makeMongoDB(socket,keyname,data)
+      if keyname is "deleteDB" then deleteMongoDB(socket,keyname)
+
   makeMongoDB = (socket,keyname,data) ->  # DB登録
     #sanitized = escapeHTML(data)
     userMG = new User
-    userMG.playmess = data
+    userMG.playmess = data.userId
+    userMG.playmess = data.playmess
     userMG.date = new Date()
     userMG.save (err) ->
       if err then console.info "swMongoSave:"+err # log
     User.find (err,userMGData) ->
       if err then console.info "swMongoFind:"+err # log
-      socket.emit keyname,userMGData
-    #if keyname is "deleteDB" then deleteMongoDB(socket,keyname)
+      socket.json.emit keyname,(userMGData)
   deleteMongoDB = (socket,keyname) ->   # DB削除
+    User.find().remove()
     socket.emit keyname
     socket.broadcast.emit keyname
-    User.find().remove()
     # mongoose - 1127 ------#
+
 # override -------#
 p_u = new SwSocket
 b_c = new SwSocket

@@ -268,11 +268,11 @@ jQuery ($) ->
     console.log("SW-UserLog:"+data.userId+ ":" +data.playmess) # log -----------#
     if data.length isnt 0
       user = _userMap[data.userId]
-      date = new Date()
-      user.txt = $("<dt>" + date + "</dt><dd>" +data.playmess+":ID"+user.userId+"</dd>")
-        .attr("data-user-id", user.userId)
+      user.txt = $("<dt>" + data.date + "</dt><dd>" +data.playmess+":ID"+data.userId+"</dd>")
+        .attr("data-user-id", data.userId)
       $("#list").prepend(user.txt)  # リストDOM挿入
       _userMap[data.userId] = user
+
     ###date = new Date()
     if _userMap[data.userId] is `undefined`     # なかったら作る
       user =    # userのjson make
@@ -305,6 +305,6 @@ jQuery ($) ->
 
   $("button#btnDbDel").click ->
     _socket.emit('deleteDB')
-    $('#list').empty() # 表示も消す (仮)
+    #$('#list').empty() # 表示も消す (仮)
 
 
