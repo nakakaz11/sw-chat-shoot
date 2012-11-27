@@ -295,6 +295,7 @@ jQuery ($) ->
     _socket.emit "player-message", msg
   $("button#btn").click ->
     setTimeout(chat, 30)         # 押し下げ判定（タイムラグ付）
+
   $("button#btnDbDel").click ->
     _socket.emit('deleteDB')
     $('#list').empty() # 表示も消す (仮)
