@@ -108,12 +108,6 @@ SwSockClient = (function(_super) {
           return console.info("swMongoSave:" + err);
         }
       });
-      User.find(function(err, userMGD) {
-        if (err) {
-          console.info("swMongoFind:" + err);
-        }
-        return socket.emit(keyname, userMGD);
-      });
       if (keyname === "deleteDB") {
         User.find().remove();
         return socket.emit(keyname);
@@ -142,6 +136,12 @@ _userId = 0;
 io.sockets.on("connection", function(socket) {
   socket.handshake.userId = _userId;
   _userId++;
+  User.find(function(err, userMGD) {
+    if (err) {
+      console.info("swMongoFind:" + err);
+    }
+    return socket.emit(keyname, userMGD);
+  });
   p_u.make(socket, 'player-update');
   b_c.make(socket, 'bullet-create');
   c_c.make(socket, 'canvas-create');

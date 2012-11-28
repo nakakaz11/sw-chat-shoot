@@ -59,16 +59,13 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
   make: (socket,keyname) ->  # chat用
     #super(socket,keyname)  # 親make()
     socket.on keyname, (data) ->  # クライアント側にイベント送
-      # mongoose - 1127 ------#
+      # mongoose -------#
       userMG = new User
       userMG.userId = socket.handshake.userId
       userMG.playmess = data.playmess
       userMG.date = new Date().toLocaleString()
       userMG.save (err) ->       # DB write
         if err then console.info "swMongoSave:"+err # log
-      User.find (err,userMGD) -> # DB read
-        if err then console.info "swMongoFind:"+err # log
-        socket.emit keyname, userMGD
 
       if keyname is "deleteDB"  # DB削除
         User.find().remove()
@@ -90,6 +87,11 @@ _userId = 0
 io.sockets.on "connection", (socket) ->
   socket.handshake.userId = _userId
   _userId++
+  # mongoose -------#
+  User.find (err,userMGD) -> # DB read
+    if err then console.info "swMongoFind:"+err # log
+    socket.emit keyname, userMGD
+
 # connection -------------------------#
   p_u.make(socket,'player-update')
   b_c.make(socket,'bullet-create')
