@@ -283,10 +283,8 @@ jQuery(function($) {
     }
   });
   _socket.on("disconnect", function(data) {
-    var user;
     if (data.length !== 0) {
-      user = _userMap[data.userId];
-      return user.txt.remove();
+      return $("#list").empty();
     }
   });
   chat = function() {
