@@ -277,7 +277,7 @@ jQuery(function($) {
           userId: val.userId
         };
         user.txt = $("<dt>" + val.date.toLocaleString() + "</dt><dd>" + val.playmess + ":ID" + val.userId + "</dd>").attr("data-user-id", data.userId);
-        $("#list").empty().prepend(user.txt);
+        $("#list").prepend(user.txt);
       }
       return _userMap[data.userId] = user;
     }
