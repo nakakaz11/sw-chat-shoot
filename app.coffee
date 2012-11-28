@@ -86,11 +86,13 @@ io.sockets.on "connection", (socket) ->
   socket.handshake.userId = _userId
   _userId++
   # mongoose -------#
+  ###
   User.find (err,userMGD) -> # DB read
     if err then console.info "swMongoFind:"+err # log
     else
       socket.emit 'player-message', userMGD
       socket.broadcast.emit 'player-message', userMGD
+  ###
 
 # connection -------------------------#
   p_u.make(socket,'player-update')

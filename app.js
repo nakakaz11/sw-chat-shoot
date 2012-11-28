@@ -133,14 +133,14 @@ _userId = 0;
 io.sockets.on("connection", function(socket) {
   socket.handshake.userId = _userId;
   _userId++;
-  User.find(function(err, userMGD) {
-    if (err) {
-      return console.info("swMongoFind:" + err);
-    } else {
-      socket.emit('player-message', userMGD);
-      return socket.broadcast.emit('player-message', userMGD);
-    }
-  });
+  /*
+    User.find (err,userMGD) -> # DB read
+      if err then console.info "swMongoFind:"+err # log
+      else
+        socket.emit 'player-message', userMGD
+        socket.broadcast.emit 'player-message', userMGD
+  */
+
   p_u.make(socket, 'player-update');
   b_c.make(socket, 'bullet-create');
   c_c.make(socket, 'canvas-create');
