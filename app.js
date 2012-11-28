@@ -108,7 +108,7 @@ SwSockClient = (function(_super) {
           return console.info("swMongoSave:" + err);
         }
       });
-      User.find(function(err, userMGData) {
+      userMG.find(function(err, userMGData) {
         if (err) {
           console.info("swMongoFind:" + err);
         }

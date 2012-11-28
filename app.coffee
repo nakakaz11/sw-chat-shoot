@@ -69,7 +69,7 @@ class SwSockClient extends SwSocket
       userMG.date = new Date().toLocaleString()
       userMG.save (err) ->
         if err then console.info "swMongoSave:"+err # log
-      User.find (err,userMGData) ->
+      userMG.find (err,userMGData) ->
         if err then console.info "swMongoFind:"+err # log
         socket.json.emit keyname,
           userMGData
