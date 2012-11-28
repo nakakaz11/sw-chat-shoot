@@ -265,7 +265,7 @@ jQuery ($) ->
   #chat -------------------------#
   #サーバーが受け取ったメッセージを返して実行する
   _socket.on "player-message", (data) ->
-    console.log("SW-UserLog:"+data.userId+ ":" +data.playmess) # log -----------#
+    console.log("SW-UserLog:"+data+ ":" +data.playmess) # log -----------#
     if data.length isnt 0
       user =    # userのjson make
         userId: data.userId
