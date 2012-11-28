@@ -64,20 +64,20 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
       userMG.userId = socket.handshake.userId
       userMG.playmess = data.playmess
       userMG.date = new Date().toLocaleString()
-      userMG.save (err) ->
+      userMG.save (err) ->       # DB write
         if err then console.info "swMongoSave:"+err # log
-      User.find (err,userMGD) ->
+      User.find (err,userMGD) -> # DB read
         if err then console.info "swMongoFind:"+err # log
         socket.emit keyname, userMGD
 
-      if keyname is "deleteDB" then deleteMongoDB(socket,keyname)
+      if keyname is "deleteDB"  # DB削除
+        User.find().remove()
+        socket.emit keyname
 
     #sanitized = escapeHTML(data) # これobj前にやんなきゃね。
   deleteMongoDB = (socket,keyname) ->   # DB削除
     #socket.emit keyname
     #socket.broadcast.emit keyname
-    User.find().remove()
-    socket.json.emit keyname,(userMGData)
 
 # override -------#
 p_u = new SwSocket

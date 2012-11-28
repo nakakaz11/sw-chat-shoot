@@ -115,15 +115,13 @@ SwSockClient = (function(_super) {
         return socket.emit(keyname, userMGD);
       });
       if (keyname === "deleteDB") {
-        return deleteMongoDB(socket, keyname);
+        User.find().remove();
+        return socket.emit(keyname);
       }
     });
   };
 
-  deleteMongoDB = function(socket, keyname) {
-    User.find().remove();
-    return socket.json.emit(keyname, userMGData);
-  };
+  deleteMongoDB = function(socket, keyname) {};
 
   return SwSockClient;
 
