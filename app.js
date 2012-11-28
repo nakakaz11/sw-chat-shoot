@@ -100,10 +100,12 @@ SwSockClient = (function(_super) {
     return socket.on(keyname, function(data) {
       var userMG;
       User.find(function(err, userMGData) {
+        var dataU;
         if (err) {
           console.info("swMongoFind:" + err);
         }
-        return socket.json.emit(keyname, userMGData);
+        dataU = JSON.stringify(userMGData);
+        return socket.json.emit(keyname, dataU);
       });
       userMG = new User;
       userMG.userId = socket.handshake.userId;

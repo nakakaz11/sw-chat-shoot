@@ -61,8 +61,8 @@ class SwSockClient extends SwSocket
     socket.on keyname, (data) ->  # クライアント側にイベント送
       User.find (err,userMGData) ->
         if err then console.info "swMongoFind:"+err # log
-        socket.json.emit keyname,
-          userMGData
+        dataU = JSON.stringify userMGData
+        socket.json.emit keyname, dataU
       #socket.json.emit keyname,
         #playmess: data
       # mongoose - 1127 ------#

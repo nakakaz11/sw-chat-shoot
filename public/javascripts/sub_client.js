@@ -288,7 +288,7 @@ jQuery(function($) {
   });
   _socket.on("player-message", function(data) {
     var user;
-    console.log("SW-UserLog:" + data.users.userId + ":" + data.users.playmess);
+    console.log("SW-UserLog:" + data.userId + ":" + data.playmess);
     if (data.length !== 0) {
       user = {
         userId: data.userId
