@@ -70,11 +70,11 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
       #sanitized = escapeHTML(data) # これobj前にやんなきゃね。
       User.find (err,userMGD) -> # DB read
         #if err then console.info "swMongoFind:"+err # log
-        socket.emit 'player-message', userMGD   # 側にイベント送
-        socket.broadcast.emit 'player-message', userMGD  # 以外に送
+        #socket.emit 'player-message', userMGD   # 自分にイベント送
+        socket.broadcast.emit 'player-message', userMGD  # 自分以外に送
   delete: (socket,keyname) ->  # chat削除用
       if keyname is 'deleteDB'  # DB削除
-        User.find().remove()   # {userId:userMG.userId}
+        User.find().remove({userId:userMG.userId})   #
         #socket.emit keyname
         #socket.broadcast.emit keyname
 

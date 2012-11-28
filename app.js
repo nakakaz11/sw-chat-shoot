@@ -108,7 +108,6 @@ SwSockClient = (function(_super) {
         }
       });
       return User.find(function(err, userMGD) {
-        socket.emit('player-message', userMGD);
         return socket.broadcast.emit('player-message', userMGD);
       });
     });
@@ -116,7 +115,9 @@ SwSockClient = (function(_super) {
 
   SwSockClient.prototype["delete"] = function(socket, keyname) {
     if (keyname === 'deleteDB') {
-      return User.find().remove();
+      return User.find().remove({
+        userId: userMG.userId
+      });
     }
   };
 
