@@ -48,6 +48,7 @@ mongoose = require('mongoose');
 Schema = mongoose.Schema;
 
 UserSchema = new Schema({
+  userId: Number,
   playmess: String,
   date: Date
 });
@@ -100,17 +101,18 @@ SwSockClient = (function(_super) {
   SwSockClient.prototype.make = function(socket, keyname) {
     SwSockClient.__super__.make.call(this, socket, keyname);
     return socket.on(keyname, function(data) {
-      socket.json.emit(keyname, {
-        playmess: data
-      });
-      return makeMongoDB(socket, keyname, data);
+      makeMongoDB(socket, keyname, data);
+      if (keyname === "deleteDB") {
+        return deleteMongoDB(socket, keyname);
+      }
     });
   };
 
   makeMongoDB = function(socket, keyname, data) {
     var userMG;
     userMG = new User;
-    userMG.playmess = data;
+    userMG.userId = data.userId;
+    userMG.playmess = data.playmess;
     userMG.date = new Date();
     userMG.save(function(err) {
       if (err) {
@@ -121,13 +123,11 @@ SwSockClient = (function(_super) {
       if (err) {
         console.info("swMongoFind:" + err);
       }
-      return socket.emit(keyname, userMGData);
+      return socket.json.emit(keyname, userMGData);
     });
   };
 
   deleteMongoDB = function(socket, keyname) {
-    socket.emit(keyname);
-    socket.broadcast.emit(keyname);
     return User.find().remove();
   };
 

@@ -32,7 +32,7 @@ server.listen app.get("port"), ->
 mongoose = require('mongoose')
 Schema = mongoose.Schema   # スキーマ定義
 UserSchema = new Schema
-  #userId: Number
+  userId: Number
   playmess: String
   date: Date
 User = mongoose.model('User', UserSchema)  #スキーマの設定
@@ -59,27 +59,29 @@ class SwSocket
 class SwSockClient extends SwSocket
   #constructor: ->
     # super(@keyname)と等価
-  make: (socket,keyname) ->
+  make: (socket,keyname) ->  # chat用
     super(socket,keyname)  # 親make()
     socket.on keyname, (data) ->  # クライアント側にイベント送
-      socket.json.emit keyname,
-        playmess: data
+      #socket.json.emit keyname,
+        #playmess: data
       # mongoose - 1127 ------#
       makeMongoDB(socket,keyname,data)
-  makeMongoDB = (socket,keyname,data) ->  # DB登録
+      if keyname is "deleteDB" then deleteMongoDB(socket,keyname)
+
+  makeMongoDB = (socket,keyname,data) ->  # mongoDB登録
     #sanitized = escapeHTML(data)
     userMG = new User
-    userMG.playmess = data
+    userMG.userId = data.userId
+    userMG.playmess = data.playmess
     userMG.date = new Date()
     userMG.save (err) ->
       if err then console.info "swMongoSave:"+err # log
     User.find (err,userMGData) ->
       if err then console.info "swMongoFind:"+err # log
-      socket.emit keyname,userMGData
-    #if keyname is "deleteDB" then deleteMongoDB(socket,keyname)
+      socket.json.emit keyname,userMGData
   deleteMongoDB = (socket,keyname) ->   # DB削除
-    socket.emit keyname
-    socket.broadcast.emit keyname
+    #socket.emit keyname
+    #socket.broadcast.emit keyname
     User.find().remove()
     # mongoose - 1127 ------#
 # override -------#

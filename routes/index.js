@@ -1,5 +1,5 @@
 /* GET home page. */
-var title = 'SW ShootingApp+ChatApp(node.js+express+socket.io+ejs+coffee)'
+var title = 'SW ShootingApp+ChatApp(node.js+express+socket.io+ejs+mongoHQ+coffee)'
 var date = new Date();
 var jst = date.toLocaleString();
 var desc = '>SW App Test:'+ jst;

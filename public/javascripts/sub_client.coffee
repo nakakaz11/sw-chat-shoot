@@ -273,6 +273,7 @@ jQuery ($) ->
         .attr("data-user-id", user.userId)
       $("#list").prepend(user.txt)  # リストDOM挿入
       _userMap[data.userId] = user
+
     ###date = new Date()
     if _userMap[data.userId] is `undefined`     # なかったら作る
       user =    # userのjson make
