@@ -68,7 +68,7 @@ class SwSockClient extends SwSocket
   makeMongoDB = (socket,keyname,data) ->  # mongoDB登録
     #sanitized = escapeHTML(data)
     userMG = new User
-    userMG.userId = data.userId
+    userMG.userId = socket.handshake.userId
     userMG.playmess = data.playmess
     userMG.date = new Date().toLocaleString()
     userMG.save (err) ->

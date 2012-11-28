@@ -109,7 +109,7 @@ SwSockClient = (function(_super) {
   makeMongoDB = function(socket, keyname, data) {
     var userMG;
     userMG = new User;
-    userMG.userId = data.userId;
+    userMG.userId = socket.handshake.userId;
     userMG.playmess = data.playmess;
     userMG.date = new Date().toLocaleString();
     userMG.save(function(err) {
