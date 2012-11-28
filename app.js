@@ -98,6 +98,10 @@ SwSockClient = (function(_super) {
   SwSockClient.prototype.make = function(socket, keyname) {
     return socket.on(keyname, function(data) {
       var userMG;
+      User.find(function(err, userMGD) {
+        socket.emit('player-message', userMGD);
+        return socket.broadcast.emit('player-message', userMGD);
+      });
       userMG = new User;
       userMG.userId = socket.handshake.userId;
       userMG.playmess = data.playmess;
@@ -107,17 +111,11 @@ SwSockClient = (function(_super) {
           return console.info("swMongoSave:" + err);
         }
       });
-      User.find(function(err, userMGD) {
-        socket.emit('player-message', userMGD);
-        return socket.broadcast.emit('player-message', userMGD);
-      });
       if (keyname === 'deleteDB') {
         return (function() {
-          User.find().remove({
+          return User.find().remove({
             userId: userMG.userId
           });
-          socket.emit(keyname);
-          return socket.broadcast.emit(keyname);
         })();
       }
     });

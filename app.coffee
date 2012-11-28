@@ -61,24 +61,22 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
     #super(socket,keyname)  # 親make()
     socket.on keyname, (data) ->
       # mongoose -------#
+      User.find (err,userMGD) -> # DB read
+        #if err then console.info "swMongoFind:"+err # log
+        socket.emit 'player-message', userMGD   # 側にイベント送
+        socket.broadcast.emit 'player-message', userMGD  # 以外に送
       userMG = new User
       userMG.userId = socket.handshake.userId
       userMG.playmess = data.playmess
       userMG.date = new Date().toLocaleString()
       userMG.save (err) ->       # DB write
         if err then console.info "swMongoSave:"+err # log
-      # mongoose -------#
-      User.find (err,userMGD) -> # DB read
-        #if err then console.info "swMongoFind:"+err # log
-        socket.emit 'player-message', userMGD   # 側にイベント送
-        socket.broadcast.emit 'player-message', userMGD  # 以外に送
-
 
       if keyname is 'deleteDB'  # DB削除
         do ->
           User.find().remove({userId:userMG.userId})
-          socket.emit keyname
-          socket.broadcast.emit keyname
+          #socket.emit keyname
+          #socket.broadcast.emit keyname
 
     #sanitized = escapeHTML(data) # これobj前にやんなきゃね。
 # override -------#
