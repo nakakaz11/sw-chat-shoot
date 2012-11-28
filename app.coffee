@@ -59,23 +59,23 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
   make: (socket,keyname) ->  # chat用
     #super(socket,keyname)  # 親make()
     socket.on keyname, (data) ->  # クライアント側にイベント送
+      # mongoose - 1127 ------#
+      makeMongoDB(socket,keyname,data)
       User.find (err,userMGD) ->
         if err then console.info "swMongoFind:"+err # log
-        #dataUser = JSON.stringify userMGD
-        socket.emit keyname, userMGD
-      # mongoose - 1127 ------#
-      # makeMongoDB(socket,keyname,data)
-      userMG = new User
-      userMG.userId = socket.handshake.userId
-      userMG.playmess = data.playmess
-      userMG.date = new Date().toLocaleString()
-      userMG.save (err) ->
-        if err then console.info "swMongoSave:"+err # log
+        socket.broadcast.emit keyname, userMGD
 
       if keyname is "deleteDB" then deleteMongoDB(socket,keyname)
 
   makeMongoDB = (socket,keyname,data) ->  # mongoDB登録
-    #sanitized = escapeHTML(data)
+    #sanitized = escapeHTML(data) # obj前にやんなきゃね〜
+    userMG = new User
+    userMG.userId = socket.handshake.userId
+    userMG.playmess = data.playmess
+    userMG.date = new Date().toLocaleString()
+    userMG.save (err) ->
+      if err then console.info "swMongoSave:"+err # log
+
   deleteMongoDB = (socket,keyname) ->   # DB削除
     #socket.emit keyname
     #socket.broadcast.emit keyname
