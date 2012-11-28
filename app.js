@@ -140,7 +140,7 @@ io.sockets.on("connection", function(socket) {
     if (err) {
       console.info("swMongoFind:" + err);
     }
-    return socket.emit(keyname, userMGD);
+    return socket.emit('player-message', userMGD);
   });
   p_u.make(socket, 'player-update');
   b_c.make(socket, 'bullet-create');

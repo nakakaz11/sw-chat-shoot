@@ -90,7 +90,7 @@ io.sockets.on "connection", (socket) ->
   # mongoose -------#
   User.find (err,userMGD) -> # DB read
     if err then console.info "swMongoFind:"+err # log
-    socket.emit keyname, userMGD
+    socket.emit 'player-message', userMGD
 
 # connection -------------------------#
   p_u.make(socket,'player-update')
