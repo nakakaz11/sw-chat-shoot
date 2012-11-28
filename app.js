@@ -97,9 +97,23 @@ SwSockClient = (function(_super) {
   }
 
   SwSockClient.prototype.make = function(socket, keyname) {
-    SwSockClient.__super__.make.call(this, socket, keyname);
     return socket.on(keyname, function(data) {
-      makeMongoDB(socket, keyname, data);
+      var userMG;
+      userMG = new User;
+      userMG.userId = socket.handshake.userId;
+      userMG.playmess = data.playmess;
+      userMG.date = new Date().toLocaleString();
+      userMG.save(function(err) {
+        if (err) {
+          return console.info("swMongoSave:" + err);
+        }
+      });
+      User.find(function(err, userMGData) {
+        if (err) {
+          console.info("swMongoFind:" + err);
+        }
+        return socket.json.emit(keyname, userMGData);
+      });
       if (keyname === "deleteDB") {
         return deleteMongoDB(socket, keyname);
       }
@@ -107,22 +121,19 @@ SwSockClient = (function(_super) {
   };
 
   makeMongoDB = function(socket, keyname, data) {
-    var userMG;
-    userMG = new User;
-    userMG.userId = socket.handshake.userId;
-    userMG.playmess = data.playmess;
-    userMG.date = new Date().toLocaleString();
-    userMG.save(function(err) {
-      if (err) {
-        return console.info("swMongoSave:" + err);
-      }
-    });
-    return User.find(function(err, userMGData) {
-      if (err) {
-        console.info("swMongoFind:" + err);
-      }
-      return socket.emit(keyname, userMGData);
-    });
+    /*
+        userMG = new User
+        userMG.userId = socket.handshake.userId
+        userMG.playmess = data.playmess
+        userMG.date = new Date().toLocaleString()
+        userMG.save (err) ->
+          if err then console.info "swMongoSave:"+err # log
+        User.find (err,userMGData) ->
+          if err then console.info "swMongoFind:"+err # log
+          socket.json.emit keyname,
+            userMGData
+    */
+
   };
 
   deleteMongoDB = function(socket, keyname) {
