@@ -287,10 +287,9 @@ jQuery(function($) {
     return _keyMap[e.keyCode] = false;
   });
   _socket.on("player-message", function(data) {
-    var key, user, val;
-    for (key in data) {
-      val = data[key];
-      console.log("SW-UserLog:" + key + ":" + val);
+    var user, val;
+    for (val in data) {
+      console.log("SW-UserLog:" + ":" + val);
     }
     if (data.length !== 0) {
       user = {
