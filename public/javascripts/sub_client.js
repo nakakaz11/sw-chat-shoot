@@ -288,7 +288,7 @@ jQuery(function($) {
   });
   _socket.on("player-message", function(data) {
     var name, user, val, _ref;
-    _ref = data.date;
+    _ref = data.users.date;
     for (name in _ref) {
       val = _ref[name];
       console.log("SW-UserLog:" + ":" + val);
