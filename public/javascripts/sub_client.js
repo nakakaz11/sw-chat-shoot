@@ -283,11 +283,7 @@ jQuery(function($) {
       return _userMap[data.userId] = user;
     }
   });
-  _socket.on("disconnect", function(data) {
-    if (data.length !== 0) {
-      return $("#list").empty();
-    }
-  });
+  _socket.on("disconnect", function(data) {});
   chat = function() {
     var msg;
     msg = $("input#message").val();
