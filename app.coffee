@@ -50,7 +50,7 @@ class SwSocket
   #constructor: (@keyname) ->
     # @keyname = keynameと等価
   make: (socket,keyname) ->
-    socket.on keyname, (data) ->  # クライアント以外にイベント送
+    socket.on keyname, (data) ->
       socket.broadcast.json.emit keyname ,
         userId: socket.handshake.userId
         data: data
@@ -59,7 +59,7 @@ class SwSocket
 class SwSockClient extends SwSocket  # 一応便宜上 extend
   make: (socket,keyname) ->  # chat用
     #super(socket,keyname)  # 親make()
-    socket.on keyname, (data) ->  # クライアント側にイベント送
+    socket.on keyname, (data) ->
       # mongoose -------#
       userMG = new User
       userMG.userId = socket.handshake.userId
@@ -70,12 +70,15 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
       # mongoose -------#
       User.find (err,userMGD) -> # DB read
         #if err then console.info "swMongoFind:"+err # log
-        socket.emit 'player-message', userMGD
+        socket.emit 'player-message', userMGD   # 側にイベント送
+        socket.broadcast.emit 'player-message', userMGD  # 以外に送
+
 
       if keyname is 'deleteDB'  # DB削除
-        User.find().remove({userId:userMG.userId})
-        #socket.emit keyname
-        #socket.broadcast.emit keyname
+        do ->
+          User.find().remove({userId:userMG.userId})
+          socket.emit keyname
+          socket.broadcast.emit keyname
 
     #sanitized = escapeHTML(data) # これobj前にやんなきゃね。
 # override -------#

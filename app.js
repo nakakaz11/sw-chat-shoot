@@ -108,12 +108,17 @@ SwSockClient = (function(_super) {
         }
       });
       User.find(function(err, userMGD) {
-        return socket.emit('player-message', userMGD);
+        socket.emit('player-message', userMGD);
+        return socket.broadcast.emit('player-message', userMGD);
       });
       if (keyname === 'deleteDB') {
-        return User.find().remove({
-          userId: userMG.userId
-        });
+        return (function() {
+          User.find().remove({
+            userId: userMG.userId
+          });
+          socket.emit(keyname);
+          return socket.broadcast.emit(keyname);
+        })();
       }
     });
   };

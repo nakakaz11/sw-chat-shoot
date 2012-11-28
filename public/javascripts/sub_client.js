@@ -300,8 +300,9 @@ jQuery(function($) {
   $("button#btn").click(function() {
     return setTimeout(chat, 30);
   });
-  return $("button#btnDbDel").click(function() {
+  $("button#btnDbDel").click(function() {
     console.info("SW-UserLog:" + ":clicked");
     _socket.emit('deleteDB');
   });
+  return _socket.on("deleteDB", $("#list").prepend($("<dt>Delited</dt><dd>(´･_･`)</dd>")));
 });
