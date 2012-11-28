@@ -39,6 +39,11 @@ UserSchema = new Schema
 User = mongoose.model('User', UserSchema)  #スキーマの設定
 uri = process.env.MONGOHQ_URL || 'mongodb://localhost/makeMongoDB' #Connect for HEROKU
 mongoose.connect(uri)
+# mongoose -------#
+findDB = ->
+  User.find (err,userMGD) -> # DB read
+    if err then console.info "swMongoFind:"+err # log
+    socket.emit 'player-message', userMGD
 # mongoose - 1127 ------#
 
 io = require("socket.io").listen(server, "log level": 1)
@@ -72,15 +77,7 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
         socket.emit keyname
         socket.broadcast.emit keyname
         User.find().remove()
-
     #sanitized = escapeHTML(data) # これobj前にやんなきゃね。
-# mongoose -------#
-findDB = ->
-  User.find (err,userMGD) -> # DB read
-    if err then console.info "swMongoFind:"+err # log
-    else
-      socket.emit 'player-message', userMGD
-
 # override -------#
 p_u = new SwSocket
 b_c = new SwSocket
