@@ -111,8 +111,6 @@ SwSockClient = (function(_super) {
         return socket.emit('player-message', userMGD);
       });
       if (keyname === 'deleteDB') {
-        socket.emit(keyname);
-        socket.broadcast.emit(keyname);
         return User.find().remove();
       }
     });

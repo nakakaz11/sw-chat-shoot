@@ -271,8 +271,8 @@ jQuery ($) ->
 
   $("button#btnDbDel").click ->
     console.log("SW-UserLog:"+ ":clicked") # log -----------#
-
     _socket.emit('deleteDB')
+    return
     #$('#list').empty() # 表示も消す (仮)
 
 

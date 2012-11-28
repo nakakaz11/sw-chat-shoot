@@ -302,6 +302,6 @@ jQuery(function($) {
   });
   return $("button#btnDbDel").click(function() {
     console.log("SW-UserLog:" + ":clicked");
-    return _socket.emit('deleteDB');
+    _socket.emit('deleteDB');
   });
 });
