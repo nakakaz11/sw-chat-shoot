@@ -44,7 +44,6 @@ io = require("socket.io").listen(server, "log level": 1)
 io.configure ->  # heroku Only Use Socket.IO server object
   io.set("transports", ["xhr-polling"])
   io.set("polling duration", 10)
-_userId = 0
 # 基底class -------------------------#
 class SwSocket
   #constructor: (@keyname) ->
@@ -64,6 +63,8 @@ class SwSockClient extends SwSocket
     socket.on keyname, (data) ->  # クライアント側にイベント送
       #socket.json.emit keyname,
         #playmess: data
+      socket.json.emit keyname,
+        playmess: data.playmess
       # mongoose - 1127 ------#
       makeMongoDB(socket,keyname,data)
       if keyname is "deleteDB" then deleteMongoDB(socket,keyname)
@@ -73,7 +74,7 @@ class SwSockClient extends SwSocket
     userMG = new User
     userMG.userId = data.userId
     userMG.playmess = data.playmess
-    userMG.date = new Date()
+    userMG.date = new Date().toLocaleString()
     userMG.save (err) ->
       if err then console.info "swMongoSave:"+err # log
     User.find (err,userMGData) ->
@@ -83,7 +84,8 @@ class SwSockClient extends SwSocket
     #socket.emit keyname
     #socket.broadcast.emit keyname
     User.find().remove()
-    # mongoose - 1127 ------#
+    socket.json.emit keyname,(userMGData)
+
 # override -------#
 p_u = new SwSocket
 b_c = new SwSocket
@@ -91,6 +93,7 @@ c_c = new SwSocket
 d_u = new SwSocket
 p_m = new SwSockClient
 # DO it -------#
+_userId = 0
 io.sockets.on "connection", (socket) ->
   socket.handshake.userId = _userId
   _userId++

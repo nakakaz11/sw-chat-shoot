@@ -267,10 +267,10 @@ jQuery ($) ->
   _socket.on "player-message", (data) ->
     console.log("SW-UserLog:"+data.userId+ ":" +data.playmess) # log -----------#
     if data.length isnt 0
-      user = _userMap[data.userId]
-      date = new Date()
-      user.txt = $("<dt>" + date + "</dt><dd>" +data.playmess+":ID"+user.userId+"</dd>")
-        .attr("data-user-id", user.userId)
+      user =    # userのjson make
+        userId: data.userId
+      user.txt = $("<dt>" + data.date + "</dt><dd>" +data.playmess+":ID"+data.userId+"</dd>")
+        .attr("data-user-id", data.userId)
       $("#list").prepend(user.txt)  # リストDOM挿入
       _userMap[data.userId] = user
 
@@ -300,12 +300,13 @@ jQuery ($) ->
   chat = ->
     msg = $("input#message").val()
     $("input#message").val ""
-    _socket.emit "player-message", msg
+    _socket.json.emit "player-message",
+      playmess:msg
   $("button#btn").click ->
     setTimeout(chat, 30)         # 押し下げ判定（タイムラグ付）
 
   $("button#btnDbDel").click ->
     _socket.emit('deleteDB')
-    $('#list').empty() # 表示も消す (仮)
+    #$('#list').empty() # 表示も消す (仮)
 
 

@@ -68,8 +68,6 @@ io.configure(function() {
   return io.set("polling duration", 10);
 });
 
-_userId = 0;
-
 SwSocket = (function() {
 
   function SwSocket() {}
@@ -101,6 +99,9 @@ SwSockClient = (function(_super) {
   SwSockClient.prototype.make = function(socket, keyname) {
     SwSockClient.__super__.make.call(this, socket, keyname);
     return socket.on(keyname, function(data) {
+      socket.json.emit(keyname, {
+        playmess: data.playmess
+      });
       makeMongoDB(socket, keyname, data);
       if (keyname === "deleteDB") {
         return deleteMongoDB(socket, keyname);
@@ -113,7 +114,7 @@ SwSockClient = (function(_super) {
     userMG = new User;
     userMG.userId = data.userId;
     userMG.playmess = data.playmess;
-    userMG.date = new Date();
+    userMG.date = new Date().toLocaleString();
     userMG.save(function(err) {
       if (err) {
         return console.info("swMongoSave:" + err);
@@ -128,7 +129,8 @@ SwSockClient = (function(_super) {
   };
 
   deleteMongoDB = function(socket, keyname) {
-    return User.find().remove();
+    User.find().remove();
+    return socket.json.emit(keyname, userMGData);
   };
 
   return SwSockClient;
@@ -144,6 +146,8 @@ c_c = new SwSocket;
 d_u = new SwSocket;
 
 p_m = new SwSockClient;
+
+_userId = 0;
 
 io.sockets.on("connection", function(socket) {
   socket.handshake.userId = _userId;
