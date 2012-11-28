@@ -99,9 +99,6 @@ SwSockClient = (function(_super) {
   SwSockClient.prototype.make = function(socket, keyname) {
     SwSockClient.__super__.make.call(this, socket, keyname);
     return socket.on(keyname, function(data) {
-      socket.json.emit(keyname, {
-        playmess: data.playmess
-      });
       makeMongoDB(socket, keyname, data);
       if (keyname === "deleteDB") {
         return deleteMongoDB(socket, keyname);

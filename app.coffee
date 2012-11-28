@@ -56,15 +56,11 @@ class SwSocket
         playmess: data
         ca_cr: data   # canvs add
 class SwSockClient extends SwSocket
-  #constructor: ->
-    # super(@keyname)と等価
   make: (socket,keyname) ->  # chat用
     super(socket,keyname)  # 親make()
     socket.on keyname, (data) ->  # クライアント側にイベント送
       #socket.json.emit keyname,
         #playmess: data
-      socket.json.emit keyname,
-        playmess: data.playmess
       # mongoose - 1127 ------#
       makeMongoDB(socket,keyname,data)
       if keyname is "deleteDB" then deleteMongoDB(socket,keyname)
