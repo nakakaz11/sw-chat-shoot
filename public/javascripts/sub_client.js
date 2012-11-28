@@ -304,5 +304,5 @@ jQuery(function($) {
     console.info("SW-UserLog:" + ":clicked");
     _socket.emit('deleteDB');
   });
-  return _socket.on("deleteDB", $("#list").prepend($("<dt>Delited</dt><dd>(´･_･`)</dd>")));
+  return _socket.on("deleteDB", $("#list").prepend($("<dt>Deleted</dt><dd>(´･_･`)...</dd>")));
 });

@@ -40,7 +40,7 @@ app.get("/gameover", routes.gameover);
 server = http.createServer(app);
 
 server.listen(app.get("port"), function() {
-  return console.log("listening on port " + app.get("port"));
+  return console.info("listening on port " + app.get("port"));
 });
 
 mongoose = require('mongoose');
@@ -106,19 +106,20 @@ SwSockClient = (function(_super) {
       userMG.userId = socket.handshake.userId;
       userMG.playmess = data.playmess;
       userMG.date = new Date().toLocaleString();
-      userMG.save(function(err) {
+      return userMG.save(function(err) {
         if (err) {
           return console.info("swMongoSave:" + err);
         }
       });
-      if (keyname === 'deleteDB') {
-        return (function() {
-          return User.find().remove({
-            userId: userMG.userId
-          });
-        })();
-      }
     });
+  };
+
+  SwSockClient.prototype["delete"] = function(socket, keyname) {
+    if (keyname === 'deleteDB') {
+      return User.find().remove({
+        userId: userMG.userId
+      });
+    }
   };
 
   return SwSockClient;
@@ -153,7 +154,7 @@ io.sockets.on("connection", function(socket) {
   c_c.make(socket, 'canvas-create');
   d_u.make(socket, 'disconnect');
   p_m.make(socket, 'player-message');
-  d_db.make(socket, 'deleteDB');
+  d_db["delete"](socket, 'deleteDB');
 });
 
 /*

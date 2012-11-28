@@ -275,6 +275,6 @@ jQuery ($) ->
     return
     #$('#list').empty() # 表示も消す (仮)
   _socket.on "deleteDB",
-    $("#list").prepend($("<dt>Delited</dt><dd>(´･_･`)</dd>"))
+    $("#list").prepend($("<dt>Deleted</dt><dd>(´･_･`)...</dd>"))
 
 

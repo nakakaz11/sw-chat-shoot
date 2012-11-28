@@ -27,7 +27,7 @@ app.get "/gameover", routes.gameover
 # createServer -------#
 server = http.createServer(app)
 server.listen app.get("port"), ->
-  console.log "listening on port " + app.get("port")
+  console.info "listening on port " + app.get("port")
 
 # mongoose - 1127 ------#
 mongoose = require('mongoose')
@@ -71,14 +71,13 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
       userMG.date = new Date().toLocaleString()
       userMG.save (err) ->       # DB write
         if err then console.info "swMongoSave:"+err # log
-
+      #sanitized = escapeHTML(data) # これobj前にやんなきゃね。
+  delete: (socket,keyname) ->  # chat削除用
       if keyname is 'deleteDB'  # DB削除
-        do ->
-          User.find().remove({userId:userMG.userId})
-          #socket.emit keyname
-          #socket.broadcast.emit keyname
+        User.find().remove({userId:userMG.userId})
+        #socket.emit keyname
+        #socket.broadcast.emit keyname
 
-    #sanitized = escapeHTML(data) # これobj前にやんなきゃね。
 # override -------#
 p_u = new SwSocket
 b_c = new SwSocket
@@ -102,7 +101,7 @@ io.sockets.on "connection", (socket) ->
   c_c.make(socket,'canvas-create') # canvs add
   d_u.make(socket,'disconnect')
   p_m.make(socket,'player-message')
-  d_db.make(socket,'deleteDB')  # mongoDB add
+  d_db.delete(socket,'deleteDB')  # mongoDB add
   return
 
 
