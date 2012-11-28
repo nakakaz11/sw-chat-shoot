@@ -265,15 +265,15 @@ jQuery ($) ->
   #chat -------------------------#
   #サーバーが受け取ったメッセージを返して実行する
   _socket.on "player-message", (data) ->
-    for name,val of data
-      console.log("SW-UserLog:"+ ":" +val.date) # log -----------#
     if data.length isnt 0
-      user =    # userのjson make
-        userId: data.userId
-      user.txt = $("<dt>" + data.date + "</dt><dd>" +data.playmess+":ID"+data.userId+"</dd>")
-        .attr("data-user-id", data.userId)
-      $("#list").prepend(user.txt)  # リストDOM挿入
-      _userMap[data.userId] = user
+      for name,val of data
+        console.log("SW-UserLog:"+ ":" +val.date) # log -----------#
+        user =    # userのjson make
+          userId: val.userId
+        user.txt = $("<dt>"+val.date+"</dt><dd>"+val.playmess+":ID"+val.userId+"</dd>")
+          .attr("data-user-id", data.userId)
+        $("#list").prepend(user.txt)  # リストDOM挿入
+      _userMap[val.userId] = user
 
     ###date = new Date()
     if _userMap[data.userId] is `undefined`     # なかったら作る

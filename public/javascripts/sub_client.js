@@ -288,17 +288,17 @@ jQuery(function($) {
   });
   _socket.on("player-message", function(data) {
     var name, user, val;
-    for (name in data) {
-      val = data[name];
-      console.log("SW-UserLog:" + ":" + val.date);
-    }
     if (data.length !== 0) {
-      user = {
-        userId: data.userId
-      };
-      user.txt = $("<dt>" + data.date + "</dt><dd>" + data.playmess + ":ID" + data.userId + "</dd>").attr("data-user-id", data.userId);
-      $("#list").prepend(user.txt);
-      return _userMap[data.userId] = user;
+      for (name in data) {
+        val = data[name];
+        console.log("SW-UserLog:" + ":" + val.date);
+        user = {
+          userId: val.userId
+        };
+        user.txt = $("<dt>" + val.date + "</dt><dd>" + val.playmess + ":ID" + val.userId + "</dd>").attr("data-user-id", data.userId);
+        $("#list").prepend(user.txt);
+      }
+      return _userMap[val.userId] = user;
     }
     /*date = new Date()
     if _userMap[data.userId] is `undefined`     # なかったら作る
