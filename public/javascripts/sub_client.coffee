@@ -259,7 +259,7 @@ jQuery ($) ->
   _socket.on "disconnect", (data) ->
     if data.length isnt 0
       #user = _userMap[data.userId]
-      $("#list").empty()  # chatに関してempty/remove処理
+      #$("#list").empty()  # chatに関してempty/remove処理
 
   #サーバーにメッセージを引数にイベントを実行する----- clickEvent
   chat = ->
