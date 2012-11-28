@@ -121,7 +121,7 @@ SwSockClient = (function(_super) {
       if (err) {
         console.info("swMongoFind:" + err);
       }
-      return socket.json.emit(keyname, userMGData);
+      return socket.emit(keyname, userMGData);
     });
   };
 
