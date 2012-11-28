@@ -301,7 +301,7 @@ jQuery(function($) {
     return setTimeout(chat, 30);
   });
   return $("button#btnDbDel").click(function() {
-    console.log("SW-UserLog:" + ":clicked");
+    console.info("SW-UserLog:" + ":clicked");
     _socket.emit('deleteDB');
   });
 });

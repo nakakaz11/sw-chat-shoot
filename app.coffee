@@ -73,9 +73,10 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
         socket.emit 'player-message', userMGD
 
       if keyname is 'deleteDB'  # DB削除
+        User.find().remove({userId:userMG.userId})
         #socket.emit keyname
         #socket.broadcast.emit keyname
-        User.find().remove()
+
     #sanitized = escapeHTML(data) # これobj前にやんなきゃね。
 # override -------#
 p_u = new SwSocket
