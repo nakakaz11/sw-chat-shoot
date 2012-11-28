@@ -273,7 +273,6 @@ jQuery(function($) {
     if (data.length !== 0) {
       for (name in data) {
         val = data[name];
-        console.log("SW-UserLog:" + ":" + val.playmess);
         user = {
           userId: val.userId
         };
@@ -302,6 +301,7 @@ jQuery(function($) {
     return setTimeout(chat, 30);
   });
   return $("button#btnDbDel").click(function() {
+    console.log("SW-UserLog:" + ":clicked");
     return _socket.emit('deleteDB');
   });
 });

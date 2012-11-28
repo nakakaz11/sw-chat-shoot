@@ -247,7 +247,6 @@ jQuery ($) ->
   _socket.on "player-message", (data) ->
     if data.length isnt 0
       for name,val of data
-        console.log("SW-UserLog:"+ ":" +val.playmess) # log -----------#
         user =    # userのjson make
           userId: val.userId
         user.txt = $("<dt>"+val.date+"</dt><dd>"+val.playmess+":ID"+val.userId+"</dd>")
@@ -271,6 +270,8 @@ jQuery ($) ->
     setTimeout(chat, 30)         # 押し下げ判定（タイムラグ付）
 
   $("button#btnDbDel").click ->
+    console.log("SW-UserLog:"+ ":clicked") # log -----------#
+
     _socket.emit('deleteDB')
     #$('#list').empty() # 表示も消す (仮)
 
