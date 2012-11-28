@@ -287,8 +287,11 @@ jQuery(function($) {
     return _keyMap[e.keyCode] = false;
   });
   _socket.on("player-message", function(data) {
-    var user;
-    console.log("SW-UserLog:" + data + ":" + data.playmess);
+    var key, user, val;
+    for (key in data) {
+      val = data[key];
+      console.log("SW-UserLog:" + key + ":" + val);
+    }
     if (data.length !== 0) {
       user = {
         userId: data.userId

@@ -55,16 +55,14 @@ class SwSocket
         data: data
         playmess: data
         ca_cr: data   # canvs add
-class SwSockClient extends SwSocket
+class SwSockClient extends SwSocket  # 一応便宜上 extend
   make: (socket,keyname) ->  # chat用
     #super(socket,keyname)  # 親make()
     socket.on keyname, (data) ->  # クライアント側にイベント送
-      User.find (err,userMGData) ->
+      User.find (err,userMGD) ->
         if err then console.info "swMongoFind:"+err # log
-        #dataU = JSON.stringify userMGData
-        socket.json.emit keyname, userMGData
-      #socket.json.emit keyname,
-        #playmess: data
+        dataUser = JSON.stringify userMGD
+        socket.json.emit keyname, dataUser
       # mongoose - 1127 ------#
       # makeMongoDB(socket,keyname,data)
       userMG = new User
