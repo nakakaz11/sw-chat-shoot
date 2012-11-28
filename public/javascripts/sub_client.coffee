@@ -250,8 +250,7 @@ jQuery ($) ->
         console.log("SW-UserLog:"+ ":" +val.playmess) # log -----------#
         user =    # userのjson make
           userId: val.userId
-        user.txt = $("<dt>"+val.date+"</dt><dd>"
-          +val.playmess+":ID"+val.userId+"</dd>")
+        user.txt = $("<dt>"+val.date+"</dt><dd>"+val.playmess+":ID"+val.userId+"</dd>")
           .attr("data-user-id", data.userId)
         $("#list").prepend(user.txt)  # リストDOM挿入
       _userMap[data.userId] = user
