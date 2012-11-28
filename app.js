@@ -108,6 +108,7 @@ SwSockClient = (function(_super) {
         }
       });
       return User.find(function(err, userMGD) {
+        socket.emit('player-message', userMGD);
         return socket.broadcast.emit('player-message', userMGD);
       });
     });
@@ -144,7 +145,7 @@ io.sockets.on("connection", function(socket) {
     if (err) {
       return console.info("swMongoFind:" + err);
     } else {
-      return socket.broadcast.emit('player-message', userMGD);
+      return socket.emit('player-message', userMGD);
     }
   });
   p_u.make(socket, 'player-update');
