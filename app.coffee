@@ -72,11 +72,7 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
         #if err then console.info "swMongoFind:"+err # log
         socket.emit 'player-message', userMGD   # 自分にイベント送
         socket.broadcast.emit 'player-message', userMGD  # 自分以外に送
-  delete: (socket,keyname) ->  # chat削除用
-      if keyname is 'deleteDB'  # DB削除
-        User.find().remove()   #  {userId:userMG.userId}
-        #socket.emit keyname
-        #socket.broadcast.emit keyname
+
 
 # override -------#
 p_u = new SwSocket
@@ -84,7 +80,6 @@ b_c = new SwSocket
 c_c = new SwSocket
 d_u = new SwSocket
 p_m = new SwSockClient
-d_db = new SwSockClient
 # DO it -------#
 _userId = 0
 io.sockets.on "connection", (socket) ->
@@ -95,7 +90,7 @@ io.sockets.on "connection", (socket) ->
     if err then console.info "swMongoFind:"+err # log
     else
       socket.emit 'player-message', userMGD
-      #socket.broadcast.emit 'player-message', userMGD
+      socket.broadcast.emit 'player-message', userMGD
 
 # connection -------------------------#
   p_u.make(socket,'player-update')
@@ -103,7 +98,11 @@ io.sockets.on "connection", (socket) ->
   c_c.make(socket,'canvas-create') # canvs add
   d_u.make(socket,'disconnect')
   p_m.make(socket,'player-message')
-  d_db.delete(socket,'deleteDB')  # mongoDB add
+  socket.on 'deleteDB', () ->
+    User.find().remove()   #  {userId:userMG.userId}
+    #socket.emit keyname
+    #socket.broadcast.emit keyname
+
   return
 
 
