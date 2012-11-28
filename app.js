@@ -108,7 +108,6 @@ SwSockClient = (function(_super) {
         }
       });
       return User.find(function(err, userMGD) {
-        socket.emit('player-message', userMGD);
         return socket.broadcast.emit('player-message', userMGD);
       });
     });
