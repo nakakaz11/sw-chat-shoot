@@ -59,14 +59,6 @@ uri = process.env.MONGOHQ_URL || 'mongodb://localhost/makeMongoDB';
 
 mongoose.connect(uri);
 
-findDB = function() {
-  return User.find(function(err, userMGD) {
-    if (err) {
-      return console.info("swMongoFind:" + err);
-    }
-  });
-};
-
 io = require("socket.io").listen(server, {
   "log level": 1
 });
@@ -153,6 +145,15 @@ io.sockets.on("connection", function(socket) {
   p_m.make(socket, 'player-message');
   d_db.make(socket, 'deleteDB');
 });
+
+findDB = function() {
+  return User.find(function(err, userMGD) {
+    if (err) {
+      console.info("swMongoFind:" + err);
+    }
+    return socket.emit('player-message', userMGD);
+  });
+};
 
 /*
 escapeHTML = (str) ->

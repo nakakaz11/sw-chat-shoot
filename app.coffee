@@ -40,11 +40,6 @@ User = mongoose.model('User', UserSchema)  #スキーマの設定
 uri = process.env.MONGOHQ_URL || 'mongodb://localhost/makeMongoDB' #Connect for HEROKU
 mongoose.connect(uri)
 # mongoose -------#
-findDB = ->
-  User.find (err,userMGD) -> # DB read
-    if err then console.info "swMongoFind:"+err # log
-    #socket.emit 'player-message', userMGD
-# mongoose - 1127 ------#
 
 io = require("socket.io").listen(server, "log level": 1)
 io.configure ->  # heroku Only Use Socket.IO server object
@@ -100,6 +95,12 @@ io.sockets.on "connection", (socket) ->
   p_m.make(socket,'player-message')
   d_db.make(socket,'deleteDB')  # mongoDB add
   return
+
+# mongoose -------#
+findDB = ->
+  User.find (err,userMGD) -> # DB read
+    if err then console.info "swMongoFind:"+err # log
+    socket.emit 'player-message', userMGD
 
 # サニタイズ sanitized = escapeHTML(msg)
 ###
