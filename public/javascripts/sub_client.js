@@ -271,6 +271,7 @@ jQuery(function($) {
   _socket.on("player-message", function(data) {
     var name, user, val;
     if (data.length !== 0) {
+      $("#list").empty();
       for (name in data) {
         val = data[name];
         user = {
@@ -303,6 +304,7 @@ jQuery(function($) {
     _socket.emit('deleteDB');
   });
   return _socket.on("deleteDB", function() {
+    $("#list").empty();
     return $("#list").prepend($("<dt>Deleted</dt><dd>(´･_･`)...</dd>"));
   });
 });

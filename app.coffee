@@ -76,7 +76,6 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
       #sanitized = escapeHTML(data) # これobj前にやんなきゃね。
       makeMongo(socket,keyname)
 
-
 # override -------#
 p_u = new SwSocket
 b_c = new SwSocket
@@ -88,15 +87,6 @@ _userId = 0
 io.sockets.on "connection", (socket) ->
   socket.handshake.userId = _userId
   _userId++
-  # mongoose -------#
-  ###
-  User.find (err,userMGD) -> # DB read
-    if err then console.info "swMongoFind:"+err # log
-    else
-      socket.emit 'player-message', userMGD
-      socket.broadcast.emit 'player-message', userMGD
-  ###
-
 # connection -------------------------#
   p_u.make(socket,'player-update')
   b_c.make(socket,'bullet-create')
@@ -107,9 +97,7 @@ io.sockets.on "connection", (socket) ->
     User.find().remove()   #  {userId:userMG.userId}
     #socket.emit keyname
     #socket.broadcast.emit keyname
-
   return
-
 
 # サニタイズ sanitized = escapeHTML(msg)
 ###

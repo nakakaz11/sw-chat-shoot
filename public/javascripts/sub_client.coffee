@@ -246,6 +246,7 @@ jQuery ($) ->
   #DB入れたから変更　1128
   _socket.on "player-message", (data) ->
     if data.length isnt 0
+      $("#list").empty()  # まず空にして
       for name,val of data
         user =    # userのjson make
           userId: val.userId
@@ -275,6 +276,7 @@ jQuery ($) ->
     return
     #$('#list').empty() # 表示も消す (仮)
   _socket.on "deleteDB", () ->
+    $("#list").empty()
     $("#list").prepend($("<dt>Deleted</dt><dd>(´･_･`)...</dd>"))
 
 
