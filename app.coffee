@@ -1,5 +1,6 @@
 # coffee -wcb *.coffee
 # sw-chat-shoot 冗長部分を基底class+extends化 1121
+# mongoDB(read/write OK,emit統合,{json}/[obj])化 1128
 "use strict"
 express = require("express")
 routes = require("./routes")
@@ -67,9 +68,10 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
       userMG.save (err) ->       # DB write
         if err then console.info "swMongoSave:"+err # log
 
-      if keyname is "deleteDB"  # DB削除
-        User.find().remove()
+      if keyname is 'deleteDB'  # DB削除
         socket.emit keyname
+        socket.broadcast.emit keyname
+        User.find().remove()
 
     #sanitized = escapeHTML(data) # これobj前にやんなきゃね。
   deleteMongoDB = (socket,keyname) ->   # DB削除
@@ -82,6 +84,7 @@ b_c = new SwSocket
 c_c = new SwSocket
 d_u = new SwSocket
 p_m = new SwSockClient
+d_db = new SwSockClient
 # DO it -------#
 _userId = 0
 io.sockets.on "connection", (socket) ->
@@ -95,10 +98,10 @@ io.sockets.on "connection", (socket) ->
 # connection -------------------------#
   p_u.make(socket,'player-update')
   b_c.make(socket,'bullet-create')
-  # canvs add
-  c_c.make(socket,'canvas-create')
+  c_c.make(socket,'canvas-create') # canvs add
   d_u.make(socket,'disconnect')
   p_m.make(socket,'player-message')
+  d_db.make(socket,'deleteDB')  # mongoDB add
   return
 
 # サニタイズ sanitized = escapeHTML(msg)

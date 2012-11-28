@@ -31,23 +31,6 @@ jQuery(function($) {
       return false;
     }
   };
-  /*canvas.onmousedown = (e) ->
-    # handle mouse events on canvas
-    pos = updatePosCanv(e, canvas)
-    mousedown = true
-    ctx.beginPath()
-    ctx.moveTo pos.c_x, pos.c_y
-    false
-  canvas.onmousemove = (e) ->
-    pos = updatePosCanv(e, canvas)
-    coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")"
-    if mousedown
-      ctx.lineTo pos.c_x, pos.c_y
-      ctx.stroke()
-  canvas.onmouseup = (e) ->
-    mousedown = false
-  */
-
   _socket.on("player-update", function(data) {
     var bullet, uCanv, user;
     if (_userMap[data.userId] === undefined) {
@@ -102,7 +85,6 @@ jQuery(function($) {
   _socket.on("canvas-create", function(data) {
     var uCanv;
     uCanv = _canvasMap[data.userId];
-    console.info("SW-UserLog:" + data.userId + ":" + data.ca_cr.c_x + ":" + data.ca_cr.c_y + ":" + data.ca_cr.c_UM);
     if (uCanv !== undefined) {
       uCanv.c_x = data.ca_cr.c_x;
       uCanv.c_y = data.ca_cr.c_y;
@@ -291,33 +273,23 @@ jQuery(function($) {
     if (data.length !== 0) {
       for (name in data) {
         val = data[name];
-        console.log("SW-UserLog:" + ":" + val.date);
+        console.log("SW-UserLog:" + ":" + val.playmess);
         user = {
           userId: val.userId
         };
-        user.txt = $("<dt>" + val.date + "</dt><dd>" + val.playmess + ":ID" + val.userId + "</dd>").attr("data-user-id", data.userId);
+        user.txt = $("<dt>" + val.date + "</dt><dd>", +val.playmess + ":ID" + val.userId + "</dd>").attr("data-user-id", data.userId);
         $("#list").prepend(user.txt);
       }
-      return _userMap[val.userId] = user;
+      return _userMap[data.userId] = user;
     }
-    /*date = new Date()
-    if _userMap[data.userId] is `undefined`     # なかったら作る
-      user =    # userのjson make
-        userId: data.userId
-      user.txt = $("<dt>" + date + "</dt><dd>" +data.playmess+":ID"+user.userId+"</dd>")
-        .attr("data-user-id", user.userId)
-      $("#list").prepend(user.txt)  # リストDOM挿入
-      _userMap[data.userId] = user
-    else                                        # あったらoverride
-      user = _userMap[data.userId]
-      user.txt = $("<dt>" + date + "</dt><dd>" +data.playmess+":ID"+user.userId+"</dd>")
-        .attr("data-user-id", user.userId)
-      $("#list").prepend(user.txt)  # リストDOM挿入
-      _userMap[data.userId] = user
-    */
-
   });
-  _socket.on("disconnect", function(data) {});
+  _socket.on("disconnect", function(data) {
+    var user;
+    if (data.length !== 0) {
+      user = _userMap[data.userId];
+      return user.txt.remove();
+    }
+  });
   chat = function() {
     var msg;
     msg = $("input#message").val();

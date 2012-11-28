@@ -1,7 +1,5 @@
 # coffee -wcb *.coffee
 # js2coffee client.js > client.coffee
-# http://www.atmarkit.co.jp/ait/articles/1210/10/news115_2.html
-
 jQuery ($) ->
   "use strict"
   _socket = io.connect()
@@ -29,21 +27,6 @@ jQuery ($) ->
       return ctxU
     else
       false
-  ###canvas.onmousedown = (e) ->
-    # handle mouse events on canvas
-    pos = updatePosCanv(e, canvas)
-    mousedown = true
-    ctx.beginPath()
-    ctx.moveTo pos.c_x, pos.c_y
-    false
-  canvas.onmousemove = (e) ->
-    pos = updatePosCanv(e, canvas)
-    coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")"
-    if mousedown
-      ctx.lineTo pos.c_x, pos.c_y
-      ctx.stroke()
-  canvas.onmouseup = (e) ->
-    mousedown = false  ###
   # /canvs add -------------------------#
   _socket.on "player-update", (data) ->   # userオブジェクト作成/初期化
     # game Engine  -------------------------#
@@ -103,7 +86,7 @@ jQuery ($) ->
   # canvs add -------------------------#
   _socket.on "canvas-create", (data) ->
     uCanv = _canvasMap[data.userId]
-    console.info("SW-UserLog:"+data.userId+":"+data.ca_cr.c_x+":"+data.ca_cr.c_y+":"+data.ca_cr.c_UM) # log -----------#
+    #console.info("SW-UserLog:"+data.userId+":"+data.ca_cr.c_x+":"+data.ca_cr.c_y+":"+data.ca_cr.c_UM) # log -----------#
     if uCanv isnt `undefined`
       uCanv.c_x = data.ca_cr.c_x
       uCanv.c_y = data.ca_cr.c_y
@@ -118,7 +101,6 @@ jQuery ($) ->
             ctxU.stroke()
           when "onmouseup"
           else null
-
 
   _socket.on "disconnect", (data) ->
     user = _userMap[data.userId]
@@ -170,7 +152,6 @@ jQuery ($) ->
     canvasY -= gCanvasEle.offsetTop
     c_x:canvasX
     c_y:canvasY   # objに代入
-  # canvs add -- mouseEV -------------------#
 
   _isSpaceKeyUp = true    # スペースキー用判定
 
@@ -201,7 +182,6 @@ jQuery ($) ->
       mousedown = false
       _socket.emit "canvas-create",
         c_UM:"onmouseup"       # switch文flag
-
     # handle mouse events on canvas  -------------------------#
 
     #left
@@ -263,39 +243,24 @@ jQuery ($) ->
     _keyMap[e.keyCode] = false
 
   #chat -------------------------#
-  #サーバーが受け取ったメッセージを返して実行する
+  #DB入れたから変更　1128
   _socket.on "player-message", (data) ->
     if data.length isnt 0
       for name,val of data
-        console.log("SW-UserLog:"+ ":" +val.date) # log -----------#
+        console.log("SW-UserLog:"+ ":" +val.playmess) # log -----------#
         user =    # userのjson make
           userId: val.userId
-        user.txt = $("<dt>"+val.date+"</dt><dd>"+val.playmess+":ID"+val.userId+"</dd>")
+        user.txt = $("<dt>"+val.date+"</dt><dd>"
+          +val.playmess+":ID"+val.userId+"</dd>")
           .attr("data-user-id", data.userId)
         $("#list").prepend(user.txt)  # リストDOM挿入
-      _userMap[val.userId] = user
-
-    ###date = new Date()
-    if _userMap[data.userId] is `undefined`     # なかったら作る
-      user =    # userのjson make
-        userId: data.userId
-      user.txt = $("<dt>" + date + "</dt><dd>" +data.playmess+":ID"+user.userId+"</dd>")
-        .attr("data-user-id", user.userId)
-      $("#list").prepend(user.txt)  # リストDOM挿入
       _userMap[data.userId] = user
-    else                                        # あったらoverride
-      user = _userMap[data.userId]
-      user.txt = $("<dt>" + date + "</dt><dd>" +data.playmess+":ID"+user.userId+"</dd>")
-        .attr("data-user-id", user.userId)
-      $("#list").prepend(user.txt)  # リストDOM挿入
-      _userMap[data.userId] = user###
 
   # セッション切断時
   _socket.on "disconnect", (data) ->
-    #user = _userMap[data.userId]
-    #if user isnt `undefined`
-      #user.element.remove()  # chatに関してはまだremove処理がない
-      #delete _bulletMap[data.userId]
+    if data.length isnt 0
+      user = _userMap[data.userId]
+      user.txt.remove()  # chatに関してremove処理
 
   #サーバーにメッセージを引数にイベントを実行する----- clickEvent
   chat = ->
