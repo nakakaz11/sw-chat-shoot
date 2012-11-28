@@ -103,7 +103,7 @@ SwSockClient = (function(_super) {
         if (err) {
           console.info("swMongoFind:" + err);
         }
-        return socket.json.emit(keyname, userMGD);
+        return socket.emit(keyname, userMGD);
       });
       userMG = new User;
       userMG.userId = socket.handshake.userId;

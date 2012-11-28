@@ -62,7 +62,7 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
       User.find (err,userMGD) ->
         if err then console.info "swMongoFind:"+err # log
         #dataUser = JSON.stringify userMGD
-        socket.json.emit keyname, userMGD
+        socket.emit keyname, userMGD
       # mongoose - 1127 ------#
       # makeMongoDB(socket,keyname,data)
       userMG = new User
