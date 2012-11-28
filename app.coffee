@@ -59,19 +59,20 @@ class SwSocket
 class SwSockClient extends SwSocket  # 一応便宜上 extend
   make: (socket,keyname) ->  # chat用
     #super(socket,keyname)  # 親make()
+    User.find (err,userMGD) -> # DB read
+      #if err then console.info "swMongoFind:"+err # log
+      socket.emit keyname, userMGD   # 自分にイベント送
+      socket.broadcast.emit keyname, userMGD  # 自分以外に送
+
     socket.on keyname, (data) ->
       # mongoose -------#
       userMG = new User
       userMG.userId = socket.handshake.userId
       userMG.playmess = data.playmess
-      userMG.date = new Date().toLocaleString()
+      userMG.date = new Date()
       userMG.save (err) ->       # DB write
         if err then console.info "swMongoSave:"+err # log
       #sanitized = escapeHTML(data) # これobj前にやんなきゃね。
-      User.find (err,userMGD) -> # DB read
-        #if err then console.info "swMongoFind:"+err # log
-        socket.emit 'player-message', userMGD   # 自分にイベント送
-        socket.broadcast.emit 'player-message', userMGD  # 自分以外に送
 
 
 # override -------#

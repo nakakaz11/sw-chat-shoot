@@ -1,7 +1,7 @@
 /* GET home page. */
 var title = 'SW Shooting+Canvas+Chat:App(node.js+express+socket.io+ejs+mongoHQ:coffee)'
-var date = new Date().toLocaleString();
-var desc = '>SW App Test:'+ date;
+var date = new Date();
+var desc = '>SW App Test:'+ date.toLocaleString();
 exports.index = function(req, res){
   res.render('index',{
       title:  title,
