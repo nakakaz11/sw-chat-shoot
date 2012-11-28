@@ -102,14 +102,18 @@ SwSockClient = (function(_super) {
       userMG.userId = socket.handshake.userId;
       userMG.playmess = data.playmess;
       userMG.date = new Date().toLocaleString();
-      userMG.save(function(err) {
+      return userMG.save(function(err) {
         if (err) {
           return console.info("swMongoSave:" + err);
         }
       });
-      return User.find(function(err, userMGD) {
-        return socket.broadcast.emit('player-message', userMGD);
-      });
+      /*
+            User.find (err,userMGD) -> # DB read
+              #if err then console.info "swMongoFind:"+err # log
+              socket.emit 'player-message', userMGD   # 自分にイベント送
+              socket.broadcast.emit 'player-message', userMGD  # 自分以外に送
+      */
+
     });
   };
 
@@ -146,7 +150,8 @@ io.sockets.on("connection", function(socket) {
     if (err) {
       console.info("swMongoFind:" + err);
     }
-    return socket.emit('player-message', userMGD);
+    socket.emit('player-message', userMGD);
+    return socket.broadcast.emit('player-message', userMGD);
   });
   p_u.make(socket, 'player-update');
   b_c.make(socket, 'bullet-create');
