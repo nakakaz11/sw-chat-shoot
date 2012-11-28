@@ -67,7 +67,11 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
       userMG.date = new Date().toLocaleString()
       userMG.save (err) ->       # DB write
         if err then console.info "swMongoSave:"+err # log
-      findDB()
+      # mongoose -------#
+      User.find (err,userMGD) -> # DB read
+        #if err then console.info "swMongoFind:"+err # log
+        socket.emit 'player-message', userMGD
+
       if keyname is 'deleteDB'  # DB削除
         socket.emit keyname
         socket.broadcast.emit keyname
@@ -85,7 +89,10 @@ _userId = 0
 io.sockets.on "connection", (socket) ->
   socket.handshake.userId = _userId
   _userId++
-  findDB()
+  # mongoose -------#
+  User.find (err,userMGD) -> # DB read
+    if err then console.info "swMongoFind:"+err # log
+    socket.emit 'player-message', userMGD
 
 # connection -------------------------#
   p_u.make(socket,'player-update')
@@ -96,11 +103,6 @@ io.sockets.on "connection", (socket) ->
   d_db.make(socket,'deleteDB')  # mongoDB add
   return
 
-# mongoose -------#
-findDB = ->
-  User.find (err,userMGD) -> # DB read
-    if err then console.info "swMongoFind:"+err # log
-    socket.emit 'player-message', userMGD
 
 # サニタイズ sanitized = escapeHTML(msg)
 ###
