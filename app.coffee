@@ -57,13 +57,14 @@ class SwSocket
         playmess: data
         ca_cr: data   # canvs add
 class SwSockClient extends SwSocket  # 一応便宜上 extend
-  make: (socket,keyname) ->  # chat用
+  make: (socket,keyname) ->  # chat with mongoose用
     #super(socket,keyname)  # 親make()
-    User.find (err,userMGD) -> # DB read
-      #if err then console.info "swMongoFind:"+err # log
-      socket.emit keyname, userMGD   # 自分にイベント送
-      socket.broadcast.emit keyname, userMGD  # 自分以外に送
-
+    makeMongo = (socket,keyname) ->  # sendDB
+      User.find (err,userMGD) -> # DB read
+        #if err then console.info "swMongoFind:"+err # log
+        socket.emit keyname, userMGD   # 自分にイベント送
+        socket.broadcast.emit keyname, userMGD  # 自分以外に送
+    makeMongo(socket,keyname)
     socket.on keyname, (data) ->
       # mongoose -------#
       userMG = new User
@@ -73,6 +74,7 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
       userMG.save (err) ->       # DB write
         if err then console.info "swMongoSave:"+err # log
       #sanitized = escapeHTML(data) # これobj前にやんなきゃね。
+      makeMongo(socket,keyname)
 
 
 # override -------#

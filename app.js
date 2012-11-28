@@ -96,21 +96,26 @@ SwSockClient = (function(_super) {
   }
 
   SwSockClient.prototype.make = function(socket, keyname) {
-    User.find(function(err, userMGD) {
-      socket.emit(keyname, userMGD);
-      return socket.broadcast.emit(keyname, userMGD);
-    });
+    var makeMongo;
+    makeMongo = function(socket, keyname) {
+      return User.find(function(err, userMGD) {
+        socket.emit(keyname, userMGD);
+        return socket.broadcast.emit(keyname, userMGD);
+      });
+    };
+    makeMongo(socket, keyname);
     return socket.on(keyname, function(data) {
       var userMG;
       userMG = new User;
       userMG.userId = socket.handshake.userId;
       userMG.playmess = data.playmess;
       userMG.date = new Date();
-      return userMG.save(function(err) {
+      userMG.save(function(err) {
         if (err) {
           return console.info("swMongoSave:" + err);
         }
       });
+      return makeMongo(socket, keyname);
     });
   };
 

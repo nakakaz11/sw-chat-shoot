@@ -251,7 +251,7 @@ jQuery ($) ->
           userId: val.userId
         user.txt = $("<dt>"+val.date.toLocaleString()+"</dt><dd>"+val.playmess+":ID"+val.userId+"</dd>")
           .attr("data-user-id", data.userId)
-        $("#list").prepend(user.txt)  # リストDOM挿入
+        $("#list").empty().prepend(user.txt)  # リスト空にしてDOM挿入
       _userMap[data.userId] = user
 
   # セッション切断時
