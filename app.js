@@ -62,9 +62,8 @@ mongoose.connect(uri);
 findDB = function() {
   return User.find(function(err, userMGD) {
     if (err) {
-      console.info("swMongoFind:" + err);
+      return console.info("swMongoFind:" + err);
     }
-    return socket.emit('player-message', userMGD);
   });
 };
 

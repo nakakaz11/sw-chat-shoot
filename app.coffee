@@ -43,7 +43,7 @@ mongoose.connect(uri)
 findDB = ->
   User.find (err,userMGD) -> # DB read
     if err then console.info "swMongoFind:"+err # log
-    socket.emit 'player-message', userMGD
+    #socket.emit 'player-message', userMGD
 # mongoose - 1127 ------#
 
 io = require("socket.io").listen(server, "log level": 1)
