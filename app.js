@@ -102,26 +102,21 @@ SwSockClient = (function(_super) {
       userMG.userId = socket.handshake.userId;
       userMG.playmess = data.playmess;
       userMG.date = new Date().toLocaleString();
-      return userMG.save(function(err) {
+      userMG.save(function(err) {
         if (err) {
           return console.info("swMongoSave:" + err);
         }
       });
-      /*
-            User.find (err,userMGD) -> # DB read
-              #if err then console.info "swMongoFind:"+err # log
-              socket.emit 'player-message', userMGD   # 自分にイベント送
-              socket.broadcast.emit 'player-message', userMGD  # 自分以外に送
-      */
-
+      return User.find(function(err, userMGD) {
+        socket.emit('player-message', userMGD);
+        return socket.broadcast.emit('player-message', userMGD);
+      });
     });
   };
 
   SwSockClient.prototype["delete"] = function(socket, keyname) {
     if (keyname === 'deleteDB') {
-      return User.find().remove({
-        userId: userMG.userId
-      });
+      return User.find().remove();
     }
   };
 
@@ -148,10 +143,10 @@ io.sockets.on("connection", function(socket) {
   _userId++;
   User.find(function(err, userMGD) {
     if (err) {
-      console.info("swMongoFind:" + err);
+      return console.info("swMongoFind:" + err);
+    } else {
+      return socket.broadcast.emit('player-message', userMGD);
     }
-    socket.emit('player-message', userMGD);
-    return socket.broadcast.emit('player-message', userMGD);
   });
   p_u.make(socket, 'player-update');
   b_c.make(socket, 'bullet-create');
