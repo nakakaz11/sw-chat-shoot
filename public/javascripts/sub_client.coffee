@@ -6,7 +6,7 @@ jQuery ($) ->
   _userMap = {}
   _bulletMap = {}
   _canvasMap = {}
-  _myId = {}
+  _myId = null
   # canvs add -------------------------#
   canvasHtml = (uid) -> "<div id='user-coord#{uid}'>UserCanvas (ID) #{uid}</div><canvas id='user-canvas#{uid}' class='user-canvas' width='200' height='200'></canvas>"
   mousedown = false
@@ -61,7 +61,7 @@ jQuery ($) ->
       uCanv.element = $(canvasHtml(user.userId)).attr("data-user-id", user.userId)
       $("#canvasUser").append(uCanv.element)
       _canvasMap[data.userId] = uCanv    # 対戦相手のobj代入
-      return _isUserCanvas = true   # flag
+      _isUserCanvas = true   # flag
 
     else
       user = _userMap[data.userId]      # もうあったら廻してuserObj更新
@@ -75,8 +75,6 @@ jQuery ($) ->
     #user.c_y = data.data.c_y
 
     updateCss(user)  # 相手のplayer
-
-    _myId.userId = data.userId
 
   _socket.on "bullet-create", (data) ->
     bullet = _bulletMap[data.userId]
@@ -274,11 +272,11 @@ jQuery ($) ->
     setTimeout(chat, 30)         # 押し下げ判定（タイムラグ付）
 
   $("button#btnDbDel").click ->
-    console.info("SW-UserLog:"+_myId.userId+ ":clicked") # log -----------#
+    console.info("SW-UserLog:"+_myId+ ":clicked") # log -----------#
     _socket.emit 'deleteDB',
       userId:_myId
     return
   _socket.on 'deleteDB', () ->
-    $("#list").children().find().attr("data-user-id",_myId.userId).replaceWith($("<dd>(´･_･`)...Deleted</dd>"))
+    $("#list").children().empty().replaceWith($("<dd>(´･_･`)...Deleted</dd>"))
 
 # coffee -wcb *.coffee

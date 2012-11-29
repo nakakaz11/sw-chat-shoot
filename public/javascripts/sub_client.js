@@ -8,7 +8,7 @@ jQuery(function($) {
   _userMap = {};
   _bulletMap = {};
   _canvasMap = {};
-  _myId = {};
+  _myId = null;
   canvasHtml = function(uid) {
     return "<div id='user-coord" + uid + "'>UserCanvas (ID) " + uid + "</div><canvas id='user-canvas" + uid + "' class='user-canvas' width='200' height='200'></canvas>";
   };
@@ -63,7 +63,7 @@ jQuery(function($) {
       uCanv.element = $(canvasHtml(user.userId)).attr("data-user-id", user.userId);
       $("#canvasUser").append(uCanv.element);
       _canvasMap[data.userId] = uCanv;
-      return _isUserCanvas = true;
+      _isUserCanvas = true;
     } else {
       user = _userMap[data.userId];
     }
@@ -71,8 +71,7 @@ jQuery(function($) {
     user.y = data.data.y;
     user.rotate = data.data.rotate;
     user.v = data.data.v;
-    updateCss(user);
-    return _myId.userId = data.userId;
+    return updateCss(user);
   });
   _socket.on("bullet-create", function(data) {
     var bullet;
@@ -299,12 +298,12 @@ jQuery(function($) {
     return setTimeout(chat, 30);
   });
   $("button#btnDbDel").click(function() {
-    console.info("SW-UserLog:" + _myId.userId + ":clicked");
+    console.info("SW-UserLog:" + _myId + ":clicked");
     _socket.emit('deleteDB', {
       userId: _myId
     });
   });
   return _socket.on('deleteDB', function() {
-    return $("#list").children().find().attr("data-user-id", _myId.userId).replaceWith($("<dd>(´･_･`)...Deleted</dd>"));
+    return $("#list").children().empty().replaceWith($("<dd>(´･_･`)...Deleted</dd>"));
   });
 });
