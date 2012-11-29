@@ -299,7 +299,7 @@ jQuery(function($) {
   $("button#btnDbDel").click(function() {
     console.info("SW-UserLog:" + _dbDelId.userId + ":clicked");
     _socket.emit('deleteDB', {
-      delid: _dbDelId.userId
+      userId: _dbDelId.userId
     });
   });
   return _socket.on('deleteDB', function() {
