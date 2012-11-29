@@ -150,8 +150,8 @@ io.sockets.on("connection", function(socket) {
     User.find().remove({
       userId: delid
     });
-    socket.emit(keyname);
-    return socket.broadcast.emit(keyname);
+    socket.emit('deleteDB');
+    return socket.broadcast.emit('deleteDB');
   });
 });
 

@@ -96,8 +96,8 @@ io.sockets.on "connection", (socket) ->
   socket.on 'deleteDB', (err,delid) ->
     if err then console.log "swMongoDel:"+err # log
     User.find().remove({ userId:delid })   #
-    socket.emit keyname
-    socket.broadcast.emit keyname
+    socket.emit 'deleteDB'
+    socket.broadcast.emit 'deleteDB'
   return
 
 # サニタイズ sanitized = escapeHTML(msg)
