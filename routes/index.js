@@ -2,8 +2,8 @@
 var title = 'SW Shooting+Canvas+Chat:App(node.js+express+socket.io+ejs+mongoHQ:coffee)';
 // 日本標準時を扱うためのユーティリティ関数
 /*var JSTDate = function (str) {  return ISODate(str + "T00+09:00");  };*/
-var date = new Date()
-var desc = '>SW App Test:'+date.toLocaleString();
+var date = new Date().getTimezoneOffset()
+var desc = '>SW App Test:'+date-540;
 exports.index = function(req, res){
   res.render('index',{
       title:  title,
