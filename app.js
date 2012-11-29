@@ -105,11 +105,13 @@ SwSockClient = (function(_super) {
     };
     makeMongo(socket, keyname);
     return socket.on(keyname, function(data) {
-      var userMG;
+      var date, jst, userMG;
+      date = new Date();
+      jst = date.toLocaleString();
       userMG = new User;
       userMG.userId = socket.handshake.userId;
       userMG.playmess = data.playmess;
-      userMG.date = new Date();
+      userMG.date = jst;
       userMG.save(function(err) {
         if (err) {
           return console.log("swMongoSave:" + err);
