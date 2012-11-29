@@ -280,7 +280,7 @@ jQuery(function($) {
         user = {
           userId: val.userId
         };
-        user.txt = $("<dt>" + val.date.toLocaleString() + "</dt><dd>" + val.playmess + ":ID" + val.userId + "</dd>").attr("data-user-id", data.userId);
+        user.txt = $("<dt>" + val.date.toLocaleString() + "</dt><dd>" + val.playmess + ":ID" + val.userId + "</dd>").attr("data-user-id", val.userId);
         _results.push($("#list").prepend(user.txt));
       }
       return _results;

@@ -255,7 +255,7 @@ jQuery ($) ->
         user =    # userのjson make
           userId: val.userId
         user.txt = $("<dt>"+val.date.toLocaleString()+"</dt><dd>"+val.playmess+":ID"+val.userId+"</dd>")
-          .attr("data-user-id", data.userId)
+          .attr("data-user-id", val.userId)
         $("#list").prepend(user.txt)  # DOM挿入
 
   # セッション切断時
