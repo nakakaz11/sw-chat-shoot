@@ -98,7 +98,7 @@ SwSockClient = (function(_super) {
   SwSockClient.prototype.make = function(socket, keyname) {
     var makeMongo;
     makeMongo = function(socket, keyname) {
-      return User.find(function(err, userMGD) {
+      return User.find(function(userMGD) {
         socket.emit(keyname, userMGD);
         return socket.broadcast.emit(keyname, userMGD);
       });
