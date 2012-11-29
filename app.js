@@ -50,7 +50,7 @@ Schema = mongoose.Schema;
 UserSchema = new Schema({
   userId: Number,
   playmess: String,
-  date: Date
+  date: String
 });
 
 User = mongoose.model('User', UserSchema);
@@ -105,12 +105,14 @@ SwSockClient = (function(_super) {
     };
     makeMongo(socket, keyname);
     return socket.on(keyname, function(data) {
-      var jst, userMG;
-      jst = ISODate();
+      var JSTDate, userMG;
+      JSTDate = function(str) {
+        return ISODate(str + "T00+09:00");
+      };
       userMG = new User;
       userMG.userId = socket.handshake.userId;
       userMG.playmess = data.playmess;
-      userMG.date = jst;
+      userMG.date = JSTDate;
       userMG.save(function(err) {
         if (err) {
           return console.log("swMongoSave:" + err);

@@ -35,7 +35,7 @@ Schema = mongoose.Schema   # スキーマ定義
 UserSchema = new Schema
   userId: Number
   playmess: String
-  date: Date
+  date: String
 User = mongoose.model('User', UserSchema)  #スキーマの設定
 uri = process.env.MONGOHQ_URL || 'mongodb://localhost/makeMongoDB' #Connect for HEROKU
 mongoose.connect(uri)
@@ -67,11 +67,12 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
     makeMongo(socket,keyname)
     socket.on keyname, (data) ->
       # mongoose -------#
-      jst = ISODate()
+      JSTDate = (str) ->
+        ISODate(str + "T00+09:00")
       userMG = new User
       userMG.userId = socket.handshake.userId
       userMG.playmess = data.playmess
-      userMG.date = jst
+      userMG.date = JSTDate
       userMG.save (err) ->       # DB write
         if err then console.log "swMongoSave:"+err # log
       #sanitized = escapeHTML(data) # これobj前にやんなきゃね。
