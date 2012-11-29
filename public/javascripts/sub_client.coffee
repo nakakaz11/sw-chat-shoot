@@ -115,6 +115,7 @@ jQuery ($) ->
       uCanv = _canvasMap[data.userId]
       uCanv.element.remove()
       delete _canvasMap[data.userId]
+
       return _isUserCanvas = false   # flag
 
   # myPlayerの初期値
