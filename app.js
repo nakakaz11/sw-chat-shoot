@@ -106,7 +106,7 @@ SwSockClient = (function(_super) {
     makeMongo(socket, keyname);
     return socket.on(keyname, function(data) {
       var JSTDate, date, userMG;
-      date = new Date().getTimezoneOffset();
+      date = new Date();
       JSTDate = date;
       userMG = new User;
       userMG.userId = socket.handshake.userId;
