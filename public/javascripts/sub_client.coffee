@@ -248,7 +248,6 @@ jQuery ($) ->
   #DB入れたから変更　1128
   _socket.on "player-message", (data) ->
     if data.length isnt 0
-      _dbDelId = data
       $("#list").empty()  # まず空にして
       for name,val of data
         #user =    # userのjson make
@@ -257,7 +256,8 @@ jQuery ($) ->
           .attr("data-user-id", val.userId)
         $("#list").prepend(userTxt)  # DOM挿入
         return
-
+      _dbDelId = data.userId
+      return
   # セッション切断時
   _socket.on "disconnect", (data) ->
     #if data.length isnt 0

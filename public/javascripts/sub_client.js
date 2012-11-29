@@ -272,7 +272,6 @@ jQuery(function($) {
   _socket.on("player-message", function(data) {
     var name, userTxt, val;
     if (data.length !== 0) {
-      _dbDelId = data;
       $("#list").empty();
       for (name in data) {
         val = data[name];
@@ -280,6 +279,7 @@ jQuery(function($) {
         $("#list").prepend(userTxt);
         return;
       }
+      _dbDelId = data.userId;
     }
   });
   _socket.on("disconnect", function(data) {});
