@@ -68,11 +68,10 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
     socket.on keyname, (data) ->
       # mongoose -------#
       date = new Date()
-      jst = date.toLocaleString()
       userMG = new User
       userMG.userId = socket.handshake.userId
       userMG.playmess = data.playmess
-      userMG.date = jst
+      userMG.date = date
       userMG.save (err) ->       # DB write
         if err then console.log "swMongoSave:"+err # log
       #sanitized = escapeHTML(data) # これobj前にやんなきゃね。
