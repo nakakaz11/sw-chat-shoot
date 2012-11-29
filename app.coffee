@@ -93,11 +93,10 @@ io.sockets.on "connection", (socket) ->
   c_c.make(socket,'canvas-create') # canvs add
   d_u.make(socket,'disconnect')
   p_m.make(socket,'player-message')
-  socket.on 'deleteDB', (err,delid) ->
-    _uid = {}
+  socket.on 'deleteDB', (delid) ->
     _uid = delid
-    console.log "swMongoDel:"+_uid.uid
-    if err then console.log "swMongoDel:"+err # log
+    console.log "swMongoDel:"+_uid
+    #if err then console.log "swMongoDel:"+err # log
     User.find().remove( userId:_uid.uid )   #
     #socket.emit 'deleteDB'
     #socket.broadcast.emit 'deleteDB'
