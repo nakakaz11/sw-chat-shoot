@@ -96,7 +96,7 @@ io.sockets.on "connection", (socket) ->
   socket.on 'deleteDB', (err,delid) ->
     console.log "swMongoDel:"+delid
     if err then console.log "swMongoDel:"+err # log
-    User.find().remove({ userId:delid })   #
+    User.find().remove({ userId:delid.delid })   #
     socket.emit 'deleteDB'
     socket.broadcast.emit 'deleteDB'
   return
