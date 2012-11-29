@@ -300,8 +300,5 @@ jQuery(function($) {
     console.info("SW-UserLog:" + _dbDelId.userId + ":clicked");
     _socket.emit('deleteDB', _dbDelId.userId);
   });
-  return _socket.on('deleteDB', function() {
-    $("#list").empty();
-    return $("#list").prepend($("<dt>Deleted</dt><dd>(´･_･`)...</dd>"));
-  });
+  return _socket.on('deleteDB', function() {});
 });

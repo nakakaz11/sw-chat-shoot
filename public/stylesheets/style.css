@@ -34,6 +34,10 @@ a {
     opacity:0.7;
 */
 }
+#list {
+    height:400px;
+    overflow: auto;
+}
 
 img.player{
 	width:50px;
