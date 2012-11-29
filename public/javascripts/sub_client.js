@@ -271,13 +271,14 @@ jQuery(function($) {
     return _keyMap[e.keyCode] = false;
   });
   _socket.on("player-message", function(data) {
-    var name, userTxt, val;
+    var name, user, val;
     if (data.length !== 0) {
       $("#list").empty();
+      user = {};
       for (name in data) {
         val = data[name];
-        userTxt = $("<dt>" + val.date.toLocaleString() + "</dt><dd>" + val.playmess + ":ID" + val.userId + "</dd>").attr("data-user-id", val.userId);
-        $("#list").prepend(userTxt);
+        user.txt = $("<dt>" + val.date.toLocaleString() + "</dt><dd>" + val.playmess + ":ID" + val.userId + "</dd>").attr("data-user-id", val.userId);
+        $("#list").prepend(user.txt);
         return;
       }
     }

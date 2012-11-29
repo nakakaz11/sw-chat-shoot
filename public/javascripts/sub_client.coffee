@@ -250,10 +250,11 @@ jQuery ($) ->
   _socket.on "player-message", (data) ->
     if data.length isnt 0
       $("#list").empty()  # まず空にして
+      user = {}
       for name,val of data
-        userTxt = $("<dt>"+val.date.toLocaleString()+"</dt><dd>"+val.playmess+":ID"+val.userId+"</dd>")
+        user.txt = $("<dt>"+val.date.toLocaleString()+"</dt><dd>"+val.playmess+":ID"+val.userId+"</dd>")
           .attr("data-user-id", val.userId)
-        $("#list").prepend(userTxt)  # DOM挿入
+        $("#list").prepend(user.txt)  # DOM挿入
         return
 
   # セッション切断時
