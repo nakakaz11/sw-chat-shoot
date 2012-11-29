@@ -95,11 +95,10 @@ io.sockets.on "connection", (socket) ->
   p_m.make(socket,'player-message')
   socket.on 'deleteDB', (delid) ->
     _uid = delid
-    console.log "swMongoDel:"+_uid.uid
-    #if err then console.log "swMongoDel:"+err # log
+    #console.log "swMongoDel:"+_uid.uid
     User.find().remove( userId:_uid.uid )   #
-    #socket.emit 'deleteDB'
-    #socket.broadcast.emit 'deleteDB'
+    socket.emit 'deleteDB'
+    socket.broadcast.emit 'deleteDB'
   return
 
 # サニタイズ sanitized = escapeHTML(msg)
