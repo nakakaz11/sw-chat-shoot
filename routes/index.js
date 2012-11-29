@@ -1,7 +1,6 @@
 /* GET home page. */
-var title = 'SW Shooting+Canvas+Chat:App(node.js+express+socket.io+ejs+mongoHQ:coffee)'
-var date = new Date();
-var jst =  date.getTimezoneOffset();
+var title = 'SW Shooting+Canvas+Chat:App(node.js+express+socket.io+ejs+mongoHQ:coffee)';
+var jst = function(str) { return ISODate(str + 'T00+09:00'); };
 var desc = '>SW App Test:'+ jst;
 exports.index = function(req, res){
   res.render('index',{
