@@ -107,11 +107,11 @@ SwSockClient = (function(_super) {
     return socket.on(keyname, function(data) {
       var date, jst, userMG;
       date = new Date();
-      jst = date.toLocaleString();
+      jst = date.getTimezoneOffset();
       userMG = new User;
       userMG.userId = socket.handshake.userId;
       userMG.playmess = data.playmess;
-      userMG.date = jst;
+      userMG.date = jst.getTimezoneOffset();
       userMG.save(function(err) {
         if (err) {
           return console.log("swMongoSave:" + err);
