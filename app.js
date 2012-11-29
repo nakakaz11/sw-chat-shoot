@@ -146,7 +146,7 @@ io.sockets.on("connection", function(socket) {
   socket.on('deleteDB', function(delid) {
     var _uid;
     _uid = delid;
-    console.log("swMongoDel:" + _uid);
+    console.log("swMongoDel:" + _uid.uid);
     return User.find().remove({
       userId: _uid.uid
     });
