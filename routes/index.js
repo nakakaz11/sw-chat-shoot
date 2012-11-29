@@ -1,6 +1,6 @@
 /* GET home page. */
 var title = 'SW Shooting+Canvas+Chat:App(node.js+express+socket.io+ejs+mongoHQ:coffee)';
-var jst = function(str) { return ISODate(str + 'T00+09:00'); };
+var jst = ISODate('T00:00:00+09:00');
 var desc = '>SW App Test:'+jst.toString();
 exports.index = function(req, res){
   res.render('index',{

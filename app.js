@@ -106,9 +106,7 @@ SwSockClient = (function(_super) {
     makeMongo(socket, keyname);
     return socket.on(keyname, function(data) {
       var jst, userMG;
-      jst = function(str) {
-        return ISODate(str + 'T00+09:00');
-      };
+      jst = ISODate('T00:00:00+09:00');
       userMG = new User;
       userMG.userId = socket.handshake.userId;
       userMG.playmess = data.playmess;
