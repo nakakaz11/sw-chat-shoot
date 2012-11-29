@@ -105,10 +105,9 @@ SwSockClient = (function(_super) {
     };
     makeMongo(socket, keyname);
     return socket.on(keyname, function(data) {
-      var JSTDate, userMG;
-      JSTDate = function(str) {
-        return ISODate(str + "T00+09:00");
-      };
+      var JSTDate, date, userMG;
+      date = new Date();
+      JSTDate = date.toLocaleString();
       userMG = new User;
       userMG.userId = socket.handshake.userId;
       userMG.playmess = data.playmess;
