@@ -250,12 +250,13 @@ jQuery ($) ->
     if data.length isnt 0
       $("#list").empty()  # まず空にして
       for name,val of data
-        user =    # userのjson make
-          userId: val.userId
-        user.txt = $("<dt>"+val.date.toLocaleString()+"</dt><dd>"+val.playmess+":ID"+val.userId+"</dd>")
+        #user =    # userのjson make
+          #userId: val.userId
+        userTxt = $("<dt>"+val.date.toLocaleString()+"</dt><dd>"+val.playmess+":ID"+val.userId+"</dd>")
           .attr("data-user-id", val.userId)
-        $("#list").prepend(user.txt)  # DOM挿入
-        _dbDelId = user.userId
+        $("#list").prepend(userTxt)  # DOM挿入
+        _dbDelId = val.userId
+        return
 
   # セッション切断時
   _socket.on "disconnect", (data) ->
