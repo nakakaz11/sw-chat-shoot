@@ -8,7 +8,7 @@ jQuery(function($) {
   _userMap = {};
   _bulletMap = {};
   _canvasMap = {};
-  _myId = null;
+  _myId = {};
   canvasHtml = function(uid) {
     return "<div id='user-coord" + uid + "'>UserCanvas (ID) " + uid + "</div><canvas id='user-canvas" + uid + "' class='user-canvas' width='200' height='200'></canvas>";
   };
@@ -72,7 +72,7 @@ jQuery(function($) {
     user.rotate = data.data.rotate;
     user.v = data.data.v;
     updateCss(user);
-    return _myId = data.userId;
+    return _myId.userId = data.userId;
   });
   _socket.on("bullet-create", function(data) {
     var bullet;
@@ -271,16 +271,19 @@ jQuery(function($) {
     return _keyMap[e.keyCode] = false;
   });
   _socket.on("player-message", function(data) {
-    var name, user, val;
+    var name, user, val, _results;
     if (data.length !== 0) {
       $("#list").empty();
-      user = {};
+      _results = [];
       for (name in data) {
         val = data[name];
-        user.txt = $("<dt>" + val.date.toLocaleString() + "</dt><dd>" + val.playmess + ":ID" + val.userId + "</dd>").attr("data-user-id", val.userId);
-        $("#list").prepend(user.txt);
-        return;
+        user = {
+          userId: val.userId
+        };
+        user.txt = $("<dt>" + val.date.toLocaleString() + "</dt><dd>" + val.playmess + ":ID" + val.userId + "</dd>").attr("data-user-id", data.userId);
+        _results.push($("#list").prepend(user.txt));
       }
+      return _results;
     }
   });
   _socket.on("disconnect", function(data) {});
@@ -296,12 +299,12 @@ jQuery(function($) {
     return setTimeout(chat, 30);
   });
   $("button#btnDbDel").click(function() {
-    console.info("SW-UserLog:" + _myId + ":clicked");
+    console.info("SW-UserLog:" + _myId.userId + ":clicked");
     _socket.emit('deleteDB', {
       userId: _myId
     });
   });
   return _socket.on('deleteDB', function() {
-    return $("#list").children().find().attr("data-user-id", _myId).replaceWith($("<dd>(´･_･`)...Deleted</dd>"));
+    return $("#list").children().find().attr("data-user-id", _myId.userId).replaceWith($("<dd>(´･_･`)...Deleted</dd>"));
   });
 });

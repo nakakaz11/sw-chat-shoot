@@ -6,7 +6,7 @@ jQuery ($) ->
   _userMap = {}
   _bulletMap = {}
   _canvasMap = {}
-  _myId = null
+  _myId = {}
   # canvs add -------------------------#
   canvasHtml = (uid) -> "<div id='user-coord#{uid}'>UserCanvas (ID) #{uid}</div><canvas id='user-canvas#{uid}' class='user-canvas' width='200' height='200'></canvas>"
   mousedown = false
@@ -75,7 +75,8 @@ jQuery ($) ->
     #user.c_y = data.data.c_y
 
     updateCss(user)  # 相手のplayer
-    return _myId = data.userId
+
+    _myId.userId = data.userId
 
   _socket.on "bullet-create", (data) ->
     bullet = _bulletMap[data.userId]
@@ -250,12 +251,12 @@ jQuery ($) ->
   _socket.on "player-message", (data) ->
     if data.length isnt 0
       $("#list").empty()  # まず空にして
-      user = {}
       for name,val of data
+        user =    # userのjson make
+          userId: val.userId
         user.txt = $("<dt>"+val.date.toLocaleString()+"</dt><dd>"+val.playmess+":ID"+val.userId+"</dd>")
-          .attr("data-user-id", val.userId)
+          .attr("data-user-id", data.userId)
         $("#list").prepend(user.txt)  # DOM挿入
-        return
 
   # セッション切断時
   _socket.on "disconnect", (data) ->
@@ -273,11 +274,11 @@ jQuery ($) ->
     setTimeout(chat, 30)         # 押し下げ判定（タイムラグ付）
 
   $("button#btnDbDel").click ->
-    console.info("SW-UserLog:"+_myId+ ":clicked") # log -----------#
+    console.info("SW-UserLog:"+_myId.userId+ ":clicked") # log -----------#
     _socket.emit 'deleteDB',
       userId:_myId
     return
   _socket.on 'deleteDB', () ->
-    $("#list").children().find().attr("data-user-id",_myId).replaceWith($("<dd>(´･_･`)...Deleted</dd>"))
+    $("#list").children().find().attr("data-user-id",_myId.userId).replaceWith($("<dd>(´･_･`)...Deleted</dd>"))
 
 # coffee -wcb *.coffee
