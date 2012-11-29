@@ -39,7 +39,7 @@ a {
 #list dt {
     font-size: 11px;
 }
-#list dl {
+#list dd {
     color: #1d9c8f;
     font-size: 19px;
 }
