@@ -3,12 +3,12 @@
 jQuery(function($) {
   "use strict";
 
-  var canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, f, mousedown, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _dbDelId, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
+  var canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, f, mousedown, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _myId, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
   _canvasMap = {};
-  _dbDelId = {};
+  _myId = null;
   canvasHtml = function(uid) {
     return "<div id='user-coord" + uid + "'>UserCanvas (ID) " + uid + "</div><canvas id='user-canvas" + uid + "' class='user-canvas' width='200' height='200'></canvas>";
   };
@@ -71,7 +71,8 @@ jQuery(function($) {
     user.y = data.data.y;
     user.rotate = data.data.rotate;
     user.v = data.data.v;
-    return updateCss(user);
+    updateCss(user);
+    return _myId = data.userId;
   });
   _socket.on("bullet-create", function(data) {
     var bullet;
@@ -279,7 +280,6 @@ jQuery(function($) {
         $("#list").prepend(userTxt);
         return;
       }
-      _dbDelId.userId = data.userId;
     }
   });
   _socket.on("disconnect", function(data) {});
@@ -295,12 +295,12 @@ jQuery(function($) {
     return setTimeout(chat, 30);
   });
   $("button#btnDbDel").click(function() {
-    console.info("SW-UserLog:" + _dbDelId.userId + ":clicked");
+    console.info("SW-UserLog:" + _myId + ":clicked");
     _socket.emit('deleteDB', {
-      userId: _dbDelId.userId
+      userId: _myId
     });
   });
   return _socket.on('deleteDB', function() {
-    return $("#list").children().find().attr("data-user-id", _dbDelId.userId).replaceWith($("<dd>(´･_･`)...Deleted</dd>"));
+    return $("#list").children().find().attr("data-user-id", _myId).replaceWith($("<dd>(´･_･`)...Deleted</dd>"));
   });
 });
