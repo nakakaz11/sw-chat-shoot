@@ -6,6 +6,7 @@ jQuery ($) ->
   _userMap = {}
   _bulletMap = {}
   _canvasMap = {}
+  _dbDelId = {}
   # canvs add -------------------------#
   canvasHtml = (uid) -> "<div id='user-coord#{uid}'>UserCanvas (ID) #{uid}</div><canvas id='user-canvas#{uid}' class='user-canvas' width='200' height='200'></canvas>"
   mousedown = false
@@ -253,7 +254,7 @@ jQuery ($) ->
         user.txt = $("<dt>"+val.date.toLocaleString()+"</dt><dd>"+val.playmess+":ID"+val.userId+"</dd>")
           .attr("data-user-id", data.userId)
         $("#list").prepend(user.txt)  # DOM挿入
-      _userMap[data.userId] = user
+      _dbDelId = user
 
   # セッション切断時
   _socket.on "disconnect", (data) ->
@@ -272,10 +273,9 @@ jQuery ($) ->
 
   $("button#btnDbDel").click ->
     console.info("SW-UserLog:"+ ":clicked") # log -----------#
-    _socket.emit('deleteDB')
+    _socket.emit 'deleteDB', _dbDelId
     return
-    #$('#list').empty() # 表示も消す (仮)
-  _socket.on "deleteDB", () ->
+  _socket.on 'deleteDB', () ->
     $("#list").empty()
     $("#list").prepend($("<dt>Deleted</dt><dd>(´･_･`)...</dd>"))
 

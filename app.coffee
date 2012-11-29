@@ -93,10 +93,10 @@ io.sockets.on "connection", (socket) ->
   c_c.make(socket,'canvas-create') # canvs add
   d_u.make(socket,'disconnect')
   p_m.make(socket,'player-message')
-  socket.on 'deleteDB', () ->
-    User.find().remove()   #  {userId:userMG.userId}
-    #socket.emit keyname
-    #socket.broadcast.emit keyname
+  socket.on 'deleteDB', (delid) ->
+    User.find().remove({ userId:delid.userId })   #
+    socket.emit keyname
+    socket.broadcast.emit keyname
   return
 
 # サニタイズ sanitized = escapeHTML(msg)
