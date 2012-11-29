@@ -279,7 +279,7 @@ jQuery(function($) {
         $("#list").prepend(userTxt);
         return;
       }
-      _dbDelId = data.userId;
+      _dbDelId.userId = data.userId;
     }
   });
   _socket.on("disconnect", function(data) {});

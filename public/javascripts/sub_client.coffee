@@ -256,7 +256,7 @@ jQuery ($) ->
           .attr("data-user-id", val.userId)
         $("#list").prepend(userTxt)  # DOM挿入
         return
-      _dbDelId = data.userId
+      _dbDelId.userId = data.userId
       return
   # セッション切断時
   _socket.on "disconnect", (data) ->
