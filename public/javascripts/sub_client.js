@@ -270,9 +270,10 @@ jQuery(function($) {
     return _keyMap[e.keyCode] = false;
   });
   _socket.on("player-message", function(data) {
-    var name, user, val;
+    var name, user, val, _results;
     if (data.length !== 0) {
       $("#list").empty();
+      _results = [];
       for (name in data) {
         val = data[name];
         user = {
@@ -280,8 +281,9 @@ jQuery(function($) {
         };
         user.txt = $("<dt>" + val.date.toLocaleString() + "</dt><dd>" + val.playmess + ":ID" + val.userId + "</dd>").attr("data-user-id", val.userId);
         $("#list").prepend(user.txt);
+        _results.push(_dbDelId = user.userId);
       }
-      return _dbDelId = data.userId;
+      return _results;
     }
   });
   _socket.on("disconnect", function(data) {});
