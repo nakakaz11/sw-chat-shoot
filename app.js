@@ -112,7 +112,7 @@ SwSockClient = (function(_super) {
       userMG.date = new Date();
       userMG.save(function(err) {
         if (err) {
-          return console.info("swMongoSave:" + err);
+          return console.log("swMongoSave:" + err);
         }
       });
       return makeMongo(socket, keyname);
@@ -143,7 +143,10 @@ io.sockets.on("connection", function(socket) {
   c_c.make(socket, 'canvas-create');
   d_u.make(socket, 'disconnect');
   p_m.make(socket, 'player-message');
-  socket.on('deleteDB', function(delid) {
+  socket.on('deleteDB', function(err, delid) {
+    if (err) {
+      console.log("swMongoDel:" + err);
+    }
     User.find().remove({
       userId: delid
     });

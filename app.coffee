@@ -72,7 +72,7 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
       userMG.playmess = data.playmess
       userMG.date = new Date()
       userMG.save (err) ->       # DB write
-        if err then console.info "swMongoSave:"+err # log
+        if err then console.log "swMongoSave:"+err # log
       #sanitized = escapeHTML(data) # これobj前にやんなきゃね。
       makeMongo(socket,keyname)
 
@@ -93,7 +93,8 @@ io.sockets.on "connection", (socket) ->
   c_c.make(socket,'canvas-create') # canvs add
   d_u.make(socket,'disconnect')
   p_m.make(socket,'player-message')
-  socket.on 'deleteDB', (delid) ->
+  socket.on 'deleteDB', (err,delid) ->
+    if err then console.log "swMongoDel:"+err # log
     User.find().remove({ userId:delid })   #
     socket.emit keyname
     socket.broadcast.emit keyname

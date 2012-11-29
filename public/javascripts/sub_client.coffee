@@ -276,7 +276,6 @@ jQuery ($) ->
     _socket.emit 'deleteDB', _dbDelId.userId
     return
   _socket.on 'deleteDB', () ->
-    #$("#list").empty()
-    #$("#list").prepend($("<dt>Deleted</dt><dd>(´･_･`)...</dd>"))
+    $("#list").children().attr("data-user-id",_dbDelId.userId).replaceWith($("<dd>(´･_･`)...Deleted</dd>"))
 
 # coffee -wcb *.coffee
