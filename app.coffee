@@ -94,7 +94,7 @@ io.sockets.on "connection", (socket) ->
   d_u.make(socket,'disconnect')
   p_m.make(socket,'player-message')
   socket.on 'deleteDB', (delid) ->
-    User.find().remove({ userId:delid.userId })   #
+    User.find().remove({ userId:delid })   #
     socket.emit keyname
     socket.broadcast.emit keyname
   return

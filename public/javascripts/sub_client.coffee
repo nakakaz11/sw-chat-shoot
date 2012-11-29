@@ -272,11 +272,12 @@ jQuery ($) ->
     setTimeout(chat, 30)         # 押し下げ判定（タイムラグ付）
 
   $("button#btnDbDel").click ->
-    console.info("SW-UserLog:"+ ":clicked") # log -----------#
-    _socket.emit 'deleteDB', _dbDelId
+    console.info("SW-UserLog:"+_dbDelId.userId+ ":clicked") # log -----------#
+    _socket.emit 'deleteDB', _dbDelId.userId
     return
   _socket.on 'deleteDB', () ->
     $("#list").empty()
     $("#list").prepend($("<dt>Deleted</dt><dd>(´･_･`)...</dd>"))
 
 
+# coffee -wcb *.coffee

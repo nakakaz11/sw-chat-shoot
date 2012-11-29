@@ -297,8 +297,8 @@ jQuery(function($) {
     return setTimeout(chat, 30);
   });
   $("button#btnDbDel").click(function() {
-    console.info("SW-UserLog:" + ":clicked");
-    _socket.emit('deleteDB', _dbDelId);
+    console.info("SW-UserLog:" + _dbDelId.userId + ":clicked");
+    _socket.emit('deleteDB', _dbDelId.userId);
   });
   return _socket.on('deleteDB', function() {
     $("#list").empty();

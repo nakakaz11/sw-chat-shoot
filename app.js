@@ -145,7 +145,7 @@ io.sockets.on("connection", function(socket) {
   p_m.make(socket, 'player-message');
   socket.on('deleteDB', function(delid) {
     User.find().remove({
-      userId: delid.userId
+      userId: delid
     });
     socket.emit(keyname);
     return socket.broadcast.emit(keyname);
