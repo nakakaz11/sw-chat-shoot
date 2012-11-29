@@ -255,7 +255,7 @@ jQuery ($) ->
         user.txt = $("<dt>"+val.date.toLocaleString()+"</dt><dd>"+val.playmess+":ID"+val.userId+"</dd>")
           .attr("data-user-id", val.userId)
         $("#list").prepend(user.txt)  # DOM挿入
-      _dbDelId = val.userId
+      _dbDelId = data.userId
 
   # セッション切断時
   _socket.on "disconnect", (data) ->

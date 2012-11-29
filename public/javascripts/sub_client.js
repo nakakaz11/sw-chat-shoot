@@ -281,7 +281,7 @@ jQuery(function($) {
         user.txt = $("<dt>" + val.date.toLocaleString() + "</dt><dd>" + val.playmess + ":ID" + val.userId + "</dd>").attr("data-user-id", val.userId);
         $("#list").prepend(user.txt);
       }
-      return _dbDelId = val.userId;
+      return _dbDelId = data.userId;
     }
   });
   _socket.on("disconnect", function(data) {});
