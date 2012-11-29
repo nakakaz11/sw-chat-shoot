@@ -144,12 +144,9 @@ io.sockets.on("connection", function(socket) {
   d_u.make(socket, 'disconnect');
   p_m.make(socket, 'player-message');
   socket.on('deleteDB', function(err, delid) {
-    console.log("swMongoDel:" + delid);
-    if (err) {
-      console.log("swMongoDel:" + err);
-    }
+    console.log("swMongoDel:" + delid.uid);
     return User.find().remove({
-      userId: delid
+      userId: delid.uid
     });
   });
 });
