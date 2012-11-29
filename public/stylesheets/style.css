@@ -36,6 +36,13 @@ a {
     height:400px;
     overflow: auto;
 }
+#list dt {
+    font-size: 11px;
+}
+#list dl {
+    color: #1d9c8f;
+    font-size: 19px;
+}
 
 img.player{
 	width:50px;
