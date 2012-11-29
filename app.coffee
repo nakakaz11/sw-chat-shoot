@@ -67,8 +67,8 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
     makeMongo(socket,keyname)
     socket.on keyname, (data) ->
       # mongoose -------#
-      date = new Date().getTimezoneOffset()
-      JSTDate = date-540
+      date = new Date().getTimezoneOffset()-540
+      JSTDate = date
       userMG = new User
       userMG.userId = socket.handshake.userId
       userMG.playmess = data.playmess
