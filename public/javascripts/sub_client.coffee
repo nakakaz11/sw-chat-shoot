@@ -274,8 +274,7 @@ jQuery ($) ->
 
   $("button#btnDbDel").click ->
     console.info("SW-UserLog:"+_dbDelId.userId+ ":clicked") # log -----------#
-    _socket.emit 'deleteDB',
-      userId:_dbDelId.userId
+    _socket.emit 'deleteDB',_dbDelId.userId
     return
   _socket.on 'deleteDB', () ->
     $("#list").children().attr("data-user-id",_dbDelId.userId).replaceWith($("<dd>(´･_･`)...Deleted</dd>"))

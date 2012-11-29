@@ -149,7 +149,7 @@ io.sockets.on("connection", function(socket) {
       console.log("swMongoDel:" + err);
     }
     return User.find().remove({
-      userId: delid.userId
+      userId: delid
     });
   });
 });
