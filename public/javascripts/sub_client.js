@@ -272,12 +272,12 @@ jQuery(function($) {
   _socket.on("player-message", function(data) {
     var name, userTxt, val;
     if (data.length !== 0) {
+      _dbDelId = data;
       $("#list").empty();
       for (name in data) {
         val = data[name];
         userTxt = $("<dt>" + val.date.toLocaleString() + "</dt><dd>" + val.playmess + ":ID" + val.userId + "</dd>").attr("data-user-id", val.userId);
         $("#list").prepend(userTxt);
-        _dbDelId = val.userId;
         return;
       }
     }
