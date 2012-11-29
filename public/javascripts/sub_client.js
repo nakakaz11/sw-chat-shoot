@@ -278,10 +278,10 @@ jQuery(function($) {
         user = {
           userId: val.userId
         };
-        user.txt = $("<dt>" + val.date.toLocaleString() + "</dt><dd>" + val.playmess + ":ID" + val.userId + "</dd>").attr("data-user-id", data.userId);
+        user.txt = $("<dt>" + val.date.toLocaleString() + "</dt><dd>" + val.playmess + ":ID" + val.userId + "</dd>").attr("data-user-id", val.userId);
         $("#list").prepend(user.txt);
       }
-      return _dbDelId = user;
+      return _dbDelId = val.userId;
     }
   });
   _socket.on("disconnect", function(data) {});
@@ -299,7 +299,7 @@ jQuery(function($) {
   $("button#btnDbDel").click(function() {
     console.info("SW-UserLog:" + _dbDelId.userId + ":clicked");
     _socket.emit('deleteDB', {
-      uid: _dbDelId.userId
+      userId: _dbDelId.userId
     });
   });
   return _socket.on('deleteDB', function() {

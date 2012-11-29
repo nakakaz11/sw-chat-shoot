@@ -253,9 +253,9 @@ jQuery ($) ->
         user =    # userのjson make
           userId: val.userId
         user.txt = $("<dt>"+val.date.toLocaleString()+"</dt><dd>"+val.playmess+":ID"+val.userId+"</dd>")
-          .attr("data-user-id", data.userId)
+          .attr("data-user-id", val.userId)
         $("#list").prepend(user.txt)  # DOM挿入
-      _dbDelId = user
+      _dbDelId = val.userId
 
   # セッション切断時
   _socket.on "disconnect", (data) ->
@@ -275,7 +275,7 @@ jQuery ($) ->
   $("button#btnDbDel").click ->
     console.info("SW-UserLog:"+_dbDelId.userId+ ":clicked") # log -----------#
     _socket.emit 'deleteDB',
-      uid:_dbDelId.userId
+      userId:_dbDelId.userId
     return
   _socket.on 'deleteDB', () ->
     $("#list").children().find().attr("data-user-id",_dbDelId.userId).replaceWith($("<dd>(´･_･`)...Deleted</dd>"))
