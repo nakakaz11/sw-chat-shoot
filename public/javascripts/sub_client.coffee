@@ -270,11 +270,13 @@ jQuery ($) ->
   delId = ->
     del = $("input#delId").val()
     $("input#delId").val ""
-    _socket.json.emit 'deleteDB',   #jsonがある状況の整理、調べないと
+    _socket.emit 'deleteDB',   #jsonがある状況の整理、調べないと
       userId:del
       console.info("SW-DelNo:"+del+ ":clicked") # log -----------#
       $("#list dd").each ->
-         $(this).has('[data-user-id="'+del+'"]').replaceWith($("<dd>(´･_･`)...Deleted</dd>"))
+        if  $(this).attr('data-user-id') is del
+            $(this).replaceWith($("<dd>(´･_･`)...Deleted</dd>"))
+            return
   $("button#btn").click ->
     setTimeout(chat, 19)         # 押し下げ判定（タイムラグ付）
   $("button#btnDbDel").click ->
