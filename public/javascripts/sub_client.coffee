@@ -274,8 +274,7 @@ jQuery ($) ->
       userId:del
       console.info("SW-DelNo:"+del+ ":clicked") # log -----------#
       $("#list dd").each ->
-        if $(this).has('[data-user-id="'+del+'"]')
-          $(this).replaceWith($("<dd>(´･_･`)...Deleted</dd>"))
+         $(this).has('[data-user-id="'+del+'"]').replaceWith($("<dd>(´･_･`)...Deleted</dd>"))
   $("button#btn").click ->
     setTimeout(chat, 19)         # 押し下げ判定（タイムラグ付）
   $("button#btnDbDel").click ->
