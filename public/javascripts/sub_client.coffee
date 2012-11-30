@@ -6,7 +6,6 @@ jQuery ($) ->
   _userMap = {}
   _bulletMap = {}
   _canvasMap = {}
-  _myId = null
   # canvs add -------------------------#
   canvasHtml = (uid) -> "<div id='user-coord#{uid}'>UserCanvas (ID) #{uid}</div><canvas id='user-canvas#{uid}' class='user-canvas' width='200' height='200'></canvas>"
   mousedown = false
@@ -257,7 +256,7 @@ jQuery ($) ->
         $("#list").prepend(user.txt)  # DOM挿入
 
   # セッション切断時
-  _socket.on "disconnect", (data) ->
+  #_socket.on "disconnect", (data) ->
     #if data.length isnt 0
       #user = _userMap[data.userId]
       #$("#list").empty()  # chatに関してempty/remove処理
@@ -274,7 +273,7 @@ jQuery ($) ->
     _socket.json.emit 'deleteDB',   #jsonがある状況の整理、調べないと
       userId:del
       console.info("SW-DelNo:"+del+ ":clicked") # log -----------#
-      $("#list").find("<dd />")
+      $("#list").find("<dd>")
                 .attr("data-user-id",del)
                 .empty().replace($("<dd>(´･_･`)...Deleted</dd>"))
   $("button#btn").click ->

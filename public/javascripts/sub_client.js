@@ -3,12 +3,11 @@
 jQuery(function($) {
   "use strict";
 
-  var canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, mousedown, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _myId, _player, _socket, _userMap;
+  var canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, mousedown, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
   _canvasMap = {};
-  _myId = null;
   canvasHtml = function(uid) {
     return "<div id='user-coord" + uid + "'>UserCanvas (ID) " + uid + "</div><canvas id='user-canvas" + uid + "' class='user-canvas' width='200' height='200'></canvas>";
   };
@@ -285,7 +284,6 @@ jQuery(function($) {
       return _results;
     }
   });
-  _socket.on("disconnect", function(data) {});
   chat = function() {
     var msg;
     msg = $("input#message").val();
@@ -300,7 +298,7 @@ jQuery(function($) {
     $("input#delId").val("");
     return _socket.json.emit('deleteDB', {
       userId: del
-    }, console.info("SW-DelNo:" + del + ":clicked"), $("#list").find("<dd />").attr("data-user-id", del).empty().replace($("<dd>(´･_･`)...Deleted</dd>")));
+    }, console.info("SW-DelNo:" + del + ":clicked"), $("#list").find("<dd>").attr("data-user-id", del).empty().replace($("<dd>(´･_･`)...Deleted</dd>")));
   };
   $("button#btn").click(function() {
     return setTimeout(chat, 19);
