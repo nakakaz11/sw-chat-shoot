@@ -296,13 +296,15 @@ jQuery(function($) {
     var del;
     del = $("input#delId").val();
     $("input#delId").val("");
-    return _socket.json.emit('deleteDB', {
+    _socket.json.emit('deleteDB', {
       userId: del
-    }, console.info("SW-DelNo:" + del + ":clicked"), $("#list dd").each(function() {
+    });
+    console.info("SW-DelNo:" + del + ":clicked");
+    return $("#list dd").each(function() {
       if ($(this).attr('data-user-id') === del) {
         $(this).replaceWith($("<dd>(´･_･`)...:ID:" + del + "is Deleted</dd>"));
       }
-    }));
+    });
   };
   $("button#btn").click(function() {
     return setTimeout(chat, 19);
