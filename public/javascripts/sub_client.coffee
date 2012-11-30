@@ -273,7 +273,7 @@ jQuery ($) ->
     _socket.json.emit 'deleteDB',   #jsonがある状況の整理、調べないと
       userId:del
       console.info("SW-DelNo:"+del+ ":clicked") # log -----------#
-      $("#list").find("<dd>")
+      $("#list").find("dd")
                 .attr("data-user-id",del)
                 .empty().replace($("<dd>(´･_･`)...Deleted</dd>"))
   $("button#btn").click ->
