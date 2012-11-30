@@ -273,8 +273,9 @@ jQuery ($) ->
     _socket.json.emit 'deleteDB',   #jsonがある状況の整理、調べないと
       userId:del
       console.info("SW-DelNo:"+del+ ":clicked") # log -----------#
-      if $("#list dd").is('[data-user-id='+del+']')
-         $(this).replaceWith($("<dd>(´･_･`)...Deleted</dd>"))
+      $("#list dd").each ->
+        $(this).is('[data-user-id='+del+']')
+               .replaceWith($("<dd>(´･_･`)...Deleted</dd>"))
   $("button#btn").click ->
     setTimeout(chat, 19)         # 押し下げ判定（タイムラグ付）
   $("button#btnDbDel").click ->
