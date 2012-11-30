@@ -67,18 +67,20 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
     makeMongo(socket,keyname)
     socket.on keyname, (data) ->
       # mongoose -------#
-      dd = new Date()
-      yy = dd.getYear()
-      mm = dd.getMonth() + 1
-      dd = dd.getDate()
-      hh = dd.getHours() + 9
-      ff = dd.getMinutes()
-      if (yy < 2000) then yy += 1900
-      #if (mm < 10) then mm = "0" + mm
-      #if (dd < 10) then dd = "0" + dd
-      if (hh < 10) then hh = "0" + hh
-      if (ff < 10) then ff = "0" + ff
-      jst = yy+"/"+mm+"/"+dd+":"+hh+":"+ff
+      day = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
+      y = (new Date()).getYear()
+      t = (new Date()).getMonth() + 1
+      d = (new Date()).getDate()
+      w = (new Date()).getDay()
+      h = (new Date()).getHours()
+      m = (new Date()).getMinutes()
+      s = (new Date()).getSeconds()
+      if(t < 10) then t = "0" + t
+      if(d < 10) then d = "0" + d
+      if(h < 10) then h = "0" + h
+      if(m < 10) then m = "0" + m
+      if(s < 10) then s = "0" + s
+      jst = y+"/"+t+"/"+d+" ("+day[w]+") "+h+":"+m
       userMG = new User
       userMG.userId = socket.handshake.userId
       userMG.playmess = data.playmess

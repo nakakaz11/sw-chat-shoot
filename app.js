@@ -108,23 +108,31 @@ SwSockClient = (function(_super) {
     };
     makeMongo(socket, keyname);
     return socket.on(keyname, function(data) {
-      var dd, ff, hh, jst, mm, userMG, yy;
-      dd = new Date();
-      yy = dd.getYear();
-      mm = dd.getMonth() + 1;
-      dd = dd.getDate();
-      hh = dd.getHours() + 9;
-      ff = dd.getMinutes();
-      if (yy < 2000) {
-        yy += 1900;
+      var d, day, h, jst, m, s, t, userMG, w, y;
+      day = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      y = (new Date()).getYear();
+      t = (new Date()).getMonth() + 1;
+      d = (new Date()).getDate();
+      w = (new Date()).getDay();
+      h = (new Date()).getHours();
+      m = (new Date()).getMinutes();
+      s = (new Date()).getSeconds();
+      if (t < 10) {
+        t = "0" + t;
       }
-      if (hh < 10) {
-        hh = "0" + hh;
+      if (d < 10) {
+        d = "0" + d;
       }
-      if (ff < 10) {
-        ff = "0" + ff;
+      if (h < 10) {
+        h = "0" + h;
       }
-      jst = yy + "/" + mm + "/" + dd + ":" + hh + ":" + ff;
+      if (m < 10) {
+        m = "0" + m;
+      }
+      if (s < 10) {
+        s = "0" + s;
+      }
+      jst = y + "/" + t + "/" + d + " (" + day[w] + ") " + h + ":" + m;
       userMG = new User;
       userMG.userId = socket.handshake.userId;
       userMG.playmess = data.playmess;
