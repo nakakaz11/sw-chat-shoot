@@ -299,7 +299,9 @@ jQuery(function($) {
     return _socket.json.emit('deleteDB', {
       userId: del
     }, console.info("SW-DelNo:" + del + ":clicked"), $("#list dd").each(function() {
-      return $(this).attr('[data-user-id=' + del + ']').replaceWith($("<dd>(´･_･`)...Deleted</dd>"));
+      if ($(this).attr('[data-user-id=' + del + ']')) {
+        return $(this).replaceWith($("<dd>(´･_･`)...Deleted</dd>"));
+      }
     }));
   };
   $("button#btn").click(function() {
