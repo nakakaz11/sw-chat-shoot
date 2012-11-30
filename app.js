@@ -108,13 +108,27 @@ SwSockClient = (function(_super) {
     };
     makeMongo(socket, keyname);
     return socket.on(keyname, function(data) {
-      var JSTDate, date, userMG;
-      date = new Date();
-      JSTDate = date;
+      var dd, ff, hh, jst, mm, userMG, yy;
+      dd = new Date();
+      yy = dd.getYear();
+      mm = dd.getMonth() + 1;
+      dd = dd.getDate();
+      hh = dd.getHours() + 9;
+      ff = dd.getMinutes();
+      if (yy < 2000) {
+        yy += 1900;
+      }
+      if (hh < 10) {
+        hh = "0" + hh;
+      }
+      if (ff < 10) {
+        ff = "0" + ff;
+      }
+      jst = yy + "/" + mm + "/" + dd + ":" + hh + ":" + ff;
       userMG = new User;
       userMG.userId = socket.handshake.userId;
       userMG.playmess = data.playmess;
-      userMG.date = JSTDate;
+      userMG.date = jst;
       userMG.save(function(err) {
         if (err) {
           return console.log("swMongoSave:" + err);

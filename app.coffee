@@ -67,12 +67,22 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
     makeMongo(socket,keyname)
     socket.on keyname, (data) ->
       # mongoose -------#
-      date = new Date()
-      JSTDate = date
+      dd = new Date()
+      yy = dd.getYear()
+      mm = dd.getMonth() + 1
+      dd = dd.getDate()
+      hh = dd.getHours() + 9
+      ff = dd.getMinutes()
+      if (yy < 2000) then yy += 1900
+      #if (mm < 10) then mm = "0" + mm
+      #if (dd < 10) then dd = "0" + dd
+      if (hh < 10) then hh = "0" + hh
+      if (ff < 10) then ff = "0" + ff
+      jst = yy+"/"+mm+"/"+dd+":"+hh+":"+ff
       userMG = new User
       userMG.userId = socket.handshake.userId
       userMG.playmess = data.playmess
-      userMG.date = JSTDate
+      userMG.date = jst
       userMG.save (err) ->       # DB write
         if err then console.log "swMongoSave:"+err # log
       #sanitized = escapeHTML(data) # これobj前にやんなきゃね。
