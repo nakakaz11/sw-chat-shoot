@@ -96,10 +96,11 @@ io.sockets.on "connection", (socket) ->
   d_u.make(socket,'disconnect')
   p_m.make(socket,'player-message')
   socket.on 'deleteDB', (delid) ->
-    uid = delid.userId
-    console.log "swMongoDel:"+uid
+    uid={}
+    uid.userId = delid.userId
+    console.log "swMongoDel:"+uid.userId
     userMG = new User
-    userMG.remove({userId:uid})
+    userMG.remove({userId:uid.userId})
     # socket.emit 'deleteDB'
     # socket.broadcast.emit 'deleteDB'
   return
