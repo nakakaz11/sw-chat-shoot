@@ -270,7 +270,7 @@ jQuery ($) ->
   delId = ->
     del = $("input#delId").val()
     $("input#delId").val ""
-    _socket.emit 'deleteDB',   #jsonがある状況の整理、調べないと
+    _socket.json.emit 'deleteDB',   #jsonがある状況の整理、調べないと
       userId:del
       console.info("SW-DelNo:"+del+ ":clicked") # log -----------#
       $("#list dd").each ->

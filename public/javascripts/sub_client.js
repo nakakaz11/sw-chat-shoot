@@ -296,7 +296,7 @@ jQuery(function($) {
     var del;
     del = $("input#delId").val();
     $("input#delId").val("");
-    return _socket.emit('deleteDB', {
+    return _socket.json.emit('deleteDB', {
       userId: del
     }, console.info("SW-DelNo:" + del + ":clicked"), $("#list dd").each(function() {
       if ($(this).attr('data-user-id') === del) {
