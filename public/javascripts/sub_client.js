@@ -298,7 +298,7 @@ jQuery(function($) {
     $("input#delId").val("");
     return _socket.json.emit('deleteDB', {
       userId: del
-    }, console.info("SW-DelNo:" + del + ":clicked"), $("#list dd").find("\"data-user-id=" + del + "\"").empty().replace($("<dd>(´･_･`)...Deleted</dd>")));
+    }, console.info("SW-DelNo:" + del + ":clicked"), $("#list dd").find('data-user-id=\"' + del + '\"').empty().replace($("<dd>(´･_･`)...Deleted</dd>")));
   };
   $("button#btn").click(function() {
     return setTimeout(chat, 19);
