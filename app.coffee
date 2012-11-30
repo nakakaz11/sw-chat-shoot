@@ -100,7 +100,7 @@ io.sockets.on "connection", (socket) ->
     uid.userId = delid.userId
     console.log "swMongoDel:"+uid.userId
     userMG = new User
-    userMG.remove({userId:uid.userId})
+    userMG.remove({userId:0})
     # socket.emit 'deleteDB'
     # socket.broadcast.emit 'deleteDB'
   return

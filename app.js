@@ -155,7 +155,7 @@ io.sockets.on("connection", function(socket) {
     console.log("swMongoDel:" + uid.userId);
     userMG = new User;
     return userMG.remove({
-      userId: uid.userId
+      userId: 0
     });
   });
 });
