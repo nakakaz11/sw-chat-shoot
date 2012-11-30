@@ -17,7 +17,14 @@ a {
 	color: #98918a;
 	font-size:1em;
 	padding:3px 4px;
-	width:50%;
+	width:70%;
+}
+#form input#delId {
+	border:1px solid #CCCCCC;
+	color: #98918a;
+	font-size:1em;
+	padding:3px 4px;
+	width:5em;
 }
 #chat{
     clear: both;
@@ -40,7 +47,7 @@ a {
     font-size: 11px;
 }
 #list dd {
-    color: #1d9c8f;
+    color: #2b6993;
     font-size: 19px;
 }
 

@@ -268,15 +268,18 @@ jQuery ($) ->
     $("input#message").val ""
     _socket.json.emit "player-message",
       playmess:msg
+  delId = ->
+    del = $("input#delId").val()
+    $("input#delId").val ""
+    _socket.json.emit 'deleteDB',   #jsonがある状況の整理、調べないと
+      userId:del
+      console.info("SW-DelNo:"+del+ ":clicked") # log -----------#
+      $("#list").find("<dd />")
+                .attr("data-user-id",del)
+                .empty().replace($("<dd>(´･_･`)...Deleted</dd>"))
   $("button#btn").click ->
-    setTimeout(chat, 30)         # 押し下げ判定（タイムラグ付）
-
+    setTimeout(chat, 19)         # 押し下げ判定（タイムラグ付）
   $("button#btnDbDel").click ->
-    console.info("SW-UserLog:"+_myId+ ":clicked") # log -----------#
-    _socket.emit 'deleteDB',
-      userId:_myId
-    return
-  _socket.on 'deleteDB', () ->
-    $("#list").children().empty().replaceWith($("<dd>(´･_･`)...Deleted</dd>"))
+    setTimeout(delId, 19)         # 押し下げ判定（タイムラグ付）
 
 # coffee -wcb *.coffee
