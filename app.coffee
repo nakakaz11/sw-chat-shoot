@@ -98,9 +98,8 @@ io.sockets.on "connection", (socket) ->
   socket.on 'deleteDB', (delid) ->
     console.log "swMongoDel:"+delid.userId
     User.find().remove({userId:delid.userId})
-    # userId:_uid.userId
-    socket.emit 'deleteDB'
-    socket.broadcast.emit 'deleteDB'
+    # socket.emit 'deleteDB'
+    # socket.broadcast.emit 'deleteDB'
   return
 
 # coffee -wcb *.coffee

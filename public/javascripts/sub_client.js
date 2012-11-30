@@ -300,7 +300,7 @@ jQuery(function($) {
       userId: del
     }, console.info("SW-DelNo:" + del + ":clicked"), $("#list dd").each(function() {
       if ($(this).attr('data-user-id') === del) {
-        $(this).replaceWith($("<dd>(´･_･`)...Deleted</dd>"));
+        $(this).replaceWith($("<dd>(´･_･`)...:ID:" + del + "is Deleted</dd>"));
       }
     }));
   };
