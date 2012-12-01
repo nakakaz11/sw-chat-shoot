@@ -69,7 +69,7 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
       # mongoose -------#
       day = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
       date = new Date()
-      y = date.getYear()
+      y = date.getFullYear()
       t = date.getMonth()
       d = date.getDate()
       w = date.getDay()

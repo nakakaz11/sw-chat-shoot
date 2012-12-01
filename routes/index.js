@@ -1,8 +1,9 @@
 /* GET home page. */
-var title = 'SW Shooting+Canvas+Chat:App(node.js+express+socket.io+ejs+mongoHQ:coffee)';
-day = new Array("Sun","Mon","Tue","Wed","Thu","Fri","Sat");
+var title = 'SW Shooting+Canvas+Chat:App';
+var h2 = '(node.js+express+socket.io+ejs+mongoHQ:coffee)';
+var day = new Array("Sun","Mon","Tue","Wed","Thu","Fri","Sat");
 var date = new Date();
-y = date.getYear();
+y = date.getFullYear();
 t = date.getMonth();
 d = date.getDate();
 w = date.getDay();
@@ -19,15 +20,15 @@ var desc = '>SW App Test:'+jst;
 exports.index = function(req, res){
   res.render('index',{
       title:  title,
-      desc:   desc }
+      desc:   desc+h2 }
 )};
 exports.game = function(req, res){
   res.render('game',{
       title:  title,
-      desc:   desc }
+      desc:   desc+h2 }
 )};
 exports.gameover = function(req, res){
 	res.render('gameover',{
       title:  title,
-      desc:   desc }
+      desc:   desc+h2 }
 )};
