@@ -108,15 +108,16 @@ SwSockClient = (function(_super) {
     };
     makeMongo(socket, keyname);
     return socket.on(keyname, function(data) {
-      var d, day, h, jst, m, s, t, userMG, w, y;
+      var d, date, day, h, jst, m, s, t, userMG, w, y;
       day = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-      y = (new Date()).getYear();
-      t = (new Date()).getMonth();
-      d = (new Date()).getDate();
-      w = (new Date()).getDay();
-      h = (new Date()).getHours();
-      m = (new Date()).getMinutes();
-      s = (new Date()).getSeconds();
+      date = new Date();
+      y = date.getYear();
+      t = date.getMonth();
+      d = date.getDate();
+      w = date.getDay();
+      h = date.getHours();
+      m = date.getMinutes();
+      s = date.getSeconds();
       if (t < 10) {
         t = "0" + t;
       }
