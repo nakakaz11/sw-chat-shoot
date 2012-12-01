@@ -70,7 +70,7 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
       day = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
       date = new Date()
       y = date.getFullYear()
-      t = date.getMonth()
+      t = date.getMonth()+1
       d = date.getDate()
       w = date.getDay()
       h = date.getHours()+9
