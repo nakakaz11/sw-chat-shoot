@@ -171,7 +171,7 @@ jQuery(function($) {
       mousedown = true;
       ctx.beginPath();
       ctx.moveTo(pos.c_x, pos.c_y);
-      _socket.emit("canvas-create", {
+      _socket.json.emit("canvas-create", {
         c_x: pos.c_x,
         c_y: pos.c_y,
         c_UM: "onmousedown"
@@ -183,7 +183,7 @@ jQuery(function($) {
       pos = updatePosCanv(e, canvas);
       coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")";
       if (mousedown) {
-        _socket.emit("canvas-create", {
+        _socket.json.emit("canvas-create", {
           c_x: pos.c_x,
           c_y: pos.c_y,
           c_UM: "onmousemove"
@@ -194,7 +194,7 @@ jQuery(function($) {
     };
     canvas.onmouseup = function(e) {
       mousedown = false;
-      return _socket.emit("canvas-create", {
+      return _socket.json.emit("canvas-create", {
         c_UM: "onmouseup"
       });
     };
@@ -216,7 +216,7 @@ jQuery(function($) {
       _bullet.y = _player.y + 20;
       _bullet.rotate = _player.rotate;
       _bullet.v = Math.max(_player.v + 3, 3);
-      _socket.emit("bullet-create", {
+      _socket.json.emit("bullet-create", {
         x: _bullet.x | 0,
         y: _bullet.y | 0,
         rotate: _bullet.rotate | 0,
@@ -250,7 +250,7 @@ jQuery(function($) {
     }
     updateCss(_bullet);
     updateCss(_player);
-    _socket.emit("player-update", {
+    _socket.json.emit("player-update", {
       x: _player.x | 0,
       y: _player.y | 0,
       rotate: _player.rotate | 0,

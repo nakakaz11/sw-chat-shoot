@@ -15,7 +15,7 @@ if(d < 10) d ="0"+d;
 if(h < 10) h ="0"+h;
 if(m < 10) m ="0"+m;
 if(s < 10) s ="0"+s;
-var jst = y+"/"+t+"/"+d+" ("+day[w]+") "+(h)+":"+m ;
+var jst = y+"/"+t+"/"+d+" ("+day[w]+") "+(h)+":"+m ;  //add Time (UTC to JST)
 var desc = '>SW App Test:'+jst;
 exports.index = function(req, res){
   res.render('index',{

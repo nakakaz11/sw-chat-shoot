@@ -1,5 +1,4 @@
-# coffee -wcb *.coffee
-# js2coffee client.js > client.coffee
+# coffee -wcb *.coffee  # js2coffee client.js > client.coffee
 jQuery ($) ->
   "use strict"
   _socket = io.connect()
@@ -9,7 +8,6 @@ jQuery ($) ->
   # canvs add -------------------------#
   canvasHtml = (uid) -> "<div id='user-coord#{uid}'>UserCanvas (ID) #{uid}</div><canvas id='user-canvas#{uid}' class='user-canvas' width='200' height='200'></canvas>"
   mousedown = false
-  #ctxUMousedown = null
   canvas = document.getElementById("my-canvas")
   coord = document.getElementById("coord")
   ctx = canvas.getContext("2d")  # get 2D context
@@ -20,14 +18,13 @@ jQuery ($) ->
   createCtxU = (uid) ->
     if _isUserCanvas is true
       ctxUid =  document.getElementById("user-canvas#{uid}")
-      # 複数の時どうすんだ ctxUser =  ctxUid.attr("data-user-id")
       ctxU = ctxUid.getContext("2d")  # get 2D context
       ctxU.strokeStyle = "#83B14E"    #Fill Color
       ctxU.lineWidth = 5
       return ctxU
     else
       false
-  # /canvs add -------------------------#
+
   _socket.on "player-update", (data) ->   # userオブジェクト作成/初期化
     # game Engine  -------------------------#
     if _userMap[data.userId] is `undefined`     # なかったら作る
@@ -53,7 +50,7 @@ jQuery ($) ->
       $("body").append(bullet.element)
       _bulletMap[data.userId] = bullet   # 対戦相手のobj代入
 
-      uCanv =                        # uCanv 作成/初期化
+      uCanv =                            # uCanv 作成/初期化
          c_x: 0
          c_y: 0
          userId: data.userId
@@ -69,10 +66,8 @@ jQuery ($) ->
     user.y = data.data.y
     user.rotate = data.data.rotate
     user.v = data.data.v
-    # 共通socket"player-update"の場合はObj構築しないとね。
     #user.c_x = data.data.c_x
     #user.c_y = data.data.c_y
-
     updateCss(user)  # 相手のplayer
 
   _socket.on "bullet-create", (data) ->
@@ -110,7 +105,6 @@ jQuery ($) ->
       bullet = _bulletMap[data.userId]
       bullet.element.remove()
       delete _bulletMap[data.userId]
-
       uCanv = _canvasMap[data.userId]
       uCanv.element.remove()
       delete _canvasMap[data.userId]
@@ -164,7 +158,7 @@ jQuery ($) ->
       mousedown = true
       ctx.beginPath()
       ctx.moveTo pos.c_x, pos.c_y
-      _socket.emit "canvas-create",
+      _socket.json.emit "canvas-create",
         c_x:pos.c_x
         c_y:pos.c_y
         c_UM:"onmousedown"   # switch文flag
@@ -173,7 +167,7 @@ jQuery ($) ->
       pos = updatePosCanv(e, canvas)
       coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")"
       if mousedown
-        _socket.emit "canvas-create",
+        _socket.json.emit "canvas-create",
           c_x:pos.c_x
           c_y:pos.c_y
           c_UM:"onmousemove"  # switch文flag
@@ -181,7 +175,7 @@ jQuery ($) ->
         ctx.stroke()
     canvas.onmouseup = (e) ->
       mousedown = false
-      _socket.emit "canvas-create",
+      _socket.json.emit "canvas-create",
         c_UM:"onmouseup"       # switch文flag
     # handle mouse events on canvas  -------------------------#
 
@@ -200,7 +194,7 @@ jQuery ($) ->
       _bullet.y = _player.y + 20
       _bullet.rotate = _player.rotate
       _bullet.v = Math.max(_player.v + 3, 3)
-      _socket.emit "bullet-create",
+      _socket.json.emit "bullet-create",
         x: _bullet.x | 0
         y: _bullet.y | 0
         rotate: _bullet.rotate | 0
@@ -229,7 +223,7 @@ jQuery ($) ->
     updateCss(_player) # 自分のplayer
 
     # ここでuser Update!  [emit]
-    _socket.emit "player-update",
+    _socket.json.emit "player-update",
       x: _player.x | 0   # ビット演算子 | or
       y: _player.y | 0
       rotate: _player.rotate | 0
@@ -255,12 +249,6 @@ jQuery ($) ->
           .attr("data-user-id", val.userId)
         $("#list").prepend(user.txt)  # DOM挿入
 
-  # セッション切断時
-  #_socket.on "disconnect", (data) ->
-    #if data.length isnt 0
-      #user = _userMap[data.userId]
-      #$("#list").empty()  # chatに関してempty/remove処理
-
   #サーバーにメッセージを引数にイベントを実行する----- clickEvent
   chat = ->
     msg = $("input#message").val()
@@ -270,8 +258,10 @@ jQuery ($) ->
   delId = ->
     del = $("input#delId").val()
     $("input#delId").val ""
-    _socket.json.emit 'deleteDB',   #jsonがある状況の整理、調べないと
+    _socket.json.emit 'deleteDB',
       userId:del
+     # v0.7.xからは socket.json.send() により明示的にJSONへ
+     # 変換するように指定できるようになりました。（省略可）
     console.info("SW-DelNo:"+del+ ":clicked") # log -----------#
     $("#list dd").each ->
       if  $(this).attr('data-user-id') is del

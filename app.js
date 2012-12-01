@@ -102,8 +102,8 @@ SwSockClient = (function(_super) {
         if (err) {
           console.info("swMongoFind:" + err);
         }
-        socket.emit(keyname, userMGD);
-        return socket.broadcast.emit(keyname, userMGD);
+        socket.json.emit(keyname, userMGD);
+        return socket.broadcast.json.emit(keyname, userMGD);
       });
     };
     makeMongo(socket, keyname);
@@ -115,7 +115,7 @@ SwSockClient = (function(_super) {
       t = date.getMonth();
       d = date.getDate();
       w = date.getDay();
-      h = date.getHours();
+      h = date.getHours() + 9;
       m = date.getMinutes();
       s = date.getSeconds();
       if (t < 10) {
@@ -178,7 +178,7 @@ io.sockets.on("connection", function(socket) {
   });
 });
 
-/*
+/*  # サニタイズ sanitized = escapeHTML(msg)
 escapeHTML = (str) ->
   str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;")
 */

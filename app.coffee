@@ -62,8 +62,8 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
     makeMongo = (socket,keyname) ->  # sendDB
       User.find (err,userMGD) -> # DB read  (err,userMGD)
         if err then console.info "swMongoFind:"+err # log
-        socket.emit keyname, userMGD   # 自分にイベント送
-        socket.broadcast.emit keyname, userMGD  # 自分以外に送
+        socket.json.emit keyname, userMGD   # 自分にイベント送
+        socket.broadcast.json.emit keyname, userMGD  # 自分以外に送
     makeMongo(socket,keyname)
     socket.on keyname, (data) ->
       # mongoose -------#
@@ -73,7 +73,7 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
       t = date.getMonth()
       d = date.getDate()
       w = date.getDay()
-      h = date.getHours()
+      h = date.getHours()+9
       m = date.getMinutes()
       s = date.getSeconds()
       if(t < 10)then t ="0"+t
@@ -81,7 +81,7 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
       if(h < 10)then h ="0"+h
       if(m < 10)then m ="0"+m
       if(s < 10)then s ="0"+s
-      jst = y+"/"+t+"/"+d+" ("+day[w]+") "+h+":"+m
+      jst = y+"/"+t+"/"+d+" ("+day[w]+") "+h+":"+m  # add Time (UTC to JST)
       userMG = new User
       userMG.userId = socket.handshake.userId
       userMG.playmess = data.playmess
@@ -90,7 +90,6 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
         if err then console.log "swMongoSave:"+err # log
       #sanitized = escapeHTML(data) # これobj前にやんなきゃね。
       makeMongo(socket,keyname)
-
 # override -------#
 p_u = new SwSocket
 b_c = new SwSocket
@@ -110,14 +109,14 @@ io.sockets.on "connection", (socket) ->
   p_m.make(socket,'player-message')
   socket.on 'deleteDB', (delid) ->
     User.find({userId:delid.userId}).remove()
-    # socket.emit 'deleteDB'
-    # socket.broadcast.emit 'deleteDB'
+    # socket.json.emit 'deleteDB'
+    # socket.broadcast.json.emit 'deleteDB'
   return
 
+# v0.7.xからは socket.json.send() により明示的にJSONへ
 # coffee -wcb *.coffee
 
-# サニタイズ sanitized = escapeHTML(msg)
-###
+###  # サニタイズ sanitized = escapeHTML(msg)
 escapeHTML = (str) ->
   str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;")
 ###
