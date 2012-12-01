@@ -2,7 +2,7 @@
 var title = 'SW Shooting+Canvas+Chat:App(node.js+express+socket.io+ejs+mongoHQ:coffee)';
 day = new Array("Sun","Mon","Tue","Wed","Thu","Fri","Sat");
 y = (new Date()).getYear();
-t = (new Date()).getMonth()+1;
+t = (new Date()).getMonth();
 d = (new Date()).getDate();
 w = (new Date()).getDay();
 h = (new Date()).getHours();

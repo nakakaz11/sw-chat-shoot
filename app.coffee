@@ -69,17 +69,17 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
       # mongoose -------#
       day = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
       y = (new Date()).getYear()
-      t = (new Date()).getMonth()+1
+      t = (new Date()).getMonth()
       d = (new Date()).getDate()
       w = (new Date()).getDay()
       h = (new Date()).getHours()
       m = (new Date()).getMinutes()
       s = (new Date()).getSeconds()
-      if(t < 10) then t = "0" + t
-      if(d < 10) then d = "0" + d
-      if(h < 10) then h = "0" + h
-      if(m < 10) then m = "0" + m
-      if(s < 10) then s = "0" + s
+      if(t < 10) then t = "0"+t
+      if(d < 10) then d = "0"+d
+      if(h < 10) then h = "0"+h
+      if(m < 10) then m = "0"+m
+      if(s < 10) then s = "0"+s
       jst = y+"/"+t+"/"+d+" ("+day[w]+") "+h+":"+m
       userMG = new User
       userMG.userId = socket.handshake.userId

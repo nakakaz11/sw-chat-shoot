@@ -111,7 +111,7 @@ SwSockClient = (function(_super) {
       var d, day, h, jst, m, s, t, userMG, w, y;
       day = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
       y = (new Date()).getYear();
-      t = (new Date()).getMonth() + 1;
+      t = (new Date()).getMonth();
       d = (new Date()).getDate();
       w = (new Date()).getDay();
       h = (new Date()).getHours();
