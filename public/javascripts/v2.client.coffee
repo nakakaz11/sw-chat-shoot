@@ -1,4 +1,4 @@
-# coffee -wcb *.coffee  # js2coffee client.js > client.coffee
+# coffee -wcb *.coffee  # js2coffee v2.client.js > v2.client.coffee
 jQuery ($) ->
   "use strict"
   _socket = io.connect()

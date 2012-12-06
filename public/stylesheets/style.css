@@ -82,3 +82,30 @@ img.bullet{
 .user-canvas {
     border: 3px solid #eb98d9;
 }
+
+/* dragdrop */
+/* <div class="toolbar"><span>Drag...</span></div>
+<div class="canvas"></div>​ */
+/* prevent users from selecting text in draggable items */
+[draggable] {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+.toolbar span {
+    display:inline-block;
+    float:left;
+}
+.toolbar img {
+    margin: 10px;
+}
+.canvas {
+    position:relative;
+    height:550px;
+    width:400px;
+    background:Yellow url("http://www.mapstop.co.uk/images/uploaded/lrg_wg2668.6a40d0d.jpg") no-repeat;
+}
+.canvas img {
+    position:absolute;
+}
