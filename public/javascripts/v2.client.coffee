@@ -51,11 +51,12 @@ jQuery ($) ->
       $("body").append(bullet.element)
       _bulletMap[data.userId] = bullet   # 対戦相手のobj代入
 
-      dDrop =                            # dDrop 作成/初期化---------------------#
+      # dDrop 作成/初期化---------------------#
+      ###dDrop =
         dd: 'dd test!'
         ddmess: null
         ddpos: null
-      _ddMap[data.userId] = dDrop        # dragdropのobj代入
+      _ddMap[data.userId] = dDrop###        # dragdropのobj代入
 
       uCanv =                            # uCanv 作成/初期化
          c_x: 0
