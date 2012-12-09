@@ -55,7 +55,6 @@ jQuery ($) ->
         dd: 'dd test!'
         ddmess: null
         ddpos: null
-        userId: data.userId
       _ddMap[data.userId] = dDrop        # dragdropのobj代入
 
       uCanv =                            # uCanv 作成/初期化
@@ -93,8 +92,8 @@ jQuery ($) ->
       dDrop.dd =     data.dd_dt.dd
       dDrop.ddmess = data.dd_dt.ddmess
       dDrop.ddpos =  data.dd_dt.ddpos
-      dDrop.userId = data.dd_dt.userId
-      console.info dDrop.dd       # log -----------#
+      dDrop.userId = data.userId
+      #console.info dDrop.dd       # log -----------#
       console.info dDrop.ddmess   # log -----------#
       console.info dDrop.ddpos    # log -----------#
       console.info dDrop.userId   # log -----------#
@@ -320,14 +319,19 @@ coffee -wcb *.coffee
         $us.on 'mousemove', ()->  #'click'
           #console.info  $(@).get(0)
           $(@).draggable( helper:'original' )
-
+          pos = $(@).position()
+          # dragdrop add -------------------------#
+          _socket.json.emit 'dd-create',
+            ddmess:'dd-create!mousemove'
+            ddpos:  pos
         $us.on 'mouseup', (e)->
           sotoFlag = false
           pos = $(@).position()
           # dragdrop add -------------------------#
           _socket.json.emit 'dd-create',
-            ddmess:'dd-create!'
-            ddpos:pos
+            ddmess:'dd-create!mouseup'
+            ddpos:  pos
+
           #e.preventDefault()
 
         $us.on 'dblclick', ()->

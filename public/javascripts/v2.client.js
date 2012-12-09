@@ -61,8 +61,7 @@ jQuery(function($) {
       dDrop = {
         dd: 'dd test!',
         ddmess: null,
-        ddpos: null,
-        userId: data.userId
+        ddpos: null
       };
       _ddMap[data.userId] = dDrop;
       uCanv = {
@@ -100,8 +99,7 @@ jQuery(function($) {
       dDrop.dd = data.dd_dt.dd;
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
-      dDrop.userId = data.dd_dt.userId;
-      console.info(dDrop.dd);
+      dDrop.userId = data.userId;
       console.info(dDrop.ddmess);
       console.info(dDrop.ddpos);
       return console.info(dDrop.userId);
@@ -362,8 +360,14 @@ jQuery(function($) {
         }
         $us = $("body > img.tools");
         $us.on('mousemove', function() {
-          return $(this).draggable({
+          var pos;
+          $(this).draggable({
             helper: 'original'
+          });
+          pos = $(this).position();
+          return _socket.json.emit('dd-create', {
+            ddmess: 'dd-create!mousemove',
+            ddpos: pos
           });
         });
         $us.on('mouseup', function(e) {
@@ -371,7 +375,7 @@ jQuery(function($) {
           sotoFlag = false;
           pos = $(this).position();
           return _socket.json.emit('dd-create', {
-            ddmess: 'dd-create!',
+            ddmess: 'dd-create!mouseup',
             ddpos: pos
           });
         });

@@ -171,6 +171,9 @@ io.sockets.on("connection", function(socket) {
   p_u.make(socket, 'player-update');
   b_c.make(socket, 'bullet-create');
   d_d.make(socket, 'dd-create');
+  socket.json.emit('dd-create', {
+    userId: socket.handshake.userId
+  });
   c_c.make(socket, 'canvas-create');
   d_u.make(socket, 'disconnect');
   p_m.make(socket, 'player-message');
