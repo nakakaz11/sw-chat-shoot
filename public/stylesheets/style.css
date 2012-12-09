@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  padding: 0 50px 50px 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: #e8dfd8;
     color: #98918a;
@@ -9,6 +9,21 @@ body {
 a {
   color: #00B7FF;
 }
+/* ------------------------------------------------------------
+  Clearfix
+------------------------------------------------------------ */
+/* new clearfix */
+.clf:before,
+.clf:after {
+    content: "";
+    display: table;
+}
+.clf:after {clear: both;}
+/* For IE 6/7 (hasL) */
+.clf {zoom: 1;}
+/* DW clearfix表示 */
+.clf {overflow: hidden;}
+/**/
 
 #game{
 }
@@ -92,6 +107,7 @@ img.bullet{
   padding: 0.2em;
   color: #fff;
   background-color: #1d9c8f;
+    text-shadow: 1px 1px 0px #584642;
 }
 .toolbar img {
     margin: 10px;
