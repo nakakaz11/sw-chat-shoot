@@ -93,13 +93,15 @@ jQuery ($) ->
     if dDrop isnt `undefined`
       dDrop.dd =    data.dd_dt.dd
       dDrop.ddpos = data.dd_dt.ddpos
-# coffee -wcb *.coffee
+  ###
+coffee -wcb *.coffee
+  ###
 
   # canvs add -------------------------#
   _socket.on "canvas-create", (data) ->
     uCanv = _canvasMap[data.userId]
     if uCanv isnt `undefined`
-      uCanv.c_x = data.ca_cr.c_x                    s
+      uCanv.c_x = data.ca_cr.c_x
       uCanv.c_y = data.ca_cr.c_y
       if _isUserCanvas
         createCtxU(data.userId)
@@ -194,7 +196,6 @@ jQuery ($) ->
       _socket.json.emit "canvas-create",
         c_UM:"onmouseup"       # switch文flag
     # handle mouse events on canvas  -------------------------#
-
     #left
     _player.rotate -= 3  if _keyMap[37] is true
     #up

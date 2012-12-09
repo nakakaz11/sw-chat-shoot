@@ -102,11 +102,15 @@ jQuery(function($) {
       return dDrop.ddpos = data.dd_dt.ddpos;
     }
   });
+  /*
+  coffee -wcb *.coffee
+  */
+
   _socket.on("canvas-create", function(data) {
     var uCanv;
     uCanv = _canvasMap[data.userId];
     if (uCanv !== undefined) {
-      uCanv.c_x = data.ca_cr.c_x(s);
+      uCanv.c_x = data.ca_cr.c_x;
       uCanv.c_y = data.ca_cr.c_y;
       if (_isUserCanvas) {
         createCtxU(data.userId);
