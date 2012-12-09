@@ -40,7 +40,7 @@ a {
     opacity:0.7; */
 }
 #list {
-    height:400px;
+    height:350px;
     overflow: auto;
 }
 #list dt {
@@ -84,28 +84,21 @@ img.bullet{
 }
 
 /* dragdrop */
-/* <div class="toolbar"><span>Drag...</span></div>
-<div class="canvas"></div>​ */
-/* prevent users from selecting text in draggable items */
-[draggable] {
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
-}
-.toolbar span {
-    display:inline-block;
-    float:left;
+.toolbar {
+  background-color: #eae3db;
+  float:left;
+  }
+.toolbarTx {
+  padding: 0.2em;
+  color: #fff;
+  background-color: #1d9c8f;
 }
 .toolbar img {
     margin: 10px;
 }
 .canvas {
-    position:relative;
-    height:550px;
-    width:400px;
-    background:Yellow url("http://www.mapstop.co.uk/images/uploaded/lrg_wg2668.6a40d0d.jpg") no-repeat;
+    /*position:relative;*/
 }
 .canvas img {
-    position:absolute;
+    /*position:absolute;*/
 }

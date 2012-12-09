@@ -1,4 +1,4 @@
-# coffee -wcb *.coffee  # js2coffee v2.client.js > v2.client.coffee
+# coffee -wcb *.coffee  # js2coffee client.js > client.coffee
 jQuery ($) ->
   "use strict"
   _socket = io.connect()
@@ -274,94 +274,10 @@ jQuery ($) ->
 
   # dragdrop -------------------------#
 
-  # generate toolbar --------------------------------#
-  # 定義 drag and drop handlers
-  $toolbar = $("div.toolbar")   # toolBarパレットの生成元
-  $.each tools, (i, tool) ->     #JSONを$()に展開回し〜
-    $("<img>", tool).appendTo($toolbar)
-  #$tools = $toolbar.find("img")  # 各imgを見る。何につかう？
 
-  sotoFlag = false    # toolbarから来たか判定
-  $("div.toolbar img.tools").draggable
-        #appendTo:'div.canvas'
-        helper:'clone'
-        start:->
-          sotoFlag = true
 
-  # dragdrop -----------------------------------------#
-  onDrag = () ->            # handle drag
-    $("div.canvas").droppable(
-      tolerance:'fit'
-      deactivate: (ev,ui) ->
-        $own = ui.helper.clone()
-        log sotoFlag
-        if sotoFlag then $(@).append($own)
-        $us = $("div.canvas img.tools")
-        $us.on 'mousemove', ()->  #'click'
-          #log $(@).get(0)
-          $(@).draggable( helper:'original' )
 
-        $us.on 'mouseup', (e)->
-          sotoFlag = false
-          pos = $(@).position()
-          e.preventDefault()
-          console.info ('oreore!(´･_･`)'+pos.left+':'+pos.top)
-          return
-        $us.on 'dblclick', ()->
-          console.info 'remove!'
-          $(@).remove()
-        false
-    )
 
-  onDrag()  # fire
 
-  #---------- onMove -- customEvent --- Add SW- on()off()の勉強でもある ----------#
-  #$(".foo button").on("click", function(){ $("#log").append("<div>bind</div>")});
-  # ↑旧.bind()
-  #$(".foo").on("click", "button", function(){$("#log").append("<div>delegate</div>")});
-  # ↑旧.delegate()
-  #$(document).on("click",".foo button",function(){$("#log").append("<div>live</div>")});
-  # ↑旧.live()
-  #---------- onMove -- customEvent --- Add SW- on()off()の勉強でもある ----------#
-  # dragdrop -------------#
-
-# coffee -wcb *.coffee
-
-tools = [  #------------- define toolset (JSON, e.g. from database)... ------------#
-  "data-id": 1
-  class: "tools"
-  alt: "sun"
-  title: "sun"
-  src: "http://cdn4.iconfinder.com/data/icons/iconsland-weather/PNG/48x48/Sunny.png"
-  "data-description": "sun in photo"
-,
-  "data-id": 2
-  class: "tools"
-  alt: "snow"
-  title: "snow"
-  src: "http://cdn4.iconfinder.com/data/icons/iconsland-weather/PNG/48x48/Thermometer_Snowflake.png"
-  "data-description": "snow in photo"
-,
-  "data-id": 3
-  class: "tools"
-  alt: "cloud"
-  title: "cloud"
-  src: "http://cdn4.iconfinder.com/data/icons/iconsland-weather/PNG/48x48/Overcast.png"
-  "data-description": "cloud in photo"
-,
-  "data-id": 4
-  class: "tools"
-  alt: "rain"
-  title: "rain"
-  src: "http://cdn4.iconfinder.com/data/icons/iconsland-weather/PNG/48x48/Night_Rain.png"
-  "data-description": "rain in photo"
-,
-  "data-id": 5
-  class: "tools"
-  alt: "rainbow"
-  title: "rainbow"
-  src: "http://cdn1.iconfinder.com/data/icons/iconsland-weather/PNG/48x48/Rainbow.png"
-  "data-description": "rainbow in photo"
-]
 
 # coffee -wcb *.coffee
