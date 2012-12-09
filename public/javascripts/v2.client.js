@@ -108,7 +108,9 @@ jQuery(function($) {
       console.info("Emit!dDrop.dd:" + dDrop.dd);
       console.info(dDrop.ddmess);
       console.info(dDrop.ddpos);
-      return console.info(dDrop.userId);
+      console.info(dDrop.userId);
+      dDrop.element = $(dDrop.dd).attr("data-user-id", dDrop.userId);
+      return $("body").append(dDrop.element).css(dDrop.ddpos);
     }
   });
   /*

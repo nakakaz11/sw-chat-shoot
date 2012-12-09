@@ -99,6 +99,9 @@ jQuery ($) ->
       console.info dDrop.ddmess   # log -----------#
       console.info dDrop.ddpos    # log -----------#
       console.info dDrop.userId   # log -----------#
+      dDrop.element = $(dDrop.dd).attr("data-user-id", dDrop.userId)
+      $("body").append(dDrop.element).css(dDrop.ddpos)
+
   ###
 coffee -wcb *.coffee
   ###
