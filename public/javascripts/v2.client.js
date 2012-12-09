@@ -82,6 +82,7 @@ jQuery(function($) {
     user.v = data.data.v;
     user.dd = data.data.dd;
     user.ddpos = data.data.ddpos;
+    coord.innerHTML = "MyCanvas (ID) " + data.userId;
     return updateCss(user);
   });
   _socket.on("bullet-create", function(data) {
@@ -112,7 +113,6 @@ jQuery(function($) {
     if (uCanv !== undefined) {
       uCanv.c_x = data.ca_cr.c_x;
       uCanv.c_y = data.ca_cr.c_y;
-      coord.innerHTML = "MyCanvas (ID) " + data.userId;
       if (_isUserCanvas) {
         createCtxU(data.userId);
         switch (data.ca_cr.c_UM) {

@@ -77,6 +77,7 @@ jQuery ($) ->
     user.dd = data.data.dd                # dragdrop add
     user.ddpos = data.data.ddpos                # dragdrop add
 
+    coord.innerHTML = "MyCanvas (ID) #{data.userId}"
     updateCss(user)  # 相手のplayer
 
   _socket.on "bullet-create", (data) ->
@@ -103,7 +104,6 @@ coffee -wcb *.coffee
     if uCanv isnt `undefined`
       uCanv.c_x = data.ca_cr.c_x
       uCanv.c_y = data.ca_cr.c_y
-      coord.innerHTML = "MyCanvas (ID) #{data.userId}"
       if _isUserCanvas
         createCtxU(data.userId)
         switch data.ca_cr.c_UM   # switch文 sw
