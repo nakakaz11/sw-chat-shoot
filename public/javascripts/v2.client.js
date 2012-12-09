@@ -353,31 +353,29 @@ jQuery(function($) {
     return $("body").droppable({
       tolerance: 'fit',
       deactivate: function(ev, ui) {
-        var $own, $us;
+        var $own, $us, pos;
         $own = ui.helper.clone();
         if (sotoFlag) {
           $(this).append($own);
+          pos = $own.position();
+          _socket.json.emit('dd-create', {
+            ddmess: 'dd-create!toolenter!',
+            ddpos: pos
+          });
         }
         $us = $("body > img.tools");
         $us.on('mousemove', function() {
-          var pos;
-          $(this).draggable({
+          return $(this).draggable({
             helper: 'original'
-          });
-          pos = $(this).position();
-          return _socket.json.emit('dd-create', {
-            ddmess: 'dd-create!mousemove',
-            ddpos: pos
           });
         });
         $us.on('mouseup', function(e) {
-          var pos;
-          sotoFlag = false;
           pos = $(this).position();
-          return _socket.json.emit('dd-create', {
-            ddmess: 'dd-create!mouseup',
+          _socket.json.emit('dd-create', {
+            ddmess: 'dd-create!mouseup!',
             ddpos: pos
           });
+          return sotoFlag = false;
         });
         $us.on('dblclick', function() {
           return $(this).remove();

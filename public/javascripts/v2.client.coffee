@@ -314,24 +314,24 @@ coffee -wcb *.coffee
       deactivate: (ev,ui) ->
         $own = ui.helper.clone()
         #console.info sotoFlag
-        if sotoFlag then $(@).append($own)
+        if sotoFlag
+          $(@).append($own)
+          pos = $own.position()
+          # dragdrop add -------------------------#
+          _socket.json.emit 'dd-create',
+            ddmess:'dd-create!toolenter!'
+            ddpos:  pos
         $us = $("body > img.tools")
         $us.on 'mousemove', ()->  #'click'
           #console.info  $(@).get(0)
           $(@).draggable( helper:'original' )
-          pos = $(@).position()
-          # dragdrop add -------------------------#
-          _socket.json.emit 'dd-create',
-            ddmess:'dd-create!mousemove'
-            ddpos:  pos
         $us.on 'mouseup', (e)->
-          sotoFlag = false
           pos = $(@).position()
           # dragdrop add -------------------------#
           _socket.json.emit 'dd-create',
-            ddmess:'dd-create!mouseup'
+            ddmess:'dd-create!mouseup!'
             ddpos:  pos
-
+          sotoFlag = false
           #e.preventDefault()
 
         $us.on 'dblclick', ()->
