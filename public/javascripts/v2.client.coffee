@@ -66,7 +66,6 @@ jQuery ($) ->
 
     else
       user = _userMap[data.userId]      # もうあったら廻してuserObj更新
-      coord.innerHTML = "MyCanvas (ID) "             ##{data.userId}
 
     console.info data.dd_dt.dd       # log -----------#
     console.info data.dd_dt.ddpos    # log -----------#
@@ -184,6 +183,7 @@ coffee -wcb *.coffee
       false
     canvas.onmousemove = (e) ->
       pos = updatePosCanv(e, canvas)
+      coord.innerHTML = "MyCanvas (ID) "             ##{data.userId}
       coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")"
       if mousedown
         _socket.json.emit "canvas-create",

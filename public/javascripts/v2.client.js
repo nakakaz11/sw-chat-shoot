@@ -73,7 +73,6 @@ jQuery(function($) {
       _isUserCanvas = true;
     } else {
       user = _userMap[data.userId];
-      coord.innerHTML = "MyCanvas (ID) ";
     }
     console.info(data.dd_dt.dd);
     console.info(data.dd_dt.ddpos);
@@ -204,6 +203,7 @@ jQuery(function($) {
     canvas.onmousemove = function(e) {
       var pos;
       pos = updatePosCanv(e, canvas);
+      coord.innerHTML = "MyCanvas (ID) ";
       coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")";
       if (mousedown) {
         _socket.json.emit("canvas-create", {
