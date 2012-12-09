@@ -402,7 +402,7 @@ tools = [  #------------- define toolset (JSON, e.g. from database)... ---------
 
 # coffee -wcb *.coffee
 
-jQuery.extend stringify: stringify = (obj) ->
+jQuery.extend stringify: (obj) ->
   t = typeof (obj)
   if t isnt "object" or obj is null
     # simple data type
