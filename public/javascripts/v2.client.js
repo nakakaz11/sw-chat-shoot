@@ -364,7 +364,7 @@ jQuery(function($) {
           $(this).append(own);
           pos = own.position();
           fly1 = own.get(0);
-          console.info("htmlDrop:" + fly1.get(0));
+          console.info("htmlDrop:" + fly1.innerHTML);
           _socket.emit('dd-create', {
             ddmess: 'dd-create!toolenter!',
             ddpos: pos
@@ -381,7 +381,7 @@ jQuery(function($) {
           sotoFlag = false;
           pos = $(this).position();
           fly2 = $(this).get(0);
-          console.info("htmlMove:" + fly2.get(0));
+          console.info("htmlMove:" + fly2.innerHTML);
           _socket.emit('dd-create', {
             ddmess: 'dd-create!mouseup!',
             ddpos: pos
