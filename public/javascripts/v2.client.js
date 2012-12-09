@@ -105,7 +105,6 @@ jQuery(function($) {
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
       dDrop.userId = data.userId;
-      console.info("html:" + dDrop.dd);
       console.info(dDrop.ddmess);
       console.info(dDrop.ddpos);
       return console.info(dDrop.userId);
@@ -359,12 +358,12 @@ jQuery(function($) {
     return $("body").droppable({
       tolerance: 'fit',
       deactivate: function(ev, ui) {
-        var $own, $us, pos;
-        $own = ui.helper.clone();
+        var $us, own, pos;
+        own = ui.helper.clone();
         if (sotoFlag) {
-          $(this).append($own);
-          pos = $own.position();
-          console.info("html:" + $own.get(0));
+          $(this).append(own);
+          pos = own.position();
+          console.info("html:" + $(own).get(0));
           _socket.emit('dd-create', {
             ddmess: 'dd-create!toolenter!',
             ddpos: pos
@@ -379,8 +378,8 @@ jQuery(function($) {
         $us.on('mouseup', function(e) {
           sotoFlag = false;
           pos = $(this).position();
+          console.info("html:" + $(this).get(0));
           _socket.emit('dd-create', {
-            dd: $(this),
             ddmess: 'dd-create!mouseup!',
             ddpos: pos
           });

@@ -95,7 +95,7 @@ jQuery ($) ->
       dDrop.ddmess = data.dd_dt.ddmess
       dDrop.ddpos =  data.dd_dt.ddpos
       dDrop.userId = data.userId
-      console.info "html:"+ dDrop.dd       # log -----------#
+      #console.info "html!dDrop.dd:"+ dDrop.dd       # log -----------#
       console.info dDrop.ddmess   # log -----------#
       console.info dDrop.ddpos    # log -----------#
       console.info dDrop.userId   # log -----------#
@@ -314,15 +314,15 @@ coffee -wcb *.coffee
     $("body").droppable(
       tolerance:'fit'
       deactivate: (ev,ui) ->
-        $own = ui.helper.clone()
+        own = ui.helper.clone()
         #console.info sotoFlag
         if sotoFlag
-          $(@).append($own)
-          pos = $own.position()
+          $(@).append(own)
+          pos = own.position()
           # dragdrop add -------------------------#
-          console.info "html:"+$own.get(0)       # log -----------#
+          console.info "html:"+$(own).get(0)       # log -----------#
           _socket.emit 'dd-create',
-            #dd: $own
+            #dd: $(own)
             ddmess:'dd-create!toolenter!'
             ddpos:  pos
         $us = $("body > img.tools")
@@ -331,10 +331,10 @@ coffee -wcb *.coffee
         $us.on 'mouseup', (e)->
           sotoFlag = false
           pos = $(@).position()
-          #console.info "html:"+$(@).get(0)       # log -----------#
           # dragdrop add -------------------------#
+          console.info "html:"+$(@).get(0)       # log -----------#
           _socket.emit 'dd-create',
-            dd: $(@)
+            #dd: $(@)
             ddmess:'dd-create!mouseup!'
             ddpos:  pos
           e.preventDefault()
