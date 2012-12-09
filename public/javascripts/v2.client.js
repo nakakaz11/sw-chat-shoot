@@ -105,6 +105,7 @@ jQuery(function($) {
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
       dDrop.userId = data.userId;
+      console.info("Emit!dDrop.dd:" + dDrop.dd);
       console.info(dDrop.ddmess);
       console.info(dDrop.ddpos);
       return console.info(dDrop.userId);
@@ -364,8 +365,8 @@ jQuery(function($) {
           $(this).append($own);
           pos = $own.position();
           fly1 = $own.get();
-          console.info("htmlDrop:" + fly1);
           _socket.emit('dd-create', {
+            dd: fly1,
             ddmess: 'dd-create!toolenter!',
             ddpos: pos
           });
@@ -381,8 +382,8 @@ jQuery(function($) {
           sotoFlag = false;
           pos = $(this).position();
           fly2 = $(this).get();
-          console.info("htmlMove:" + fly2);
           _socket.emit('dd-create', {
+            dd: fly2,
             ddmess: 'dd-create!mouseup!',
             ddpos: pos
           });

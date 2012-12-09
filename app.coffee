@@ -118,8 +118,8 @@ io.sockets.on "connection", (socket) ->
 # v0.7.xからは socket.json.send() により明示的にJSONへ
 ###
 coffee -wcb *.coffee
-###
-###  # サニタイズ sanitized = escapeHTML(msg)
+
+# サニタイズ sanitized = escapeHTML(msg)
 escapeHTML = (str) ->
   str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;")
 ###

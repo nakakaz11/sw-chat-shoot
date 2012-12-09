@@ -95,7 +95,7 @@ jQuery ($) ->
       dDrop.ddmess = data.dd_dt.ddmess
       dDrop.ddpos =  data.dd_dt.ddpos
       dDrop.userId = data.userId
-      #console.info "html!dDrop.dd:"+ dDrop.dd       # log -----------#
+      console.info "Emit!dDrop.dd:"+ dDrop.dd       # log -----------#
       console.info dDrop.ddmess   # log -----------#
       console.info dDrop.ddpos    # log -----------#
       console.info dDrop.userId   # log -----------#
@@ -321,9 +321,9 @@ coffee -wcb *.coffee
           pos = $own.position()
           # dragdrop add -------------------------#
           fly1 = $own.get()
-          console.info "htmlDrop:"+fly1      # log -----------#
+          #console.info "htmlDrop:"+fly1      # log -----------#
           _socket.emit 'dd-create',
-            #dd: $($own)
+            dd: fly1
             ddmess:'dd-create!toolenter!'
             ddpos:  pos
         $us = $("body > img.tools")
@@ -334,9 +334,9 @@ coffee -wcb *.coffee
           pos = $(@).position()
           # dragdrop add -------------------------#
           fly2 = $(@).get()
-          console.info "htmlMove:"+fly2       # log -----------#
+          #console.info "htmlMove:"+fly2       # log -----------#
           _socket.emit 'dd-create',
-            #dd: $(@)
+            dd: fly2
             ddmess:'dd-create!mouseup!'
             ddpos:  pos
           e.preventDefault()
