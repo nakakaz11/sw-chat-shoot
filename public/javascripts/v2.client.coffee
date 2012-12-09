@@ -66,6 +66,7 @@ jQuery ($) ->
 
     else
       user = _userMap[data.userId]      # もうあったら廻してuserObj更新
+      coord.innerHTML = "MyCanvas (ID) "             ##{data.userId}
 
     console.info data.dd_dt.dd       # log -----------#
     console.info data.dd_dt.ddpos    # log -----------#
@@ -74,10 +75,9 @@ jQuery ($) ->
     user.y = data.data.y
     user.rotate = data.data.rotate
     user.v = data.data.v
-    user.dd = data.data.dd                # dragdrop add
-    user.ddpos = data.data.ddpos                # dragdrop add
+    #user.dd = data.data.dd                      # dragdrop add
+    #user.ddpos = data.data.ddpos                # dragdrop add
 
-    coord.innerHTML = "MyCanvas (ID) #{data.userId}"
     updateCss(user)  # 相手のplayer
 
   _socket.on "bullet-create", (data) ->

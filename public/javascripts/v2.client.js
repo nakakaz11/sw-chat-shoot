@@ -73,6 +73,7 @@ jQuery(function($) {
       _isUserCanvas = true;
     } else {
       user = _userMap[data.userId];
+      coord.innerHTML = "MyCanvas (ID) ";
     }
     console.info(data.dd_dt.dd);
     console.info(data.dd_dt.ddpos);
@@ -80,9 +81,6 @@ jQuery(function($) {
     user.y = data.data.y;
     user.rotate = data.data.rotate;
     user.v = data.data.v;
-    user.dd = data.data.dd;
-    user.ddpos = data.data.ddpos;
-    coord.innerHTML = "MyCanvas (ID) " + data.userId;
     return updateCss(user);
   });
   _socket.on("bullet-create", function(data) {
