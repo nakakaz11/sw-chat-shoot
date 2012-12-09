@@ -4,10 +4,11 @@ var tools;
 jQuery(function($) {
   "use strict";
 
-  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, mousedown, onDrag, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
+  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, mousedown, onDrag, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
+  _ddMap = {};
   _canvasMap = {};
   canvasHtml = function(uid) {
     return "<div id='user-coord" + uid + "'>UserCanvas (ID) " + uid + "</div><canvas id='user-canvas" + uid + "' class='user-canvas' width='200' height='200'></canvas>";
@@ -33,7 +34,7 @@ jQuery(function($) {
     }
   };
   _socket.on("player-update", function(data) {
-    var bullet, uCanv, user;
+    var bullet, dDrop, uCanv, user;
     if (_userMap[data.userId] === undefined) {
       user = {
         x: 0,
@@ -55,6 +56,12 @@ jQuery(function($) {
       bullet.element = $("<img src=\"/images/bullet.png\" class=\"bullet\" />").attr("data-user-id", user.userId);
       $("body").append(bullet.element);
       _bulletMap[data.userId] = bullet;
+      dDrop = {
+        dd: 'dd test!',
+        ddpos: 0,
+        userId: data.userId
+      };
+      _ddMap[data.userId] = dDrop;
       uCanv = {
         c_x: 0,
         c_y: 0,
@@ -67,10 +74,14 @@ jQuery(function($) {
     } else {
       user = _userMap[data.userId];
     }
+    console.info(data.dd_dt.dd);
+    console.info(data.dd_dt.ddpos);
     user.x = data.data.x;
     user.y = data.data.y;
     user.rotate = data.data.rotate;
     user.v = data.data.v;
+    user.dd = data.data.dd;
+    user.ddpos = data.data.ddpos;
     return updateCss(user);
   });
   _socket.on("bullet-create", function(data) {
@@ -83,11 +94,19 @@ jQuery(function($) {
       return bullet.v = data.data.v;
     }
   });
+  _socket.on("dd-create", function(data) {
+    var dDrop;
+    dDrop = _ddMap[data.userId];
+    if (dDrop !== undefined) {
+      dDrop.dd = data.dd_dt.dd;
+      return dDrop.ddpos = data.dd_dt.ddpos;
+    }
+  });
   _socket.on("canvas-create", function(data) {
     var uCanv;
     uCanv = _canvasMap[data.userId];
     if (uCanv !== undefined) {
-      uCanv.c_x = data.ca_cr.c_x;
+      uCanv.c_x = data.ca_cr.c_x(s);
       uCanv.c_y = data.ca_cr.c_y;
       if (_isUserCanvas) {
         createCtxU(data.userId);

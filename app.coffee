@@ -40,7 +40,6 @@ User = mongoose.model('User', UserSchema)  #スキーマの設定
 uri = process.env.MONGOHQ_URL || 'mongodb://localhost/makeMongoDB' #Connect for HEROKU
 mongoose.connect(uri)
 # mongoose -------#
-
 io = require("socket.io").listen(server, "log level": 1)
 io.configure ->  # heroku Only Use Socket.IO server object
   io.set("transports", ["xhr-polling"])
@@ -55,6 +54,7 @@ class SwSocket
         userId: socket.handshake.userId
         data: data
         playmess: data
+        dd_dt: data   # canvs add
         ca_cr: data   # canvs add
 class SwSockClient extends SwSocket  # 一応便宜上 extend
   make: (socket,keyname) ->  # chat with mongoose用
@@ -93,6 +93,7 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
 # override -------#
 p_u = new SwSocket
 b_c = new SwSocket
+d_d = new SwSocket
 c_c = new SwSocket
 d_u = new SwSocket
 p_m = new SwSockClient
@@ -104,18 +105,16 @@ io.sockets.on "connection", (socket) ->
 # connection -------------------------#
   p_u.make(socket,'player-update')
   b_c.make(socket,'bullet-create')
+  d_d.make(socket,'dd-create')     # dragdrop add
   c_c.make(socket,'canvas-create') # canvs add
   d_u.make(socket,'disconnect')
   p_m.make(socket,'player-message')
   socket.on 'deleteDB', (delid) ->
     User.find({userId:delid.userId}).remove()
-    # socket.json.emit 'deleteDB'
-    # socket.broadcast.json.emit 'deleteDB'
   return
 
 # v0.7.xからは socket.json.send() により明示的にJSONへ
 # coffee -wcb *.coffee
-
 ###  # サニタイズ sanitized = escapeHTML(msg)
 escapeHTML = (str) ->
   str.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/>/g, "&gt;")

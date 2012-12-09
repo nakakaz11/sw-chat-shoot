@@ -4,6 +4,7 @@ jQuery ($) ->
   _socket = io.connect()
   _userMap = {}
   _bulletMap = {}
+  _ddMap = {}
   _canvasMap = {}
   # canvs add -------------------------#
   canvasHtml = (uid) -> "<div id='user-coord#{uid}'>UserCanvas (ID) #{uid}</div><canvas id='user-canvas#{uid}' class='user-canvas' width='200' height='200'></canvas>"
@@ -33,12 +34,10 @@ jQuery ($) ->
         y: 0
         v: 0
         rotate: 0
-        #c_x: 0  # canvs add
-        #c_y: 0  # canvs add
         userId: data.userId
       user.element = $("<img src=\"/images/unit.png\" class=\"player\" />").attr("data-user-id", user.userId)   # 対戦相手のエレメントappend
       $("body").append(user.element)
-      _userMap[data.userId] = user  # 対戦相手のobj代入
+      _userMap[data.userId] = user        # 対戦相手のobj代入
 
       bullet =                            # bullet弾 作成/初期化
         x: -100
@@ -49,6 +48,12 @@ jQuery ($) ->
       bullet.element = $("<img src=\"/images/bullet.png\" class=\"bullet\" />").attr("data-user-id", user.userId)
       $("body").append(bullet.element)
       _bulletMap[data.userId] = bullet   # 対戦相手のobj代入
+
+      dDrop =                            # dDrop 作成/初期化---------------------#
+        dd: 'dd test!'
+        ddpos: 0
+        userId: data.userId
+      _ddMap[data.userId] = dDrop        # dragdropのobj代入
 
       uCanv =                            # uCanv 作成/初期化
          c_x: 0
@@ -62,12 +67,16 @@ jQuery ($) ->
     else
       user = _userMap[data.userId]      # もうあったら廻してuserObj更新
 
+    console.info data.dd_dt.dd       # log -----------#
+    console.info data.dd_dt.ddpos    # log -----------#
+
     user.x = data.data.x
     user.y = data.data.y
     user.rotate = data.data.rotate
     user.v = data.data.v
-    #user.c_x = data.data.c_x
-    #user.c_y = data.data.c_y
+    user.dd = data.data.dd                # dragdrop add
+    user.ddpos = data.data.ddpos                # dragdrop add
+
     updateCss(user)  # 相手のplayer
 
   _socket.on "bullet-create", (data) ->
@@ -78,12 +87,19 @@ jQuery ($) ->
       bullet.rotate = data.data.rotate
       bullet.v = data.data.v
 
+  # dragdrop add -------------------------#
+  _socket.on "dd-create", (data) ->
+    dDrop = _ddMap[data.userId]
+    if dDrop isnt `undefined`
+      dDrop.dd =    data.dd_dt.dd
+      dDrop.ddpos = data.dd_dt.ddpos
+# coffee -wcb *.coffee
+
   # canvs add -------------------------#
   _socket.on "canvas-create", (data) ->
     uCanv = _canvasMap[data.userId]
-    #console.info("SW-UserLog:"+data.userId+":"+data.ca_cr.c_x+":"+data.ca_cr.c_y+":"+data.ca_cr.c_UM) # log -----------#
     if uCanv isnt `undefined`
-      uCanv.c_x = data.ca_cr.c_x
+      uCanv.c_x = data.ca_cr.c_x                    s
       uCanv.c_y = data.ca_cr.c_y
       if _isUserCanvas
         createCtxU(data.userId)
@@ -105,10 +121,10 @@ jQuery ($) ->
       bullet = _bulletMap[data.userId]
       bullet.element.remove()
       delete _bulletMap[data.userId]
+       # dragdrop add あとで。
       uCanv = _canvasMap[data.userId]
       uCanv.element.remove()
       delete _canvasMap[data.userId]
-
       return _isUserCanvas = false   # flag
 
   # myPlayerの初期値
@@ -200,7 +216,7 @@ jQuery ($) ->
         rotate: _bullet.rotate | 0
         v: _bullet.v
     _player.v *= 0.95
-    updatePosition(_player)
+    updatePosition(_player)               # myPlayer自分
 
     # ここはMapのループ出現処理？
     w_width = $(window).width()
@@ -209,15 +225,17 @@ jQuery ($) ->
     _player.y = w_height  if _player.y < -50
     _player.x = -50  if _player.x > w_width
     _player.y = -50  if _player.y > w_height
-    updatePosition(_bullet)
+    updatePosition(_bullet)               # myBullet自分
 
     # bullet 判定まわし
     for key of _bulletMap
       bullet = _bulletMap[key]
       updatePosition(bullet)
       updateCss(bullet)
+                                       # dragdrop add あとで。
       # 衝突判定 jump
       location.href = "/gameover"  if _player.x < bullet.x and bullet.x < _player.x + 50 and _player.y < bullet.y and bullet.y < _player.y + 50
+                                       # dragdrop add あとで。
 
     updateCss(_bullet) # 自分のbullet
     updateCss(_player) # 自分のplayer
@@ -309,7 +327,6 @@ jQuery ($) ->
           $(@).remove()
         false
     )
-# coffee -wcb *.coffee
   onDrag()  # fire
 
   #---------- onMove -- customEvent --- Add SW- on()off()の勉強でもある ----------#
