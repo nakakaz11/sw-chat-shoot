@@ -370,11 +370,11 @@ jQuery(function($) {
           var pos;
           sotoFlag = false;
           pos = $(this).position();
-          e.preventDefault();
           _socket.json.emit('dd-create', {
             ddmess: 'dd-create!',
             ddpos: pos
           });
+          return e.preventDefault();
         });
         $us.on('dblclick', function() {
           return $(this).remove();

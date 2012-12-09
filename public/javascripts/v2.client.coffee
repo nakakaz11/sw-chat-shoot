@@ -301,7 +301,7 @@ coffee -wcb *.coffee
   $toolbar = $("div.toolbar")   # toolBarパレットの生成元
   $.each tools, (i, tool) ->     #JSONを$()に展開回し〜
     $("<img>", tool).appendTo($toolbar)
-  #$tools = $toolbar.find("img")  # 各imgを見る。何につかう？
+
   sotoFlag = false    # toolbarから来たか判定
   $("div.toolbar img.tools").draggable
         #appendTo:'div.canvas'
@@ -324,12 +324,11 @@ coffee -wcb *.coffee
         $us.on 'mouseup', (e)->
           sotoFlag = false
           pos = $(@).position()
-          e.preventDefault()
-          #console.info ('oreore!(´･_･`)'+pos.left+':'+pos.top)
+          # dragdrop add -------------------------#
           _socket.json.emit 'dd-create',
             ddmess:'dd-create!'
             ddpos:pos
-          return
+          e.preventDefault()
 
         $us.on 'dblclick', ()->
           $(@).remove()
