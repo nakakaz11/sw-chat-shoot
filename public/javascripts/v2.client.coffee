@@ -320,7 +320,7 @@ coffee -wcb *.coffee
           $(@).append(own)
           pos = own.position()
           # dragdrop add -------------------------#
-          console.info "html:"+$(own).get(0)       # log -----------#
+          console.info "htmlDrop:"+own.html()       # log -----------#
           _socket.emit 'dd-create',
             #dd: $(own)
             ddmess:'dd-create!toolenter!'
@@ -332,7 +332,7 @@ coffee -wcb *.coffee
           sotoFlag = false
           pos = $(@).position()
           # dragdrop add -------------------------#
-          console.info "html:"+$(@).get(0)       # log -----------#
+          console.info "htmlMove:"+$(@).html()       # log -----------#
           _socket.emit 'dd-create',
             #dd: $(@)
             ddmess:'dd-create!mouseup!'
