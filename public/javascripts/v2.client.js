@@ -100,6 +100,7 @@ jQuery(function($) {
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
       dDrop.userId = data.userId;
+      console.info(dDrop.dd);
       console.info(dDrop.ddmess);
       console.info(dDrop.ddpos);
       return console.info(dDrop.userId);
