@@ -321,7 +321,7 @@ coffee -wcb *.coffee
           pos = $own.position()
           # dragdrop add -------------------------#
           fly1 = $own.get()
-          console.info "htmlDrop:"+fly1[0]      # log -----------#
+          console.info "htmlDrop:"+fly1      # log -----------#
           _socket.emit 'dd-create',
             #dd: $($own)
             ddmess:'dd-create!toolenter!'
@@ -334,7 +334,7 @@ coffee -wcb *.coffee
           pos = $(@).position()
           # dragdrop add -------------------------#
           fly2 = $(@).get()
-          console.info "htmlMove:"+$(fly2)[0]       # log -----------#
+          console.info "htmlMove:"+fly2       # log -----------#
           _socket.emit 'dd-create',
             #dd: $(@)
             ddmess:'dd-create!mouseup!'
