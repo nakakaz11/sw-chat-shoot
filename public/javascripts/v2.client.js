@@ -325,7 +325,7 @@ jQuery(function($) {
     }
   });
   onDrag = function() {
-    return $("div.canvas").droppable({
+    return $("body").droppable({
       tolerance: 'fit',
       deactivate: function(ev, ui) {
         var $own, $us;

@@ -272,8 +272,7 @@ jQuery ($) ->
   $("button#btnDbDel").click ->
     setTimeout(delId, 19)         # 押し下げ判定（タイムラグ付）
 
-  # dragdrop -------------------------#
-
+  # dragdrop -----------------------------------------------------------------------------------#
   # generate toolbar --------------------------------#
   # 定義 drag and drop handlers
   $toolbar = $("div.toolbar")   # toolBarパレットの生成元
@@ -288,9 +287,8 @@ jQuery ($) ->
         start:->
           sotoFlag = true
 
-  # dragdrop -----------------------------------------#
   onDrag = () ->            # handle drag
-    $("div.canvas").droppable(
+    $("body").droppable(
       tolerance:'fit'
       deactivate: (ev,ui) ->
         $own = ui.helper.clone()
