@@ -330,7 +330,7 @@ jQuery(function($) {
       deactivate: function(ev, ui) {
         var $own, $us;
         $own = ui.helper.clone();
-        log(sotoFlag);
+        console.info(sotoFlag);
         if (sotoFlag) {
           $(this).append($own);
         }

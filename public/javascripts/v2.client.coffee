@@ -292,11 +292,11 @@ jQuery ($) ->
       tolerance:'fit'
       deactivate: (ev,ui) ->
         $own = ui.helper.clone()
-        log sotoFlag
+        console.info sotoFlag
         if sotoFlag then $(@).append($own)
         $us = $("div.canvas img.tools")
         $us.on 'mousemove', ()->  #'click'
-          #log $(@).get(0)
+          #console.info  $(@).get(0)
           $(@).draggable( helper:'original' )
 
         $us.on 'mouseup', (e)->
@@ -305,12 +305,13 @@ jQuery ($) ->
           e.preventDefault()
           console.info ('oreore!(´･_･`)'+pos.left+':'+pos.top)
           return
+
         $us.on 'dblclick', ()->
           console.info 'remove!'
           $(@).remove()
         false
     )
-
+# coffee -wcb *.coffee
   onDrag()  # fire
 
   #---------- onMove -- customEvent --- Add SW- on()off()の勉強でもある ----------#
@@ -323,7 +324,6 @@ jQuery ($) ->
   #---------- onMove -- customEvent --- Add SW- on()off()の勉強でもある ----------#
   # dragdrop -------------#
 
-# coffee -wcb *.coffee
 
 tools = [  #------------- define toolset (JSON, e.g. from database)... ------------#
   "data-id": 1
