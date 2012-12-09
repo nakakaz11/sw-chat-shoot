@@ -74,7 +74,7 @@ SwSocket = (function() {
 
   SwSocket.prototype.make = function(socket, keyname) {
     return socket.on(keyname, function(data) {
-      return socket.broadcast.json.emit(keyname, {
+      return socket.broadcast.emit(keyname, {
         userId: socket.handshake.userId,
         data: data,
         dd_dt: data,

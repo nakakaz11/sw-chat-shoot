@@ -50,7 +50,7 @@ class SwSocket
     # @keyname = keynameと等価
   make: (socket,keyname) ->
     socket.on keyname, (data) ->
-      socket.broadcast.json.emit keyname ,
+      socket.broadcast.emit keyname ,    #.json
         userId: socket.handshake.userId
         data: data
         #playmess: data
