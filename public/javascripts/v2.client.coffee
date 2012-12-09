@@ -53,8 +53,8 @@ jQuery ($) ->
 
       # dDrop 作成/初期化---------------------#
       dDrop =
-        dd: 'dd test!'
-        ###ddmess: null
+        ###dd: 'dd test!'
+        ddmess: null
         ddpos: null###
         userId: data.userId
       _ddMap[data.userId] = dDrop        # dragdropのobj代入
@@ -95,7 +95,7 @@ jQuery ($) ->
       dDrop.ddmess = data.dd_dt.ddmess
       dDrop.ddpos =  data.dd_dt.ddpos
       dDrop.userId = data.userId
-      #console.info dDrop.dd       # log -----------#
+      console.info "html:"+dDrop.dd       # log -----------#
       console.info dDrop.ddmess   # log -----------#
       console.info dDrop.ddpos    # log -----------#
       console.info dDrop.userId   # log -----------#
@@ -321,6 +321,7 @@ coffee -wcb *.coffee
           pos = $own.position()
           # dragdrop add -------------------------#
           _socket.json.emit 'dd-create',
+            dd:$(@).get(0)
             ddmess:'dd-create!toolenter!'
             ddpos:  pos
         $us = $("body > img.tools")
@@ -332,6 +333,7 @@ coffee -wcb *.coffee
           pos = $(@).position()
           # dragdrop add -------------------------#
           _socket.json.emit 'dd-create',
+            dd:$(@).get(0)
             ddmess:'dd-create!mouseup!'
             ddpos:  pos
           e.preventDefault()

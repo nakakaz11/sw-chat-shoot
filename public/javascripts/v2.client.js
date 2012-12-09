@@ -59,8 +59,8 @@ jQuery(function($) {
       $("body").append(bullet.element);
       _bulletMap[data.userId] = bullet;
       dDrop = {
-        dd: 'dd test!',
-        /*ddmess: null
+        /*dd: 'dd test!'
+        ddmess: null
         ddpos: null
         */
 
@@ -105,6 +105,7 @@ jQuery(function($) {
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
       dDrop.userId = data.userId;
+      console.info("html:" + dDrop.dd);
       console.info(dDrop.ddmess);
       console.info(dDrop.ddpos);
       return console.info(dDrop.userId);
@@ -364,6 +365,7 @@ jQuery(function($) {
           $(this).append($own);
           pos = $own.position();
           _socket.json.emit('dd-create', {
+            dd: $(this).get(0),
             ddmess: 'dd-create!toolenter!',
             ddpos: pos
           });
@@ -378,6 +380,7 @@ jQuery(function($) {
           sotoFlag = false;
           pos = $(this).position();
           _socket.json.emit('dd-create', {
+            dd: $(this).get(0),
             ddmess: 'dd-create!mouseup!',
             ddpos: pos
           });
