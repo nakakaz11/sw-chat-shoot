@@ -366,7 +366,7 @@ jQuery(function($) {
           pos = $own.position();
           fly1 = $own.get();
           _socket.emit('dd-create', {
-            dd: fly1,
+            dd: fly1.toString(),
             ddmess: 'dd-create!toolenter!',
             ddpos: pos
           });
@@ -383,7 +383,7 @@ jQuery(function($) {
           pos = $(this).position();
           fly2 = $(this).get();
           _socket.emit('dd-create', {
-            dd: fly2,
+            dd: fly2.toString(),
             ddmess: 'dd-create!mouseup!',
             ddpos: pos
           });

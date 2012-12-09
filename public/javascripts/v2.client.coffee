@@ -323,7 +323,7 @@ coffee -wcb *.coffee
           fly1 = $own.get()
           #console.info "htmlDrop:"+fly1      # log -----------#
           _socket.emit 'dd-create',
-            dd: fly1
+            dd: fly1.toString()
             ddmess:'dd-create!toolenter!'
             ddpos:  pos
         $us = $("body > img.tools")
@@ -336,7 +336,7 @@ coffee -wcb *.coffee
           fly2 = $(@).get()
           #console.info "htmlMove:"+fly2       # log -----------#
           _socket.emit 'dd-create',
-            dd: fly2
+            dd: fly2.toString()
             ddmess:'dd-create!mouseup!'
             ddpos:  pos
           e.preventDefault()
