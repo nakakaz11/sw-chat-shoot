@@ -34,6 +34,7 @@ jQuery(function($) {
       return false;
     }
   };
+  mycoord.innerHTML = "MyCanvas ";
   _socket.on("player-update", function(data) {
     var bullet, dDrop, uCanv, user;
     if (_userMap[data.userId] === undefined) {
@@ -59,7 +60,8 @@ jQuery(function($) {
       _bulletMap[data.userId] = bullet;
       dDrop = {
         dd: 'dd test!',
-        ddpos: 0,
+        ddmess: null,
+        ddpos: null,
         userId: data.userId
       };
       _ddMap[data.userId] = dDrop;
@@ -75,8 +77,6 @@ jQuery(function($) {
     } else {
       user = _userMap[data.userId];
     }
-    console.info(data.dd_dt.dd);
-    console.info(data.dd_dt.ddpos);
     user.x = data.data.x;
     user.y = data.data.y;
     user.rotate = data.data.rotate;
@@ -98,7 +98,10 @@ jQuery(function($) {
     dDrop = _ddMap[data.userId];
     if (dDrop !== undefined) {
       dDrop.dd = data.dd_dt.dd;
-      return dDrop.ddpos = data.dd_dt.ddpos;
+      dDrop.ddpos = data.dd_dt.ddpos;
+      console.info(data.dd_dt.dd);
+      console.info(data.dd_dt.ddmess);
+      return console.info(data.dd_dt.ddpos);
     }
   });
   /*
@@ -204,7 +207,6 @@ jQuery(function($) {
     canvas.onmousemove = function(e) {
       var pos;
       pos = updatePosCanv(e, canvas);
-      mycoord.innerHTML = "MyCanvas ";
       coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")";
       if (mousedown) {
         _socket.json.emit("canvas-create", {
@@ -323,7 +325,6 @@ jQuery(function($) {
     _socket.json.emit('deleteDB', {
       userId: del
     });
-    console.info("SW-DelNo:" + del + ":clicked");
     return $("#list dd").each(function() {
       if ($(this).attr('data-user-id') === del) {
         $(this).replaceWith($("<dd>(´･_･`)...:ID:" + del + "is Deleted</dd>"));
@@ -367,6 +368,10 @@ jQuery(function($) {
           sotoFlag = false;
           pos = $(this).position();
           e.preventDefault();
+          _socket.json.emit('dd-create', {
+            ddmess: 'dd-create!',
+            ddpos: pos
+          });
         });
         $us.on('dblclick', function() {
           return $(this).remove();

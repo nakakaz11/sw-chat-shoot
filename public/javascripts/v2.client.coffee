@@ -26,6 +26,7 @@ jQuery ($) ->
       return ctxU
     else
       false
+  mycoord.innerHTML = "MyCanvas "
 
   _socket.on "player-update", (data) ->   # userオブジェクト作成/初期化
     # game Engine  -------------------------#
@@ -52,7 +53,8 @@ jQuery ($) ->
 
       dDrop =                            # dDrop 作成/初期化---------------------#
         dd: 'dd test!'
-        ddpos: 0
+        ddmess: null
+        ddpos: null
         userId: data.userId
       _ddMap[data.userId] = dDrop        # dragdropのobj代入
 
@@ -67,9 +69,6 @@ jQuery ($) ->
 
     else
       user = _userMap[data.userId]      # もうあったら廻してuserObj更新
-
-    console.info data.dd_dt.dd       # log -----------#
-    console.info data.dd_dt.ddpos    # log -----------#
 
     user.x = data.data.x
     user.y = data.data.y
@@ -93,6 +92,10 @@ jQuery ($) ->
     if dDrop isnt `undefined`
       dDrop.dd =    data.dd_dt.dd
       dDrop.ddpos = data.dd_dt.ddpos
+      console.info data.dd_dt.dd       # log -----------#
+      console.info data.dd_dt.ddmess   # log -----------#
+      console.info data.dd_dt.ddpos    # log -----------#
+
   ###
 coffee -wcb *.coffee
   ###
@@ -183,7 +186,6 @@ coffee -wcb *.coffee
       false
     canvas.onmousemove = (e) ->
       pos = updatePosCanv(e, canvas)
-      mycoord.innerHTML = "MyCanvas "
       coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")"
       if mousedown
         _socket.json.emit "canvas-create",
@@ -282,7 +284,7 @@ coffee -wcb *.coffee
       userId:del
      # v0.7.xからは socket.json.send() により明示的にJSONへ
      # 変換するように指定できるようになりました。（省略可）
-    console.info("SW-DelNo:"+del+ ":clicked") # log -----------#
+    #console.info("SW-DelNo:"+del+ ":clicked") # log -----------#
     $("#list dd").each ->
       if  $(this).attr('data-user-id') is del
           $(this).replaceWith($("<dd>(´･_･`)...:ID:#{del}is Deleted</dd>"))
@@ -322,10 +324,12 @@ coffee -wcb *.coffee
           pos = $(@).position()
           e.preventDefault()
           #console.info ('oreore!(´･_･`)'+pos.left+':'+pos.top)
+          _socket.json.emit 'dd-create',
+            ddmess:'dd-create!'
+            ddpos:pos
           return
 
         $us.on 'dblclick', ()->
-          #console.info 'remove!'
           $(@).remove()
         false
     )
