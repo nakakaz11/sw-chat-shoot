@@ -320,19 +320,18 @@ coffee -wcb *.coffee
           $(@).append($own)
           pos = $own.position()
           # dragdrop add -------------------------#
-          console.info "html:"+$own.get(0)       # log -----------#
+          #console.info "html:"+$own.get(0)       # log -----------#
           _socket.emit 'dd-create',
             dd: $own
             ddmess:'dd-create!toolenter!'
             ddpos:  pos
         $us = $("body > img.tools")
         $us.on 'mousemove', ()->  #'click'
-          #console.info  $(@).get(0)
           $(@).draggable( helper:'original' )
         $us.on 'mouseup', (e)->
           sotoFlag = false
           pos = $(@).position()
-          console.info "html:"+$(@).get(0)       # log -----------#
+          #console.info "html:"+$(@).get(0)       # log -----------#
           # dragdrop add -------------------------#
           _socket.emit 'dd-create',
             dd: $(@)
