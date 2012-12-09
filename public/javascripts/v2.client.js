@@ -62,12 +62,15 @@ jQuery(function($) {
         dd: 'dd test!'
         ddmess: null
         ddpos: null
+        userId: data.userId
       _ddMap[data.userId] = dDrop
       */
 
       uCanv = {
-        c_x: 0,
-        c_y: 0,
+        /*c_x: 0
+        c_y: 0
+        */
+
         userId: data.userId
       };
       uCanv.element = $(canvasHtml(user.userId)).attr("data-user-id", user.userId);
@@ -101,7 +104,6 @@ jQuery(function($) {
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
       dDrop.userId = data.userId;
-      console.info(dDrop.dd);
       console.info(dDrop.ddmess);
       console.info(dDrop.ddpos);
       return console.info(dDrop.userId);

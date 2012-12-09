@@ -56,11 +56,12 @@ jQuery ($) ->
         dd: 'dd test!'
         ddmess: null
         ddpos: null
+        userId: data.userId
       _ddMap[data.userId] = dDrop###        # dragdropのobj代入
-
+      # uCanv 作成/初期化---------------------#
       uCanv =                            # uCanv 作成/初期化
-         c_x: 0
-         c_y: 0
+         ###c_x: 0
+         c_y: 0###
          userId: data.userId
       uCanv.element = $(canvasHtml(user.userId)).attr("data-user-id", user.userId)
       $("#canvasUser").append(uCanv.element)
@@ -94,7 +95,7 @@ jQuery ($) ->
       dDrop.ddmess = data.dd_dt.ddmess
       dDrop.ddpos =  data.dd_dt.ddpos
       dDrop.userId = data.userId
-      console.info dDrop.dd       # log -----------#
+      #console.info dDrop.dd       # log -----------#
       console.info dDrop.ddmess   # log -----------#
       console.info dDrop.ddpos    # log -----------#
       console.info dDrop.userId   # log -----------#
