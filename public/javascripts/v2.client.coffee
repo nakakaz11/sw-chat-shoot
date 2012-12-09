@@ -90,12 +90,14 @@ jQuery ($) ->
   _socket.on "dd-create", (data) ->
     dDrop = _ddMap[data.userId]
     if dDrop isnt `undefined`
-      dDrop.dd =    data.dd_dt.dd
-      dDrop.ddpos = data.dd_dt.ddpos
-      console.info data.dd_dt.dd       # log -----------#
-      console.info data.dd_dt.ddmess   # log -----------#
-      console.info data.dd_dt.ddpos    # log -----------#
-
+      dDrop.dd =     data.dd_dt.dd
+      dDrop.ddmess = data.dd_dt.ddmess
+      dDrop.ddpos =  data.dd_dt.ddpos
+      dDrop.userId = data.dd_dt.userId
+      console.info dDrop.dd_dt.dd       # log -----------#
+      console.info dDrop.dd_dt.ddmess   # log -----------#
+      console.info dDrop.dd_dt.ddpos    # log -----------#
+      console.info dDrop.dd_dt.userId   # log -----------#
   ###
 coffee -wcb *.coffee
   ###

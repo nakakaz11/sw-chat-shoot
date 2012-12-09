@@ -98,10 +98,13 @@ jQuery(function($) {
     dDrop = _ddMap[data.userId];
     if (dDrop !== undefined) {
       dDrop.dd = data.dd_dt.dd;
+      dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
-      console.info(data.dd_dt.dd);
-      console.info(data.dd_dt.ddmess);
-      return console.info(data.dd_dt.ddpos);
+      dDrop.userId = data.dd_dt.userId;
+      console.info(dDrop.dd_dt.dd);
+      console.info(dDrop.dd_dt.ddmess);
+      console.info(dDrop.dd_dt.ddpos);
+      return console.info(dDrop.dd_dt.userId);
     }
   });
   /*
