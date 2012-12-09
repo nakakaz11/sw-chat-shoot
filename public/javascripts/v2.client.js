@@ -330,7 +330,6 @@ jQuery(function($) {
       deactivate: function(ev, ui) {
         var $own, $us;
         $own = ui.helper.clone();
-        console.info(sotoFlag);
         if (sotoFlag) {
           $(this).append($own);
         }
@@ -345,10 +344,8 @@ jQuery(function($) {
           sotoFlag = false;
           pos = $(this).position();
           e.preventDefault();
-          console.info('oreore!(´･_･`)' + pos.left + ':' + pos.top);
         });
         $us.on('dblclick', function() {
-          console.info('remove!');
           return $(this).remove();
         });
         return false;

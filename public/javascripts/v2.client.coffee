@@ -273,26 +273,24 @@ jQuery ($) ->
     setTimeout(delId, 19)         # 押し下げ判定（タイムラグ付）
 
   # dragdrop -----------------------------------------------------------------------------------#
-  # generate toolbar --------------------------------#
   # 定義 drag and drop handlers
   $toolbar = $("div.toolbar")   # toolBarパレットの生成元
   $.each tools, (i, tool) ->     #JSONを$()に展開回し〜
     $("<img>", tool).appendTo($toolbar)
   #$tools = $toolbar.find("img")  # 各imgを見る。何につかう？
-
   sotoFlag = false    # toolbarから来たか判定
   $("div.toolbar img.tools").draggable
         #appendTo:'div.canvas'
         helper:'clone'
         start:->
-          sotoFlag = true
+          sotoFlag = true  # toolbarから来たか判定
 
   onDrag = () ->            # handle drag
     $("body").droppable(
       tolerance:'fit'
       deactivate: (ev,ui) ->
         $own = ui.helper.clone()
-        console.info sotoFlag
+        #console.info sotoFlag
         if sotoFlag then $(@).append($own)
         $us = $("body > img.tools")
         $us.on 'mousemove', ()->  #'click'
@@ -303,11 +301,11 @@ jQuery ($) ->
           sotoFlag = false
           pos = $(@).position()
           e.preventDefault()
-          console.info ('oreore!(´･_･`)'+pos.left+':'+pos.top)
+          #console.info ('oreore!(´･_･`)'+pos.left+':'+pos.top)
           return
 
         $us.on 'dblclick', ()->
-          console.info 'remove!'
+          #console.info 'remove!'
           $(@).remove()
         false
     )
