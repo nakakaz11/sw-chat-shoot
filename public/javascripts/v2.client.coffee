@@ -314,16 +314,16 @@ coffee -wcb *.coffee
     $("body").droppable(
       tolerance:'fit'
       deactivate: (ev,ui) ->
-        own = ui.helper.clone()
+        $own = ui.helper.clone()
         #console.info sotoFlag
         if sotoFlag
-          $(@).append(own)
-          pos = own.position()
+          $(@).append($own)
+          pos = $own.position()
           # dragdrop add -------------------------#
-          fly1 = own.get(0)
-          console.info "htmlDrop:"+$(fly1)      # log -----------#
+          fly1 = $own.get(0)
+          console.info "htmlDrop:"+$(fly1).get(0)      # log -----------#
           _socket.emit 'dd-create',
-            #dd: $(own)
+            #dd: $($own)
             ddmess:'dd-create!toolenter!'
             ddpos:  pos
         $us = $("body > img.tools")
@@ -334,7 +334,7 @@ coffee -wcb *.coffee
           pos = $(@).position()
           # dragdrop add -------------------------#
           fly2 = $(@).get(0)
-          console.info "htmlMove:"+$(fly2)       # log -----------#
+          console.info "htmlMove:"+$(fly2).get(0)       # log -----------#
           _socket.emit 'dd-create',
             #dd: $(@)
             ddmess:'dd-create!mouseup!'
