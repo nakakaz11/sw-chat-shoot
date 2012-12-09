@@ -101,16 +101,19 @@ jQuery(function($) {
     var dDrop;
     dDrop = _ddMap[data.userId];
     if (dDrop !== undefined) {
-      dDrop.dd = data.dd_dt.dd;
+      dDrop.ddid = data.dd_dt.ddid;
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
       dDrop.userId = data.userId;
-      console.info("Emit!dDrop.dd:" + dDrop.dd);
+      console.info("Emit!data-user-id:" + dDrop.ddid);
       console.info(dDrop.ddmess);
       console.info(dDrop.ddpos);
-      console.info(dDrop.userId);
-      dDrop.element = $(dDrop.dd).attr("data-user-id", dDrop.userId);
-      return $("body").append(dDrop.element).css(dDrop.ddpos);
+      return console.info(dDrop.userId);
+      /*if $("body > img.tools").find("data-user-id")
+        dDrop.element = .attr("data-user-id", dDrop.userId)
+        $("body").append(dDrop.element).css(dDrop.ddpos)
+      */
+
     }
   });
   /*
@@ -361,15 +364,14 @@ jQuery(function($) {
     return $("body").droppable({
       tolerance: 'fit',
       deactivate: function(ev, ui) {
-        var $own, $us, fly1, flyJ1, pos;
+        var $own, $us, fly1, pos;
         $own = ui.helper.clone();
         if (sotoFlag) {
           $(this).append($own);
           pos = $own.position();
-          fly1 = $own.get();
-          flyJ1 = $.stringify(fly1);
+          fly1 = $own.attr("data-id");
           _socket.emit('dd-create', {
-            dd: flyJ1,
+            ddid: fly1,
             ddmess: 'dd-create!toolenter!',
             ddpos: pos
           });
@@ -381,13 +383,12 @@ jQuery(function($) {
           });
         });
         $us.on('mouseup', function(e) {
-          var fly2, flyJ2;
+          var fly2;
           sotoFlag = false;
           pos = $(this).position();
-          fly2 = $(this).get();
-          flyJ2 = $.stringify(fly2);
+          fly2 = $(this).attr("data-id");
           _socket.emit('dd-create', {
-            dd: flyJ2,
+            ddid: fly2,
             ddmess: 'dd-create!mouseup!',
             ddpos: pos
           });
@@ -441,36 +442,3 @@ tools = [
     "data-description": "rainbow in photo"
   }
 ];
-
-$.extend({
-  stringify: function(obj) {
-    var arr, json, n, t, v;
-    t = typeof obj;
-    if (t !== "object" || obj === null) {
-      if (t === "string") {
-        obj = "\"" + obj + "\"";
-      }
-      return String(obj);
-    } else {
-      n = void 0;
-      v = void 0;
-      json = [];
-      arr = obj && obj.constructor === Array;
-      for (n in obj) {
-        v = obj[n];
-        t = typeof v;
-        if (obj.hasOwnProperty(n)) {
-          if (t === "string") {
-            v = "\"" + v + "\"";
-          } else {
-            if (t === "object" && v !== null) {
-              v = jQuery.stringify(v);
-            }
-          }
-          json.push((arr ? "" : "\"" + n + "\":") + String(v));
-        }
-      }
-      return (arr ? "[" : "{") + String(json) + (arr ? "]" : "}");
-    }
-  }
-});

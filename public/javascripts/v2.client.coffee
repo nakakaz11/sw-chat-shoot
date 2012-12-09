@@ -91,16 +91,17 @@ jQuery ($) ->
   _socket.on "dd-create", (data) ->
     dDrop = _ddMap[data.userId]
     if dDrop isnt `undefined`
-      dDrop.dd =     data.dd_dt.dd
+      dDrop.ddid =     data.dd_dt.ddid
       dDrop.ddmess = data.dd_dt.ddmess
       dDrop.ddpos =  data.dd_dt.ddpos
       dDrop.userId = data.userId
-      console.info "Emit!dDrop.dd:"+ dDrop.dd       # log -----------#
+      console.info "Emit!data-user-id:"+ dDrop.ddid       # log -----------#
       console.info dDrop.ddmess   # log -----------#
       console.info dDrop.ddpos    # log -----------#
       console.info dDrop.userId   # log -----------#
-      dDrop.element = $(dDrop.dd).attr("data-user-id", dDrop.userId)
-      $("body").append(dDrop.element).css(dDrop.ddpos)
+      ###if $("body > img.tools").find("data-user-id")
+        dDrop.element = .attr("data-user-id", dDrop.userId)
+        $("body").append(dDrop.element).css(dDrop.ddpos)###
 
   ###
 coffee -wcb *.coffee
@@ -323,11 +324,10 @@ coffee -wcb *.coffee
           $(@).append($own)
           pos = $own.position()
           # dragdrop add -------------------------#
-          fly1 = $own.get()
-          flyJ1= $.stringify(fly1)
+          fly1 = $own.attr("data-id")
           #console.info "htmlDrop:"+fly1      # log -----------#
           _socket.emit 'dd-create',
-            dd: flyJ1
+            ddid: fly1
             ddmess:'dd-create!toolenter!'
             ddpos:  pos
         $us = $("body > img.tools")
@@ -337,12 +337,10 @@ coffee -wcb *.coffee
           sotoFlag = false
           pos = $(@).position()
           # dragdrop add -------------------------#
-          fly2 = $(@).get()
-          flyJ2= $.stringify(fly2)
+          fly2 = $(@).attr("data-id")
           #console.info "htmlMove:"+fly2       # log -----------#
           _socket.emit 'dd-create',
-            dd: flyJ2
-            #dd: fly2.toString()
+            ddid: fly2
             ddmess:'dd-create!mouseup!'
             ddpos:  pos
           e.preventDefault()
@@ -403,25 +401,3 @@ tools = [  #------------- define toolset (JSON, e.g. from database)... ---------
 
 # coffee -wcb *.coffee
 
-$.extend
-  stringify: (obj) ->
-    t = typeof (obj)
-    if t isnt "object" or obj is null
-      # simple data type
-      obj = "\"" + obj + "\""  if t is "string"
-      String obj
-    else
-      # recurse array or object
-      n = undefined
-      v = undefined
-      json = []
-      arr = (obj and obj.constructor is Array)
-      for n of obj
-        v = obj[n]
-        t = typeof (v)
-        if obj.hasOwnProperty(n)
-          if t is "string"
-            v = "\"" + v + "\""
-          else v = jQuery.stringify(v)  if t is "object" and v isnt null
-          json.push ((if arr then "" else "\"" + n + "\":")) + String(v)
-      ((if arr then "[" else "{")) + String(json) + ((if arr then "]" else "}"))
