@@ -326,7 +326,8 @@ coffee -wcb *.coffee
           fly1 = $own.get()
           #console.info "htmlDrop:"+fly1      # log -----------#
           _socket.emit 'dd-create',
-            dd: fly1.toString()
+            dd: $.stringify(fly1)
+            #dd: fly1.toString()
             ddmess:'dd-create!toolenter!'
             ddpos:  pos
         $us = $("body > img.tools")
@@ -339,7 +340,8 @@ coffee -wcb *.coffee
           fly2 = $(@).get()
           #console.info "htmlMove:"+fly2       # log -----------#
           _socket.emit 'dd-create',
-            dd: fly2.toString()
+            dd: $.stringify(fly2)
+            #dd: fly2.toString()
             ddmess:'dd-create!mouseup!'
             ddpos:  pos
           e.preventDefault()
@@ -399,3 +401,25 @@ tools = [  #------------- define toolset (JSON, e.g. from database)... ---------
 ]
 
 # coffee -wcb *.coffee
+
+jQuery.extend stringify: stringify = (obj) ->
+  t = typeof (obj)
+  if t isnt "object" or obj is null
+    # simple data type
+    obj = "\"" + obj + "\""  if t is "string"
+    String obj
+  else
+    # recurse array or object
+    n = undefined
+    v = undefined
+    json = []
+    arr = (obj and obj.constructor is Array)
+    for n of obj
+      v = obj[n]
+      t = typeof (v)
+      if obj.hasOwnProperty(n)
+        if t is "string"
+          v = "\"" + v + "\""
+        else v = jQuery.stringify(v)  if t is "object" and v isnt null
+        json.push ((if arr then "" else "\"" + n + "\":")) + String(v)
+    ((if arr then "[" else "{")) + String(json) + ((if arr then "]" else "}"))
