@@ -402,24 +402,25 @@ tools = [  #------------- define toolset (JSON, e.g. from database)... ---------
 
 # coffee -wcb *.coffee
 
-jQuery.extend stringify: (obj) ->
-  t = typeof (obj)
-  if t isnt "object" or obj is null
-    # simple data type
-    obj = "\"" + obj + "\""  if t is "string"
-    String obj
-  else
-    # recurse array or object
-    n = undefined
-    v = undefined
-    json = []
-    arr = (obj and obj.constructor is Array)
-    for n of obj
-      v = obj[n]
-      t = typeof (v)
-      if obj.hasOwnProperty(n)
-        if t is "string"
-          v = "\"" + v + "\""
-        else v = jQuery.stringify(v)  if t is "object" and v isnt null
-        json.push ((if arr then "" else "\"" + n + "\":")) + String(v)
-    ((if arr then "[" else "{")) + String(json) + ((if arr then "]" else "}"))
+$.extend
+  stringify: (obj) ->
+    t = typeof (obj)
+    if t isnt "object" or obj is null
+      # simple data type
+      obj = "\"" + obj + "\""  if t is "string"
+      String obj
+    else
+      # recurse array or object
+      n = undefined
+      v = undefined
+      json = []
+      arr = (obj and obj.constructor is Array)
+      for n of obj
+        v = obj[n]
+        t = typeof (v)
+        if obj.hasOwnProperty(n)
+          if t is "string"
+            v = "\"" + v + "\""
+          else v = jQuery.stringify(v)  if t is "object" and v isnt null
+          json.push ((if arr then "" else "\"" + n + "\":")) + String(v)
+      ((if arr then "[" else "{")) + String(json) + ((if arr then "]" else "}"))

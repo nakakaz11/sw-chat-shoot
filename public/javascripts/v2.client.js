@@ -440,7 +440,7 @@ tools = [
   }
 ];
 
-jQuery.extend({
+$.extend({
   stringify: function(obj) {
     var arr, json, n, t, v;
     t = typeof obj;
