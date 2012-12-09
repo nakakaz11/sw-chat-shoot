@@ -77,9 +77,7 @@ jQuery ($) ->
     user.v = data.data.v
     #user.dd = data.data.dd                      # dragdrop add
     #user.ddpos = data.data.ddpos                # dragdrop add
-
-    mycoord.innerHTML = "MyCanvas (ID)#{ user.userId }"
-
+    mycoord.innerHTML = "MyCanvas (ID)#{ _userMap[data.userId].userId }"
     updateCss(user)  # 相手のplayer
 
   _socket.on "bullet-create", (data) ->

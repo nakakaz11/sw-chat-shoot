@@ -81,7 +81,7 @@ jQuery(function($) {
     user.y = data.data.y;
     user.rotate = data.data.rotate;
     user.v = data.data.v;
-    mycoord.innerHTML = "MyCanvas (ID)" + user.userId;
+    mycoord.innerHTML = "MyCanvas (ID)" + _userMap[data.userId].userId;
     return updateCss(user);
   });
   _socket.on("bullet-create", function(data) {
