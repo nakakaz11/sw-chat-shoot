@@ -320,9 +320,9 @@ coffee -wcb *.coffee
           $(@).append($own)
           pos = $own.position()
           # dragdrop add -------------------------#
-          #console.info "html:"+$own.get(0)       # log -----------#
+          console.info "html:"+$own.get(0)       # log -----------#
           _socket.emit 'dd-create',
-            dd: $own
+            #dd: $own
             ddmess:'dd-create!toolenter!'
             ddpos:  pos
         $us = $("body > img.tools")
