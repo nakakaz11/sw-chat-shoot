@@ -4,7 +4,7 @@ var tools;
 jQuery(function($) {
   "use strict";
 
-  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, mousedown, onDrag, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
+  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, mousedown, mycoord, onDrag, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
@@ -16,6 +16,7 @@ jQuery(function($) {
   mousedown = false;
   canvas = document.getElementById("my-canvas");
   coord = document.getElementById("coord");
+  mycoord = document.getElementById("mycoord");
   ctx = canvas.getContext("2d");
   ctx.strokeStyle = "#DE3D9C";
   ctx.lineWidth = 5;
@@ -80,6 +81,7 @@ jQuery(function($) {
     user.y = data.data.y;
     user.rotate = data.data.rotate;
     user.v = data.data.v;
+    mycoord.innerHTML = "MyCanvas (ID)" + user.userId;
     return updateCss(user);
   });
   _socket.on("bullet-create", function(data) {
@@ -203,7 +205,6 @@ jQuery(function($) {
     canvas.onmousemove = function(e) {
       var pos;
       pos = updatePosCanv(e, canvas);
-      coord.innerHTML = "MyCanvas (ID) ";
       coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")";
       if (mousedown) {
         _socket.json.emit("canvas-create", {

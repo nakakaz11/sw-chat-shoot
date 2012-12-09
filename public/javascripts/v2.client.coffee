@@ -11,6 +11,7 @@ jQuery ($) ->
   mousedown = false
   canvas = document.getElementById("my-canvas")
   coord = document.getElementById("coord")
+  mycoord = document.getElementById("mycoord")
   ctx = canvas.getContext("2d")  # get 2D context
   ctx.strokeStyle = "#DE3D9C"    #Fill Color
   ctx.lineWidth = 5
@@ -76,6 +77,8 @@ jQuery ($) ->
     user.v = data.data.v
     #user.dd = data.data.dd                      # dragdrop add
     #user.ddpos = data.data.ddpos                # dragdrop add
+
+    mycoord.innerHTML = "MyCanvas (ID)#{ user.userId }"
 
     updateCss(user)  # 相手のplayer
 
@@ -183,7 +186,6 @@ coffee -wcb *.coffee
       false
     canvas.onmousemove = (e) ->
       pos = updatePosCanv(e, canvas)
-      coord.innerHTML = "MyCanvas (ID) "             ##{data.userId}
       coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")"
       if mousedown
         _socket.json.emit "canvas-create",
