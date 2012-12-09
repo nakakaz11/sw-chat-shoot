@@ -77,7 +77,6 @@ jQuery ($) ->
     user.v = data.data.v
     #user.dd = data.data.dd                      # dragdrop add
     #user.ddpos = data.data.ddpos                # dragdrop add
-    mycoord.innerHTML = "MyCanvas (ID)#{ _userMap[data.userId].userId }"
     updateCss(user)  # 相手のplayer
 
   _socket.on "bullet-create", (data) ->
@@ -184,6 +183,7 @@ coffee -wcb *.coffee
       false
     canvas.onmousemove = (e) ->
       pos = updatePosCanv(e, canvas)
+      mycoord.innerHTML = "MyCanvas "
       coord.innerHTML = "(" + pos.c_x + "," + pos.c_y + ")"
       if mousedown
         _socket.json.emit "canvas-create",

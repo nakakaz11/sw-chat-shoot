@@ -77,7 +77,6 @@ SwSocket = (function() {
       return socket.broadcast.json.emit(keyname, {
         userId: socket.handshake.userId,
         data: data,
-        playmess: data,
         dd_dt: data,
         ca_cr: data
       });

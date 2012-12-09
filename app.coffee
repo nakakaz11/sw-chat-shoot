@@ -53,7 +53,7 @@ class SwSocket
       socket.broadcast.json.emit keyname ,
         userId: socket.handshake.userId
         data: data
-        playmess: data
+        #playmess: data
         dd_dt: data   # canvs add
         ca_cr: data   # canvs add
 class SwSockClient extends SwSocket  # 一応便宜上 extend
