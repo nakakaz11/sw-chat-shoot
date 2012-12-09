@@ -328,7 +328,7 @@ coffee -wcb *.coffee
           _socket.json.emit 'dd-create',
             ddmess:'dd-create!'
             ddpos:pos
-          e.preventDefault()
+          #e.preventDefault()
 
         $us.on 'dblclick', ()->
           $(@).remove()
