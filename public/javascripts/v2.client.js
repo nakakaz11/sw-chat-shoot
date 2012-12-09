@@ -334,7 +334,7 @@ jQuery(function($) {
         if (sotoFlag) {
           $(this).append($own);
         }
-        $us = $("div.canvas img.tools");
+        $us = $("body > img.tools");
         $us.on('mousemove', function() {
           return $(this).draggable({
             helper: 'original'

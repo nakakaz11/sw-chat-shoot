@@ -294,7 +294,7 @@ jQuery ($) ->
         $own = ui.helper.clone()
         console.info sotoFlag
         if sotoFlag then $(@).append($own)
-        $us = $("div.canvas img.tools")
+        $us = $("body > img.tools")
         $us.on 'mousemove', ()->  #'click'
           #console.info  $(@).get(0)
           $(@).draggable( helper:'original' )
