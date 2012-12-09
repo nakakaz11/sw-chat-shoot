@@ -94,10 +94,10 @@ jQuery ($) ->
       dDrop.ddmess = data.dd_dt.ddmess
       dDrop.ddpos =  data.dd_dt.ddpos
       dDrop.userId = data.dd_dt.userId
-      console.info dDrop.dd_dt.dd       # log -----------#
-      console.info dDrop.dd_dt.ddmess   # log -----------#
-      console.info dDrop.dd_dt.ddpos    # log -----------#
-      console.info dDrop.dd_dt.userId   # log -----------#
+      console.info dDrop.dd       # log -----------#
+      console.info dDrop.ddmess   # log -----------#
+      console.info dDrop.ddpos    # log -----------#
+      console.info dDrop.userId   # log -----------#
   ###
 coffee -wcb *.coffee
   ###
