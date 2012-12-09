@@ -363,7 +363,7 @@ jQuery(function($) {
         if (sotoFlag) {
           $(this).append(own);
           pos = own.position();
-          console.info("htmlDrop:" + own.html());
+          console.info("htmlDrop:" + own);
           _socket.emit('dd-create', {
             ddmess: 'dd-create!toolenter!',
             ddpos: pos
@@ -378,7 +378,7 @@ jQuery(function($) {
         $us.on('mouseup', function(e) {
           sotoFlag = false;
           pos = $(this).position();
-          console.info("htmlMove:" + $(this).html());
+          console.info("htmlMove:" + $(this));
           _socket.emit('dd-create', {
             ddmess: 'dd-create!mouseup!',
             ddpos: pos
