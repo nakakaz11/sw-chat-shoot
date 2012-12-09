@@ -326,13 +326,13 @@ coffee -wcb *.coffee
           #console.info  $(@).get(0)
           $(@).draggable( helper:'original' )
         $us.on 'mouseup', (e)->
+          sotoFlag = false
           pos = $(@).position()
           # dragdrop add -------------------------#
           _socket.json.emit 'dd-create',
             ddmess:'dd-create!mouseup!'
             ddpos:  pos
-          sotoFlag = false
-          #e.preventDefault()
+          e.preventDefault()
 
         $us.on 'dblclick', ()->
           $(@).remove()

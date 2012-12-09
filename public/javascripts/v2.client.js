@@ -370,12 +370,13 @@ jQuery(function($) {
           });
         });
         $us.on('mouseup', function(e) {
+          sotoFlag = false;
           pos = $(this).position();
           _socket.json.emit('dd-create', {
             ddmess: 'dd-create!mouseup!',
             ddpos: pos
           });
-          return sotoFlag = false;
+          return e.preventDefault();
         });
         $us.on('dblclick', function() {
           return $(this).remove();
