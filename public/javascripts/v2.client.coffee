@@ -321,7 +321,7 @@ coffee -wcb *.coffee
           pos = $own.position()
           # dragdrop add -------------------------#
           _socket.json.emit 'dd-create',
-            dd:$(@).get(0)
+            dd: $own
             ddmess:'dd-create!toolenter!'
             ddpos:  pos
         $us = $("body > img.tools")
@@ -333,7 +333,7 @@ coffee -wcb *.coffee
           pos = $(@).position()
           # dragdrop add -------------------------#
           _socket.json.emit 'dd-create',
-            dd:$(@).get(0)
+            dd: $(@)
             ddmess:'dd-create!mouseup!'
             ddpos:  pos
           e.preventDefault()

@@ -365,7 +365,7 @@ jQuery(function($) {
           $(this).append($own);
           pos = $own.position();
           _socket.json.emit('dd-create', {
-            dd: $(this).get(0),
+            dd: $own,
             ddmess: 'dd-create!toolenter!',
             ddpos: pos
           });
@@ -380,7 +380,7 @@ jQuery(function($) {
           sotoFlag = false;
           pos = $(this).position();
           _socket.json.emit('dd-create', {
-            dd: $(this).get(0),
+            dd: $(this),
             ddmess: 'dd-create!mouseup!',
             ddpos: pos
           });
