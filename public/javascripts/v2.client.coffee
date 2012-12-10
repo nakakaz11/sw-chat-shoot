@@ -101,13 +101,13 @@ jQuery ($) ->
           clone = $("div.toolbar > img.tools").has("[data-id=#{dDrop.ddid}]").clone()
           console.info $(clone)   # log -----------#
           #dDrop.element = $(clone).attr("data-user-id", dDrop.userId)
-          dDrop.element = $("<div class='test'>test</div>")
+          dDrop.element = $("<div class='test'>test(userId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
             .attr("data-user-id", dDrop.userId)
             .css(dDrop.ddpos)
           $("body").append(dDrop.element)
         when 'dd-create_mouseup'
           clone = $("div.toolbar > img.tools").has("[data-id=#{dDrop.ddid}]")
-          $("<div class='test'>test</div>")
+          $("<div class='test'>testMove</div>")
             .css(dDrop.ddpos)
             .attr("data-user-id", dDrop.userId)
             .appendTo("body")

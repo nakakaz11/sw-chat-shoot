@@ -114,8 +114,15 @@ img.bullet{
 .canvas img {
     /*position:absolute;*/
 }
+body > img.tools {
+    position:absolute;
+   	top:0;
+   	left:0;
+}
 .test{
 	position:absolute;
 	top:0;
 	left:0;
+    color: #d11b6d;
+    font-size: 17px;
 }
