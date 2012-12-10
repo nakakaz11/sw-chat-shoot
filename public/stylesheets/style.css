@@ -12,18 +12,14 @@ a {
 /* ------------------------------------------------------------
   Clearfix
 ------------------------------------------------------------ */
-/* new clearfix */
 .clf:before,
 .clf:after {
     content: "";
     display: table;
 }
 .clf:after {clear: both;}
-/* For IE 6/7 (hasL) */
 .clf {zoom: 1;}
-/* DW clearfix表示 */
 .clf {overflow: hidden;}
-/**/
 
 #game{
 }
@@ -117,4 +113,9 @@ img.bullet{
 }
 .canvas img {
     /*position:absolute;*/
+}
+.test{
+	position:absolute;
+	top:0;
+	left:0;
 }
