@@ -98,21 +98,23 @@ jQuery(function($) {
     }
   });
   _socket.on("dd-create", function(data) {
-    var clone, dDelem, dDrop;
+    var clone, dDelem1, dDelem2, dDrop;
     dDrop = _ddMap[data.userId];
     if (dDrop !== undefined) {
       dDrop.ddid = data.dd_dt.ddid;
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
       dDrop.userId = data.userId;
-      dDelem = $("<div class='test'>(´･_･`..drop...userId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>");
-      clone = $("div.toolbar > img.tools").has("[data-id=" + dDrop.ddid + "]").clone();
+      dDelem1 = $("<div class='test'>(´･_･`..drop...userId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>");
+      dDelem2 = $("<div class='test'>(´･_･`..move...userId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>");
+      clone = $("div.toolbar img.tools").has("[data-id=" + dDrop.ddid + "]");
+      console.info($(clone));
       switch (dDrop.ddmess) {
         case 'dd-create_toolenter':
-          dDrop.element = dDelem.attr("data-user-id", dDrop.userId).css(dDrop.ddpos);
+          dDrop.element = dDelem1.attr("data-user-id", dDrop.userId).css(dDrop.ddpos);
           return $("body").append(dDrop.element);
         case 'dd-create_mouseup':
-          dDrop.element = $("<div class='test'>(´･_･`..move...userId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>").attr("data-user-id", dDrop.userId).css(dDrop.ddpos);
+          dDrop.element = dDelem2.attr("data-user-id", dDrop.userId).css(dDrop.ddpos);
           return $("body").append(dDrop.element);
         case 'dd-create_remove':
           return dDelem.find("[data-id=" + dDrop.ddid + "]").remove();

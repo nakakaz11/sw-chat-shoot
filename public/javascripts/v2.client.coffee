@@ -87,7 +87,7 @@ jQuery ($) ->
       bullet.rotate = data.data.rotate
       bullet.v = data.data.v
 
-  #------------------------ dragdrop add -------------------------#
+  #------------------------ dragdrop add ----------------------------------#
   _socket.on "dd-create", (data) ->
     dDrop = _ddMap[data.userId]
     if dDrop isnt `undefined`
@@ -96,17 +96,18 @@ jQuery ($) ->
       dDrop.ddpos =  data.dd_dt.ddpos
       dDrop.userId = data.userId
       #console.info "Emit!data-id:"+ dDrop.ddid       # log -----------#
-      dDelem = $("<div class='test'>(´･_･`..drop...userId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
-      clone = $("div.toolbar > img.tools").has("[data-id=#{dDrop.ddid}]").clone()
+      dDelem1 = $("<div class='test'>(´･_･`..drop...userId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
+      dDelem2 = $("<div class='test'>(´･_･`..move...userId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
+      clone = $("div.toolbar img.tools").has("[data-id=#{dDrop.ddid}]")
+      console.info $(clone)   # log -----------#
       switch dDrop.ddmess
         when 'dd-create_toolenter'
-          #console.info $(clone)   # log -----------#
-          dDrop.element = dDelem
+          dDrop.element = dDelem1
             .attr("data-user-id", dDrop.userId)
             .css(dDrop.ddpos)
           $("body").append(dDrop.element)
         when 'dd-create_mouseup'
-          dDrop.element = $("<div class='test'>(´･_･`..move...userId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
+          dDrop.element = dDelem2
             .attr("data-user-id", dDrop.userId)
             .css(dDrop.ddpos)
           $("body").append(dDrop.element)
