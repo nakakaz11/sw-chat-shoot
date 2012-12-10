@@ -101,7 +101,7 @@ jQuery ($) ->
       #console.info dDrop.userId   # log -----------#
       switch dDrop.ddmess
         when 'dd-create_toolenter'
-          clone = $("body > img.tools").find("[data-id=#{dDrop.ddid}]").clone
+          clone = $("body > img.tools").has("[data-id=#{dDrop.ddid}]")
           console.info $(clone).get(0)   # log -----------#
           dDrop.element = $(clone).attr("data-user-id", dDrop.userId)
           $("body").append(dDrop.element).css(dDrop.ddpos)

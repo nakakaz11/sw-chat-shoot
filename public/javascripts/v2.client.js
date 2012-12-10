@@ -107,7 +107,7 @@ jQuery(function($) {
       dDrop.userId = data.userId;
       switch (dDrop.ddmess) {
         case 'dd-create_toolenter':
-          clone = $("body > img.tools").find("[data-id=" + dDrop.ddid + "]").clone;
+          clone = $("body > img.tools").has("[data-id=" + dDrop.ddid + "]");
           console.info($(clone).get(0));
           dDrop.element = $(clone).attr("data-user-id", dDrop.userId);
           return $("body").append(dDrop.element).css(dDrop.ddpos);
