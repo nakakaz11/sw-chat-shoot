@@ -99,16 +99,16 @@ jQuery ($) ->
       #console.info dDrop.ddmess   # log -----------#
       #console.info dDrop.ddpos    # log -----------#
       #console.info dDrop.userId   # log -----------#
-      switch dDrop.ddmess
+      switch dDrop.ddmes.s
         when 'dd-create_toolenter'
-          clone = $("body > img.tools").has("[data-id=#{dDrop.ddid}]").clone()
-          console.info clone   # log -----------#
+          clone = $("div.toolbar > img.tools").has("[data-id=#{dDrop.ddid}]").clone()
+          console.info $(clone)   # log -----------#
           dDrop.element = $(clone).attr("data-user-id", dDrop.userId)
           $("body").append(dDrop.element).css(dDrop.ddpos)
         when 'dd-create_mouseup'
-          clone = $("body > img.tools").has("[data-id=#{dDrop.ddid}]")
+          clone = $("div.toolbar > img.tools").has("[data-id=#{dDrop.ddid}]")
           clone.append("body").css(dDrop.ddpos)
-          #console.info clone.innerHTML   # log -----------#
+          console.info clone   # log -----------#
         else null
 
   ###

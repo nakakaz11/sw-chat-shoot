@@ -105,15 +105,16 @@ jQuery(function($) {
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
       dDrop.userId = data.userId;
-      switch (dDrop.ddmess) {
+      switch (dDrop.ddmes.s) {
         case 'dd-create_toolenter':
-          clone = $("body > img.tools").has("[data-id=" + dDrop.ddid + "]").clone();
-          console.info(clone);
+          clone = $("div.toolbar > img.tools").has("[data-id=" + dDrop.ddid + "]").clone();
+          console.info($(clone));
           dDrop.element = $(clone).attr("data-user-id", dDrop.userId);
           return $("body").append(dDrop.element).css(dDrop.ddpos);
         case 'dd-create_mouseup':
-          clone = $("body > img.tools").has("[data-id=" + dDrop.ddid + "]");
-          return clone.append("body").css(dDrop.ddpos);
+          clone = $("div.toolbar > img.tools").has("[data-id=" + dDrop.ddid + "]");
+          clone.append("body").css(dDrop.ddpos);
+          return console.info(clone);
         default:
           return null;
       }
