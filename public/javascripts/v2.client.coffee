@@ -103,11 +103,11 @@ jQuery ($) ->
         when 'dd-create_toolenter'
           clone = $("body > img.tools").find("[data-id=#{dDrop.ddid}]").clone()
           console.info $(clone)   # log -----------#
-          #dDrop.element = $(clone).attr("data-user-id", dDrop.userId)
-          #$("body").append(dDrop.element).css(dDrop.ddpos)
+          dDrop.element = $(clone).attr("data-user-id", dDrop.userId)
+          $("body").append(dDrop.element).css(dDrop.ddpos)
         when 'dd-create_mouseup'
           clone = $("body > img.tools").find("[data-id=#{dDrop.ddid}]")
-          console.info $(clone)   # log -----------#
+          console.info $(clone)[0]   # log -----------#
         else null
 
   ###
