@@ -99,7 +99,7 @@ jQuery ($) ->
       #console.info dDrop.ddmess   # log -----------#
       #console.info dDrop.ddpos    # log -----------#
       #console.info dDrop.userId   # log -----------#
-      switch dDrop.ddmes
+      switch dDrop.ddmess
         when 'dd-create_toolenter'
           clone = $("div.toolbar > img.tools").has("[data-id=#{dDrop.ddid}]").clone()
           console.info $(clone)   # log -----------#
