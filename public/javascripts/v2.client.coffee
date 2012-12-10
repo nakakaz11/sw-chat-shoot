@@ -102,11 +102,12 @@ jQuery ($) ->
       switch dDrop.ddmess
         when 'dd-create_toolenter'
           clone = $("body > img.tools").has("[data-id=#{dDrop.ddid}]").clone()
-          console.info clone.innerHTML   # log -----------#
+          console.info clone   # log -----------#
           dDrop.element = $(clone).attr("data-user-id", dDrop.userId)
           $("body").append(dDrop.element).css(dDrop.ddpos)
         when 'dd-create_mouseup'
-          $("body > img.tools").has("[data-id=#{dDrop.ddid}]").append("body").css(dDrop.ddpos)
+          clone = $("body > img.tools").has("[data-id=#{dDrop.ddid}]")
+          clone.append("body").css(dDrop.ddpos)
           #console.info clone.innerHTML   # log -----------#
         else null
 
