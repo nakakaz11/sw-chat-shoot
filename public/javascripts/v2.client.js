@@ -107,16 +107,11 @@ jQuery(function($) {
       dDrop.userId = data.userId;
       switch (dDrop.ddmess) {
         case 'dd-create_toolenter':
-          clone = $("body > img.tools").attr({
-            "data-id": dDrop.ddid
-          }).clone();
-          dDrop.element = $(clone).attr("data-user-id", dDrop.userId);
-          return $("body").append(dDrop.element).css(dDrop.ddpos);
+          clone = $("body > img.tools[data-id=" + dDrop.ddid + "]").clone();
+          return console.info($(clone));
         case 'dd-create_mouseup':
-          clone = $("body > img.tools").attr({
-            "data-id": dDrop.ddid
-          }).clone();
-          return console.info($(clone).get(0));
+          clone = $("body > img.tools[data-id=" + dDrop.ddid + "]");
+          return console.info($(clone));
         default:
           return null;
       }
