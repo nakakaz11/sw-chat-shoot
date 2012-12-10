@@ -95,7 +95,7 @@ jQuery ($) ->
       dDrop.ddmess = data.dd_dt.ddmess
       dDrop.ddpos =  data.dd_dt.ddpos
       dDrop.userId = data.userId
-      console.info "Emit!data-id:"+ dDrop.ddid       # log -----------#
+      #console.info "Emit!data-id:"+ dDrop.ddid       # log -----------#
       #console.info dDrop.ddmess   # log -----------#
       #console.info dDrop.ddpos    # log -----------#
       #console.info dDrop.userId   # log -----------#
@@ -106,7 +106,7 @@ jQuery ($) ->
           $("body").append(dDrop.element).css(dDrop.ddpos)
         when 'dd-create_mouseup'
           clone = $("body > img.tools").attr("data-id":dDrop.ddid).clone()
-          console.info $(clone)   # log -----------#
+          console.info $(clone).get(0)   # log -----------#
         else null
 
   ###

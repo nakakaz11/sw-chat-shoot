@@ -105,7 +105,6 @@ jQuery(function($) {
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
       dDrop.userId = data.userId;
-      console.info("Emit!data-id:" + dDrop.ddid);
       switch (dDrop.ddmess) {
         case 'dd-create_toolenter':
           clone = $("body > img.tools").attr({
@@ -117,7 +116,7 @@ jQuery(function($) {
           clone = $("body > img.tools").attr({
             "data-id": dDrop.ddid
           }).clone();
-          return console.info($(clone));
+          return console.info($(clone).get(0));
         default:
           return null;
       }
