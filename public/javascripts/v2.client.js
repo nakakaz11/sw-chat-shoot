@@ -98,23 +98,24 @@ jQuery(function($) {
     }
   });
   _socket.on("dd-create", function(data) {
-    var clone, dDrop;
+    var clone, dDelem, dDrop;
     dDrop = _ddMap[data.userId];
     if (dDrop !== undefined) {
       dDrop.ddid = data.dd_dt.ddid;
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
       dDrop.userId = data.userId;
+      dDelem = $("<div class='test'>test(userId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>");
+      clone = $("div.toolbar > img.tools").has("[data-id=" + dDrop.ddid + "]").clone();
       switch (dDrop.ddmess) {
         case 'dd-create_toolenter':
-          clone = $("div.toolbar > img.tools").has("[data-id=" + dDrop.ddid + "]").clone();
           console.info($(clone));
-          dDrop.element = $("<div class='test'>test(userId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>").attr("data-user-id", dDrop.userId).css(dDrop.ddpos);
+          dDrop.element = dDelem.attr("data-user-id", dDrop.userId).css(dDrop.ddpos);
           return $("body").append(dDrop.element);
         case 'dd-create_mouseup':
-          clone = $("div.toolbar > img.tools").has("[data-id=" + dDrop.ddid + "]");
-          $("<div class='test'>testMove</div>").css(dDrop.ddpos).attr("data-user-id", dDrop.userId).appendTo("body");
-          return console.info(clone);
+          return dDelem.css(dDrop.ddpos);
+        case 'dd-create_remove':
+          return dDelem.find("[data-id=" + dDrop.ddid + "]").remove();
         default:
           return null;
       }
@@ -398,10 +399,16 @@ jQuery(function($) {
           });
           return e.preventDefault();
         });
-        $us.on('dblclick', function() {
-          return $(this).remove();
+        return $us.on('dblclick', function(e) {
+          var fly3;
+          fly3 = $(this).attr("data-id");
+          _socket.emit('dd-create', {
+            ddid: fly3,
+            ddmess: 'dd-create_remove'
+          });
+          $(this).remove();
+          return e.preventDefault();
         });
-        return false;
       }
     });
   };

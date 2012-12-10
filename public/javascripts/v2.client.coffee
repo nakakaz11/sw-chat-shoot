@@ -96,22 +96,19 @@ jQuery ($) ->
       dDrop.ddpos =  data.dd_dt.ddpos
       dDrop.userId = data.userId
       #console.info "Emit!data-id:"+ dDrop.ddid       # log -----------#
+      dDelem = $("<div class='test'>test(userId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
+      clone = $("div.toolbar > img.tools").has("[data-id=#{dDrop.ddid}]").clone()
       switch dDrop.ddmess
         when 'dd-create_toolenter'
-          clone = $("div.toolbar > img.tools").has("[data-id=#{dDrop.ddid}]").clone()
           console.info $(clone)   # log -----------#
-          #dDrop.element = $(clone).attr("data-user-id", dDrop.userId)
-          dDrop.element = $("<div class='test'>test(userId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
+          dDrop.element = dDelem
             .attr("data-user-id", dDrop.userId)
             .css(dDrop.ddpos)
           $("body").append(dDrop.element)
         when 'dd-create_mouseup'
-          clone = $("div.toolbar > img.tools").has("[data-id=#{dDrop.ddid}]")
-          $("<div class='test'>testMove</div>")
-            .css(dDrop.ddpos)
-            .attr("data-user-id", dDrop.userId)
-            .appendTo("body")
-          console.info clone   # log -----------#
+          dDelem.css(dDrop.ddpos)
+        when 'dd-create_remove'
+          dDelem.find("[data-id=#{dDrop.ddid}]").remove()
         else null
 
   ###
@@ -356,9 +353,13 @@ coffee -wcb *.coffee
             ddpos:  pos
           e.preventDefault()
 
-        $us.on 'dblclick', ()->
+        $us.on 'dblclick', (e)->
+          fly3 = $(@).attr("data-id")
+          _socket.emit 'dd-create',
+            ddid: fly3
+            ddmess:'dd-create_remove'
           $(@).remove()
-        false
+          e.preventDefault()
     )
   onDrag()  # fire
 
