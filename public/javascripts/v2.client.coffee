@@ -87,7 +87,7 @@ jQuery ($) ->
       bullet.rotate = data.data.rotate
       bullet.v = data.data.v
 
-  # dragdrop add -------------------------#
+  #------------------------ dragdrop add -------------------------#
   _socket.on "dd-create", (data) ->
     dDrop = _ddMap[data.userId]
     if dDrop isnt `undefined`
@@ -95,13 +95,19 @@ jQuery ($) ->
       dDrop.ddmess = data.dd_dt.ddmess
       dDrop.ddpos =  data.dd_dt.ddpos
       dDrop.userId = data.userId
-      console.info "Emit!data-user-id:"+ dDrop.ddid       # log -----------#
-      console.info dDrop.ddmess   # log -----------#
-      console.info dDrop.ddpos    # log -----------#
-      console.info dDrop.userId   # log -----------#
-      ###if $("body > img.tools").find("data-user-id")
-        dDrop.element = .attr("data-user-id", dDrop.userId)
-        $("body").append(dDrop.element).css(dDrop.ddpos)###
+      console.info "Emit!data-id:"+ dDrop.ddid       # log -----------#
+      #console.info dDrop.ddmess   # log -----------#
+      #console.info dDrop.ddpos    # log -----------#
+      #console.info dDrop.userId   # log -----------#
+      switch dDrop.ddmess
+        when 'dd-create_toolenter'
+          clone = $("body > img.tools").attr("data-id").find(dDrop.ddid).clone()
+          dDrop.element = $(clone).attr("data-user-id", dDrop.userId)
+          $("body").append(dDrop.element).css(dDrop.ddpos)
+        when 'dd-create_mouseup'
+          clone = $("body > img.tools").attr("data-id").find(dDrop.ddid).clone()
+          console.info $(clone)   # log -----------#
+        else null
 
   ###
 coffee -wcb *.coffee
@@ -328,7 +334,7 @@ coffee -wcb *.coffee
           #console.info "htmlDrop:"+fly1      # log -----------#
           _socket.emit 'dd-create',
             ddid: fly1
-            ddmess:'dd-create!toolenter!'
+            ddmess:'dd-create_toolenter'
             ddpos:  pos
         $us = $("body > img.tools")
         $us.on 'mousemove', ()->  #'click'
@@ -341,7 +347,7 @@ coffee -wcb *.coffee
           #console.info "htmlMove:"+fly2       # log -----------#
           _socket.emit 'dd-create',
             ddid: fly2
-            ddmess:'dd-create!mouseup!'
+            ddmess:'dd-create_mouseup'
             ddpos:  pos
           e.preventDefault()
 
