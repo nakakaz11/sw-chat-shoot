@@ -107,7 +107,7 @@ jQuery(function($) {
       dDrop.userId = data.userId;
       dDelem1 = $("<div class='test'>(´･_･`..drop...userId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>");
       dDelem2 = $("<div class='test'>(´･_･`..move...userId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>");
-      clone = $("div.toolbar img.tools").has("[data-id=" + dDrop.ddid + "]");
+      clone = $("div.toolbar img.tools").has("data-id=" + dDrop.ddid);
       console.info($(clone));
       switch (dDrop.ddmess) {
         case 'dd-create_toolenter':
