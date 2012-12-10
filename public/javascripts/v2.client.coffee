@@ -106,12 +106,12 @@ jQuery ($) ->
             .css(dDrop.ddpos)
           $("body").append(dDrop.element)
         when 'dd-create_mouseup'
-          dDrop.element = $(clone)
+          dDrop.element = $("<div class='test'>(´･_･`..move...userId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
             .attr("data-user-id", dDrop.userId)
             .css(dDrop.ddpos)
           $("body").append(dDrop.element)
         when 'dd-create_remove'
-          dDelem.has("[data-id=#{dDrop.ddid}]").remove()
+          dDelem.find("[data-id=#{dDrop.ddid}]").remove()
         else null
 
   ###

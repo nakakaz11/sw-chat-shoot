@@ -112,10 +112,10 @@ jQuery(function($) {
           dDrop.element = dDelem.attr("data-user-id", dDrop.userId).css(dDrop.ddpos);
           return $("body").append(dDrop.element);
         case 'dd-create_mouseup':
-          dDrop.element = $(clone).attr("data-user-id", dDrop.userId).css(dDrop.ddpos);
+          dDrop.element = $("<div class='test'>(´･_･`..move...userId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>").attr("data-user-id", dDrop.userId).css(dDrop.ddpos);
           return $("body").append(dDrop.element);
         case 'dd-create_remove':
-          return dDelem.has("[data-id=" + dDrop.ddid + "]").remove();
+          return dDelem.find("[data-id=" + dDrop.ddid + "]").remove();
         default:
           return null;
       }
