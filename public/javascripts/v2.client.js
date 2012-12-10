@@ -108,11 +108,11 @@ jQuery(function($) {
       switch (dDrop.ddmess) {
         case 'dd-create_toolenter':
           clone = $("body > img.tools").has("[data-id=" + dDrop.ddid + "]").clone();
-          console.info(clone);
+          console.info(clone.innerHTML);
           dDrop.element = $(clone).attr("data-user-id", dDrop.userId);
           return $("body").append(dDrop.element).css(dDrop.ddpos);
         case 'dd-create_mouseup':
-          return $("body > img.tools").has("[data-id=" + dDrop.ddid + "]").appendTo("body").css(dDrop.ddpos);
+          return $("body > img.tools").has("[data-id=" + dDrop.ddid + "]").append("body").css(dDrop.ddpos);
         default:
           return null;
       }
