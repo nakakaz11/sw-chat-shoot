@@ -13,10 +13,10 @@
     });
 
     var index = 0;
-    $.backstretch(images[index], {speed: 15000});
+    $.backstretch(images[index], {speed: 5000});
     setInterval(function() {
         index = (index >= images.length - 1) ? 0 : index + 1;
         $.backstretch(images[index]);
-    }, 5000);
+    }, 15000);
 
 // });
