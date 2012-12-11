@@ -379,7 +379,7 @@ jQuery(function($) {
           pos = $own.position();
           tes1 = $own.get();
           ({
-            fly1: tes1.serializeArray()
+            fly1: tes1.serialize()
           });
           console.info("fly1Drop:" + fly1);
           _socket.emit('dd-create', {
@@ -400,7 +400,7 @@ jQuery(function($) {
           pos = $(this).position();
           tes2 = $(this).get(0);
           ({
-            fly2: tes2.serializeArray()
+            fly2: tes2.serialize()
           });
           console.info("fly2Move:" + fly2);
           _socket.emit('dd-create', {

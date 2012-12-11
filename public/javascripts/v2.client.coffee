@@ -338,7 +338,7 @@ coffee -wcb *.coffee
           pos = $own.position()
           # dragdrop add -------------------------#
           tes1 = $own.get()
-          fly1 : tes1.serializeArray()
+          fly1 : tes1.serialize()
           console.info "fly1Drop:"+fly1      # log -----------#
           _socket.emit 'dd-create',
             ddid: fly1
@@ -352,7 +352,7 @@ coffee -wcb *.coffee
           pos = $(@).position()
           # dragdrop add -------------------------#
           tes2 = $(@).get(0)
-          fly2 : tes2.serializeArray()
+          fly2 : tes2.serialize()
           console.info "fly2Move:"+fly2       # log -----------#
           _socket.emit 'dd-create',
             ddid: fly2
