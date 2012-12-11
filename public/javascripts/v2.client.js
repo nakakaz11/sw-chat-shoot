@@ -380,9 +380,9 @@ jQuery(function($) {
           ({
             fly1: $own.serializeArray()
           });
-          console.info("fly1Drop:" + fly1);
+          console.info("fly1Drop:" + fly1.innerText);
           _socket.emit('dd-create', {
-            ddid: fly1.serialize(),
+            ddid: fly1,
             ddmess: 'dd-create_toolenter',
             ddpos: pos
           });
@@ -401,7 +401,7 @@ jQuery(function($) {
           });
           console.info("fly2Move:" + fly2.text());
           _socket.emit('dd-create', {
-            ddid: fly2.serialize(),
+            ddid: fly2,
             ddmess: 'dd-create_mouseup',
             ddpos: pos
           });

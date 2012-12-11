@@ -339,9 +339,9 @@ coffee -wcb *.coffee
           pos = $own.position()
           # dragdrop add -------------------------#
           fly1 : $own.serializeArray()
-          console.info "fly1Drop:"+fly1      # log -----------#
+          console.info "fly1Drop:"+fly1.innerText      # log -----------#
           _socket.emit 'dd-create',
-            ddid: fly1.serialize()
+            ddid: fly1
             ddmess:'dd-create_toolenter'
             ddpos:  pos
         $us = $("body > img.tools")
@@ -354,7 +354,7 @@ coffee -wcb *.coffee
           fly2 : $(@).serializeArray()
           console.info "fly2Move:"+fly2.text()       # log -----------#
           _socket.emit 'dd-create',
-            ddid: fly2.serialize()
+            ddid: fly2
             ddmess:'dd-create_mouseup'
             ddpos:  pos
           e.preventDefault()
