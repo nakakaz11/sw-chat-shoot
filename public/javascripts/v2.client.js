@@ -4,7 +4,7 @@ var tools;
 jQuery(function($) {
   "use strict";
 
-  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, fly1, fly2, mousedown, mycoord, onDrag, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
+  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, fly1, mousedown, mycoord, onDrag, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
@@ -361,7 +361,6 @@ jQuery(function($) {
   });
   sotoFlag = false;
   fly1 = {};
-  fly2 = {};
   $("div.toolbar img.tools").draggable({
     helper: 'clone',
     start: function() {
@@ -379,7 +378,7 @@ jQuery(function($) {
           pos = $own.position();
           tes1 = $own.get();
           ({
-            fly1: tes1.serialize()
+            fly1: JSON.stringify(tes1)
           });
           console.info("fly1Drop:" + fly1);
           _socket.emit('dd-create', {
@@ -395,13 +394,11 @@ jQuery(function($) {
           });
         });
         $us.on('mouseup', function(e) {
-          var tes2;
+          var fly2, tes2;
           sotoFlag = false;
           pos = $(this).position();
           tes2 = $(this).get(0);
-          ({
-            fly2: tes2.serialize()
-          });
+          fly2 = JSON.stringify(tes2);
           console.info("fly2Move:" + fly2);
           _socket.emit('dd-create', {
             ddid: fly2,
