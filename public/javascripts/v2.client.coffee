@@ -333,14 +333,13 @@ coffee -wcb *.coffee
       tolerance:'fit'
       deactivate: (ev,ui) ->
         $own = ui.helper.clone()
-        #console.info sotoFlag
         if sotoFlag
           $(@).append($own)
           pos = $own.position()
           # dragdrop add -------------------------#
           fly1 : $own.serializeArray()
-          tes1 = $own.html()
-          console.info "fly1Drop:"+tes1      # log -----------#
+          tes1 = $own.get()
+          console.info "fly1Drop:"+tes1.toSource()      # log -----------#
           _socket.emit 'dd-create',
             ddid: fly1
             ddmess:'dd-create_toolenter'
@@ -353,7 +352,7 @@ coffee -wcb *.coffee
           pos = $(@).position()
           # dragdrop add -------------------------#
           fly2 : $(@).serializeArray()
-          tes2 = $(@).innerHTML
+          tes2 = $(@).get(0)
           console.info "fly2Move:"+tes2       # log -----------#
           _socket.emit 'dd-create',
             ddid: fly2
