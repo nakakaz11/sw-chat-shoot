@@ -372,7 +372,7 @@ jQuery(function($) {
     return $("body").droppable({
       tolerance: 'fit',
       deactivate: function(ev, ui) {
-        var $own, $us, pos;
+        var $own, $us, pos, tes1;
         $own = ui.helper.clone();
         if (sotoFlag) {
           $(this).append($own);
@@ -380,7 +380,8 @@ jQuery(function($) {
           ({
             fly1: $own.serializeArray()
           });
-          console.info("fly1Drop:" + fly1);
+          tes1 = $own.html();
+          console.info("fly1Drop:" + tes1);
           _socket.emit('dd-create', {
             ddid: fly1,
             ddmess: 'dd-create_toolenter',
@@ -394,12 +395,14 @@ jQuery(function($) {
           });
         });
         $us.on('mouseup', function(e) {
+          var tes2;
           sotoFlag = false;
           pos = $(this).position();
           ({
             fly2: $(this).serializeArray()
           });
-          console.info("fly2Move:" + JSON.stringify(fly2));
+          tes2 = $(this).innerHTML;
+          console.info("fly2Move:" + tes2);
           _socket.emit('dd-create', {
             ddid: fly2,
             ddmess: 'dd-create_mouseup',

@@ -339,7 +339,8 @@ coffee -wcb *.coffee
           pos = $own.position()
           # dragdrop add -------------------------#
           fly1 : $own.serializeArray()
-          console.info "fly1Drop:"+fly1      # log -----------#
+          tes1 = $own.html()
+          console.info "fly1Drop:"+tes1      # log -----------#
           _socket.emit 'dd-create',
             ddid: fly1
             ddmess:'dd-create_toolenter'
@@ -352,7 +353,8 @@ coffee -wcb *.coffee
           pos = $(@).position()
           # dragdrop add -------------------------#
           fly2 : $(@).serializeArray()
-          console.info "fly2Move:"+JSON.stringify(fly2)       # log -----------#
+          tes2 = $(@).innerHTML
+          console.info "fly2Move:"+tes2       # log -----------#
           _socket.emit 'dd-create',
             ddid: fly2
             ddmess:'dd-create_mouseup'
