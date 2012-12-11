@@ -320,8 +320,8 @@ coffee -wcb *.coffee
     $("<img>", tool).appendTo($toolbar)
 
   sotoFlag = false    # toolbarから来たか判定
-  fly1 = {}
-  #fly2 = {}
+  #fly1 = {}
+  fly2 = {}
   $("div.toolbar img.tools").draggable
         #appendTo:'div.canvas'
         helper:'clone'
@@ -338,7 +338,7 @@ coffee -wcb *.coffee
           pos = $own.position()
           # dragdrop add -------------------------#
           tes1 = $own.get()
-          fly1 : JSON.stringify(tes1)
+          fly1 = JSON.stringify(tes1)
           console.info "fly1Drop:"+fly1      # log -----------#
           _socket.emit 'dd-create',
             ddid: fly1
@@ -352,8 +352,8 @@ coffee -wcb *.coffee
           pos = $(@).position()
           # dragdrop add -------------------------#
           tes2 = $(@).get(0)
-          fly2 = JSON.stringify(tes2)
-          console.info "fly2Move:"+fly2       # log -----------#
+          fly2 : tes2
+          console.info "fly2Move:"+fly2[0]       # log -----------#
           _socket.emit 'dd-create',
             ddid: fly2
             ddmess:'dd-create_mouseup'
