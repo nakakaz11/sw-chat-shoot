@@ -320,6 +320,8 @@ coffee -wcb *.coffee
     $("<img>", tool).appendTo($toolbar)
 
   sotoFlag = false    # toolbarから来たか判定
+  fly1 = {}
+  fly2 = {}
   $("div.toolbar img.tools").draggable
         #appendTo:'div.canvas'
         helper:'clone'
@@ -336,10 +338,10 @@ coffee -wcb *.coffee
           $(@).append($own)
           pos = $own.position()
           # dragdrop add -------------------------#
-          fly1 = $own.serialize()
+          fly1 : $own.serializeArray()
           console.info "fly1Drop:"+fly1      # log -----------#
           _socket.emit 'dd-create',
-            ddid: fly1
+            ddid: fly1.serialize()
             ddmess:'dd-create_toolenter'
             ddpos:  pos
         $us = $("body > img.tools")
@@ -349,10 +351,10 @@ coffee -wcb *.coffee
           sotoFlag = false
           pos = $(@).position()
           # dragdrop add -------------------------#
-          fly2 = $(@).serialize()
-          console.info "fly2Move:"+fly2       # log -----------#
+          fly2 : $(@).serializeArray()
+          console.info "fly2Move:"+fly2.text()       # log -----------#
           _socket.emit 'dd-create',
-            ddid: fly2
+            ddid: fly2.serialize()
             ddmess:'dd-create_mouseup'
             ddpos:  pos
           e.preventDefault()

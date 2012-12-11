@@ -4,7 +4,7 @@ var tools;
 jQuery(function($) {
   "use strict";
 
-  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, mousedown, mycoord, onDrag, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
+  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, fly1, fly2, mousedown, mycoord, onDrag, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
@@ -360,6 +360,8 @@ jQuery(function($) {
     return $("<img>", tool).appendTo($toolbar);
   });
   sotoFlag = false;
+  fly1 = {};
+  fly2 = {};
   $("div.toolbar img.tools").draggable({
     helper: 'clone',
     start: function() {
@@ -370,15 +372,17 @@ jQuery(function($) {
     return $("body").droppable({
       tolerance: 'fit',
       deactivate: function(ev, ui) {
-        var $own, $us, fly1, pos;
+        var $own, $us, pos;
         $own = ui.helper.clone();
         if (sotoFlag) {
           $(this).append($own);
           pos = $own.position();
-          fly1 = $own.serialize();
+          ({
+            fly1: $own.serializeArray()
+          });
           console.info("fly1Drop:" + fly1);
           _socket.emit('dd-create', {
-            ddid: fly1,
+            ddid: fly1.serialize(),
             ddmess: 'dd-create_toolenter',
             ddpos: pos
           });
@@ -390,13 +394,14 @@ jQuery(function($) {
           });
         });
         $us.on('mouseup', function(e) {
-          var fly2;
           sotoFlag = false;
           pos = $(this).position();
-          fly2 = $(this).serialize();
-          console.info("fly2Move:" + fly2);
+          ({
+            fly2: $(this).serializeArray()
+          });
+          console.info("fly2Move:" + fly2.text());
           _socket.emit('dd-create', {
-            ddid: fly2,
+            ddid: fly2.serialize(),
             ddmess: 'dd-create_mouseup',
             ddpos: pos
           });
