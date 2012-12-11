@@ -339,7 +339,7 @@ coffee -wcb *.coffee
           # dragdrop add -------------------------#
           fly1 : $own.serializeArray()
           tes1 = $own.get()
-          console.info "fly1Drop:"+tes1.toSource()      # log -----------#
+          console.info "fly1Drop:"+tes1      # log -----------#
           _socket.emit 'dd-create',
             ddid: fly1
             ddmess:'dd-create_toolenter'

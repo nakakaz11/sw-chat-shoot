@@ -381,7 +381,7 @@ jQuery(function($) {
             fly1: $own.serializeArray()
           });
           tes1 = $own.get();
-          console.info("fly1Drop:" + tes1.toSource());
+          console.info("fly1Drop:" + tes1);
           _socket.emit('dd-create', {
             ddid: fly1,
             ddmess: 'dd-create_toolenter',
