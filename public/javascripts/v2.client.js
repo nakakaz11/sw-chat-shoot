@@ -377,11 +377,11 @@ jQuery(function($) {
         if (sotoFlag) {
           $(this).append($own);
           pos = $own.position();
-          ({
-            fly1: $own.serializeArray()
-          });
           tes1 = $own.get();
-          console.info("fly1Drop:" + tes1);
+          ({
+            fly1: tes1.serializeArray()
+          });
+          console.info("fly1Drop:" + fly1);
           _socket.emit('dd-create', {
             ddid: fly1,
             ddmess: 'dd-create_toolenter',
@@ -398,11 +398,11 @@ jQuery(function($) {
           var tes2;
           sotoFlag = false;
           pos = $(this).position();
-          ({
-            fly2: $(this).serializeArray()
-          });
           tes2 = $(this).get(0);
-          console.info("fly2Move:" + tes2);
+          ({
+            fly2: tes2.serializeArray()
+          });
+          console.info("fly2Move:" + fly2);
           _socket.emit('dd-create', {
             ddid: fly2,
             ddmess: 'dd-create_mouseup',
