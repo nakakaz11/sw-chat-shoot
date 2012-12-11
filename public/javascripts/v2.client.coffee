@@ -338,8 +338,8 @@ coffee -wcb *.coffee
           pos = $own.position()
           # dragdrop add -------------------------#
           tes1 = $own.get()
-          fly1 = JSON.stringify(tes1)
-          console.info "fly1Drop:"+fly1      # log -----------#
+          #fly1 = JSON.stringify(tes1)
+          console.info "fly1Drop:"+tes1      # log -----------#
           _socket.emit 'dd-create',
             ddid: fly1
             ddmess:'dd-create_toolenter'

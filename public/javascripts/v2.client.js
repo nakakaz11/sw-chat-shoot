@@ -371,14 +371,13 @@ jQuery(function($) {
     return $("body").droppable({
       tolerance: 'fit',
       deactivate: function(ev, ui) {
-        var $own, $us, fly1, pos, tes1;
+        var $own, $us, pos, tes1;
         $own = ui.helper.clone();
         if (sotoFlag) {
           $(this).append($own);
           pos = $own.position();
           tes1 = $own.get();
-          fly1 = JSON.stringify(tes1);
-          console.info("fly1Drop:" + fly1);
+          console.info("fly1Drop:" + tes1);
           _socket.emit('dd-create', {
             ddid: fly1,
             ddmess: 'dd-create_toolenter',
