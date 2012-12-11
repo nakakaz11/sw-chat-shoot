@@ -99,7 +99,7 @@ jQuery ($) ->
       dDelem1 = $("<div class='test'>(´･_･`..drop...userId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
       dDelem2 = $("<div class='test'>(´･_･`..move...userId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
       clone = $("div.toolbar img.tools").attr("data-id=#{dDrop.ddid}")
-      console.info $(clone)   # log -----------#
+      #console.info $(clone)   # log -----------#
       switch dDrop.ddmess
         when 'dd-create_toolenter'
           dDrop.element = dDelem1
@@ -336,8 +336,8 @@ coffee -wcb *.coffee
           $(@).append($own)
           pos = $own.position()
           # dragdrop add -------------------------#
-          fly1 = $own.attr("data-id")
-          #console.info "htmlDrop:"+fly1      # log -----------#
+          fly1 = $own.serialize()
+          console.info "fly1Drop:"+fly1      # log -----------#
           _socket.emit 'dd-create',
             ddid: fly1
             ddmess:'dd-create_toolenter'
@@ -349,8 +349,8 @@ coffee -wcb *.coffee
           sotoFlag = false
           pos = $(@).position()
           # dragdrop add -------------------------#
-          fly2 = $(@).attr("data-id")
-          #console.info "htmlMove:"+fly2       # log -----------#
+          fly2 = $(@).serialize()
+          console.info "fly2Move:"+fly2       # log -----------#
           _socket.emit 'dd-create',
             ddid: fly2
             ddmess:'dd-create_mouseup'
