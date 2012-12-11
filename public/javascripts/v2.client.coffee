@@ -341,7 +341,7 @@ coffee -wcb *.coffee
           #fly1 = JSON.stringify(tes1)
           console.info "fly1Drop:"+tes1      # log -----------#
           _socket.emit 'dd-create',
-            ddid: fly1
+            ddid: tes1
             ddmess:'dd-create_toolenter'
             ddpos:  pos
         $us = $("body > img.tools")
