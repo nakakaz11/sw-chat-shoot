@@ -326,7 +326,6 @@ coffee -wcb *.coffee
         start:->
           sotoFlag = true  # toolbarから来たか判定
         stop:->
-          $(@).addClass('drpd')
           #$(@).draggable "destroy"
 
   $("body").droppable(
@@ -335,7 +334,8 @@ coffee -wcb *.coffee
       $own = ui.helper.clone()      # this clone 生成
       if sotoFlag                   # ドロップされた場合は...
         pos = $own.position()       # css確定
-        $(@).append($own).css(pos)  # bodyにappend
+        $(@).append($own).css(pos).addClass('drpd')  # bodyにappend
+        $own.draggable "destroy"
   )
   $us = $("img.drpd")
   $us.draggable(

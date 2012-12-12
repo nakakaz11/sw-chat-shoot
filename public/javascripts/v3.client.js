@@ -365,9 +365,7 @@ jQuery(function($) {
     start: function() {
       return sotoFlag = true;
     },
-    stop: function() {
-      return $(this).addClass('drpd');
-    }
+    stop: function() {}
   });
   $("body").droppable({
     tolerance: 'fit',
@@ -376,7 +374,8 @@ jQuery(function($) {
       $own = ui.helper.clone();
       if (sotoFlag) {
         pos = $own.position();
-        return $(this).append($own).css(pos);
+        $(this).append($own).css(pos).addClass('drpd');
+        return $own.draggable("destroy");
       }
     }
   });
