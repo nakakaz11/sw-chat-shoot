@@ -392,8 +392,8 @@ jQuery(function($) {
           var fly2, tes2;
           sotoFlag = false;
           pos = $(this).position();
-          tes2 = ui.instance.clone().get(0);
-          fly2 = $(tes2).get();
+          tes2 = ui.instance.get(0);
+          fly2 = $(tes2).get(0);
           _socket.emit('dd-create', console.info("fly2Move:" + $(fly2).html()), {
             ddmess: 'dd-create_mouseup',
             ddpos: pos
