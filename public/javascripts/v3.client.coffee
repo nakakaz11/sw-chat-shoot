@@ -332,7 +332,8 @@ coffee -wcb *.coffee
         $own = ui.helper.clone()
         #console.info sotoFlag
         if sotoFlag
-          $(@).append($own).addClass("dropImg")
+          $own.addClass("dropImg")
+          $(@).append($own)
           pos = $own.position()
           # dragdrop add -------------------------#
           fly1 = $own.attr("data-id")
@@ -341,7 +342,7 @@ coffee -wcb *.coffee
             ddid: fly1
             ddmess:'dd-create_toolenter'
             ddpos:  pos
-        $us = $("body > img.dropImg")
+        $us = $("body > img.tools")
         $us.on 'mousemove', ()->  #'click'
           $(@).draggable( helper:'original' )
         $us.on 'mouseup', (e)->

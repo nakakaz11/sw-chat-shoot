@@ -372,7 +372,8 @@ jQuery(function($) {
         var $own, $us, fly1, pos;
         $own = ui.helper.clone();
         if (sotoFlag) {
-          $(this).append($own).addClass("dropImg");
+          $own.addClass("dropImg");
+          $(this).append($own);
           pos = $own.position();
           fly1 = $own.attr("data-id");
           console.info("dd-create_toolenter" + fly1);
@@ -382,7 +383,7 @@ jQuery(function($) {
             ddpos: pos
           });
         }
-        $us = $("body > img.dropImg");
+        $us = $("body > img.tools");
         $us.on('mousemove', function() {
           return $(this).draggable({
             helper: 'original'
