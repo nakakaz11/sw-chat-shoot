@@ -338,7 +338,7 @@ coffee -wcb *.coffee
           tes1 = $own.html()
           #fly1 = tes1.serializeArray()
           _socket.emit 'dd-create',
-            console.log "fly1Drop:"+tes1      # log -----------#
+            console.log "fly1Drop:"+tes1.toString()      # log -----------#
             #ddid: fly1
             ddmess:'dd-create_toolenter'
             ddpos:  pos
@@ -352,7 +352,7 @@ coffee -wcb *.coffee
           tes2 = $(@).html()
           fly2 = tes2
           _socket.emit 'dd-create',
-            console.info "fly2Move:"+fly2     # log -----------#
+            console.info "fly2Move:"+fly2.toString()     # log -----------#
             #ddid: fly2
             ddmess:'dd-create_mouseup'
             ddpos:  pos
