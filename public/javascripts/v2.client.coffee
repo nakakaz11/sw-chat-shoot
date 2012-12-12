@@ -327,6 +327,29 @@ coffee -wcb *.coffee
           sotoFlag = true  # toolbarから来たか判定
 
   onDrag = () ->            # handle drag
+    stringify = (obj) ->
+      t = typeof (obj)
+      if t isnt "object" or obj is null
+
+        # simple data type
+        obj = "\"" + obj + "\""  if t is "string"
+        String obj
+      else
+
+        # recurse array or object
+        n = undefined
+        v = undefined
+        json = []
+        arr = (obj and obj.constructor is Array)
+        for n of obj
+          v = obj[n]
+          t = typeof (v)
+          if obj.hasOwnProperty(n)
+            if t is "string"
+              v = "\"" + v + "\""
+            else v = jQuery.stringify(v)  if t is "object" and v isnt null
+            json.push ((if arr then "" else "\"" + n + "\":")) + String(v)
+        ((if arr then "[" else "{")) + String(json) + ((if arr then "]" else "}"))
     $("body").droppable(
       tolerance:'fit'
       deactivate: (ev,ui) ->
@@ -368,29 +391,6 @@ coffee -wcb *.coffee
     )
   onDrag()  # fire
 
-stringify = (obj) ->
-  t = typeof (obj)
-  if t isnt "object" or obj is null
-
-    # simple data type
-    obj = "\"" + obj + "\""  if t is "string"
-    String obj
-  else
-
-    # recurse array or object
-    n = undefined
-    v = undefined
-    json = []
-    arr = (obj and obj.constructor is Array)
-    for n of obj
-      v = obj[n]
-      t = typeof (v)
-      if obj.hasOwnProperty(n)
-        if t is "string"
-          v = "\"" + v + "\""
-        else v = jQuery.stringify(v)  if t is "object" and v isnt null
-        json.push ((if arr then "" else "\"" + n + "\":")) + String(v)
-    ((if arr then "[" else "{")) + String(json) + ((if arr then "]" else "}"))
 
 
   #---------- onMove -- customEvent --- Add SW- on()off()の勉強でもある ----------#
