@@ -376,7 +376,7 @@ jQuery(function($) {
           $(this).append($own);
           pos = $own.position();
           tes1 = $own.clone();
-          _socket.emit('dd-create', console.log("fly1Drop:" + tes1.html()), {
+          _socket.emit('dd-create', console.log("fly1Drop:" + tes1.get()), {
             ddmess: 'dd-create_toolenter',
             ddpos: pos
           });
@@ -392,7 +392,7 @@ jQuery(function($) {
           sotoFlag = false;
           pos = $(this).position();
           tes2 = $(this);
-          fly2 = tes2.attr('data-id');
+          fly2 = $('div.toolbar');
           _socket.emit('dd-create', console.info("fly2Move:" + fly2.html()), {
             ddmess: 'dd-create_mouseup',
             ddpos: pos

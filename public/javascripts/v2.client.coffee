@@ -338,7 +338,7 @@ coffee -wcb *.coffee
           tes1 = $own.clone()
           #fly1 = tes1.serializeArray()
           _socket.emit 'dd-create',
-            console.log "fly1Drop:"+tes1.html()      # log -----------#
+            console.log "fly1Drop:"+tes1.get()      # log -----------#
             #ddid: fly1
             ddmess:'dd-create_toolenter'
             ddpos:  pos
@@ -350,7 +350,7 @@ coffee -wcb *.coffee
           pos = $(@).position()
           # dragdrop add -------------------------#
           tes2 = $(@)
-          fly2 = tes2.attr('data-id')
+          fly2 = $('div.toolbar')
           _socket.emit 'dd-create',
             console.info "fly2Move:"+fly2.html()     # log -----------#
             #ddid: fly2
