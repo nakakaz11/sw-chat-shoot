@@ -344,29 +344,29 @@ coffee -wcb *.coffee
           #ddid: fly1
           ddmess:'dd-create_toolenter'
           ddpos:  pos
-      $us = $("img.drpd")
-      $us.on 'mousemove', ()->  #'click'
-        $(@).draggable( helper:'original' )
-      $us.on 'mouseup', (e) ->
-        sotoFlag = false
-        pos = $(@).position()
-        # dragdrop add -------------------------#
-        tes2 = $(@).clone()
-        _socket.emit 'dd-create',
-          console.info "fly2Move:"+ $(tes2)      # log -----------#
-          #ddid: fly2
-          ddmess:'dd-create_mouseup'
-          ddpos:  pos
-        e.preventDefault()
-
-      $us.on 'dblclick', (e)->
-        fly3 = $(@).attr("data-id")
-        _socket.emit 'dd-create',
-          ddid: fly3
-          ddmess:'dd-create_remove'
-        $(@).remove()
-        e.preventDefault()
   )
+  $us = $("img.drpd")
+  $us.on 'mousemove', ()->  #'click'
+    $(@).draggable( helper:'original' )
+  $us.on 'mouseup', (e) ->
+    sotoFlag = false
+    pos = $(@).position()
+    # dragdrop add -------------------------#
+    tes2 = $(@).clone()
+    _socket.emit 'dd-create',
+      console.info "fly2Move:"+ $(tes2)      # log -----------#
+      #ddid: fly2
+      ddmess:'dd-create_mouseup'
+      ddpos:  pos
+    e.preventDefault()
+
+  $us.on 'dblclick', (e)->
+    fly3 = $(@).attr("data-id")
+    _socket.emit 'dd-create',
+      ddid: fly3
+      ddmess:'dd-create_remove'
+    $(@).remove()
+    e.preventDefault()
 
   ###
 coffee -wcb *.coffee
