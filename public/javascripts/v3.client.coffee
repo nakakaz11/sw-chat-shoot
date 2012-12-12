@@ -331,39 +331,39 @@ coffee -wcb *.coffee
               $own = ui.helper.clone()
               if sotoFlag
                 $own.addClass('drpd')
-                $(@).append($own)
+                pos = $own.position()
+                $(@).append($own).css(pos)
+                _socket.emit 'dd-create',
+                  console.info "toolenter:"   # log -----------#
+                  ddid: $own.attr("data-id")
+                  ddmess:'dd-create_toolenter'
+                  ddpos:  pos
+              $us = $("img.drpd")
+              $us.on 'mousemove', (e)->  #'click'
+                console.info "mousemove:"   # log -----------#
+                e.preventDefault()
+              $us.on 'mouseup', (e) ->
+                console.info "mouseup:"     # log -----------#
+                sotoFlag = false
+                pos = $(@).position()
+                # dragdrop add -------------------------#
+                _socket.emit 'dd-create',
+                  ddid: $(@).attr("data-id")
+                  ddmess:'dd-create_mouseup'
+                  ddpos:  pos
+                e.preventDefault()
+
+              $us.on 'dblclick', (e)->
+                console.info "dblclick:"   # log -----------#
+                # dragdrop add -------------------------#
+                _socket.emit 'dd-create',
+                  ddid: $(@).attr("data-id")
+                  ddmess:'dd-create_remove'
+                $(@).remove()
+                e.preventDefault()
           )
         stop:->
           #$(@).draggable "destroy"
-
-
-  $("img.drpd").draggable()
-  $("img.drpd").each ->
-    console.info $(@).html()   # log -----------#
-    $(@).on 'mousemove', (e)->  #'click'
-      console.info "mousemove:"   # log -----------#
-      e.preventDefault()
-
-    $(@).on 'mouseup', (e) ->
-      console.info "mouseup:"   # log -----------#
-      sotoFlag = false
-      pos = $(@).position()
-      # dragdrop add -------------------------#
-      tes2 = $(@).clone()
-      _socket.emit 'dd-create',
-        #ddid: fly2
-        ddmess:'dd-create_mouseup'
-        ddpos:  pos
-      e.preventDefault()
-
-    $(@).on 'dblclick', (e)->
-      console.info "dblclick:"   # log -----------#
-      fly3 = $(@).attr("data-id")
-      _socket.emit 'dd-create',
-        ddid: fly3
-        ddmess:'dd-create_remove'
-      $(@).remove()
-      e.preventDefault()
 
   ###
 coffee -wcb *.coffee
