@@ -336,9 +336,9 @@ coffee -wcb *.coffee
           pos = $own.position()
           # dragdrop add -------------------------#
           tes1 = $own.clone()
-          #fly1 = tes1.serializeArray()
+          fly1 = $(tes1)
           _socket.emit 'dd-create',
-            console.log "fly1Drop:"+tes1.get()      # log -----------#
+            console.info "fly1Drop:"+fly1.html()     # log -----------#
             #ddid: fly1
             ddmess:'dd-create_toolenter'
             ddpos:  pos
@@ -349,10 +349,10 @@ coffee -wcb *.coffee
           sotoFlag = false
           pos = $(@).position()
           # dragdrop add -------------------------#
-          tes2 = $(@)
-          fly2 = $('div.toolbar')
+          tes2 = $(@).clone()
+          fly2 = $('body.ui-droppable img.tools')
           _socket.emit 'dd-create',
-            console.info "fly2Move:"+fly2.html()     # log -----------#
+            console.info "fly2Move:"+ $(tes2)+"fly2Move:"+fly2.html()      # log -----------#
             #ddid: fly2
             ddmess:'dd-create_mouseup'
             ddpos:  pos
