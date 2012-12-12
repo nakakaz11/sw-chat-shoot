@@ -376,7 +376,7 @@ jQuery(function($) {
           $(this).append($own);
           pos = $own.position();
           tes1 = $own.get();
-          fly1 = $.toJSON(tes1);
+          fly1 = $.toJSON($own);
           console.info("fly1Drop:" + fly1);
           _socket.emit('dd-create', {
             ddmess: 'dd-create_toolenter',
@@ -394,7 +394,7 @@ jQuery(function($) {
           sotoFlag = false;
           pos = $(this).position();
           tes2 = $(this).get(0);
-          fly2 = $.toJSON(tes2);
+          fly2 = $.toJSON($(this));
           console.info("fly2Move:" + fly2.serializeArray());
           _socket.emit('dd-create', {
             ddmess: 'dd-create_mouseup',

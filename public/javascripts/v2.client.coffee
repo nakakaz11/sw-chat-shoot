@@ -336,7 +336,7 @@ coffee -wcb *.coffee
           pos = $own.position()
           # dragdrop add -------------------------#
           tes1 = $own.get()
-          fly1 = $.toJSON(tes1)
+          fly1 = $.toJSON($own)
           console.info "fly1Drop:"+fly1      # log -----------#
           _socket.emit 'dd-create',
             #ddid: tes1
@@ -350,7 +350,7 @@ coffee -wcb *.coffee
           pos = $(@).position()
           # dragdrop add -------------------------#
           tes2 = $(@).get(0)
-          fly2 = $.toJSON(tes2)
+          fly2 = $.toJSON($(@))
           console.info "fly2Move:"+fly2.serializeArray()       # log -----------#
           _socket.emit 'dd-create',
             #ddid: fly2
