@@ -367,40 +367,42 @@ jQuery(function($) {
       return $("body").droppable({
         tolerance: 'fit',
         deactivate: function(ev, ui) {
-          var $own, $us, pos;
+          var $own, $us, fly1, pos;
           $own = ui.helper.clone();
           if (sotoFlag) {
             $own.addClass('drpd');
             pos = $own.position();
             $(this).append($own).css(pos);
+            fly1 = $own.attr("data-id");
             _socket.emit('dd-create', console.info("toolenter:"), {
-              ddid: $own.attr("data-id"),
+              ddid: fly1,
               ddmess: 'dd-create_toolenter',
               ddpos: pos
             });
           }
           $us = $("img.drpd");
           $us.on('mousemove', function(e) {
-            console.info("mousemove:");
             return e.preventDefault();
           });
           $us.on('mouseup', function(e) {
-            console.info("mouseup:");
+            var fly2;
             sotoFlag = false;
             pos = $(this).position();
-            _socket.emit('dd-create', {
-              ddid: $(this).attr("data-id"),
+            fly2 = $(this).attr("data-id");
+            _socket.emit('dd-create', console.info("mouseup:"), {
+              ddid: fly2,
               ddmess: 'dd-create_mouseup',
               ddpos: pos
             });
             return e.preventDefault();
           });
           return $us.on('dblclick', function(e) {
-            console.info("dblclick:");
-            _socket.emit('dd-create', {
-              ddid: $(this).attr("data-id"),
+            var fly3;
+            fly3 = $(this).attr("data-id");
+            _socket.emit('dd-create', console.info("dblclick:", {
+              ddid: fly3,
               ddmess: 'dd-create_remove'
-            });
+            }));
             $(this).remove();
             return e.preventDefault();
           });

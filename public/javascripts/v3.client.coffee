@@ -333,31 +333,34 @@ coffee -wcb *.coffee
                 $own.addClass('drpd')
                 pos = $own.position()
                 $(@).append($own).css(pos)
+                fly1 = $own.attr("data-id")
+                # dragdrop add -------------------------#
                 _socket.emit 'dd-create',
                   console.info "toolenter:"   # log -----------#
-                  ddid: $own.attr("data-id")
+                  ddid: fly1
                   ddmess:'dd-create_toolenter'
                   ddpos:  pos
               $us = $("img.drpd")
               $us.on 'mousemove', (e)->  #'click'
-                console.info "mousemove:"   # log -----------#
                 e.preventDefault()
               $us.on 'mouseup', (e) ->
-                console.info "mouseup:"     # log -----------#
                 sotoFlag = false
                 pos = $(@).position()
+                fly2 = $(@).attr("data-id")
                 # dragdrop add -------------------------#
                 _socket.emit 'dd-create',
-                  ddid: $(@).attr("data-id")
+                  console.info "mouseup:"     # log -----------#
+                  ddid: fly2
                   ddmess:'dd-create_mouseup'
                   ddpos:  pos
                 e.preventDefault()
 
               $us.on 'dblclick', (e)->
-                console.info "dblclick:"   # log -----------#
+                fly3 = $(@).attr("data-id")
                 # dragdrop add -------------------------#
                 _socket.emit 'dd-create',
-                  ddid: $(@).attr("data-id")
+                console.info "dblclick:"   # log -----------#
+                  ddid: fly3
                   ddmess:'dd-create_remove'
                 $(@).remove()
                 e.preventDefault()
