@@ -116,7 +116,7 @@ jQuery(function($) {
           dDrop.element = dDelem2.attr("data-user-id", dDrop.userId).css(dDrop.ddpos);
           return $("body").append(dDrop.element);
         case 'dd-create_remove':
-          return dDelem.find("[data-id=" + dDrop.ddid + "]").remove();
+          return dDelem2.find("[data-id=" + dDrop.ddid + "]").remove();
         default:
           return null;
       }
@@ -393,7 +393,7 @@ jQuery(function($) {
           sotoFlag = false;
           pos = $(this).position();
           tes2 = $(this).get();
-          console.info("fly2Move:" + tes2);
+          console.info("fly2Move:" + tes2.innerHTML);
           _socket.emit('dd-create', {
             ddmess: 'dd-create_mouseup',
             ddpos: pos

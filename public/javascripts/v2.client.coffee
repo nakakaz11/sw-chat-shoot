@@ -112,7 +112,7 @@ jQuery ($) ->
             .css(dDrop.ddpos)
           $("body").append(dDrop.element)
         when 'dd-create_remove'
-          dDelem.find("[data-id=#{dDrop.ddid}]").remove()
+          dDelem2.find("[data-id=#{dDrop.ddid}]").remove()
         else null
   #------------------------ dragdrop add ----------------------------------#
   ###
@@ -336,6 +336,7 @@ coffee -wcb *.coffee
           pos = $own.position()
           # dragdrop add -------------------------#
           tes1 = $own.get(0)
+          #fly1 = $.toJSON(tes1)
           console.info "fly1Drop:"+ tes1     # log -----------#
           _socket.emit 'dd-create',
             #ddid: tes1
@@ -349,8 +350,8 @@ coffee -wcb *.coffee
           pos = $(@).position()
           # dragdrop add -------------------------#
           tes2 = $(@).get()
-          #fly2 = $.toJSON($(@))
-          console.info "fly2Move:"+ tes2      # log -----------#
+          #fly2 = $.toJSON(tes2)
+          console.info "fly2Move:"+ tes2.innerHTML      # log -----------#
           _socket.emit 'dd-create',
             #ddid: fly2
             ddmess:'dd-create_mouseup'
