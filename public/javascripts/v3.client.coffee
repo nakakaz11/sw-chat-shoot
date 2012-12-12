@@ -351,9 +351,9 @@ coffee -wcb *.coffee
           pos = $(@).position()
           # dragdrop add -------------------------#
           tes2 = ui.instance
-          fly2 = $(tes2).get(0)
+          fly2 = $(tes2)
           _socket.emit 'dd-create',
-            console.info "fly2Move:"+ $(fly2).html()      # log -----------#
+            console.info "fly2Move:"+ $(fly2).get(0)      # log -----------#
             #ddid: fly2
             ddmess:'dd-create_mouseup'
             ddpos:  pos
