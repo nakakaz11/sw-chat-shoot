@@ -335,8 +335,13 @@ coffee -wcb *.coffee
           $(@).append($own)        # bodyにappend
           pos = $own.position()    # css確定
           # dragdrop add -------------------------#
-          _socket.emit 'dd-create', () ->
-            #ddCreateToolenter({ddid: fly1,ddmess:'dd-create_toolenter',ddpos:  pos})
+          tes1 = ui.helper.clone()
+          fly1 = $(tes1).html()
+          _socket.emit 'dd-create',
+            console.info "fly1Drop:"+fly1     # log -----------#
+            #ddid: fly1
+            ddmess:'dd-create_toolenter'
+            ddpos:  pos
 
         $us = $("body > img.tools")
         $us.on 'mousemove', ()->  #'click'
@@ -345,17 +350,24 @@ coffee -wcb *.coffee
           sotoFlag = false
           pos = $(@).position()
           # dragdrop add -------------------------#
-          _socket.emit 'dd-create', () ->
-          #ddCreateMouseup({ddid: fly2,ddmess:'dd-create_mouseup',ddpos:  pos})
+          _socket.emit 'dd-create',
+            #ddid: fly2
+            ddmess:'dd-create_mouseup'
+            ddpos:  pos
           e.preventDefault()
 
         $us.on 'dblclick', (e)->
           # dragdrop add -------------------------#
-          _socket.emit 'dd-create', () ->
-          #ddCreateRemove({ddid: fly3,ddmess:'dd-create_remove'})
+          fly3 = $(@).attr("data-id")
+          _socket.emit 'dd-create',
+            ddid: fly3
+            ddmess:'dd-create_remove'
           $(@).remove()
           e.preventDefault()
     )
+  ###
+coffee -wcb *.coffee
+  ###
   onDrag()  # fire
 
 

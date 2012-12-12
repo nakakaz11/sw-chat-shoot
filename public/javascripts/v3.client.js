@@ -370,12 +370,17 @@ jQuery(function($) {
     return $("body").droppable({
       tolerance: 'fit',
       deactivate: function(ev, ui) {
-        var $own, $us, pos;
+        var $own, $us, fly1, pos, tes1;
         $own = ui.helper.clone();
         if (sotoFlag) {
           $(this).append($own);
           pos = $own.position();
-          _socket.emit('dd-create', function() {});
+          tes1 = ui.helper.clone();
+          fly1 = $(tes1).html();
+          _socket.emit('dd-create', console.info("fly1Drop:" + fly1), {
+            ddmess: 'dd-create_toolenter',
+            ddpos: pos
+          });
         }
         $us = $("body > img.tools");
         $us.on('mousemove', function() {
@@ -386,17 +391,29 @@ jQuery(function($) {
         $us.on('mouseup', function(e) {
           sotoFlag = false;
           pos = $(this).position();
-          _socket.emit('dd-create', function() {});
+          _socket.emit('dd-create', {
+            ddmess: 'dd-create_mouseup',
+            ddpos: pos
+          });
           return e.preventDefault();
         });
         return $us.on('dblclick', function(e) {
-          _socket.emit('dd-create', function() {});
+          var fly3;
+          fly3 = $(this).attr("data-id");
+          _socket.emit('dd-create', {
+            ddid: fly3,
+            ddmess: 'dd-create_remove'
+          });
           $(this).remove();
           return e.preventDefault();
         });
       }
     });
   };
+  /*
+  coffee -wcb *.coffee
+  */
+
   return onDrag();
 });
 
