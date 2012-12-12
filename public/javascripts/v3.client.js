@@ -4,7 +4,7 @@ var tools;
 jQuery(function($) {
   "use strict";
 
-  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, mousedown, mycoord, onDrag, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
+  var $toolbar, $us, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, mousedown, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
@@ -364,60 +364,53 @@ jQuery(function($) {
     helper: 'clone',
     start: function() {
       return sotoFlag = true;
+    },
+    stop: function() {
+      return $(this).draggable("destroy");
     }
   });
-  onDrag = function() {
-    return $("body").droppable({
-      tolerance: 'fit',
-      deactivate: function(ev, ui) {
-        var $own, $us, fly1, pos, tes1;
-        $own = ui.helper.clone();
-        if (sotoFlag) {
-          $(this).append($own);
-          pos = $own.position();
-          tes1 = ui.helper.clone();
-          fly1 = $(tes1).get(0);
-          _socket.emit('dd-create', console.info("fly1Drop:" + fly1), {
-            ddmess: 'dd-create_toolenter',
-            ddpos: pos
-          });
-        }
-        $us = $("body > img.tools");
-        $us.on('mousemove', function() {
-          return $(this).draggable({
-            helper: 'original'
-          });
-        });
-        $us.on('mouseup', function(e) {
-          var fly2, tes2;
-          sotoFlag = false;
-          pos = $(this).position();
-          tes2 = ui.helper.clone();
-          fly2 = $(tes2).get(0);
-          _socket.emit('dd-create', console.info("fly2Move:" + $(fly2)), {
-            ddmess: 'dd-create_mouseup',
-            ddpos: pos
-          });
-          return e.preventDefault();
-        });
-        return $us.on('dblclick', function(e) {
-          var fly3;
-          fly3 = $(this).attr("data-id");
-          _socket.emit('dd-create', {
-            ddid: fly3,
-            ddmess: 'dd-create_remove'
-          });
-          $(this).remove();
-          return e.preventDefault();
-        });
+  $("body").droppable({
+    tolerance: 'fit',
+    deactivate: function(ev, ui) {
+      var $own, pos;
+      $own = ui.helper.clone();
+      if (sotoFlag) {
+        pos = $own.position();
+        $(this).append($own).css(pos);
+        return sotoFlag = false;
       }
-    });
-  };
+    }
+  });
+  $us = $("body > img.tools");
+  return $us.draggable({
+    stop: function(e, ui) {
+      $us.on('mousemove', function() {});
+      $us.on('mouseup', function() {
+        var fly2, pos, tes2;
+        pos = $(this).position();
+        tes2 = ui.helper.clone();
+        fly2 = $(tes2).get(0);
+        return _socket.emit('dd-create', console.info("fly2Move:" + $(fly2)), {
+          ddmess: 'dd-create_mouseup',
+          ddpos: pos
+        });
+      });
+      return $us.on('dblclick', function(e) {
+        var fly3;
+        fly3 = $(this).attr("data-id");
+        _socket.emit('dd-create', {
+          ddid: fly3,
+          ddmess: 'dd-create_remove'
+        });
+        $(this).remove();
+        return e.preventDefault();
+      });
+    }
+  });
   /*
   coffee -wcb *.coffee
   */
 
-  return onDrag();
 });
 
 tools = [

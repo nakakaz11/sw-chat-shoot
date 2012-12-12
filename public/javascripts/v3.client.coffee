@@ -325,53 +325,46 @@ coffee -wcb *.coffee
         helper:'clone'
         start:->
           sotoFlag = true  # toolbarから来たか判定
+        stop:->
+          $(@).draggable "destroy"
 
-  onDrag = () ->            # handle drag
-    $("body").droppable(
-      tolerance:'fit'
-      deactivate: (ev,ui) ->
-        $own = ui.helper.clone()   # this clone 生成
-        if sotoFlag                # ドロップされた場合は...
-          $(@).append($own)        # bodyにappend
-          pos = $own.position()    # css確定
-          # dragdrop add -------------------------#
-          tes1 = ui.helper.clone()
-          fly1 = $(tes1).get(0)
-          _socket.emit 'dd-create',
-            console.info "fly1Drop:"+fly1     # log -----------#
-            #ddid: fly1
-            ddmess:'dd-create_toolenter'
-            ddpos:  pos
+  $("body").droppable(
+    tolerance:'fit'
+    deactivate: (ev,ui) ->
+      $own = ui.helper.clone()      # this clone 生成
+      if sotoFlag                   # ドロップされた場合は...
+        pos = $own.position()       # css確定
+        $(@).append($own).css(pos)  # bodyにappend
+        sotoFlag = false            # sotoFlag戻す
+  )
+  $us = $("body > img.tools")
+  $us.draggable(
+    #helper:'original'
+    stop:(e,ui)->
+      $us.on 'mousemove', () ->  #'click'
+      $us.on 'mouseup', () ->
+        pos = $(@).position()
+        # dragdrop add -------------------------#
+        tes2 = ui.helper.clone()
+        fly2 = $(tes2).get(0)
+        _socket.emit 'dd-create',
+          console.info "fly2Move:"+ $(fly2)      # log -----------#
+          #ddid: fly2
+          ddmess:'dd-create_mouseup'
+          ddpos:  pos
+      $us.on 'dblclick', (e)->
+        # dragdrop add -------------------------#
+        fly3 = $(@).attr("data-id")
+        _socket.emit 'dd-create',
+          ddid: fly3
+          ddmess:'dd-create_remove'
+        $(@).remove()
+        e.preventDefault()
+  )
 
-        $us = $("body > img.tools")
-        $us.on 'mousemove', ()->  #'click'
-          $(@).draggable( helper:'original' )
-        $us.on 'mouseup', (e) ->
-          sotoFlag = false
-          pos = $(@).position()
-          # dragdrop add -------------------------#
-          tes2 = ui.helper.clone()
-          fly2 = $(tes2).get(0)
-          _socket.emit 'dd-create',
-            console.info "fly2Move:"+ $(fly2)      # log -----------#
-            #ddid: fly2
-            ddmess:'dd-create_mouseup'
-            ddpos:  pos
-          e.preventDefault()
-
-        $us.on 'dblclick', (e)->
-          # dragdrop add -------------------------#
-          fly3 = $(@).attr("data-id")
-          _socket.emit 'dd-create',
-            ddid: fly3
-            ddmess:'dd-create_remove'
-          $(@).remove()
-          e.preventDefault()
-    )
   ###
 coffee -wcb *.coffee
   ###
-  onDrag()  # fire
 
 
 
