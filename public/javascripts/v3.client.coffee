@@ -96,23 +96,22 @@ jQuery ($) ->
       dDrop.ddpos =  data.dd_dt.ddpos
       dDrop.userId = data.userId
       #console.info "Emit!data-id:"+ dDrop.ddid       # log -----------#
-      dDelem1 = $("<div class='test'>(´･_･`..drop...userId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
-      dDelem2 = $("<div class='test'>(´･_･`..move...userId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
-      clone = $("div.toolbar img.tools").attr("data-id=#{dDrop.ddid}")
-      #console.info $(clone)   # log -----------#
       switch dDrop.ddmess
         when 'dd-create_toolenter'
-          dDrop.element = dDelem1
+          clone = $("div.toolbar > img.tools").has("[data-id=#{dDrop.ddid}]").clone()
+          console.info $(clone)   # log -----------#
+          #dDrop.element = $(clone).attr("data-user-id", dDrop.userId)
+          dDrop.element = $("<div class='test'>test(userId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
             .attr("data-user-id", dDrop.userId)
             .css(dDrop.ddpos)
           $("body").append(dDrop.element)
         when 'dd-create_mouseup'
-          dDrop.element = dDelem2
-            .attr("data-user-id", dDrop.userId)
+          clone = $("div.toolbar > img.tools").has("[data-id=#{dDrop.ddid}]")
+          $("<div class='test'>testMove</div>")
             .css(dDrop.ddpos)
-          $("body").append(dDrop.element)
-        when 'dd-create_remove'
-          dDelem2.find("[data-id=#{dDrop.ddid}]").remove()
+            .attr("data-user-id", dDrop.userId)
+            .appendTo("body")
+          console.info clone   # log -----------#
         else null
   #------------------------ dragdrop add ----------------------------------#
   ###
@@ -325,48 +324,49 @@ coffee -wcb *.coffee
         helper:'clone'
         start:->
           sotoFlag = true  # toolbarから来たか判定
-          $("body").droppable(
-            tolerance:'fit'
-            deactivate: (ev,ui) ->
-              $own = ui.helper.clone()
-              if sotoFlag
-                $own.addClass('drpd')
-                pos = $own.position()
-                $(@).append($own).css(pos)
-                fly1 = $own.attr("data-id")
-                # dragdrop add -------------------------#
-                _socket.emit 'dd-create',
-                  console.info "toolenter:"   # log -----------#
-                  ddid: fly1
-                  ddmess:'dd-create_toolenter'
-                  ddpos:  pos
-              $us = $("img.drpd")
-              $us.on 'mousemove', (e)->  #'click'
-                e.preventDefault()
-              $us.on 'mouseup', (e) ->
-                sotoFlag = false
-                pos = $(@).position()
-                fly2 = $(@).attr("data-id")
-                # dragdrop add -------------------------#
-                _socket.emit 'dd-create',
-                  console.info "mouseup:"     # log -----------#
-                  ddid: fly2
-                  ddmess:'dd-create_mouseup'
-                  ddpos:  pos
-                e.preventDefault()
 
-              $us.on 'dblclick', (e)->
-                fly3 = $(@).attr("data-id")
-                # dragdrop add -------------------------#
-                _socket.emit 'dd-create',
-                console.info "dblclick:"   # log -----------#
-                  ddid: fly3
-                  ddmess:'dd-create_remove'
-                $(@).remove()
-                e.preventDefault()
-          )
-        stop:->
-          #$(@).draggable "destroy"
+  onDrag = () ->            # handle drag
+    $("body").droppable(
+      tolerance:'fit'
+      deactivate: (ev,ui) ->
+        $own = ui.helper.clone()
+        #console.info sotoFlag
+        if sotoFlag
+          $(@).append($own)
+          pos = $own.position()
+          # dragdrop add -------------------------#
+          fly1 = $own.attr("data-id")
+          console.info "dd-create_toolenter"+fly1      # log -----------#
+          _socket.emit 'dd-create',
+            ddid: fly1
+            ddmess:'dd-create_toolenter'
+            ddpos:  pos
+        $us = $("body > img.tools")
+        $us.on 'mousemove', ()->  #'click'
+          $(@).draggable( helper:'original' )
+        $us.on 'mouseup', (e)->
+          sotoFlag = false
+          pos = $(@).position()
+          # dragdrop add -------------------------#
+          fly2 = $(@).attr("data-id")
+          console.info "dd-create_mouseup:"+fly2       # log -----------#
+          _socket.emit 'dd-create',
+            ddid: fly2
+            ddmess:'dd-create_mouseup'
+            ddpos:  pos
+          e.preventDefault()
+
+        $us.on 'dblclick', ()->
+          # dragdrop add -------------------------#
+          fly3 = $(@).attr("data-id")
+          console.info "dd-create_remove:"+fly3       # log -----------#
+          _socket.emit 'dd-create',
+            ddid: fly3,
+            ddmess: 'dd-create_remove'
+          $(@).remove()
+        false
+    )
+  onDrag()  # fire
 
   ###
 coffee -wcb *.coffee

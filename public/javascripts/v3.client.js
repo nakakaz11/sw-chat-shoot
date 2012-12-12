@@ -4,7 +4,7 @@ var tools;
 jQuery(function($) {
   "use strict";
 
-  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, mousedown, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
+  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, mousedown, mycoord, onDrag, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
@@ -98,25 +98,23 @@ jQuery(function($) {
     }
   });
   _socket.on("dd-create", function(data) {
-    var clone, dDelem1, dDelem2, dDrop;
+    var clone, dDrop;
     dDrop = _ddMap[data.userId];
     if (dDrop !== undefined) {
       dDrop.ddid = data.dd_dt.ddid;
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
       dDrop.userId = data.userId;
-      dDelem1 = $("<div class='test'>(´･_･`..drop...userId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>");
-      dDelem2 = $("<div class='test'>(´･_･`..move...userId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>");
-      clone = $("div.toolbar img.tools").attr("data-id=" + dDrop.ddid);
       switch (dDrop.ddmess) {
         case 'dd-create_toolenter':
-          dDrop.element = dDelem1.attr("data-user-id", dDrop.userId).css(dDrop.ddpos);
+          clone = $("div.toolbar > img.tools").has("[data-id=" + dDrop.ddid + "]").clone();
+          console.info($(clone));
+          dDrop.element = $("<div class='test'>test(userId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>").attr("data-user-id", dDrop.userId).css(dDrop.ddpos);
           return $("body").append(dDrop.element);
         case 'dd-create_mouseup':
-          dDrop.element = dDelem2.attr("data-user-id", dDrop.userId).css(dDrop.ddpos);
-          return $("body").append(dDrop.element);
-        case 'dd-create_remove':
-          return dDelem2.find("[data-id=" + dDrop.ddid + "]").remove();
+          clone = $("div.toolbar > img.tools").has("[data-id=" + dDrop.ddid + "]");
+          $("<div class='test'>testMove</div>").css(dDrop.ddpos).attr("data-user-id", dDrop.userId).appendTo("body");
+          return console.info(clone);
         default:
           return null;
       }
@@ -360,57 +358,63 @@ jQuery(function($) {
     return $("<img>", tool).appendTo($toolbar);
   });
   sotoFlag = false;
-  return $("div.toolbar img.tools").draggable({
+  $("div.toolbar img.tools").draggable({
     helper: 'clone',
     start: function() {
-      sotoFlag = true;
-      return $("body").droppable({
-        tolerance: 'fit',
-        deactivate: function(ev, ui) {
-          var $own, $us, fly1, pos;
-          $own = ui.helper.clone();
-          if (sotoFlag) {
-            $own.addClass('drpd');
-            pos = $own.position();
-            $(this).append($own).css(pos);
-            fly1 = $own.attr("data-id");
-            _socket.emit('dd-create', console.info("toolenter:"), {
-              ddid: fly1,
-              ddmess: 'dd-create_toolenter',
-              ddpos: pos
-            });
-          }
-          $us = $("img.drpd");
-          $us.on('mousemove', function(e) {
-            return e.preventDefault();
-          });
-          $us.on('mouseup', function(e) {
-            var fly2;
-            sotoFlag = false;
-            pos = $(this).position();
-            fly2 = $(this).attr("data-id");
-            _socket.emit('dd-create', console.info("mouseup:"), {
-              ddid: fly2,
-              ddmess: 'dd-create_mouseup',
-              ddpos: pos
-            });
-            return e.preventDefault();
-          });
-          return $us.on('dblclick', function(e) {
-            var fly3;
-            fly3 = $(this).attr("data-id");
-            _socket.emit('dd-create', console.info("dblclick:", {
-              ddid: fly3,
-              ddmess: 'dd-create_remove'
-            }));
-            $(this).remove();
-            return e.preventDefault();
+      return sotoFlag = true;
+    }
+  });
+  onDrag = function() {
+    return $("body").droppable({
+      tolerance: 'fit',
+      deactivate: function(ev, ui) {
+        var $own, $us, fly1, pos;
+        $own = ui.helper.clone();
+        if (sotoFlag) {
+          $(this).append($own);
+          pos = $own.position();
+          fly1 = $own.attr("data-id");
+          console.info("dd-create_toolenter" + fly1);
+          _socket.emit('dd-create', {
+            ddid: fly1,
+            ddmess: 'dd-create_toolenter',
+            ddpos: pos
           });
         }
-      });
-    },
-    stop: function() {}
-  });
+        $us = $("body > img.tools");
+        $us.on('mousemove', function() {
+          return $(this).draggable({
+            helper: 'original'
+          });
+        });
+        $us.on('mouseup', function(e) {
+          var fly2;
+          sotoFlag = false;
+          pos = $(this).position();
+          fly2 = $(this).attr("data-id");
+          console.info("dd-create_mouseup:" + fly2);
+          _socket.emit('dd-create', {
+            ddid: fly2,
+            ddmess: 'dd-create_mouseup',
+            ddpos: pos
+          });
+          return e.preventDefault();
+        });
+        $us.on('dblclick', function() {
+          var fly3;
+          fly3 = $(this).attr("data-id");
+          console.info("dd-create_remove:" + fly3);
+          _socket.emit('dd-create', {
+            ddid: fly3,
+            ddmess: 'dd-create_remove'
+          });
+          return $(this).remove();
+        });
+        return false;
+      }
+    });
+  };
+  return onDrag();
   /*
   coffee -wcb *.coffee
   */
