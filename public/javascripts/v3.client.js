@@ -98,23 +98,24 @@ jQuery(function($) {
     }
   });
   _socket.on("dd-create", function(data) {
-    var clone, dDrop;
+    var clone, dDrop, dDrop1, dDrop2;
     dDrop = _ddMap[data.userId];
     if (dDrop !== undefined) {
       dDrop.ddid = data.dd_dt.ddid;
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
       dDrop.userId = data.userId;
+      dDrop1 = $("<div class='test'>test(userId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>");
+      dDrop2 = $("<div class='test'>testMove</div>");
       switch (dDrop.ddmess) {
         case 'dd-create_toolenter':
           clone = $("div.toolbar > img.tools").has("[data-id=" + dDrop.ddid + "]").clone();
           console.info($(clone));
-          dDrop.element = $("<div class='test'>test(userId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>").attr("data-user-id", dDrop.userId).css(dDrop.ddpos);
-          return $("body").append(dDrop.element);
+          dDrop1.attr("data-user-id", dDrop.userId).css(dDrop.ddpos);
+          return $("body").append(dDrop1);
         case 'dd-create_mouseup':
           clone = $("div.toolbar > img.tools").has("[data-id=" + dDrop.ddid + "]");
-          $("<div class='test'>testMove</div>").css(dDrop.ddpos).attr("data-user-id", dDrop.userId).appendTo("body");
-          return console.info(clone);
+          return dDrop2.css(dDrop.ddpos).attr("data-user-id", dDrop.userId).appendTo("body");
         default:
           return null;
       }
@@ -371,7 +372,7 @@ jQuery(function($) {
         var $own, $us, fly1, pos;
         $own = ui.helper.clone();
         if (sotoFlag) {
-          $(this).append($own);
+          $(this).append($own).addClass("dropImg");
           pos = $own.position();
           fly1 = $own.attr("data-id");
           console.info("dd-create_toolenter" + fly1);
@@ -381,7 +382,7 @@ jQuery(function($) {
             ddpos: pos
           });
         }
-        $us = $("body > img.tools");
+        $us = $("body > img.dropImg");
         $us.on('mousemove', function() {
           return $(this).draggable({
             helper: 'original'

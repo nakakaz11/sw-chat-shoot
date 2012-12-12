@@ -95,23 +95,23 @@ jQuery ($) ->
       dDrop.ddmess = data.dd_dt.ddmess
       dDrop.ddpos =  data.dd_dt.ddpos
       dDrop.userId = data.userId
-      #console.info "Emit!data-id:"+ dDrop.ddid       # log -----------#
+
+      dDrop1 = $("<div class='test'>test(userId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
+      dDrop2 = $("<div class='test'>testMove</div>")
       switch dDrop.ddmess
         when 'dd-create_toolenter'
           clone = $("div.toolbar > img.tools").has("[data-id=#{dDrop.ddid}]").clone()
           console.info $(clone)   # log -----------#
           #dDrop.element = $(clone).attr("data-user-id", dDrop.userId)
-          dDrop.element = $("<div class='test'>test(userId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
-            .attr("data-user-id", dDrop.userId)
-            .css(dDrop.ddpos)
-          $("body").append(dDrop.element)
+          dDrop1.attr("data-user-id", dDrop.userId)
+                .css(dDrop.ddpos)
+          $("body").append(dDrop1)
         when 'dd-create_mouseup'
           clone = $("div.toolbar > img.tools").has("[data-id=#{dDrop.ddid}]")
-          $("<div class='test'>testMove</div>")
-            .css(dDrop.ddpos)
-            .attr("data-user-id", dDrop.userId)
-            .appendTo("body")
-          console.info clone   # log -----------#
+          dDrop2.css(dDrop.ddpos)
+                .attr("data-user-id", dDrop.userId)
+                .appendTo("body")
+          #console.info clone   # log -----------#
         else null
   #------------------------ dragdrop add ----------------------------------#
   ###
@@ -332,7 +332,7 @@ coffee -wcb *.coffee
         $own = ui.helper.clone()
         #console.info sotoFlag
         if sotoFlag
-          $(@).append($own)
+          $(@).append($own).addClass("dropImg")
           pos = $own.position()
           # dragdrop add -------------------------#
           fly1 = $own.attr("data-id")
@@ -341,7 +341,7 @@ coffee -wcb *.coffee
             ddid: fly1
             ddmess:'dd-create_toolenter'
             ddpos:  pos
-        $us = $("body > img.tools")
+        $us = $("body > img.dropImg")
         $us.on 'mousemove', ()->  #'click'
           $(@).draggable( helper:'original' )
         $us.on 'mouseup', (e)->
