@@ -335,38 +335,32 @@ coffee -wcb *.coffee
       if sotoFlag
         $own.addClass('drpd')
         $(@).append($own)
-        pos = $own.position()
-        # dragdrop add -------------------------#
-        tes1 = $own.clone()
-        #fly1 = $(tes1).html()
-        _socket.emit 'dd-create',
-          console.info "fly1Drop:"+tes1     # log -----------#
-          #ddid: fly1
-          ddmess:'dd-create_toolenter'
-          ddpos:  pos
+        $own.draggable "destroy"
   )
-  $us = $("img.drpd")
-  $us.on 'mousemove', ()->  #'click'
-    $(@).draggable( helper:'original' )
-  $us.on 'mouseup', (e) ->
-    sotoFlag = false
-    pos = $(@).position()
-    # dragdrop add -------------------------#
-    tes2 = $(@).clone()
-    _socket.emit 'dd-create',
-      console.info "fly2Move:"+ $(tes2)      # log -----------#
-      #ddid: fly2
-      ddmess:'dd-create_mouseup'
-      ddpos:  pos
-    e.preventDefault()
+  $("img.drpd").each (i,val)->
+    $(@).on 'mousemove', (e)->  #'click'
+      $(@).draggable( helper:'original' )
+      e.preventDefault()
 
-  $us.on 'dblclick', (e)->
-    fly3 = $(@).attr("data-id")
-    _socket.emit 'dd-create',
-      ddid: fly3
-      ddmess:'dd-create_remove'
-    $(@).remove()
-    e.preventDefault()
+    $(@).on 'mouseup', (e) ->
+      sotoFlag = false
+      pos = $(@).position()
+      # dragdrop add -------------------------#
+      tes2 = $(@).clone()
+      _socket.emit 'dd-create',
+        console.info "fly2Move:"+ $(tes2)      # log -----------#
+        #ddid: fly2
+        ddmess:'dd-create_mouseup'
+        ddpos:  pos
+      e.preventDefault()
+
+    $(@).on 'dblclick', (e)->
+      fly3 = $(@).attr("data-id")
+      _socket.emit 'dd-create',
+        ddid: fly3
+        ddmess:'dd-create_remove'
+      $(@).remove()
+      e.preventDefault()
 
   ###
 coffee -wcb *.coffee

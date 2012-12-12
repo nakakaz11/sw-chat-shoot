@@ -4,7 +4,7 @@ var tools;
 jQuery(function($) {
   "use strict";
 
-  var $toolbar, $us, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, mousedown, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
+  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, mousedown, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
@@ -370,46 +370,43 @@ jQuery(function($) {
   $("body").droppable({
     tolerance: 'fit',
     deactivate: function(ev, ui) {
-      var $own, pos, tes1;
+      var $own;
       $own = ui.helper.clone();
       if (sotoFlag) {
         $own.addClass('drpd');
         $(this).append($own);
-        pos = $own.position();
-        tes1 = $own.clone();
-        return _socket.emit('dd-create', console.info("fly1Drop:" + tes1), {
-          ddmess: 'dd-create_toolenter',
-          ddpos: pos
-        });
+        return $own.draggable("destroy");
       }
     }
   });
-  $us = $("img.drpd");
-  $us.on('mousemove', function() {
-    return $(this).draggable({
-      helper: 'original'
+  return $("img.drpd").each(function(i, val) {
+    $(this).on('mousemove', function(e) {
+      $(this).draggable({
+        helper: 'original'
+      });
+      return e.preventDefault();
     });
-  });
-  $us.on('mouseup', function(e) {
-    var pos, tes2;
-    sotoFlag = false;
-    pos = $(this).position();
-    tes2 = $(this).clone();
-    _socket.emit('dd-create', console.info("fly2Move:" + $(tes2)), {
-      ddmess: 'dd-create_mouseup',
-      ddpos: pos
+    $(this).on('mouseup', function(e) {
+      var pos, tes2;
+      sotoFlag = false;
+      pos = $(this).position();
+      tes2 = $(this).clone();
+      _socket.emit('dd-create', console.info("fly2Move:" + $(tes2)), {
+        ddmess: 'dd-create_mouseup',
+        ddpos: pos
+      });
+      return e.preventDefault();
     });
-    return e.preventDefault();
-  });
-  return $us.on('dblclick', function(e) {
-    var fly3;
-    fly3 = $(this).attr("data-id");
-    _socket.emit('dd-create', {
-      ddid: fly3,
-      ddmess: 'dd-create_remove'
+    return $(this).on('dblclick', function(e) {
+      var fly3;
+      fly3 = $(this).attr("data-id");
+      _socket.emit('dd-create', {
+        ddid: fly3,
+        ddmess: 'dd-create_remove'
+      });
+      $(this).remove();
+      return e.preventDefault();
     });
-    $(this).remove();
-    return e.preventDefault();
   });
   /*
   coffee -wcb *.coffee
