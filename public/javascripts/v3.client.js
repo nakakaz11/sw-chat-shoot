@@ -375,7 +375,7 @@ jQuery(function($) {
       if (sotoFlag) {
         $own.addClass('drpd');
         $(this).append($own);
-        return $own.draggable("destroy");
+        return $(ui.draggable).draggable("destroy");
       }
     }
   });

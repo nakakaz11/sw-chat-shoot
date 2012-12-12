@@ -335,7 +335,7 @@ coffee -wcb *.coffee
       if sotoFlag
         $own.addClass('drpd')
         $(@).append($own)
-        $own.draggable "destroy"
+        $(ui.draggable).draggable("destroy")
   )
   $("img.drpd").each (i,val)->
     $(@).on 'mousemove', (e)->  #'click'
