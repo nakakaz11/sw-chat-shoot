@@ -335,10 +335,10 @@ coffee -wcb *.coffee
           $(@).append($own)
           pos = $own.position()
           # dragdrop add -------------------------#
-          tes1 = $own.get(0)
-          fly1 = tes1.serializeArray()
+          tes1 = $own.html()
+          #fly1 = tes1.serializeArray()
           _socket.emit 'dd-create',
-            console.info "fly1Drop:"+fly1      # log -----------#
+            console.info "fly1Drop:"+tes1      # log -----------#
             ddid: fly1
             ddmess:'dd-create_toolenter'
             ddpos:  pos
@@ -349,10 +349,10 @@ coffee -wcb *.coffee
           sotoFlag = false
           pos = $(@).position()
           # dragdrop add -------------------------#
-          tes2 = $(@)
-          #fly2 = $.toJSON(tes2)
+          tes2 = $(@).get(0)
+          fly2 = tes2.html()
           _socket.emit 'dd-create',
-            console.info "fly2Move:"+stringify( tes2 )      # log -----------#
+            console.info "fly2Move:"+fly2     # log -----------#
             #ddid: fly2
             ddmess:'dd-create_mouseup'
             ddpos:  pos
