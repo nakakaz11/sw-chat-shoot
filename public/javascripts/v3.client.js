@@ -366,7 +366,7 @@ jQuery(function($) {
       return sotoFlag = true;
     },
     stop: function() {
-      return $(this).draggable("destroy");
+      return $(this).addClass('drpd');
     }
   });
   $("body").droppable({
@@ -380,7 +380,7 @@ jQuery(function($) {
       }
     }
   });
-  $us = $("body > img.tools");
+  $us = $("img.drpd");
   return $us.draggable({
     start: function() {
       return sotoFlag = false;

@@ -326,7 +326,8 @@ coffee -wcb *.coffee
         start:->
           sotoFlag = true  # toolbarから来たか判定
         stop:->
-          $(@).draggable "destroy"
+          $(@).addClass('drpd')
+          #$(@).draggable "destroy"
 
   $("body").droppable(
     tolerance:'fit'
@@ -336,7 +337,7 @@ coffee -wcb *.coffee
         pos = $own.position()       # css確定
         $(@).append($own).css(pos)  # bodyにappend
   )
-  $us = $("body > img.tools")
+  $us = $("img.drpd")
   $us.draggable(
     start:->
       sotoFlag = false            # sotoFlag戻す
