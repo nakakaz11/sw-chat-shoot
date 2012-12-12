@@ -375,8 +375,8 @@ jQuery(function($) {
         if (sotoFlag) {
           $(this).append($own);
           pos = $own.position();
-          tes1 = ui.helper.clone();
-          fly1 = $(tes1).get(0);
+          tes1 = ui.helper.clone().get(0);
+          fly1 = $(tes1);
           _socket.emit('dd-create', console.info("fly1Drop:" + fly1), {
             ddmess: 'dd-create_toolenter',
             ddpos: pos
@@ -389,9 +389,12 @@ jQuery(function($) {
           });
         });
         $us.on('mouseup', function(e) {
+          var fly2, tes2;
           sotoFlag = false;
           pos = $(this).position();
-          _socket.emit('dd-create', {
+          tes2 = ui.instance.clone().get(0);
+          fly2 = $(tes2).get();
+          _socket.emit('dd-create', console.info("fly2Move:" + $(fly2).html()), {
             ddmess: 'dd-create_mouseup',
             ddpos: pos
           });
