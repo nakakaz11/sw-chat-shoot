@@ -376,7 +376,7 @@ jQuery(function($) {
           $(this).append($own);
           pos = $own.position();
           tes1 = ui.helper.clone();
-          fly1 = $(tes1).html();
+          fly1 = tes1.html();
           _socket.emit('dd-create', console.info("fly1Drop:" + fly1), {
             ddmess: 'dd-create_toolenter',
             ddpos: pos

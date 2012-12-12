@@ -336,7 +336,7 @@ coffee -wcb *.coffee
           pos = $own.position()    # css確定
           # dragdrop add -------------------------#
           tes1 = ui.helper.clone()
-          fly1 = $(tes1).html()
+          fly1 = tes1.html()
           _socket.emit 'dd-create',
             console.info "fly1Drop:"+fly1     # log -----------#
             #ddid: fly1
