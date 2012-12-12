@@ -4,7 +4,7 @@ var tools;
 jQuery(function($) {
   "use strict";
 
-  var $toolbar, $us, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, mousedown, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
+  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, mousedown, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
@@ -367,34 +367,37 @@ jQuery(function($) {
     },
     stop: function() {}
   });
-  $("body").droppable({
+  return $("body").droppable({
     tolerance: 'fit',
     deactivate: function(ev, ui) {
-      var $own, pos;
+      var $own, $us, pos, tes1;
       $own = ui.helper.clone();
       if (sotoFlag) {
+        $own.addClass('drpd');
+        $(this).append($own);
         pos = $own.position();
-        $(this).append($own).css(pos).addClass('drpd');
-        return $own.draggable("destroy");
+        tes1 = $own.clone();
+        _socket.emit('dd-create', console.info("fly1Drop:" + tes1), {
+          ddmess: 'dd-create_toolenter',
+          ddpos: pos
+        });
       }
-    }
-  });
-  $us = $("img.drpd");
-  return $us.draggable({
-    start: function() {
-      return sotoFlag = false;
-    },
-    stop: function(e, ui) {
-      $us.on('mousemove', function() {});
-      $us.on('mouseup', function() {
-        var fly2, pos, tes2;
+      $us = $("img.drpd");
+      $us.on('mousemove', function() {
+        return $(this).draggable({
+          helper: 'original'
+        });
+      });
+      $us.on('mouseup', function(e) {
+        var tes2;
+        sotoFlag = false;
         pos = $(this).position();
-        tes2 = ui.helper.clone();
-        fly2 = $(tes2).get(0);
-        return _socket.emit('dd-create', console.info("fly2Move:" + $(fly2)), {
+        tes2 = $(this).clone();
+        _socket.emit('dd-create', console.info("fly2Move:" + $(tes2)), {
           ddmess: 'dd-create_mouseup',
           ddpos: pos
         });
+        return e.preventDefault();
       });
       return $us.on('dblclick', function(e) {
         var fly3;
