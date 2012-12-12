@@ -335,10 +335,11 @@ coffee -wcb *.coffee
       if sotoFlag                   # ドロップされた場合は...
         pos = $own.position()       # css確定
         $(@).append($own).css(pos)  # bodyにappend
-        sotoFlag = false            # sotoFlag戻す
   )
   $us = $("body > img.tools")
   $us.draggable(
+    start:->
+      sotoFlag = false            # sotoFlag戻す
     #helper:'original'
     stop:(e,ui)->
       $us.on 'mousemove', () ->  #'click'

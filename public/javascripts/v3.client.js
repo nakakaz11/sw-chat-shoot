@@ -376,13 +376,15 @@ jQuery(function($) {
       $own = ui.helper.clone();
       if (sotoFlag) {
         pos = $own.position();
-        $(this).append($own).css(pos);
-        return sotoFlag = false;
+        return $(this).append($own).css(pos);
       }
     }
   });
   $us = $("body > img.tools");
   return $us.draggable({
+    start: function() {
+      return sotoFlag = false;
+    },
     stop: function(e, ui) {
       $us.on('mousemove', function() {});
       $us.on('mouseup', function() {
