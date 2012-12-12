@@ -367,47 +367,18 @@ jQuery(function($) {
     }
   });
   onDrag = function() {
-    var stringify;
-    stringify = function(obj) {
-      var arr, json, n, t, v;
-      t = typeof obj;
-      if (t !== "object" || obj === null) {
-        if (t === "string") {
-          obj = "\"" + obj + "\"";
-        }
-        return String(obj);
-      } else {
-        n = void 0;
-        v = void 0;
-        json = [];
-        arr = obj && obj.constructor === Array;
-        for (n in obj) {
-          v = obj[n];
-          t = typeof v;
-          if (obj.hasOwnProperty(n)) {
-            if (t === "string") {
-              v = "\"" + v + "\"";
-            } else {
-              if (t === "object" && v !== null) {
-                v = jQuery.stringify(v);
-              }
-            }
-            json.push((arr ? "" : "\"" + n + "\":") + String(v));
-          }
-        }
-        return (arr ? "[" : "{") + String(json) + (arr ? "]" : "}");
-      }
-    };
     return $("body").droppable({
       tolerance: 'fit',
       deactivate: function(ev, ui) {
-        var $own, $us, pos, tes1;
+        var $own, $us, fly1, pos, tes1;
         $own = ui.helper.clone();
         if (sotoFlag) {
           $(this).append($own);
           pos = $own.position();
           tes1 = $own.get(0);
-          _socket.emit('dd-create', console.info("fly1Drop:" + stringify(tes1)), {
+          fly1 = tes1.serializeArray();
+          _socket.emit('dd-create', console.info("fly1Drop:" + fly1), {
+            ddid: fly1,
             ddmess: 'dd-create_toolenter',
             ddpos: pos
           });
