@@ -105,12 +105,12 @@ jQuery(function($) {
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
       dDrop.userId = data.userId;
-      dDrop1 = $("<div class='test'>Drop(userId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>");
-      dDrop2 = $("<div class='test'>Move(userId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>");
+      dDrop1 = $("<div class='test'>Drop(uId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>");
+      dDrop2 = $("<div class='test'>Move(uId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>");
       switch (dDrop.ddmess) {
         case 'dd-create_toolenter':
-          clone = $("div.toolbar > img.tools").has("[data-id=" + dDrop.ddid + "]").clone();
-          console.info($(clone));
+          clone = $("div.toolbar > img.tools[data-id=" + dDrop.ddid + "]").clone();
+          console.info($(clone).html());
           dDrop1.attr("data-user-id", dDrop.userId).css(dDrop.ddpos);
           return $("body").append(dDrop1);
         case 'dd-create_mouseup':
@@ -369,14 +369,16 @@ jQuery(function($) {
     return $("body").droppable({
       tolerance: 'fit',
       deactivate: function(ev, ui) {
-        var $own, $us, fly1, pos;
+        var $own, $us, fly1, pos, tes1;
         $own = ui.helper.clone();
         if (sotoFlag) {
           $own.addClass("dropImg");
           $(this).append($own);
           pos = $own.position();
           fly1 = $own.attr("data-id");
-          console.info("dd-create_toolenter:" + fly1);
+          tes1 = $();
+          tes1.innerHTML = $own;
+          console.info("dd-create_toolenter:" + fly1 + "innerH" + tes1);
           _socket.emit('dd-create', {
             ddid: fly1,
             ddmess: 'dd-create_toolenter',
