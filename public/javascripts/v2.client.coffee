@@ -349,8 +349,8 @@ coffee -wcb *.coffee
           sotoFlag = false
           pos = $(@).position()
           # dragdrop add -------------------------#
-          tes2 = $(@).get(0)
-          fly2 = tes2.html()
+          tes2 = $(@).html()
+          fly2 = tes2
           _socket.emit 'dd-create',
             console.info "fly2Move:"+fly2     # log -----------#
             #ddid: fly2
