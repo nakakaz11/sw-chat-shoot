@@ -370,14 +370,13 @@ jQuery(function($) {
     return $("body").droppable({
       tolerance: 'fit',
       deactivate: function(ev, ui) {
-        var $own, $us, fly1, pos, tes1;
+        var $own, $us, pos, tes1;
         $own = ui.helper.clone();
         if (sotoFlag) {
           $(this).append($own);
           pos = $own.position();
           tes1 = $own.clone();
-          fly1 = $(tes1).html();
-          _socket.emit('dd-create', console.info("fly1Drop:" + fly1), {
+          _socket.emit('dd-create', console.info("fly1Drop:" + tes1), {
             ddmess: 'dd-create_toolenter',
             ddpos: pos
           });
@@ -394,7 +393,7 @@ jQuery(function($) {
           pos = $(this).position();
           tes2 = $(this).clone();
           fly2 = $('body.ui-droppable img.tools');
-          _socket.emit('dd-create', console.info("fly2Move:" + $(tes2).html() + " fly2Move:" + fly2), {
+          _socket.emit('dd-create', console.info("fly2Move:" + $(tes2) + " fly2Move:" + fly2.get(0)), {
             ddmess: 'dd-create_mouseup',
             ddpos: pos
           });
