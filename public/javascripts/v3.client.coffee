@@ -335,10 +335,10 @@ coffee -wcb *.coffee
           $(@).append($own)        # bodyにappend
           pos = $own.position()    # css確定
           # dragdrop add -------------------------#
-          tes1 = ui.helper.get(0)
-          fly1 = tes1.get(0)
+          tes1 = ui.helper.clone()
+          fly1 = $(tes1).get(0)
           _socket.emit 'dd-create',
-            console.info "fly1Drop:"+fly1     # log -----------#
+            console.info "fly1Drop:"+fly1.html()     # log -----------#
             #ddid: fly1
             ddmess:'dd-create_toolenter'
             ddpos:  pos
