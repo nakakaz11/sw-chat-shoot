@@ -335,24 +335,24 @@ coffee -wcb *.coffee
           $(@).append($own)
           pos = $own.position()
           # dragdrop add -------------------------#
-          tes1 = $own.html()
+          tes1 = $own.clone()
           #fly1 = tes1.serializeArray()
           _socket.emit 'dd-create',
-            console.log "fly1Drop:"+tes1.toString()      # log -----------#
+            console.log "fly1Drop:"+tes1.html()      # log -----------#
             #ddid: fly1
             ddmess:'dd-create_toolenter'
             ddpos:  pos
         $us = $("body > img.tools")
         $us.on 'mousemove', ()->  #'click'
           $(@).draggable( helper:'original' )
-        $us.on 'mouseup', (e)->
+        $us.on 'mouseup', (e) ->
           sotoFlag = false
           pos = $(@).position()
           # dragdrop add -------------------------#
-          tes2 = $(@).html()
-          fly2 = tes2
+          tes2 = $(@)
+          fly2 = tes2.attr('data-id')
           _socket.emit 'dd-create',
-            console.info "fly2Move:"+fly2.toString()     # log -----------#
+            console.info "fly2Move:"+fly2.html()     # log -----------#
             #ddid: fly2
             ddmess:'dd-create_mouseup'
             ddpos:  pos
