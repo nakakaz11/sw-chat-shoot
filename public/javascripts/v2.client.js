@@ -378,7 +378,7 @@ jQuery(function($) {
           tes1 = $own.get(0);
           for (i = _i = 0, _len = tes1.length; _i < _len; i = ++_i) {
             val = tes1[i];
-            console.info("fly1Drop:" + val.innerHTML);
+            console.info("fly1Drop:" + val[i]);
           }
           _socket.emit('dd-create', {
             ddmess: 'dd-create_toolenter',

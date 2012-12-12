@@ -337,7 +337,7 @@ coffee -wcb *.coffee
           # dragdrop add -------------------------#
           tes1 = $own.get(0)
           for val, i in tes1
-            console.info "fly1Drop:"+val.innerHTML      # log -----------#
+            console.info "fly1Drop:"+val[i]      # log -----------#
           #fly1 = $.toJSON(tes1)
           _socket.emit 'dd-create',
             #ddid: tes1
