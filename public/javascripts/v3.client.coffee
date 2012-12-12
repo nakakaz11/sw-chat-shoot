@@ -336,7 +336,7 @@ coffee -wcb *.coffee
           pos = $own.position()    # css確定
           # dragdrop add -------------------------#
           tes1 = ui.helper.clone().get(0)
-          fly1 = $(tes1)
+          fly1 = $(tes1).html()
           _socket.emit 'dd-create',
             console.info "fly1Drop:"+fly1     # log -----------#
             #ddid: fly1
@@ -350,10 +350,10 @@ coffee -wcb *.coffee
           sotoFlag = false
           pos = $(@).position()
           # dragdrop add -------------------------#
-          tes2 = ui.instance
-          fly2 = $(tes2)
+          tes2 = ui.helper.clone()
+          fly2 = $(tes2).get(0)
           _socket.emit 'dd-create',
-            console.info "fly2Move:"+ $(fly2).get(0)      # log -----------#
+            console.info "fly2Move:"+ $(fly2)      # log -----------#
             #ddid: fly2
             ddmess:'dd-create_mouseup'
             ddpos:  pos
