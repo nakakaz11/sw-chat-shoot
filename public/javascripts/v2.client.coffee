@@ -338,8 +338,8 @@ coffee -wcb *.coffee
           tes1 = $own.html()
           #fly1 = tes1.serializeArray()
           _socket.emit 'dd-create',
-            console.info "fly1Drop:"+tes1      # log -----------#
-            ddid: fly1
+            console.log "fly1Drop:"+tes1      # log -----------#
+            #ddid: fly1
             ddmess:'dd-create_toolenter'
             ddpos:  pos
         $us = $("body > img.tools")
