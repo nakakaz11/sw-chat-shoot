@@ -325,17 +325,17 @@ coffee -wcb *.coffee
         helper:'clone'
         start:->
           sotoFlag = true  # toolbarから来たか判定
+          $("body").droppable(
+            tolerance:'fit'
+            deactivate: (ev,ui) ->
+              $own = ui.helper.clone()
+              if sotoFlag
+                $own.addClass('drpd')
+                $(@).append($own)
+          )
         stop:->
           #$(@).draggable "destroy"
 
-  $("body").droppable(
-    tolerance:'fit'
-    deactivate: (ev,ui) ->
-      $own = ui.helper.clone()
-      if sotoFlag
-        $own.addClass('drpd')
-        $(@).append($own)
-  )
 
   $("img.drpd").draggable()
   $("img.drpd").each ->

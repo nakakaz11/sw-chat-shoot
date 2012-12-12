@@ -363,20 +363,20 @@ jQuery(function($) {
   $("div.toolbar img.tools").draggable({
     helper: 'clone',
     start: function() {
-      return sotoFlag = true;
+      sotoFlag = true;
+      return $("body").droppable({
+        tolerance: 'fit',
+        deactivate: function(ev, ui) {
+          var $own;
+          $own = ui.helper.clone();
+          if (sotoFlag) {
+            $own.addClass('drpd');
+            return $(this).append($own);
+          }
+        }
+      });
     },
     stop: function() {}
-  });
-  $("body").droppable({
-    tolerance: 'fit',
-    deactivate: function(ev, ui) {
-      var $own;
-      $own = ui.helper.clone();
-      if (sotoFlag) {
-        $own.addClass('drpd');
-        return $(this).append($own);
-      }
-    }
   });
   $("img.drpd").draggable();
   return $("img.drpd").each(function() {
