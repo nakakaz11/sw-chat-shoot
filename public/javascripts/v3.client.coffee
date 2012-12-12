@@ -336,9 +336,10 @@ coffee -wcb *.coffee
         $own.addClass('drpd')
         $(@).append($own)
   )
-  $("img.drpd").each (i,val)->
+
+  $("img.drpd").draggable()
+  $("img.drpd").each ->
     $(@).on 'mousemove', (e)->  #'click'
-      $(@).draggable( helper:'original' )
       e.preventDefault()
 
     $(@).on 'mouseup', (e) ->

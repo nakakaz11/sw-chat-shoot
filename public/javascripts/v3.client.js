@@ -378,11 +378,9 @@ jQuery(function($) {
       }
     }
   });
-  return $("img.drpd").each(function(i, val) {
+  $("img.drpd").draggable();
+  return $("img.drpd").each(function() {
     $(this).on('mousemove', function(e) {
-      $(this).draggable({
-        helper: 'original'
-      });
       return e.preventDefault();
     });
     $(this).on('mouseup', function(e) {
