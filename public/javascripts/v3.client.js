@@ -380,15 +380,18 @@ jQuery(function($) {
   });
   $("img.drpd").draggable();
   return $("img.drpd").each(function() {
+    console.info($(this).html());
     $(this).on('mousemove', function(e) {
+      console.info("mousemove:");
       return e.preventDefault();
     });
     $(this).on('mouseup', function(e) {
       var pos, tes2;
+      console.info("mouseup:");
       sotoFlag = false;
       pos = $(this).position();
       tes2 = $(this).clone();
-      _socket.emit('dd-create', console.info("fly2Move:" + $(tes2)), {
+      _socket.emit('dd-create', {
         ddmess: 'dd-create_mouseup',
         ddpos: pos
       });
@@ -396,6 +399,7 @@ jQuery(function($) {
     });
     return $(this).on('dblclick', function(e) {
       var fly3;
+      console.info("dblclick:");
       fly3 = $(this).attr("data-id");
       _socket.emit('dd-create', {
         ddid: fly3,

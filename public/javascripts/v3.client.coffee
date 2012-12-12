@@ -339,22 +339,25 @@ coffee -wcb *.coffee
 
   $("img.drpd").draggable()
   $("img.drpd").each ->
+    console.info $(@).html()   # log -----------#
     $(@).on 'mousemove', (e)->  #'click'
+      console.info "mousemove:"   # log -----------#
       e.preventDefault()
 
     $(@).on 'mouseup', (e) ->
+      console.info "mouseup:"   # log -----------#
       sotoFlag = false
       pos = $(@).position()
       # dragdrop add -------------------------#
       tes2 = $(@).clone()
       _socket.emit 'dd-create',
-        console.info "fly2Move:"+ $(tes2)      # log -----------#
         #ddid: fly2
         ddmess:'dd-create_mouseup'
         ddpos:  pos
       e.preventDefault()
 
     $(@).on 'dblclick', (e)->
+      console.info "dblclick:"   # log -----------#
       fly3 = $(@).attr("data-id")
       _socket.emit 'dd-create',
         ddid: fly3
