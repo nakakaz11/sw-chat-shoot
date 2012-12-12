@@ -96,8 +96,8 @@ jQuery ($) ->
       dDrop.ddpos =  data.dd_dt.ddpos
       dDrop.userId = data.userId
 
-      dDrop1 = $("<div class='test'>test(userId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
-      dDrop2 = $("<div class='test'>testMove</div>")
+      dDrop1 = $("<div class='test'>Drop(userId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
+      dDrop2 = $("<div class='test'>Move(userId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
       switch dDrop.ddmess
         when 'dd-create_toolenter'
           clone = $("div.toolbar > img.tools").has("[data-id=#{dDrop.ddid}]").clone()
@@ -337,7 +337,7 @@ coffee -wcb *.coffee
           pos = $own.position()
           # dragdrop add -------------------------#
           fly1 = $own.attr("data-id")
-          console.info "dd-create_toolenter"+fly1      # log -----------#
+          console.info "dd-create_toolenter:"+fly1      # log -----------#
           _socket.emit 'dd-create',
             ddid: fly1
             ddmess:'dd-create_toolenter'
