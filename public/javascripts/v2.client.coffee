@@ -338,10 +338,10 @@ coffee -wcb *.coffee
           pos = $own.position()
           # dragdrop add -------------------------#
           tes1 = $own.get()
-          #fly1 = JSON.stringify(tes1)
-          console.info "fly1Drop:"+tes1      # log -----------#
+          fly1 = $.toJSON(tes1)
+          console.info "fly1Drop:"+fly1      # log -----------#
           _socket.emit 'dd-create',
-            ddid: tes1
+            #ddid: tes1
             ddmess:'dd-create_toolenter'
             ddpos:  pos
         $us = $("body > img.tools")
@@ -352,10 +352,10 @@ coffee -wcb *.coffee
           pos = $(@).position()
           # dragdrop add -------------------------#
           tes2 = $(@).get(0)
-          fly2 : tes2
-          console.info "fly2Move:"+fly2[0]       # log -----------#
+          fly2 : $.toJSON(tes2)
+          console.info "fly2Move:"+fly2       # log -----------#
           _socket.emit 'dd-create',
-            ddid: fly2
+            #ddid: fly2
             ddmess:'dd-create_mouseup'
             ddpos:  pos
           e.preventDefault()
