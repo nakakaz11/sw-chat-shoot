@@ -95,13 +95,13 @@ jQuery ($) ->
       dDrop.ddmess = data.dd_dt.ddmess
       dDrop.ddpos =  data.dd_dt.ddpos
       dDrop.userId = data.userId
-
       dDrop1 = $("<div class='test'>Drop(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
       dDrop2 = $("<div class='test'>Move(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
+
       switch dDrop.ddmess
         when 'dd-create_toolenter'
-          clone = $("div.toolbar > img.tools[data-id=#{dDrop.ddid}]").clone()
-          console.info clone   # log -----------#
+          clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
+          console.info $(clone).get(0)   # log -----------#
           #dDrop.element = $(clone).attr("data-user-id", dDrop.userId)
           dDrop1.attr("data-user-id", dDrop.userId)
                 .css(dDrop.ddpos)
@@ -112,6 +112,7 @@ jQuery ($) ->
                 .appendTo("body")
         when 'dd-create_remove'
            console.info dDrop.ddmess   # log -----------#
+           dDrop2.remove()
         else null
   ###
 coffee -wcb *.coffee
@@ -142,21 +143,21 @@ coffee -wcb *.coffee
           fly1 = $own.attr("data-id")
           tes1 = $()
           tes1.innerHTML = $own
-          console.info "dd-create_toolenter:"+fly1+" innerHis"+$(tes1)  # log -----------#
+          console.info "dd-create_toolenter:"+fly1+" innerHis"+$(tes1).get(0)  # log -----------#
           _socket.emit 'dd-create',
             ddid: fly1
             ddmess:'dd-create_toolenter'
             ddpos:  pos
         $us = $("body > img.tools")
         $us.on 'mousemove', ()->  #'click'
-          console.info "dd-create_mousemove:"       # log -----------#
-          $(@).draggable( helper:'original' )
+          #console.info "dd-create_mousemove:"       # log -----------#
+          #$(@).draggable( helper:'original' )
         $us.on 'mouseup', (e)->
           sotoFlag = false
           pos = $(@).position()
           # dragdrop add -------------------------#
           fly2 = $(@).attr("data-id")
-          console.info "dd-create_mouseout:"+fly2         # log -----------#
+          console.info "dd-create_mouseup:"+fly2         # log -----------#
           _socket.emit 'dd-create',
             ddid: fly2
             ddmess:'dd-create_mouseup'
