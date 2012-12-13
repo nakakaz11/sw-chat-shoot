@@ -117,9 +117,9 @@ jQuery ($) ->
         if dDrop.ddmess is'dd-create_mouseup'
           #console.info dDrop.ddpos            # log -----------#
           #console.info $(@).get(0)            # log -----------#
-          #$(@).css(dDrop.ddpos)
-          #$("body").append(@)
-          $("img.test[data-ddcount='#{dDrop.ddcount}']").css(dDrop.ddpos)
+          $(@).css(dDrop.ddpos)
+          $("body").append(@)
+          #$("img.test[data-ddcount='#{dDrop.ddcount}']").css(dDrop.ddpos)
         if dDrop.ddmess is'dd-create_remove'
           $(@).remove()
         else return
@@ -188,7 +188,6 @@ coffee -wcb *.coffee
           ddesc:  dragImg.ddesc
           ddmess:'dd-create_mouseup'
           ddpos:  dragImg.pos
-          ddcount:dragImg.pos
         ev.preventDefault()
 
       $us.on 'dblclick', ()->

@@ -122,7 +122,8 @@ jQuery(function($) {
           ddcount++;
         }
         if (dDrop.ddmess === 'dd-create_mouseup') {
-          $("img.test[data-ddcount='" + dDrop.ddcount + "']").css(dDrop.ddpos);
+          $(this).css(dDrop.ddpos);
+          $("body").append(this);
         }
         if (dDrop.ddmess === 'dd-create_remove') {
           return $(this).remove();
@@ -193,8 +194,7 @@ jQuery(function($) {
           tit: dragImg.tit,
           ddesc: dragImg.ddesc,
           ddmess: 'dd-create_mouseup',
-          ddpos: dragImg.pos,
-          ddcount: dragImg.pos
+          ddpos: dragImg.pos
         });
         return ev.preventDefault();
       });
