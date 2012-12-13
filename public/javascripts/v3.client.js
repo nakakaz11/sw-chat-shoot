@@ -153,7 +153,7 @@ jQuery(function($) {
           dropImg.src = $own.attr('src');
           console.info("dd-create_toolenter:id:" + dropImg.dataId + " src:" + dropImg.src);
           _socket.emit('dd-create', {
-            ddid: fly1,
+            ddid: dropImg.dataId,
             ddmess: 'dd-create_toolenter',
             ddpos: pos
           });

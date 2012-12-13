@@ -144,7 +144,7 @@ coffee -wcb *.coffee
           dropImg.src    = $own.attr('src')
           console.info "dd-create_toolenter:id:"+dropImg.dataId+" src:"+dropImg.src  # log -----------#
           _socket.emit 'dd-create',
-            ddid: fly1
+            ddid:   dropImg.dataId
             ddmess:'dd-create_toolenter'
             ddpos:  pos
         $us = $("body > img.tools")
