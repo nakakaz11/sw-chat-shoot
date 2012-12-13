@@ -147,9 +147,10 @@ jQuery(function($) {
   $("body").droppable({
     tolerance: 'fit',
     deactivate: function(ev, ui) {
-      var $own, $us, dropImg, pos;
+      var $own, $us, dragImg, dropImg, pos;
       $own = ui.helper.clone();
       dropImg = {};
+      dragImg = {};
       if (sotoFlag) {
         $own.addClass("myDropImg");
         $(this).append($own);
@@ -174,24 +175,41 @@ jQuery(function($) {
         return $(this).draggable();
       });
       $us.on('mouseup', function(e) {
-        var fly2;
         sotoFlag = false;
-        pos = $(this).position();
-        fly2 = $(this).attr("data-id");
-        console.info("dd-create_mouseup:" + fly2);
+        dragImg.dataId = $(this).attr("data-id");
+        dragImg.src = $(this).attr('src');
+        dragImg.alt = $(this).attr('alt');
+        dragImg.tit = $(this).attr('title');
+        dragImg.ddesc = $(this).attr('data-description');
+        dragImg.pos = $(this).position();
+        console.info("dd-create_mouseup:");
         _socket.emit('dd-create', {
-          ddid: fly2,
+          ddid: dragImg.dataId,
+          src: dragImg.src,
+          alt: dragImg.alt,
+          tit: dragImg.tit,
+          ddesc: dragImg.ddesc,
           ddmess: 'dd-create_mouseup',
-          ddpos: pos
+          ddpos: dragImg.pos
         });
         return e.preventDefault();
       });
       $us.on('dblclick', function() {
         var fly3;
+        dragImg.dataId = $(this).attr("data-id");
+        dragImg.src = $(this).attr('src');
+        dragImg.alt = $(this).attr('alt');
+        dragImg.tit = $(this).attr('title');
+        dragImg.ddesc = $(this).attr('data-description');
+        dragImg.pos = $(this).position();
         fly3 = $(this).attr("data-id");
-        console.info("dd-create_remove:" + fly3);
+        console.info("dd-create_remove:");
         _socket.emit('dd-create', {
-          ddid: fly3,
+          ddid: dragImg.dataId,
+          src: dragImg.src,
+          alt: dragImg.alt,
+          tit: dragImg.tit,
+          ddesc: dragImg.ddesc,
           ddmess: 'dd-create_remove'
         });
         return $(this).remove();
