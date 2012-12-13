@@ -159,7 +159,7 @@ jQuery(function($) {
         }
         $us = $("body > img.tools");
         $us.on('mousemove', function() {
-          console.info("dd-create_mousemove:" + fly2);
+          console.info("dd-create_mousemove:");
           return $(this).draggable({
             helper: 'original'
           });

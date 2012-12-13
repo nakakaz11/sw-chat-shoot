@@ -149,7 +149,7 @@ coffee -wcb *.coffee
             ddpos:  pos
         $us = $("body > img.tools")
         $us.on 'mousemove', ()->  #'click'
-          console.info "dd-create_mousemove:"+fly2       # log -----------#
+          console.info "dd-create_mousemove:"       # log -----------#
           $(@).draggable( helper:'original' )
         $us.on 'mouseup', (e)->
           sotoFlag = false
