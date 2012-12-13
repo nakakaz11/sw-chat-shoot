@@ -174,14 +174,15 @@ jQuery(function($) {
       $us.on('mousemove', function() {
         return $(this).draggable();
       });
-      $us.on('mouseup', function(e) {
+      $us.on('mouseup', function(ev, ui) {
+        $own = ui.helper.clone();
         sotoFlag = false;
-        dragImg.dataId = $(this).attr("data-id");
-        dragImg.src = $(this).attr('src');
-        dragImg.alt = $(this).attr('alt');
-        dragImg.tit = $(this).attr('title');
-        dragImg.ddesc = $(this).attr('data-description');
-        dragImg.pos = $(this).position();
+        dragImg.dataId = $own.attr("data-id");
+        dragImg.src = $own.attr('src');
+        dragImg.alt = $own.attr('alt');
+        dragImg.tit = $own.attr('title');
+        dragImg.ddesc = $own.attr('data-description');
+        dragImg.pos = $own.position();
         _socket.emit('dd-create', {
           ddid: dragImg.dataId,
           src: dragImg.src,
@@ -193,14 +194,15 @@ jQuery(function($) {
         });
         return e.preventDefault();
       });
-      $us.on('dblclick', function() {
+      $us.on('dblclick', function(ev, ui) {
         var fly3;
-        dragImg.dataId = $(this).attr("data-id");
-        dragImg.src = $(this).attr('src');
-        dragImg.alt = $(this).attr('alt');
-        dragImg.tit = $(this).attr('title');
-        dragImg.ddesc = $(this).attr('data-description');
-        dragImg.pos = $(this).position();
+        $own = ui.helper.clone();
+        dragImg.dataId = $own.attr("data-id");
+        dragImg.src = $own.attr('src');
+        dragImg.alt = $own.attr('alt');
+        dragImg.tit = $own.attr('title');
+        dragImg.ddesc = $own.attr('data-description');
+        dragImg.pos = $own.position();
         fly3 = $(this).attr("data-id");
         _socket.emit('dd-create', {
           ddid: dragImg.dataId,

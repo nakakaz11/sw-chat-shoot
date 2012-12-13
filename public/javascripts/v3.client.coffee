@@ -163,14 +163,15 @@ coffee -wcb *.coffee
         $(@).draggable(
           #helper:'original'
         )
-      $us.on 'mouseup', (e)->
+      $us.on 'mouseup', (ev,ui)->
+        $own = ui.helper.clone()
         sotoFlag = false
-        dragImg.dataId = $(@).attr("data-id")
-        dragImg.src    = $(@).attr('src')
-        dragImg.alt    = $(@).attr('alt')
-        dragImg.tit    = $(@).attr('title')
-        dragImg.ddesc  = $(@).attr('data-description')
-        dragImg.pos    = $(@).position()
+        dragImg.dataId = $own.attr("data-id")
+        dragImg.src    = $own.attr('src')
+        dragImg.alt    = $own.attr('alt')
+        dragImg.tit    = $own.attr('title')
+        dragImg.ddesc  = $own.attr('data-description')
+        dragImg.pos    = $own.position()
         # dragdrop add -------------------------#
         #console.info "dd-create_mouseup:"       # log -----------#
         _socket.emit 'dd-create',
@@ -183,13 +184,14 @@ coffee -wcb *.coffee
           ddpos:  dragImg.pos
         e.preventDefault()
 
-      $us.on 'dblclick', ()->
-        dragImg.dataId = $(@).attr("data-id")
-        dragImg.src    = $(@).attr('src')
-        dragImg.alt    = $(@).attr('alt')
-        dragImg.tit    = $(@).attr('title')
-        dragImg.ddesc  = $(@).attr('data-description')
-        dragImg.pos    = $(@).position()
+      $us.on 'dblclick', (ev,ui)->
+        $own = ui.helper.clone()
+        dragImg.dataId = $own.attr("data-id")
+        dragImg.src    = $own.attr('src')
+        dragImg.alt    = $own.attr('alt')
+        dragImg.tit    = $own.attr('title')
+        dragImg.ddesc  = $own.attr('data-description')
+        dragImg.pos    = $own.position()
         # dragdrop add -------------------------#
         fly3 = $(@).attr("data-id")
         #console.info "dd-create_remove:"        # log -----------#
