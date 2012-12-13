@@ -112,21 +112,19 @@ jQuery(function($) {
       $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "'>").css("opacity", 0.5);
       clone = $("div.toolbar > img.tools[data-id='" + dDrop.ddid + "']").clone();
       infonowana = clone;
-      if (dDrop.ddmess === 'dd-create_toolenter' || 'dd-create_mouseup' || 'dd-create_remove') {
-        console.info(dDrop.ddmess);
-        return $dDrop1.each(function() {
-          if (dDrop.ddmess === 'dd-create_mouseup') {
+      return $dDrop1.each(function() {
+        switch (dDrop.ddmess) {
+          case 'dd-create_mouseup':
             console.info(dDrop.ddpos);
+            console.info($(this).get(0));
             return $(this).css(dDrop.ddpos);
-          } else if (dDrop.ddmess === 'dd-create_remove') {
+          case 'dd-create_remove':
             return $(this).remove();
-          } else {
-            console.info(dDrop.ddpos);
-            $dDrop1.css(dDrop.ddpos);
+          case 'dd-create_toolenter':
+            $(this).css(dDrop.ddpos);
             return $("body").append(this);
-          }
-        });
-      }
+        }
+      });
     }
   });
   /*
@@ -176,7 +174,6 @@ jQuery(function($) {
       });
       $us.on('mouseup', function(ev) {
         $own = $(this);
-        console.info($(this).get(0));
         sotoFlag = false;
         dragImg.dataId = $own.attr("data-id");
         dragImg.src = $own.attr('src');
@@ -196,7 +193,6 @@ jQuery(function($) {
         return ev.preventDefault();
       });
       $us.on('dblclick', function() {
-        var fly3;
         $own = $(this);
         dragImg.dataId = $own.attr("data-id");
         dragImg.src = $own.attr('src');
@@ -204,7 +200,6 @@ jQuery(function($) {
         dragImg.tit = $own.attr('title');
         dragImg.ddesc = $own.attr('data-description');
         dragImg.pos = $own.position();
-        fly3 = $(this).attr("data-id");
         _socket.emit('dd-create', {
           ddid: dragImg.dataId,
           src: dragImg.src,

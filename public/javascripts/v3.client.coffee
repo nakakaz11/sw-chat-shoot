@@ -75,8 +75,7 @@ jQuery ($) ->
     user.y = data.data.y
     user.rotate = data.data.rotate
     user.v = data.data.v
-    #user.dd = data.data.dd                      # dragdrop add
-    #user.ddpos = data.data.ddpos                # dragdrop add
+
     updateCss(user)  # 相手のplayer
 
   _socket.on "bullet-create", (data) ->
@@ -87,7 +86,7 @@ jQuery ($) ->
       bullet.rotate = data.data.rotate
       bullet.v = data.data.v
 
-  #------------------------ dragdrop add ----------------------------------#
+  #-------------受け側----------- dragdrop add ----------------------------------#
   _socket.on "dd-create", (data) ->
     dDrop = _ddMap[data.userId]
     if dDrop isnt `undefined`
@@ -103,20 +102,21 @@ jQuery ($) ->
       #dDrop2 = $("<div class='test'>Move(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
       clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
       infonowana = clone
-      if dDrop.ddmess is 'dd-create_toolenter' or 'dd-create_mouseup' or 'dd-create_remove'
-          #console.info clone.get(0)            # log -----------#
-          #console.info "コンソール+testは代入注意(´･_･`) CloneIs:"+ infonowana   # log -----#
-          console.info dDrop.ddmess            # log -----------#
-          $dDrop1.each ->
-            if dDrop.ddmess is 'dd-create_mouseup'
-              console.info dDrop.ddpos            # log -----------#
-              $(@).css(dDrop.ddpos)
-            else if dDrop.ddmess is 'dd-create_remove'
-              $(@).remove()
-            else
-              console.info dDrop.ddpos            # log -----------#
-              $dDrop1.css(dDrop.ddpos)
-              $("body").append(@)
+      #console.info clone.get(0)            # log -----------#
+      #console.info "コンソール+testは代入注意(´･_･`) CloneIs:"+ infonowana   # log -----#
+      #console.info dDrop.ddmess            # log -----------#
+      $dDrop1.each ->
+        switch dDrop.ddmess
+          when 'dd-create_mouseup'
+            console.info dDrop.ddpos            # log -----------#
+            console.info $(@).get(0)            # log -----------#
+            $(@).css(dDrop.ddpos)
+          when 'dd-create_remove'
+            $(@).remove()
+          when 'dd-create_toolenter'
+            $(@).css(dDrop.ddpos)
+            $("body").append(@)
+          else return
   ###
 coffee -wcb *.coffee
   ###
@@ -142,13 +142,12 @@ coffee -wcb *.coffee
         $own.addClass("myDropImg")
         $(@).append($own)
         pos = $own.position()
-        # dragdrop add -------------------------#
+        #---送り側--- dragdrop add ----------------------#
         dropImg.dataId = $own.attr("data-id")
         dropImg.src    = $own.attr('src')
         dropImg.alt    = $own.attr('alt')
         dropImg.tit    = $own.attr('title')
         dropImg.ddesc    = $own.attr('data-description')
-        #console.info "dd-create_toolenter:id:"+dropImg.dataId+" src:"+dropImg.src  # log -----------#
         _socket.emit 'dd-create',
           ddid:   dropImg.dataId
           src:    dropImg.src
@@ -165,7 +164,7 @@ coffee -wcb *.coffee
         )
       $us.on 'mouseup', (ev)->
         $own = $(@)
-        console.info $(@).get(0)      # log -----------#
+        #console.info $(@).get(0)      # log -----------#
         sotoFlag = false
         dragImg.dataId = $own.attr("data-id")
         dragImg.src    = $own.attr('src')
@@ -173,7 +172,7 @@ coffee -wcb *.coffee
         dragImg.tit    = $own.attr('title')
         dragImg.ddesc  = $own.attr('data-description')
         dragImg.pos    = $own.position()
-        # dragdrop add -------------------------#
+        #---送り側--- dragdrop add ----------------------#
         #console.info "dd-create_mouseup:"       # log -----------#
         _socket.emit 'dd-create',
           ddid:   dragImg.dataId
@@ -193,8 +192,7 @@ coffee -wcb *.coffee
         dragImg.tit    = $own.attr('title')
         dragImg.ddesc  = $own.attr('data-description')
         dragImg.pos    = $own.position()
-        # dragdrop add -------------------------#
-        fly3 = $(@).attr("data-id")
+        #---送り側--- dragdrop add ----------------------#
         #console.info "dd-create_remove:"        # log -----------#
         _socket.emit 'dd-create',
           ddid:   dragImg.dataId
@@ -206,7 +204,6 @@ coffee -wcb *.coffee
         $(@).remove()
       false
   )
-  #onDrag()  # fire
   #------------------------ dragdrop add ----------------------------------#
   # canvs add -------------------------#
   _socket.on "canvas-create", (data) ->
