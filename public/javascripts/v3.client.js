@@ -175,7 +175,8 @@ jQuery(function($) {
         return $(this).draggable();
       });
       $us.on('mouseup', function(ev, ui) {
-        $own = ui.helper.clone();
+        $own = $(this);
+        console.info($(this).get(0));
         sotoFlag = false;
         dragImg.dataId = $own.attr("data-id");
         dragImg.src = $own.attr('src');
@@ -196,7 +197,7 @@ jQuery(function($) {
       });
       $us.on('dblclick', function(ev, ui) {
         var fly3;
-        $own = ui.helper.clone();
+        $own = $(this);
         dragImg.dataId = $own.attr("data-id");
         dragImg.src = $own.attr('src');
         dragImg.alt = $own.attr('alt');

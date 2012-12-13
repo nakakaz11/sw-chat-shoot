@@ -164,7 +164,8 @@ coffee -wcb *.coffee
           #helper:'original'
         )
       $us.on 'mouseup', (ev,ui)->
-        $own = ui.helper.clone()
+        $own = $(@)
+        console.info $(@).get(0)      # log -----------#
         sotoFlag = false
         dragImg.dataId = $own.attr("data-id")
         dragImg.src    = $own.attr('src')
@@ -185,7 +186,7 @@ coffee -wcb *.coffee
         e.preventDefault()
 
       $us.on 'dblclick', (ev,ui)->
-        $own = ui.helper.clone()
+        $own = $(@)
         dragImg.dataId = $own.attr("data-id")
         dragImg.src    = $own.attr('src')
         dragImg.alt    = $own.attr('alt')
