@@ -116,8 +116,7 @@ jQuery(function($) {
           $("body").append(this);
         }
         if (dDrop.ddmess === 'dd-create_mouseup') {
-          console.info(dDrop.ddpos);
-          console.info($(this).get(0));
+          $(this).remove();
           $(this).css(dDrop.ddpos);
           $("body").append(this);
         }

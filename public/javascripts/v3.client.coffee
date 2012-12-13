@@ -110,8 +110,9 @@ jQuery ($) ->
           $(@).css(dDrop.ddpos)
           $("body").append(@)
         if dDrop.ddmess is'dd-create_mouseup'
-            console.info dDrop.ddpos            # log -----------#
-            console.info $(@).get(0)            # log -----------#
+            #console.info dDrop.ddpos            # log -----------#
+            #console.info $(@).get(0)            # log -----------#
+            $(@).remove()
             $(@).css(dDrop.ddpos)
             $("body").append(@)
         if dDrop.ddmess is'dd-create_remove'
