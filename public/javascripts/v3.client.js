@@ -117,9 +117,9 @@ jQuery(function($) {
         return $dDrop1.each(function() {
           if (dDrop.ddmess === 'dd-create_mouseup') {
             console.info(dDrop.ddpos);
-            return this.css(dDrop.ddpos);
+            return $(this).css(dDrop.ddpos);
           } else if (dDrop.ddmess === 'dd-create_remove') {
-            return this.remove();
+            return $(this).remove();
           } else {
             console.info(dDrop.ddpos);
             $dDrop1.css(dDrop.ddpos);

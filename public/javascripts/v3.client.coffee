@@ -110,9 +110,9 @@ jQuery ($) ->
           $dDrop1.each ->
             if dDrop.ddmess is 'dd-create_mouseup'
               console.info dDrop.ddpos            # log -----------#
-              @.css(dDrop.ddpos)
+              $(@).css(dDrop.ddpos)
             else if dDrop.ddmess is 'dd-create_remove'
-              @.remove()
+              $(@).remove()
             else
               console.info dDrop.ddpos            # log -----------#
               $dDrop1.css(dDrop.ddpos)
