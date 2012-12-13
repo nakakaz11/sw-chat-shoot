@@ -99,24 +99,23 @@ jQuery ($) ->
       dDrop.userId = data.userId
       dDrop.ddmess = data.dd_dt.ddmess
       dDrop.ddpos  = data.dd_dt.ddpos
-      dDrop1 = $("<img data-id='#{dDrop.ddid}' class='test' alt='#{dDrop.alt}' title='#{dDrop.tit}' src='#{dDrop.src}' data-description='#{dDrop.ddesc}'>")
+      $dDrop1 = $("<img data-id='#{dDrop.ddid}' class='test' alt='#{dDrop.alt}' title='#{dDrop.tit}' src='#{dDrop.src}' data-description='#{dDrop.ddesc}'>").css("opacity", 0.5)
       #dDrop2 = $("<div class='test'>Move(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
       clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
       infonowana = clone
-      switch dDrop.ddmess
-        when 'dd-create_toolenter'
+      if dDrop.ddmess is 'dd-create_toolenter'
           console.info clone.get(0)   # log -----------#
-          console.info "myDropImgCloneIs:"+ infonowana   # log -----------#
-          dDrop1.css("opacity", 0.5)
-                .css(dDrop.ddpos)
-          $("body").append(dDrop1)
-        when 'dd-create_mouseup'
-          dDrop1.css(dDrop.ddpos)
+          console.info "コンソール+testは代入注意(´･_･`) CloneIs:"+ infonowana   # log -----#
+          $dDrop1.each ->
+            if dDrop.ddmess is 'dd-create_mouseup'
+              $(@).css(dDrop.ddpos)
+            else if dDrop.ddmess is 'dd-create_remove'
+              console.info dDrop.ddmess   # log -----------#
+              $(@).remove()
+            else
+              $dDrop1.css(dDrop.ddpos)
+              $("body").append(@)
 
-        when 'dd-create_remove'
-          console.info dDrop.ddmess   # log -----------#
-          dDrop1.remove()
-        else null
   ###
 coffee -wcb *.coffee
   ###

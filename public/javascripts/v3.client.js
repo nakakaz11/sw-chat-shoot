@@ -98,7 +98,7 @@ jQuery(function($) {
     }
   });
   _socket.on("dd-create", function(data) {
-    var clone, dDrop, dDrop1, infonowana;
+    var $dDrop1, clone, dDrop, infonowana;
     dDrop = _ddMap[data.userId];
     if (dDrop !== undefined) {
       dDrop.ddid = data.dd_dt.ddid;
@@ -109,22 +109,23 @@ jQuery(function($) {
       dDrop.userId = data.userId;
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
-      dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "'>");
+      $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "'>").css("opacity", 0.5);
       clone = $("div.toolbar > img.tools[data-id='" + dDrop.ddid + "']").clone();
       infonowana = clone;
-      switch (dDrop.ddmess) {
-        case 'dd-create_toolenter':
-          console.info(clone.get(0));
-          console.info("myDropImgCloneIs:" + infonowana);
-          dDrop1.css("opacity", 0.5).css(dDrop.ddpos);
-          return $("body").append(dDrop1);
-        case 'dd-create_mouseup':
-          return dDrop1.css(dDrop.ddpos);
-        case 'dd-create_remove':
-          console.info(dDrop.ddmess);
-          return dDrop1.remove();
-        default:
-          return null;
+      if (dDrop.ddmess === 'dd-create_toolenter') {
+        console.info(clone.get(0));
+        console.info("コンソール+testは代入注意(´･_･`) CloneIs:" + infonowana);
+        return $dDrop1.each(function() {
+          if (dDrop.ddmess === 'dd-create_mouseup') {
+            return $(this).css(dDrop.ddpos);
+          } else if (dDrop.ddmess === 'dd-create_remove') {
+            console.info(dDrop.ddmess);
+            return $(this).remove();
+          } else {
+            $dDrop1.css(dDrop.ddpos);
+            return $("body").append(this);
+          }
+        });
       }
     }
   });
