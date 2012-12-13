@@ -113,7 +113,7 @@ jQuery(function($) {
           console.info(clone);
           dDrop1.attr("data-user-id", dDrop.userId).css(dDrop.ddpos);
           return $("body").append(dDrop1);
-        case 'dd-create_mouseup':
+        case 'dd-create_mouseout':
           return dDrop2.css(dDrop.ddpos).attr("data-user-id", dDrop.userId).appendTo("body");
         case 'dd-create_remove':
           return console.info(dDrop.ddmess);
@@ -141,7 +141,7 @@ jQuery(function($) {
           case "onmousemove":
             ctxU.lineTo(uCanv.c_x, uCanv.c_y);
             return ctxU.stroke();
-          case "onmouseup":
+          case "onmouseout":
             break;
           default:
             return null;
@@ -236,10 +236,10 @@ jQuery(function($) {
         return ctx.stroke();
       }
     };
-    canvas.onmouseup = function(e) {
+    canvas.onmouseout = function(e) {
       mousedown = false;
       return _socket.json.emit("canvas-create", {
-        c_UM: "onmouseup"
+        c_UM: "onmouseout"
       });
     };
     if (_keyMap[37] === true) {
@@ -388,19 +388,20 @@ jQuery(function($) {
         }
         $us = $("body > img.tools");
         $us.on('mousemove', function() {
+          console.info("dd-create_mousemove:" + fly2);
           return $(this).draggable({
             helper: 'original'
           });
         });
-        $us.on('mouseup', function(e) {
+        $us.on('mouseout', function(e) {
           var fly2;
           sotoFlag = false;
           pos = $(this).position();
           fly2 = $(this).attr("data-id");
-          console.info("dd-create_mouseup:" + fly2);
+          console.info("dd-create_mouseout:" + fly2);
           _socket.emit('dd-create', {
             ddid: fly2,
-            ddmess: 'dd-create_mouseup',
+            ddmess: 'dd-create_mouseout',
             ddpos: pos
           });
           return e.preventDefault();

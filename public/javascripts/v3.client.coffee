@@ -106,7 +106,7 @@ jQuery ($) ->
           dDrop1.attr("data-user-id", dDrop.userId)
                 .css(dDrop.ddpos)
           $("body").append(dDrop1)
-        when 'dd-create_mouseup'
+        when 'dd-create_mouseout'
           dDrop2.css(dDrop.ddpos)
                 .attr("data-user-id", dDrop.userId)
                 .appendTo("body")
@@ -133,7 +133,7 @@ coffee -wcb *.coffee
           when "onmousemove"
             ctxU.lineTo uCanv.c_x, uCanv.c_y
             ctxU.stroke()
-          when "onmouseup"
+          when "onmouseout"
           else null
 
   _socket.on "disconnect", (data) ->
@@ -212,10 +212,10 @@ coffee -wcb *.coffee
           c_UM:"onmousemove"  # switch文flag
         ctx.lineTo pos.c_x, pos.c_y
         ctx.stroke()
-    canvas.onmouseup = (e) ->
+    canvas.onmouseout = (e) ->
       mousedown = false
       _socket.json.emit "canvas-create",
-        c_UM:"onmouseup"       # switch文flag
+        c_UM:"onmouseout"       # switch文flag
     # handle mouse events on canvas  -------------------------#
     #left
     _player.rotate -= 3  if _keyMap[37] is true
@@ -346,16 +346,17 @@ coffee -wcb *.coffee
             ddpos:  pos
         $us = $("body > img.tools")
         $us.on 'mousemove', ()->  #'click'
+          console.info "dd-create_mousemove:"+fly2       # log -----------#
           $(@).draggable( helper:'original' )
-        $us.on 'mouseup', (e)->
+        $us.on 'mouseout', (e)->
           sotoFlag = false
           pos = $(@).position()
           # dragdrop add -------------------------#
           fly2 = $(@).attr("data-id")
-          console.info "dd-create_mouseup:"+fly2       # log -----------#
+          console.info "dd-create_mouseout:"+fly2       # log -----------#
           _socket.emit 'dd-create',
             ddid: fly2
-            ddmess:'dd-create_mouseup'
+            ddmess:'dd-create_mouseout'
             ddpos:  pos
           e.preventDefault()
 
