@@ -139,10 +139,10 @@ coffee -wcb *.coffee
           $(@).append($own)
           pos = $own.position()
           # dragdrop add -------------------------#
-          fly1 = $own.attr("data-id")
-          tes1 = $()
-          tes1.innerHTML = $own
-          console.info "dd-create_toolenter:"+fly1+" innerHis:"+tes1.attr('src')  # log -----------#
+          dropImg = {}
+          dropImg.dataId = $own.attr("data-id")
+          dropImg.src    = $own.attr('src')
+          console.info "dd-create_toolenter:id:"+dropImg.dataId+" src:"+dropImg.src  # log -----------#
           _socket.emit 'dd-create',
             ddid: fly1
             ddmess:'dd-create_toolenter'

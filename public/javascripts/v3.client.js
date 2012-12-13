@@ -142,16 +142,16 @@ jQuery(function($) {
     return $("body").droppable({
       tolerance: 'fit',
       deactivate: function(ev, ui) {
-        var $own, $us, fly1, pos, tes1;
+        var $own, $us, dropImg, pos;
         $own = ui.helper.clone();
         if (sotoFlag) {
           $own.addClass("dropImg");
           $(this).append($own);
           pos = $own.position();
-          fly1 = $own.attr("data-id");
-          tes1 = $();
-          tes1.innerHTML = $own;
-          console.info("dd-create_toolenter:" + fly1 + " innerHis:" + tes1.attr('src'));
+          dropImg = {};
+          dropImg.dataId = $own.attr("data-id");
+          dropImg.src = $own.attr('src');
+          console.info("dd-create_toolenter:id:" + dropImg.dataId + " src:" + dropImg.src);
           _socket.emit('dd-create', {
             ddid: fly1,
             ddmess: 'dd-create_toolenter',
