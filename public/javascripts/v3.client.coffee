@@ -105,7 +105,7 @@ jQuery ($) ->
       infonowana = clone
       if dDrop.ddmess is 'dd-create_toolenter' or 'dd-create_mouseup' or 'dd-create_remove'
           console.info clone.get(0)            # log -----------#
-          console.info "コンソール+testは代入注意(´･_･`) CloneIs:"+ infonowana   # log -----#
+          #console.info "コンソール+testは代入注意(´･_･`) CloneIs:"+ infonowana   # log -----#
           console.info dDrop.ddmess            # log -----------#
           $dDrop1.each ->
             if dDrop.ddmess is 'dd-create_mouseup'
@@ -163,14 +163,14 @@ coffee -wcb *.coffee
         )
       $us.on 'mouseup', (e)->
         sotoFlag = false
-        dragImg.dataId = $(@).attr("data-id")
-        dragImg.src    = $(@).attr('src')
-        dragImg.alt    = $(@).attr('alt')
-        dragImg.tit    = $(@).attr('title')
-        dragImg.ddesc  = $(@).attr('data-description')
-        dragImg.pos    = $(@).position()
+        dragImg.dataId = @.attr("data-id")
+        dragImg.src    = @.attr('src')
+        dragImg.alt    = @.attr('alt')
+        dragImg.tit    = @.attr('title')
+        dragImg.ddesc  = @.attr('data-description')
+        dragImg.pos    = @.position()
         # dragdrop add -------------------------#
-        console.info "dd-create_mouseup:"       # log -----------#
+        #console.info "dd-create_mouseup:"       # log -----------#
         _socket.emit 'dd-create',
           ddid:   dragImg.dataId
           src:    dragImg.src
@@ -182,15 +182,15 @@ coffee -wcb *.coffee
         e.preventDefault()
 
       $us.on 'dblclick', ()->
-        dragImg.dataId = $(@).attr("data-id")
-        dragImg.src    = $(@).attr('src')
-        dragImg.alt    = $(@).attr('alt')
-        dragImg.tit    = $(@).attr('title')
-        dragImg.ddesc  = $(@).attr('data-description')
-        dragImg.pos    = $(@).position()
+        dragImg.dataId = @.attr("data-id")
+        dragImg.src    = @.attr('src')
+        dragImg.alt    = @.attr('alt')
+        dragImg.tit    = @.attr('title')
+        dragImg.ddesc  = @.attr('data-description')
+        dragImg.pos    = @.position()
         # dragdrop add -------------------------#
         fly3 = $(@).attr("data-id")
-        console.info "dd-create_remove:"        # log -----------#
+        #console.info "dd-create_remove:"        # log -----------#
         _socket.emit 'dd-create',
           ddid:   dragImg.dataId
           src:    dragImg.src
