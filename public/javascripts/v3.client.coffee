@@ -102,10 +102,11 @@ jQuery ($) ->
       dDrop1 = $("<img data-id='#{dDrop.ddid}' class='test' alt='#{dDrop.alt}' title='#{dDrop.tit}' src='#{dDrop.src}' data-description='#{dDrop.ddesc}'>")
       #dDrop2 = $("<div class='test'>Move(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
       clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
+      infonowana = clone
       switch dDrop.ddmess
         when 'dd-create_toolenter'
           console.info clone.get(0)   # log -----------#
-          console.info "myDropImgCloneIs:"+ clone.get(0)   # log -----------#
+          console.info "myDropImgCloneIs:"+ infonowana   # log -----------#
           dDrop1.css("opacity", 0.5)
                 .css(dDrop.ddpos)
           $("body").append(dDrop1)
