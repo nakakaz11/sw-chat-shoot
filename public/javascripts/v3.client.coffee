@@ -104,7 +104,8 @@ jQuery ($) ->
       clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
       switch dDrop.ddmess
         when 'dd-create_toolenter'
-          console.info "myDropImgCloneIs:"+ clone.html()   # log -----------#
+          console.info clone.get(0)   # log -----------#
+          #console.info "myDropImgCloneIs:"+ clone.get(0)   # log -----------#
           dDrop1.css("opacity", 0.5)
                 .css(dDrop.ddpos)
           $("body").append(dDrop1)
