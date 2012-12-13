@@ -102,20 +102,21 @@ jQuery ($) ->
       #dDrop2 = $("<div class='test'>Move(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
       clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
       infonowana = clone
-      if dDrop.ddmess is 'dd-create_toolenter' or 'dd-create_mouseup' or 'dd-create_remove'
-          #console.info clone.get(0)            # log -----------#
-          #console.info "コンソール+testは代入注意(´･_･`) CloneIs:"+ infonowana   # log -----#
-          #console.info dDrop.ddmess            # log -----------#
-          $dDrop1.each ->
-            if dDrop.ddmess is 'dd-create_mouseup'
-              console.info dDrop.ddpos            # log -----------#
-              console.info $(@).get(0)            # log -----------#
-              $(@).css(dDrop.ddpos)
-            else if dDrop.ddmess is 'dd-create_remove'
-              $(@).remove()
-            else if dDrop.ddmess is 'dd-create_toolenter'
-              $(@).css(dDrop.ddpos)
-              $("body").append(@)
+      #console.info clone.get(0)            # log -----------#
+      #console.info "コンソール+testは代入注意(´･_･`) CloneIs:"+ infonowana   # log -----#
+      #console.info dDrop.ddmess            # log -----------#
+      $dDrop1.each ->
+        switch dDrop.ddmess
+          when 'dd-create_mouseup'
+            console.info dDrop.ddpos            # log -----------#
+            console.info $(@).get(0)            # log -----------#
+            $(@).css(dDrop.ddpos)
+          when 'dd-create_remove'
+            $(@).remove()
+          when 'dd-create_toolenter'
+            $(@).css(dDrop.ddpos)
+            $("body").append(@)
+          else return
   ###
 coffee -wcb *.coffee
   ###

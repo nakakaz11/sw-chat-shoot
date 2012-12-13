@@ -112,20 +112,19 @@ jQuery(function($) {
       $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "'>").css("opacity", 0.5);
       clone = $("div.toolbar > img.tools[data-id='" + dDrop.ddid + "']").clone();
       infonowana = clone;
-      if (dDrop.ddmess === 'dd-create_toolenter' || 'dd-create_mouseup' || 'dd-create_remove') {
-        return $dDrop1.each(function() {
-          if (dDrop.ddmess === 'dd-create_mouseup') {
+      return $dDrop1.each(function() {
+        switch (dDrop.ddmess) {
+          case 'dd-create_mouseup':
             console.info(dDrop.ddpos);
             console.info($(this).get(0));
             return $(this).css(dDrop.ddpos);
-          } else if (dDrop.ddmess === 'dd-create_remove') {
+          case 'dd-create_remove':
             return $(this).remove();
-          } else if (dDrop.ddmess === 'dd-create_toolenter') {
+          case 'dd-create_toolenter':
             $(this).css(dDrop.ddpos);
             return $("body").append(this);
-          }
-        });
-      }
+        }
+      });
     }
   });
   /*
