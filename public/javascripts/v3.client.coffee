@@ -91,27 +91,30 @@ jQuery ($) ->
   _socket.on "dd-create", (data) ->
     dDrop = _ddMap[data.userId]
     if dDrop isnt `undefined`
-      dDrop.ddid =     data.dd_dt.ddid
+      dDrop.ddid =   data.dd_dt.ddid          #data-id
+      dDrop.src    = data.dd_dt.src
+      dDrop.alt    = data.dd_dt.alt
+      dDrop.tit    = data.dd_dt.tit
+      dDrop.ddesc  = data.dd_dt.ddesc
+      dDrop.userId = data.userId
       dDrop.ddmess = data.dd_dt.ddmess
       dDrop.ddpos =  data.dd_dt.ddpos
-      dDrop.userId = data.userId
-      dDrop1 = $("<div class='test'>Drop(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
-      dDrop2 = $("<div class='test'>Move(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
+      dDrop1 = $("<img data-id='#{dDrop.ddid}' class='test' alt='#{dDrop.alt}' title='#{dDrop.tit}' src='#{dDrop.src}' data-description='#{dDrop.ddesc}'>")
+      #dDrop2 = $("<div class='test'>Move(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
       clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
       switch dDrop.ddmess
         when 'dd-create_toolenter'
-          console.info $(clone).get(0)   # log -----------#
-          #dDrop.element = $(clone).attr("data-user-id", dDrop.userId)
-          dDrop1.attr("data-user-id", dDrop.userId)
+          console.info "myDropImgCloneIs:"+$(clone).get(0)   # log -----------#
+          dDrop1.css("opacity", 0.5)
                 .css(dDrop.ddpos)
           $("body").append(dDrop1)
         when 'dd-create_mouseup'
-          dDrop2.css(dDrop.ddpos)
+          dDrop1.css(dDrop.ddpos)
                 .attr("data-user-id", dDrop.userId)
                 .appendTo("body")
         when 'dd-create_remove'
            console.info dDrop.ddmess   # log -----------#
-           dDrop2.remove()
+           dDrop1.remove()
         else null
   ###
 coffee -wcb *.coffee
@@ -133,18 +136,24 @@ coffee -wcb *.coffee
       tolerance:'fit'
       deactivate: (ev,ui) ->
         $own = ui.helper.clone()
-        #console.info sotoFlag
+        dropImg = {}
         if sotoFlag
-          $own.addClass("dropImg")
+          $own.addClass("myDropImg")
           $(@).append($own)
           pos = $own.position()
           # dragdrop add -------------------------#
-          dropImg = {}
           dropImg.dataId = $own.attr("data-id")
           dropImg.src    = $own.attr('src')
-          console.info "dd-create_toolenter:id:"+dropImg.dataId+" src:"+dropImg.src  # log -----------#
+          dropImg.alt    = $own.attr('alt')
+          dropImg.tit    = $own.attr('title')
+          dropImg.ddesc    = $own.attr('data-description')
+          #console.info "dd-create_toolenter:id:"+dropImg.dataId+" src:"+dropImg.src  # log -----------#
           _socket.emit 'dd-create',
             ddid:   dropImg.dataId
+            src:    dropImg.src
+            alt:    dropImg.alt
+            tit:    dropImg.tit
+            ddesc:  dropImg.ddesc
             ddmess:'dd-create_toolenter'
             ddpos:  pos
         $us = $("body > img.tools")

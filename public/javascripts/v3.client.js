@@ -98,26 +98,29 @@ jQuery(function($) {
     }
   });
   _socket.on("dd-create", function(data) {
-    var clone, dDrop, dDrop1, dDrop2;
+    var clone, dDrop, dDrop1;
     dDrop = _ddMap[data.userId];
     if (dDrop !== undefined) {
       dDrop.ddid = data.dd_dt.ddid;
+      dDrop.src = data.dd_dt.src;
+      dDrop.alt = data.dd_dt.alt;
+      dDrop.tit = data.dd_dt.tit;
+      dDrop.ddesc = data.dd_dt.ddesc;
+      dDrop.userId = data.userId;
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
-      dDrop.userId = data.userId;
-      dDrop1 = $("<div class='test'>Drop(uId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>");
-      dDrop2 = $("<div class='test'>Move(uId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>");
+      dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "'>");
       clone = $("div.toolbar > img.tools[data-id='" + dDrop.ddid + "']").clone();
       switch (dDrop.ddmess) {
         case 'dd-create_toolenter':
-          console.info($(clone).get(0));
-          dDrop1.attr("data-user-id", dDrop.userId).css(dDrop.ddpos);
+          console.info("myDropImgCloneIs:" + $(clone).get(0));
+          dDrop1.css("opacity", 0.5).css(dDrop.ddpos);
           return $("body").append(dDrop1);
         case 'dd-create_mouseup':
-          return dDrop2.css(dDrop.ddpos).attr("data-user-id", dDrop.userId).appendTo("body");
+          return dDrop1.css(dDrop.ddpos).attr("data-user-id", dDrop.userId).appendTo("body");
         case 'dd-create_remove':
           console.info(dDrop.ddmess);
-          return dDrop2.remove();
+          return dDrop1.remove();
         default:
           return null;
       }
@@ -144,16 +147,22 @@ jQuery(function($) {
       deactivate: function(ev, ui) {
         var $own, $us, dropImg, pos;
         $own = ui.helper.clone();
+        dropImg = {};
         if (sotoFlag) {
-          $own.addClass("dropImg");
+          $own.addClass("myDropImg");
           $(this).append($own);
           pos = $own.position();
-          dropImg = {};
           dropImg.dataId = $own.attr("data-id");
           dropImg.src = $own.attr('src');
-          console.info("dd-create_toolenter:id:" + dropImg.dataId + " src:" + dropImg.src);
+          dropImg.alt = $own.attr('alt');
+          dropImg.tit = $own.attr('title');
+          dropImg.ddesc = $own.attr('data-description');
           _socket.emit('dd-create', {
             ddid: dropImg.dataId,
+            src: dropImg.src,
+            alt: dropImg.alt,
+            tit: dropImg.tit,
+            ddesc: dropImg.ddesc,
             ddmess: 'dd-create_toolenter',
             ddpos: pos
           });
