@@ -163,7 +163,7 @@ coffee -wcb *.coffee
         $(@).draggable(
           #helper:'original'
         )
-      $us.on 'mouseup', (ev,ui)->
+      $us.on 'mouseup', (ev)->
         $own = $(@)
         console.info $(@).get(0)      # log -----------#
         sotoFlag = false
@@ -183,9 +183,9 @@ coffee -wcb *.coffee
           ddesc:  dragImg.ddesc
           ddmess:'dd-create_mouseup'
           ddpos:  dragImg.pos
-        e.preventDefault()
+        ev.preventDefault()
 
-      $us.on 'dblclick', (ev,ui)->
+      $us.on 'dblclick', ()->
         $own = $(@)
         dragImg.dataId = $own.attr("data-id")
         dragImg.src    = $own.attr('src')

@@ -174,7 +174,7 @@ jQuery(function($) {
       $us.on('mousemove', function() {
         return $(this).draggable();
       });
-      $us.on('mouseup', function(ev, ui) {
+      $us.on('mouseup', function(ev) {
         $own = $(this);
         console.info($(this).get(0));
         sotoFlag = false;
@@ -193,9 +193,9 @@ jQuery(function($) {
           ddmess: 'dd-create_mouseup',
           ddpos: dragImg.pos
         });
-        return e.preventDefault();
+        return ev.preventDefault();
       });
-      $us.on('dblclick', function(ev, ui) {
+      $us.on('dblclick', function() {
         var fly3;
         $own = $(this);
         dragImg.dataId = $own.attr("data-id");
