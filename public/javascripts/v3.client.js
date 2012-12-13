@@ -113,7 +113,7 @@ jQuery(function($) {
       clone = $("div.toolbar > img.tools[data-id='" + dDrop.ddid + "']").clone();
       switch (dDrop.ddmess) {
         case 'dd-create_toolenter':
-          console.info("myDropImgCloneIs:" + clone.get(0));
+          console.info("myDropImgCloneIs:" + clone.html());
           dDrop1.css("opacity", 0.5).css(dDrop.ddpos);
           return $("body").append(dDrop1);
         case 'dd-create_mouseup':
