@@ -4,7 +4,7 @@ var tools;
 jQuery(function($) {
   "use strict";
 
-  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, mousedown, mycoord, onDrag, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
+  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, mousedown, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
@@ -98,7 +98,7 @@ jQuery(function($) {
     }
   });
   _socket.on("dd-create", function(data) {
-    var clone, dDrop, dDrop1;
+    var $dDrop1, clone, dDrop, infonowana;
     dDrop = _ddMap[data.userId];
     if (dDrop !== undefined) {
       dDrop.ddid = data.dd_dt.ddid;
@@ -109,20 +109,23 @@ jQuery(function($) {
       dDrop.userId = data.userId;
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
-      dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "'>");
+      $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "'>").css("opacity", 0.5);
       clone = $("div.toolbar > img.tools[data-id='" + dDrop.ddid + "']").clone();
-      switch (dDrop.ddmess) {
-        case 'dd-create_toolenter':
-          console.info("myDropImgCloneIs:" + $(clone).get(0));
-          dDrop1.css("opacity", 0.5).css(dDrop.ddpos);
-          return $("body").append(dDrop1);
-        case 'dd-create_mouseup':
-          return dDrop1.css(dDrop.ddpos).attr("data-user-id", dDrop.userId).appendTo("body");
-        case 'dd-create_remove':
-          console.info(dDrop.ddmess);
-          return dDrop1.remove();
-        default:
-          return null;
+      infonowana = clone;
+      if (dDrop.ddmess === 'dd-create_toolenter' || 'dd-create_mouseup' || 'dd-create_remove') {
+        console.info(dDrop.ddmess);
+        return $dDrop1.each(function() {
+          if (dDrop.ddmess === 'dd-create_mouseup') {
+            console.info(dDrop.ddpos);
+            return this.css(dDrop.ddpos);
+          } else if (dDrop.ddmess === 'dd-create_remove') {
+            return this.remove();
+          } else {
+            console.info(dDrop.ddpos);
+            $dDrop1.css(dDrop.ddpos);
+            return $("body").append(this);
+          }
+        });
       }
     }
   });
@@ -141,64 +144,80 @@ jQuery(function($) {
       return sotoFlag = true;
     }
   });
-  onDrag = function() {
-    return $("body").droppable({
-      tolerance: 'fit',
-      deactivate: function(ev, ui) {
-        var $own, $us, dropImg, pos;
-        $own = ui.helper.clone();
-        dropImg = {};
-        if (sotoFlag) {
-          $own.addClass("myDropImg");
-          $(this).append($own);
-          pos = $own.position();
-          dropImg.dataId = $own.attr("data-id");
-          dropImg.src = $own.attr('src');
-          dropImg.alt = $own.attr('alt');
-          dropImg.tit = $own.attr('title');
-          dropImg.ddesc = $own.attr('data-description');
-          _socket.emit('dd-create', {
-            ddid: dropImg.dataId,
-            src: dropImg.src,
-            alt: dropImg.alt,
-            tit: dropImg.tit,
-            ddesc: dropImg.ddesc,
-            ddmess: 'dd-create_toolenter',
-            ddpos: pos
-          });
-        }
-        $us = $("body > img.tools");
-        $us.on('mousemove', function() {
-          return $(this).draggable();
+  $("body").droppable({
+    tolerance: 'fit',
+    deactivate: function(ev, ui) {
+      var $own, $us, dragImg, dropImg, pos;
+      $own = ui.helper.clone();
+      dropImg = {};
+      dragImg = {};
+      if (sotoFlag) {
+        $own.addClass("myDropImg");
+        $(this).append($own);
+        pos = $own.position();
+        dropImg.dataId = $own.attr("data-id");
+        dropImg.src = $own.attr('src');
+        dropImg.alt = $own.attr('alt');
+        dropImg.tit = $own.attr('title');
+        dropImg.ddesc = $own.attr('data-description');
+        _socket.emit('dd-create', {
+          ddid: dropImg.dataId,
+          src: dropImg.src,
+          alt: dropImg.alt,
+          tit: dropImg.tit,
+          ddesc: dropImg.ddesc,
+          ddmess: 'dd-create_toolenter',
+          ddpos: pos
         });
-        $us.on('mouseup', function(e) {
-          var fly2;
-          sotoFlag = false;
-          pos = $(this).position();
-          fly2 = $(this).attr("data-id");
-          console.info("dd-create_mouseup:" + fly2);
-          _socket.emit('dd-create', {
-            ddid: fly2,
-            ddmess: 'dd-create_mouseup',
-            ddpos: pos
-          });
-          return e.preventDefault();
-        });
-        $us.on('dblclick', function() {
-          var fly3;
-          fly3 = $(this).attr("data-id");
-          console.info("dd-create_remove:" + fly3);
-          _socket.emit('dd-create', {
-            ddid: fly3,
-            ddmess: 'dd-create_remove'
-          });
-          return $(this).remove();
-        });
-        return false;
       }
-    });
-  };
-  onDrag();
+      $us = $("body > img.tools");
+      $us.on('mousemove', function() {
+        return $(this).draggable();
+      });
+      $us.on('mouseup', function(ev) {
+        $own = $(this);
+        console.info($(this).get(0));
+        sotoFlag = false;
+        dragImg.dataId = $own.attr("data-id");
+        dragImg.src = $own.attr('src');
+        dragImg.alt = $own.attr('alt');
+        dragImg.tit = $own.attr('title');
+        dragImg.ddesc = $own.attr('data-description');
+        dragImg.pos = $own.position();
+        _socket.emit('dd-create', {
+          ddid: dragImg.dataId,
+          src: dragImg.src,
+          alt: dragImg.alt,
+          tit: dragImg.tit,
+          ddesc: dragImg.ddesc,
+          ddmess: 'dd-create_mouseup',
+          ddpos: dragImg.pos
+        });
+        return ev.preventDefault();
+      });
+      $us.on('dblclick', function() {
+        var fly3;
+        $own = $(this);
+        dragImg.dataId = $own.attr("data-id");
+        dragImg.src = $own.attr('src');
+        dragImg.alt = $own.attr('alt');
+        dragImg.tit = $own.attr('title');
+        dragImg.ddesc = $own.attr('data-description');
+        dragImg.pos = $own.position();
+        fly3 = $(this).attr("data-id");
+        _socket.emit('dd-create', {
+          ddid: dragImg.dataId,
+          src: dragImg.src,
+          alt: dragImg.alt,
+          tit: dragImg.tit,
+          ddesc: dragImg.ddesc,
+          ddmess: 'dd-create_remove'
+        });
+        return $(this).remove();
+      });
+      return false;
+    }
+  });
   _socket.on("canvas-create", function(data) {
     var uCanv;
     uCanv = _canvasMap[data.userId];
