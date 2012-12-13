@@ -98,7 +98,7 @@ jQuery(function($) {
     }
   });
   _socket.on("dd-create", function(data) {
-    var $dDrop1, clone, dDrop, infonowana;
+    var $dDrop1, dDrop;
     dDrop = _ddMap[data.userId];
     if (dDrop !== undefined) {
       dDrop.ddid = data.dd_dt.ddid;
@@ -110,19 +110,21 @@ jQuery(function($) {
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
       $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "'>").css("opacity", 0.5);
-      clone = $("div.toolbar > img.tools[data-id='" + dDrop.ddid + "']").clone();
-      infonowana = clone;
       return $dDrop1.each(function() {
-        switch (dDrop.ddmess) {
-          case 'dd-create_mouseup':
-            console.info(dDrop.ddpos);
-            console.info($(this).get(0));
-            return $("body").append(this).css(dDrop.ddpos);
-          case 'dd-create_remove':
-            return $("body").append(this).remove();
-          case 'dd-create_toolenter':
-            $(this).css(dDrop.ddpos);
-            return $("body").append(this);
+        if (dDrop.ddmess === 'dd-create_toolenter') {
+          $(this).css(dDrop.ddpos);
+          $("body").append(this);
+        }
+        if (dDrop.ddmess === 'dd-create_mouseup') {
+          console.info(dDrop.ddpos);
+          console.info($(this).get(0));
+          $(this).css(dDrop.ddpos);
+          $("body").append(this);
+        }
+        if (dDrop.ddmess === 'dd-create_remove') {
+          return $(this).remove();
+        } else {
+
         }
       });
     }
