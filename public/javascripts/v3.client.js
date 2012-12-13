@@ -126,6 +126,61 @@ jQuery(function($) {
   coffee -wcb *.coffee
   */
 
+  onDrag = function() {
+    return $("body").droppable({
+      tolerance: 'fit',
+      deactivate: function(ev, ui) {
+        var $own, $us, fly1, pos, tes1;
+        $own = ui.helper.clone();
+        if (sotoFlag) {
+          $own.addClass("dropImg");
+          $(this).append($own);
+          pos = $own.position();
+          fly1 = $own.attr("data-id");
+          tes1 = $();
+          tes1.innerHTML = $own;
+          console.info("dd-create_toolenter:" + fly1 + " innerHis" + $(tes1));
+          _socket.emit('dd-create', {
+            ddid: fly1,
+            ddmess: 'dd-create_toolenter',
+            ddpos: pos
+          });
+        }
+        $us = $("body > img.tools");
+        $us.on('mousemove', function() {
+          console.info("dd-create_mousemove:" + fly2);
+          return $(this).draggable({
+            helper: 'original'
+          });
+        });
+        $us.on('mouseout', function(e) {
+          var fly2, sotoFlag;
+          sotoFlag = false;
+          pos = $(this).position();
+          fly2 = $(this).attr("data-id");
+          console.info("dd-create_mouseout:" + fly2);
+          _socket.emit('dd-create', {
+            ddid: fly2,
+            ddmess: 'dd-create_mouseout',
+            ddpos: pos
+          });
+          return e.preventDefault();
+        });
+        $us.on('dblclick', function() {
+          var fly3;
+          fly3 = $(this).attr("data-id");
+          console.info("dd-create_remove:" + fly3);
+          _socket.emit('dd-create', {
+            ddid: fly3,
+            ddmess: 'dd-create_remove'
+          });
+          return $(this).remove();
+        });
+        return false;
+      }
+    });
+  };
+  onDrag();
   _socket.on("canvas-create", function(data) {
     var uCanv;
     uCanv = _canvasMap[data.userId];
@@ -141,7 +196,7 @@ jQuery(function($) {
           case "onmousemove":
             ctxU.lineTo(uCanv.c_x, uCanv.c_y);
             return ctxU.stroke();
-          case "onmouseout":
+          case "onmouseup":
             break;
           default:
             return null;
@@ -236,10 +291,10 @@ jQuery(function($) {
         return ctx.stroke();
       }
     };
-    canvas.onmouseout = function(e) {
+    canvas.onmouseup = function(e) {
       mousedown = false;
       return _socket.json.emit("canvas-create", {
-        c_UM: "onmouseout"
+        c_UM: "onmouseup"
       });
     };
     if (_keyMap[37] === true) {
@@ -360,67 +415,12 @@ jQuery(function($) {
     return $("<img>", tool).appendTo($toolbar);
   });
   sotoFlag = false;
-  $("div.toolbar img.tools").draggable({
+  return $("div.toolbar img.tools").draggable({
     helper: 'clone',
     start: function() {
       return sotoFlag = true;
     }
   });
-  onDrag = function() {
-    return $("body").droppable({
-      tolerance: 'fit',
-      deactivate: function(ev, ui) {
-        var $own, $us, fly1, pos, tes1;
-        $own = ui.helper.clone();
-        if (sotoFlag) {
-          $own.addClass("dropImg");
-          $(this).append($own);
-          pos = $own.position();
-          fly1 = $own.attr("data-id");
-          tes1 = $();
-          tes1.innerHTML = $own;
-          console.info("dd-create_toolenter:" + fly1 + " innerHis" + $(tes1));
-          _socket.emit('dd-create', {
-            ddid: fly1,
-            ddmess: 'dd-create_toolenter',
-            ddpos: pos
-          });
-        }
-        $us = $("body > img.tools");
-        $us.on('mousemove', function() {
-          console.info("dd-create_mousemove:" + fly2);
-          return $(this).draggable({
-            helper: 'original'
-          });
-        });
-        $us.on('mouseout', function(e) {
-          var fly2;
-          sotoFlag = false;
-          pos = $(this).position();
-          fly2 = $(this).attr("data-id");
-          console.info("dd-create_mouseout:" + fly2);
-          _socket.emit('dd-create', {
-            ddid: fly2,
-            ddmess: 'dd-create_mouseout',
-            ddpos: pos
-          });
-          return e.preventDefault();
-        });
-        $us.on('dblclick', function() {
-          var fly3;
-          fly3 = $(this).attr("data-id");
-          console.info("dd-create_remove:" + fly3);
-          _socket.emit('dd-create', {
-            ddid: fly3,
-            ddmess: 'dd-create_remove'
-          });
-          return $(this).remove();
-        });
-        return false;
-      }
-    });
-  };
-  return onDrag();
   /*
   coffee -wcb *.coffee
   */

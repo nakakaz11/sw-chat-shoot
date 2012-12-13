@@ -117,7 +117,53 @@ jQuery ($) ->
   ###
 coffee -wcb *.coffee
   ###
+  onDrag = () ->            # handle drag
+    $("body").droppable(
+      tolerance:'fit'
+      deactivate: (ev,ui) ->
+        $own = ui.helper.clone()
+        #console.info sotoFlag
+        if sotoFlag
+          $own.addClass("dropImg")
+          $(@).append($own)
+          pos = $own.position()
+          # dragdrop add -------------------------#
+          fly1 = $own.attr("data-id")
+          tes1 = $()
+          tes1.innerHTML = $own
+          console.info "dd-create_toolenter:"+fly1+" innerHis"+$(tes1)  # log -----------#
+          _socket.emit 'dd-create',
+            ddid: fly1
+            ddmess:'dd-create_toolenter'
+            ddpos:  pos
+        $us = $("body > img.tools")
+        $us.on 'mousemove', ()->  #'click'
+          console.info "dd-create_mousemove:"+fly2       # log -----------#
+          $(@).draggable( helper:'original' )
+        $us.on 'mouseout', (e)->
+          sotoFlag = false
+          pos = $(@).position()
+          # dragdrop add -------------------------#
+          fly2 = $(@).attr("data-id")
+          console.info "dd-create_mouseout:"+fly2         # log -----------#
+          _socket.emit 'dd-create',
+            ddid: fly2
+            ddmess:'dd-create_mouseout'
+            ddpos:  pos
+          e.preventDefault()
 
+        $us.on 'dblclick', ()->
+          # dragdrop add -------------------------#
+          fly3 = $(@).attr("data-id")
+          console.info "dd-create_remove:"+fly3           # log -----------#
+          _socket.emit 'dd-create',
+            ddid: fly3,
+            ddmess: 'dd-create_remove'
+          $(@).remove()
+        false
+    )
+  onDrag()  # fire
+  #------------------------ dragdrop add ----------------------------------#
   # canvs add -------------------------#
   _socket.on "canvas-create", (data) ->
     uCanv = _canvasMap[data.userId]
@@ -133,7 +179,7 @@ coffee -wcb *.coffee
           when "onmousemove"
             ctxU.lineTo uCanv.c_x, uCanv.c_y
             ctxU.stroke()
-          when "onmouseout"
+          when "onmouseup"
           else null
 
   _socket.on "disconnect", (data) ->
@@ -212,10 +258,10 @@ coffee -wcb *.coffee
           c_UM:"onmousemove"  # switch文flag
         ctx.lineTo pos.c_x, pos.c_y
         ctx.stroke()
-    canvas.onmouseout = (e) ->
+    canvas.onmouseup = (e) ->
       mousedown = false
       _socket.json.emit "canvas-create",
-        c_UM:"onmouseout"       # switch文flag
+        c_UM:"onmouseup"       # switch文flag
     # handle mouse events on canvas  -------------------------#
     #left
     _player.rotate -= 3  if _keyMap[37] is true
@@ -324,53 +370,6 @@ coffee -wcb *.coffee
         helper:'clone'
         start:->
           sotoFlag = true  # toolbarから来たか判定
-
-  onDrag = () ->            # handle drag
-    $("body").droppable(
-      tolerance:'fit'
-      deactivate: (ev,ui) ->
-        $own = ui.helper.clone()
-        #console.info sotoFlag
-        if sotoFlag
-          $own.addClass("dropImg")
-          $(@).append($own)
-          pos = $own.position()
-          # dragdrop add -------------------------#
-          fly1 = $own.attr("data-id")
-          tes1 = $()
-          tes1.innerHTML = $own
-          console.info "dd-create_toolenter:"+fly1+" innerHis"+$(tes1)  # log -----------#
-          _socket.emit 'dd-create',
-            ddid: fly1
-            ddmess:'dd-create_toolenter'
-            ddpos:  pos
-        $us = $("body > img.tools")
-        $us.on 'mousemove', ()->  #'click'
-          console.info "dd-create_mousemove:"+fly2       # log -----------#
-          $(@).draggable( helper:'original' )
-        $us.on 'mouseout', (e)->
-          sotoFlag = false
-          pos = $(@).position()
-          # dragdrop add -------------------------#
-          fly2 = $(@).attr("data-id")
-          console.info "dd-create_mouseout:"+fly2       # log -----------#
-          _socket.emit 'dd-create',
-            ddid: fly2
-            ddmess:'dd-create_mouseout'
-            ddpos:  pos
-          e.preventDefault()
-
-        $us.on 'dblclick', ()->
-          # dragdrop add -------------------------#
-          fly3 = $(@).attr("data-id")
-          console.info "dd-create_remove:"+fly3       # log -----------#
-          _socket.emit 'dd-create',
-            ddid: fly3,
-            ddmess: 'dd-create_remove'
-          $(@).remove()
-        false
-    )
-  onDrag()  # fire
 
   ###
 coffee -wcb *.coffee
