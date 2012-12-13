@@ -105,18 +105,17 @@ jQuery ($) ->
       #console.info clone.get(0)            # log -----------#
       #console.info "コンソール+testは代入注意(´･_･`) CloneIs:"+ infonowana   # log -----#
       #console.info dDrop.ddmess            # log -----------#
-      $dDrop1.each =>
-        if dDrop.ddmess is'dd-create_toolenter'
+      if dDrop.ddmess is'dd-create_toolenter'
+        $(@).css(dDrop.ddpos)
+        $("body").append(@)
+      if dDrop.ddmess is'dd-create_mouseup'
+          #console.info dDrop.ddpos            # log -----------#
+          #console.info $(@).get(0)            # log -----------#
           $(@).css(dDrop.ddpos)
           $("body").append(@)
-        if dDrop.ddmess is'dd-create_mouseup'
-            #console.info dDrop.ddpos            # log -----------#
-            #console.info $(@).get(0)            # log -----------#
-            $(@).css(dDrop.ddpos)
-            $("body").append(@)
-        if dDrop.ddmess is'dd-create_remove'
-            $(@).remove()
-        else return
+      if dDrop.ddmess is'dd-create_remove'
+          $(@).remove()
+      else return
   ###
 coffee -wcb *.coffee
   ###

@@ -98,8 +98,7 @@ jQuery(function($) {
     }
   });
   _socket.on("dd-create", function(data) {
-    var $dDrop1, dDrop,
-      _this = this;
+    var $dDrop1, dDrop;
     dDrop = _ddMap[data.userId];
     if (dDrop !== undefined) {
       dDrop.ddid = data.dd_dt.ddid;
@@ -111,21 +110,19 @@ jQuery(function($) {
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
       $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "'>").css("opacity", 0.5);
-      return $dDrop1.each(function() {
-        if (dDrop.ddmess === 'dd-create_toolenter') {
-          $(_this).css(dDrop.ddpos);
-          $("body").append(_this);
-        }
-        if (dDrop.ddmess === 'dd-create_mouseup') {
-          $(_this).css(dDrop.ddpos);
-          $("body").append(_this);
-        }
-        if (dDrop.ddmess === 'dd-create_remove') {
-          return $(_this).remove();
-        } else {
+      if (dDrop.ddmess === 'dd-create_toolenter') {
+        $(this).css(dDrop.ddpos);
+        $("body").append(this);
+      }
+      if (dDrop.ddmess === 'dd-create_mouseup') {
+        $(this).css(dDrop.ddpos);
+        $("body").append(this);
+      }
+      if (dDrop.ddmess === 'dd-create_remove') {
+        return $(this).remove();
+      } else {
 
-        }
-      });
+      }
     }
   });
   /*
