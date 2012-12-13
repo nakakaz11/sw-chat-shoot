@@ -165,12 +165,12 @@ coffee -wcb *.coffee
         )
       $us.on 'mouseup', (e)->
         sotoFlag = false
-        dragImg.dataId = @.attr("data-id")
-        dragImg.src    = @.attr('src')
-        dragImg.alt    = @.attr('alt')
-        dragImg.tit    = @.attr('title')
-        dragImg.ddesc  = @.attr('data-description')
-        dragImg.pos    = @.position()
+        dragImg.dataId = $(@).attr("data-id")
+        dragImg.src    = $(@).attr('src')
+        dragImg.alt    = $(@).attr('alt')
+        dragImg.tit    = $(@).attr('title')
+        dragImg.ddesc  = $(@).attr('data-description')
+        dragImg.pos    = $(@).position()
         # dragdrop add -------------------------#
         #console.info "dd-create_mouseup:"       # log -----------#
         _socket.emit 'dd-create',
@@ -184,12 +184,12 @@ coffee -wcb *.coffee
         e.preventDefault()
 
       $us.on 'dblclick', ()->
-        dragImg.dataId = @.attr("data-id")
-        dragImg.src    = @.attr('src')
-        dragImg.alt    = @.attr('alt')
-        dragImg.tit    = @.attr('title')
-        dragImg.ddesc  = @.attr('data-description')
-        dragImg.pos    = @.position()
+        dragImg.dataId = $(@).attr("data-id")
+        dragImg.src    = $(@).attr('src')
+        dragImg.alt    = $(@).attr('alt')
+        dragImg.tit    = $(@).attr('title')
+        dragImg.ddesc  = $(@).attr('data-description')
+        dragImg.pos    = $(@).position()
         # dragdrop add -------------------------#
         fly3 = $(@).attr("data-id")
         #console.info "dd-create_remove:"        # log -----------#
