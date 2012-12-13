@@ -151,7 +151,7 @@ jQuery(function($) {
           fly1 = $own.attr("data-id");
           tes1 = $();
           tes1.innerHTML = $own;
-          console.info("dd-create_toolenter:" + fly1 + " innerHis:" + tes1);
+          console.info("dd-create_toolenter:" + fly1 + " innerHis:" + tes1.attr('src'));
           _socket.emit('dd-create', {
             ddid: fly1,
             ddmess: 'dd-create_toolenter',
@@ -159,7 +159,9 @@ jQuery(function($) {
           });
         }
         $us = $("body > img.tools");
-        $us.on('mousemove', function() {});
+        $us.on('mousemove', function() {
+          return $(this).draggable();
+        });
         $us.on('mouseup', function(e) {
           var fly2;
           sotoFlag = false;

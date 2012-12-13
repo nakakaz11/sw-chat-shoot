@@ -142,21 +142,23 @@ coffee -wcb *.coffee
           fly1 = $own.attr("data-id")
           tes1 = $()
           tes1.innerHTML = $own
-          console.info "dd-create_toolenter:"+fly1+" innerHis:"+tes1  # log -----------#
+          console.info "dd-create_toolenter:"+fly1+" innerHis:"+tes1.attr('src')  # log -----------#
           _socket.emit 'dd-create',
             ddid: fly1
             ddmess:'dd-create_toolenter'
             ddpos:  pos
         $us = $("body > img.tools")
         $us.on 'mousemove', ()->  #'click'
-          #console.info "dd-create_mousemove:"       # log -----------#
-          #$(@).draggable( helper:'original' )
+          #console.info "dd-create_mousemove:"        # log -----------#
+          $(@).draggable(
+            #helper:'original'
+          )
         $us.on 'mouseup', (e)->
           sotoFlag = false
           pos = $(@).position()
           # dragdrop add -------------------------#
           fly2 = $(@).attr("data-id")
-          console.info "dd-create_mouseup:"+fly2         # log -----------#
+          console.info "dd-create_mouseup:"+fly2       # log -----------#
           _socket.emit 'dd-create',
             ddid: fly2
             ddmess:'dd-create_mouseup'
@@ -166,7 +168,7 @@ coffee -wcb *.coffee
         $us.on 'dblclick', ()->
           # dragdrop add -------------------------#
           fly3 = $(@).attr("data-id")
-          console.info "dd-create_remove:"+fly3           # log -----------#
+          console.info "dd-create_remove:"+fly3        # log -----------#
           _socket.emit 'dd-create',
             ddid: fly3,
             ddmess: 'dd-create_remove'
