@@ -117,11 +117,11 @@ jQuery(function($) {
           if (dDrop.ddmess === 'dd-create_mouseup') {
             console.info(dDrop.ddpos);
             console.info($(this).get(0));
-            return $dDrop1.css(dDrop.ddpos);
+            return $(this).css(dDrop.ddpos);
           } else if (dDrop.ddmess === 'dd-create_remove') {
             return $(this).remove();
-          } else {
-            $dDrop1.css(dDrop.ddpos);
+          } else if (dDrop.ddmess === 'dd-create_toolenter') {
+            $(this).css(dDrop.ddpos);
             return $("body").append(this);
           }
         });
