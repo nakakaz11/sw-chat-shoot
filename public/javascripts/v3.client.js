@@ -107,9 +107,9 @@ jQuery(function($) {
       dDrop.userId = data.userId;
       dDrop1 = $("<div class='test'>Drop(uId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>");
       dDrop2 = $("<div class='test'>Move(uId:" + dDrop.userId + "/ddid:" + dDrop.ddid + ")</div>");
+      clone = $("div.toolbar > img.tools[data-id='" + dDrop.ddid + "']").clone();
       switch (dDrop.ddmess) {
         case 'dd-create_toolenter':
-          clone = $("div.toolbar > img.tools[data-id='" + dDrop.ddid + "']").clone();
           console.info($(clone).get(0));
           dDrop1.attr("data-user-id", dDrop.userId).css(dDrop.ddpos);
           return $("body").append(dDrop1);
@@ -151,7 +151,7 @@ jQuery(function($) {
           fly1 = $own.attr("data-id");
           tes1 = $();
           tes1.innerHTML = $own;
-          console.info("dd-create_toolenter:" + fly1 + " innerHis" + $(tes1).get(0));
+          console.info("dd-create_toolenter:" + fly1 + " innerHis" + tes1.get(0));
           _socket.emit('dd-create', {
             ddid: fly1,
             ddmess: 'dd-create_toolenter',
