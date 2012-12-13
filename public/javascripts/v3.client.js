@@ -110,19 +110,21 @@ jQuery(function($) {
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
       $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "'>").css("opacity", 0.5);
-      if (dDrop.ddmess === 'dd-create_toolenter') {
-        $(this).css(dDrop.ddpos);
-        $("body").append(this);
-      }
-      if (dDrop.ddmess === 'dd-create_mouseup') {
-        $(this).css(dDrop.ddpos);
-        $("body").append(this);
-      }
-      if (dDrop.ddmess === 'dd-create_remove') {
-        return $(this).remove();
-      } else {
+      return $dDrop1.each(function() {
+        if (dDrop.ddmess === 'dd-create_toolenter') {
+          $(this).css(dDrop.ddpos);
+          $("body").append(this);
+        }
+        if (dDrop.ddmess === 'dd-create_mouseup') {
+          $(this).css(dDrop.ddpos);
+          $("body").append(this);
+        }
+        if (dDrop.ddmess === 'dd-create_remove') {
+          return $(this).remove();
+        } else {
 
-      }
+        }
+      });
     }
   });
   /*
