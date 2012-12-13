@@ -126,6 +126,17 @@ jQuery(function($) {
   coffee -wcb *.coffee
   */
 
+  $toolbar = $("div.toolbar");
+  $.each(tools, function(i, tool) {
+    return $("<img>", tool).appendTo($toolbar);
+  });
+  sotoFlag = false;
+  $("div.toolbar img.tools").draggable({
+    helper: 'clone',
+    start: function() {
+      return sotoFlag = true;
+    }
+  });
   onDrag = function() {
     return $("body").droppable({
       tolerance: 'fit',
@@ -154,7 +165,7 @@ jQuery(function($) {
           });
         });
         $us.on('mouseout', function(e) {
-          var fly2, sotoFlag;
+          var fly2;
           sotoFlag = false;
           pos = $(this).position();
           fly2 = $(this).attr("data-id");
@@ -407,19 +418,8 @@ jQuery(function($) {
   $("button#btn").click(function() {
     return setTimeout(chat, 19);
   });
-  $("button#btnDbDel").click(function() {
+  return $("button#btnDbDel").click(function() {
     return setTimeout(delId, 19);
-  });
-  $toolbar = $("div.toolbar");
-  $.each(tools, function(i, tool) {
-    return $("<img>", tool).appendTo($toolbar);
-  });
-  sotoFlag = false;
-  return $("div.toolbar img.tools").draggable({
-    helper: 'clone',
-    start: function() {
-      return sotoFlag = true;
-    }
   });
   /*
   coffee -wcb *.coffee

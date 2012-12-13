@@ -113,10 +113,21 @@ jQuery ($) ->
         when 'dd-create_remove'
            console.info dDrop.ddmess   # log -----------#
         else null
-  #------------------------ dragdrop add ----------------------------------#
   ###
 coffee -wcb *.coffee
   ###
+  # dragdrop -------------------------------------------------------#
+  # 定義 drag and drop handlers
+  $toolbar = $("div.toolbar")   # toolBarパレットの生成元
+  $.each tools, (i, tool) ->     #JSONを$()に展開回し〜
+    $("<img>", tool).appendTo($toolbar)
+
+  sotoFlag = false    # toolbarから来たか判定
+  $("div.toolbar img.tools").draggable
+        #appendTo:'div.canvas'
+        helper:'clone'
+        start:->
+          sotoFlag = true  # toolbarから来たか判定
   onDrag = () ->            # handle drag
     $("body").droppable(
       tolerance:'fit'
@@ -358,18 +369,6 @@ coffee -wcb *.coffee
   $("button#btnDbDel").click ->
     setTimeout(delId, 19)         # 押し下げ判定（タイムラグ付）
 
-  # dragdrop -----------------------------------------------------------------------------------#
-  # 定義 drag and drop handlers
-  $toolbar = $("div.toolbar")   # toolBarパレットの生成元
-  $.each tools, (i, tool) ->     #JSONを$()に展開回し〜
-    $("<img>", tool).appendTo($toolbar)
-
-  sotoFlag = false    # toolbarから来たか判定
-  $("div.toolbar img.tools").draggable
-        #appendTo:'div.canvas'
-        helper:'clone'
-        start:->
-          sotoFlag = true  # toolbarから来たか判定
 
   ###
 coffee -wcb *.coffee
