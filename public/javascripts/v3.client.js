@@ -113,14 +113,15 @@ jQuery(function($) {
       clone = $("div.toolbar > img.tools[data-id='" + dDrop.ddid + "']").clone();
       infonowana = clone;
       if (dDrop.ddmess === 'dd-create_toolenter' || 'dd-create_mouseup' || 'dd-create_remove') {
-        console.info(clone.get(0));
         console.info(dDrop.ddmess);
         return $dDrop1.each(function() {
           if (dDrop.ddmess === 'dd-create_mouseup') {
-            return $(this).css(dDrop.ddpos);
+            console.info(dDrop.ddpos);
+            return this.css(dDrop.ddpos);
           } else if (dDrop.ddmess === 'dd-create_remove') {
-            return $(this).remove();
+            return this.remove();
           } else {
+            console.info(dDrop.ddpos);
             $dDrop1.css(dDrop.ddpos);
             return $("body").append(this);
           }

@@ -104,15 +104,17 @@ jQuery ($) ->
       clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
       infonowana = clone
       if dDrop.ddmess is 'dd-create_toolenter' or 'dd-create_mouseup' or 'dd-create_remove'
-          console.info clone.get(0)            # log -----------#
+          #console.info clone.get(0)            # log -----------#
           #console.info "コンソール+testは代入注意(´･_･`) CloneIs:"+ infonowana   # log -----#
           console.info dDrop.ddmess            # log -----------#
           $dDrop1.each ->
             if dDrop.ddmess is 'dd-create_mouseup'
-              $(@).css(dDrop.ddpos)
+              console.info dDrop.ddpos            # log -----------#
+              @.css(dDrop.ddpos)
             else if dDrop.ddmess is 'dd-create_remove'
-              $(@).remove()
+              @.remove()
             else
+              console.info dDrop.ddpos            # log -----------#
               $dDrop1.css(dDrop.ddpos)
               $("body").append(@)
   ###
