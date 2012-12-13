@@ -98,7 +98,8 @@ jQuery(function($) {
     }
   });
   _socket.on("dd-create", function(data) {
-    var $dDrop1, dDrop;
+    var $dDrop1, dDrop,
+      _this = this;
     dDrop = _ddMap[data.userId];
     if (dDrop !== undefined) {
       dDrop.ddid = data.dd_dt.ddid;
@@ -112,16 +113,15 @@ jQuery(function($) {
       $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "'>").css("opacity", 0.5);
       return $dDrop1.each(function() {
         if (dDrop.ddmess === 'dd-create_toolenter') {
-          $(this).css(dDrop.ddpos);
-          $("body").append(this);
+          $(_this).css(dDrop.ddpos);
+          $("body").append(_this);
         }
         if (dDrop.ddmess === 'dd-create_mouseup') {
-          $(this).remove();
-          $(this).css(dDrop.ddpos);
-          $("body").append(this);
+          $(_this).css(dDrop.ddpos);
+          $("body").append(_this);
         }
         if (dDrop.ddmess === 'dd-create_remove') {
-          return $(this).remove();
+          return $(_this).remove();
         } else {
 
         }
