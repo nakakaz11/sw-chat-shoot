@@ -4,7 +4,7 @@ var tools;
 jQuery(function($) {
   "use strict";
 
-  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, mousedown, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
+  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, ddcount, delId, f, mousedown, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
@@ -97,6 +97,7 @@ jQuery(function($) {
       return bullet.v = data.data.v;
     }
   });
+  ddcount = 0;
   _socket.on("dd-create", function(data) {
     var $dDrop1, dDrop;
     dDrop = _ddMap[data.userId];
@@ -109,15 +110,19 @@ jQuery(function($) {
       dDrop.userId = data.userId;
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
+      dDrop.ddcount = data.dd_dt.ddcount;
       $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "'>").css("opacity", 0.5);
       return $dDrop1.each(function() {
         if (dDrop.ddmess === 'dd-create_toolenter') {
           $(this).css(dDrop.ddpos);
-          $("body").append(this);
+          $("body").append(this).attr('data-ddcount', ddcount);
+          _socket.emit('dd-create', {
+            ddcount: ddcount
+          });
+          ddcount++;
         }
         if (dDrop.ddmess === 'dd-create_mouseup') {
-          $(this).css(dDrop.ddpos);
-          $("body").append(this);
+          $("img.test[data-ddcount='" + dDrop.ddcount + "']").css(dDrop.ddpos);
         }
         if (dDrop.ddmess === 'dd-create_remove') {
           return $(this).remove();
@@ -188,7 +193,8 @@ jQuery(function($) {
           tit: dragImg.tit,
           ddesc: dragImg.ddesc,
           ddmess: 'dd-create_mouseup',
-          ddpos: dragImg.pos
+          ddpos: dragImg.pos,
+          ddcount: dragImg.pos
         });
         return ev.preventDefault();
       });
