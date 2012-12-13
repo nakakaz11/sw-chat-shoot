@@ -113,7 +113,7 @@ jQuery(function($) {
           console.info(clone);
           dDrop1.attr("data-user-id", dDrop.userId).css(dDrop.ddpos);
           return $("body").append(dDrop1);
-        case 'dd-create_mouseout':
+        case 'dd-create_mouseup':
           return dDrop2.css(dDrop.ddpos).attr("data-user-id", dDrop.userId).appendTo("body");
         case 'dd-create_remove':
           return console.info(dDrop.ddmess);
@@ -164,7 +164,7 @@ jQuery(function($) {
             helper: 'original'
           });
         });
-        $us.on('mouseout', function(e) {
+        $us.on('mouseup', function(e) {
           var fly2;
           sotoFlag = false;
           pos = $(this).position();
@@ -172,7 +172,7 @@ jQuery(function($) {
           console.info("dd-create_mouseout:" + fly2);
           _socket.emit('dd-create', {
             ddid: fly2,
-            ddmess: 'dd-create_mouseout',
+            ddmess: 'dd-create_mouseup',
             ddpos: pos
           });
           return e.preventDefault();

@@ -106,7 +106,7 @@ jQuery ($) ->
           dDrop1.attr("data-user-id", dDrop.userId)
                 .css(dDrop.ddpos)
           $("body").append(dDrop1)
-        when 'dd-create_mouseout'
+        when 'dd-create_mouseup'
           dDrop2.css(dDrop.ddpos)
                 .attr("data-user-id", dDrop.userId)
                 .appendTo("body")
@@ -151,7 +151,7 @@ coffee -wcb *.coffee
         $us.on 'mousemove', ()->  #'click'
           console.info "dd-create_mousemove:"+fly2       # log -----------#
           $(@).draggable( helper:'original' )
-        $us.on 'mouseout', (e)->
+        $us.on 'mouseup', (e)->
           sotoFlag = false
           pos = $(@).position()
           # dragdrop add -------------------------#
@@ -159,7 +159,7 @@ coffee -wcb *.coffee
           console.info "dd-create_mouseout:"+fly2         # log -----------#
           _socket.emit 'dd-create',
             ddid: fly2
-            ddmess:'dd-create_mouseout'
+            ddmess:'dd-create_mouseup'
             ddpos:  pos
           e.preventDefault()
 
