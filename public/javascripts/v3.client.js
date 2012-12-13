@@ -112,14 +112,14 @@ jQuery(function($) {
       $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "'>").css("opacity", 0.5);
       clone = $("div.toolbar > img.tools[data-id='" + dDrop.ddid + "']").clone();
       infonowana = clone;
-      if (dDrop.ddmess === 'dd-create_toolenter') {
+      if (dDrop.ddmess === 'dd-create_toolenter' || 'dd-create_mouseup' || 'dd-create_remove') {
         console.info(clone.get(0));
         console.info("コンソール+testは代入注意(´･_･`) CloneIs:" + infonowana);
+        console.info(dDrop.ddmess);
         return $dDrop1.each(function() {
           if (dDrop.ddmess === 'dd-create_mouseup') {
             return $(this).css(dDrop.ddpos);
           } else if (dDrop.ddmess === 'dd-create_remove') {
-            console.info(dDrop.ddmess);
             return $(this).remove();
           } else {
             $dDrop1.css(dDrop.ddpos);
