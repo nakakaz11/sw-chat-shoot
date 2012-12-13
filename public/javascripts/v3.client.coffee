@@ -110,9 +110,9 @@ jQuery ($) ->
           when 'dd-create_mouseup'
             console.info dDrop.ddpos            # log -----------#
             console.info $(@).get(0)            # log -----------#
-            $(@).css(dDrop.ddpos)
+            $("body").append(@).css(dDrop.ddpos)
           when 'dd-create_remove'
-            $(@).remove()
+            $("body").append(@).remove()
           when 'dd-create_toolenter'
             $(@).css(dDrop.ddpos)
             $("body").append(@)
