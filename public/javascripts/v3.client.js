@@ -115,8 +115,8 @@ jQuery(function($) {
         var _that;
         switch (dDrop.ddmess) {
           case 'dd-create_mouseup':
-            _that = $("body").contents().filter("img.test[data-count='" + ddcount + "']");
-            console.info($(_that));
+            _that = $("body").find("img.test[data-count='" + ddcount + "']").contents();
+            console.info($(_that).get(0));
             return $("img.test[data-count='" + ddcount + "']").css(dDrop.ddpos);
           case 'dd-create_remove':
             return $(this).remove();
