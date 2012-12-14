@@ -110,8 +110,7 @@ jQuery ($) ->
         if dDrop.ddmess is'dd-create_toolenter'
           $(@).css(dDrop.ddpos)
           $("body").append(@)#.attr('data-ddcount',ddcount)
-          _socket.emit 'dd-create',
-            ddcount : ddcount
+          console.info "ddcountIs:"+ddcount
           ddcount++
         if dDrop.ddmess is'dd-create_mouseup'
           #console.info dDrop.ddpos            # log -----------#

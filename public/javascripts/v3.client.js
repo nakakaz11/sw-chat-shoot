@@ -115,9 +115,7 @@ jQuery(function($) {
         if (dDrop.ddmess === 'dd-create_toolenter') {
           $(this).css(dDrop.ddpos);
           $("body").append(this);
-          _socket.emit('dd-create', {
-            ddcount: ddcount
-          });
+          console.info("ddcountIs:" + ddcount);
           ddcount++;
         }
         if (dDrop.ddmess === 'dd-create_mouseup') {
