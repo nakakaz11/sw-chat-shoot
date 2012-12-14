@@ -112,6 +112,7 @@ jQuery(function($) {
       dDrop.ddpos = data.dd_dt.ddpos;
       $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "' data-userid='" + dDrop.userId + "'>").css("opacity", 0.5);
       return $dDrop1.each(function() {
+        console.info("ddcountIs:" + ddcount);
         switch (dDrop.ddmess) {
           case 'dd-create_mouseup':
             console.info($(this).get(0));
@@ -120,7 +121,6 @@ jQuery(function($) {
           case 'dd-create_remove':
             return $(this).remove();
           case 'dd-create_toolenter':
-            console.info("ddcountIs:" + ddcount);
             $(this).css(dDrop.ddpos);
             $("body").append(this);
             return ddcount++;

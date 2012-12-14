@@ -105,6 +105,7 @@ jQuery ($) ->
       #console.info clone.get(0)            # log -----------#
       #console.info dDrop.ddmess            # log -----------#
       $dDrop1.each ->
+        console.info "ddcountIs:"+ddcount       # log -------# 相手の総カウント
         switch dDrop.ddmess
           when 'dd-create_mouseup'
             console.info $(@).get(0)            # log -----------#
@@ -113,10 +114,9 @@ jQuery ($) ->
           when 'dd-create_remove'
             $(@).remove()
           when 'dd-create_toolenter'
-            console.info "ddcountIs:"+ddcount     # log -----------#
             $(@).css(dDrop.ddpos)
             $("body").append(@)
-            ddcount++
+            ddcount++                # 相手の総カウント
           else return
   ###
 coffee -wcb *.coffee
