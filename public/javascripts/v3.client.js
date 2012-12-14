@@ -117,7 +117,7 @@ jQuery(function($) {
         ddMyCountTarget = $("img.test[data-count='" + dDrop.ddcount + "']");
         switch (dDrop.ddmess) {
           case 'dd-create_mouseup':
-            console.info('カウント多い？#{dDrop.ddpos}');
+            console.info('カウント多い？' + dDrop.ddpos);
             return ddMyCountTarget.animate(dDrop.ddpos, "fast", "easeOutExpo");
           case 'dd-create_remove':
             return ddMyCountTarget.remove();
@@ -171,8 +171,8 @@ jQuery(function($) {
           ddpos: pos
         });
         _socket.on("dd-create", function(data) {
-          dragImg.ddcount = data.dd_dt.ddOwnCount;
-          $own.addClass("myDropImg").attr("data-count", dragImg.ddcount);
+          dragImg.ddOwnCount = data.dd_dt.ddOwnCount;
+          $own.addClass("myDropImg").attr("data-count", dragImg.ddOwnCount);
           return $(this).append($own);
         });
       }
@@ -191,6 +191,7 @@ jQuery(function($) {
         dragImg.ddesc = $ownUp.attr('data-description');
         dragImg.pos = $ownUp.position();
         dragImg.ddcount = $ownUp.attr('data-count');
+        console.info("dd-create_mouseup:count:" + dragImg.ddcount);
         _socket.emit('dd-create', {
           ddid: dragImg.dataId,
           src: dragImg.src,

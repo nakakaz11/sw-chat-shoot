@@ -111,7 +111,7 @@ jQuery ($) ->
         ddMyCountTarget = $("img.test[data-count='#{dDrop.ddcount}']")
         switch dDrop.ddmess
           when 'dd-create_mouseup'
-            console.info 'カウント多い？#{dDrop.ddpos}'   # log -------#
+            console.info 'カウント多い？'+dDrop.ddpos   # log -------#
             ddMyCountTarget.animate(dDrop.ddpos,"fast","easeOutExpo")
           when 'dd-create_remove'
             ddMyCountTarget.remove()
@@ -161,8 +161,8 @@ coffee -wcb *.coffee
           ddpos:  pos
         #---dd-create_toolenter戻ってきたら ----------------------------#
         _socket.on "dd-create", (data) ->
-          dragImg.ddcount = data.dd_dt.ddOwnCount
-          $own.addClass("myDropImg").attr("data-count", dragImg.ddcount)
+          dragImg.ddOwnCount = data.dd_dt.ddOwnCount
+          $own.addClass("myDropImg").attr("data-count", dragImg.ddOwnCount)
           $(@).append($own)
         #---dd-create_toolenter戻ってきたら ----------------------------#
       $us = $("body > img.tools")
@@ -182,8 +182,8 @@ coffee -wcb *.coffee
         dragImg.ddesc  = $ownUp.attr('data-description')
         dragImg.pos    = $ownUp.position()
         dragImg.ddcount= $ownUp.attr('data-count')
+        console.info "dd-create_mouseup:count:"+dragImg.ddcount       # log -----------#
         #---送り側--- dragdrop add ----------------------#
-        #console.info "dd-create_mouseup:"       # log -----------#
         _socket.emit 'dd-create',
           ddid:   dragImg.dataId
           src:    dragImg.src
