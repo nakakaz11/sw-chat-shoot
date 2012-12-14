@@ -87,6 +87,7 @@ jQuery ($) ->
       bullet.v = data.data.v
 
   #-------------受け側----------- dragdrop add ----------------------------------#
+  ddcount = 0
   _socket.on "dd-create", (data) ->
     dDrop = _ddMap[data.userId]
     if dDrop isnt `undefined`
@@ -100,23 +101,27 @@ jQuery ($) ->
       dDrop.ddpos  = data.dd_dt.ddpos
       $dDrop1 = $("<img data-id='#{dDrop.ddid}' class='test' alt='#{dDrop.alt}' title='#{dDrop.tit}' src='#{dDrop.src}' data-description='#{dDrop.ddesc}'>").css("opacity", 0.5)
       #dDrop2 = $("<div class='test'>Move(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
-      clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
-      infonowana = clone
+      #clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
+      #infonowana = clone
       #console.info clone.get(0)            # log -----------#
       #console.info "コンソール+testは代入注意(´･_･`) CloneIs:"+ infonowana   # log -----#
       #console.info dDrop.ddmess            # log -----------#
       $dDrop1.each ->
-        switch dDrop.ddmess
-          when 'dd-create_mouseup'
-            console.info dDrop.ddpos            # log -----------#
-            console.info $(@).get(0)            # log -----------#
-            $(@).css(dDrop.ddpos)
-          when 'dd-create_remove'
-            $(@).remove()
-          when 'dd-create_toolenter'
-            $(@).css(dDrop.ddpos)
-            $("body").append(@)
-          else return
+        if dDrop.ddmess is'dd-create_toolenter'
+          $(@).css(dDrop.ddpos)
+          $("body").append(@)#.attr('data-ddcount',ddcount)
+          _socket.emit 'dd-create',
+            ddcount : ddcount
+          ddcount++
+        if dDrop.ddmess is'dd-create_mouseup'
+          #console.info dDrop.ddpos            # log -----------#
+          #console.info $(@).get(0)            # log -----------#
+          $(@).css(dDrop.ddpos)
+          $("body").append(@)
+          #$("img.test[data-ddcount='#{dDrop.ddcount}']").css(dDrop.ddpos)
+        if dDrop.ddmess is'dd-create_remove'
+          $(@).remove()
+        else return
   ###
 coffee -wcb *.coffee
   ###
@@ -147,7 +152,7 @@ coffee -wcb *.coffee
         dropImg.src    = $own.attr('src')
         dropImg.alt    = $own.attr('alt')
         dropImg.tit    = $own.attr('title')
-        dropImg.ddesc    = $own.attr('data-description')
+        dropImg.ddesc  = $own.attr('data-description')
         _socket.emit 'dd-create',
           ddid:   dropImg.dataId
           src:    dropImg.src
