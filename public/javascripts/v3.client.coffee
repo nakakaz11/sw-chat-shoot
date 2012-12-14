@@ -105,7 +105,7 @@ jQuery ($) ->
       #console.info clone.get(0)            # log -----------#
       #console.info dDrop.ddmess            # log -----------#
       $dDrop1.each ->
-        ddMyCountTarget = $("img.test[data-count='#{ddMyCount-1}']")
+        ddMyCountTarget = $("img.test[data-count='#{ddcount-1}']")
         # 相手の総カウント反映_this
         switch dDrop.ddmess
           when 'dd-create_mouseup'

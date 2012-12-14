@@ -113,7 +113,7 @@ jQuery(function($) {
       $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "' data-userid='" + dDrop.userId + "'>").css("opacity", 0.5);
       return $dDrop1.each(function() {
         var ddMyCountTarget;
-        ddMyCountTarget = $("img.test[data-count='" + (ddMyCount - 1) + "']");
+        ddMyCountTarget = $("img.test[data-count='" + (ddcount - 1) + "']");
         switch (dDrop.ddmess) {
           case 'dd-create_mouseup':
             return ddMyCountTarget.css(dDrop.ddpos);
