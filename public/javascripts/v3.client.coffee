@@ -145,6 +145,8 @@ coffee -wcb *.coffee
       dragImg = {}
       if sotoFlag
         pos = $own.position()
+        $own.addClass("myDropImg")
+        $(@).append($own)
         #---送り側--- dragdrop add ----------------------#
         dropImg.dataId = $own.attr("data-id")
         dropImg.src    = $own.attr('src')
@@ -163,9 +165,7 @@ coffee -wcb *.coffee
         _socket.on "dd-create", (data) ->
           dragImg.ddOwnCount = data.dd_dt.ddOwnCount
           console.info "dd-create_:count:"+dragImg.ddOwnCount       # log -----------#
-          $own.addClass("myDropImg")
           $own.attr("data-count", dragImg.ddOwnCount)
-          $(@).append($own)
         #---dd-create_toolenter戻ってきたら ----------------------------#
       $us = $("body > img.tools")
       $us.on 'mousemove', ()->  #'click'

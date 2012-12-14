@@ -156,6 +156,8 @@ jQuery(function($) {
       dragImg = {};
       if (sotoFlag) {
         pos = $own.position();
+        $own.addClass("myDropImg");
+        $(this).append($own);
         dropImg.dataId = $own.attr("data-id");
         dropImg.src = $own.attr('src');
         dropImg.alt = $own.attr('alt');
@@ -173,9 +175,7 @@ jQuery(function($) {
         _socket.on("dd-create", function(data) {
           dragImg.ddOwnCount = data.dd_dt.ddOwnCount;
           console.info("dd-create_:count:" + dragImg.ddOwnCount);
-          $own.addClass("myDropImg");
-          $own.attr("data-count", dragImg.ddOwnCount);
-          return $(this).append($own);
+          return $own.attr("data-count", dragImg.ddOwnCount);
         });
       }
       $us = $("body > img.tools");
