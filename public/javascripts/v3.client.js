@@ -115,9 +115,8 @@ jQuery(function($) {
         console.info("ddcountIs:" + ddcount);
         switch (dDrop.ddmess) {
           case 'dd-create_mouseup':
-            console.info($(this).get(0));
-            $(this).css(dDrop.ddpos);
-            return $("body").append(this);
+            console.info("ddcountIs:" + ddcount);
+            return $("img.test[data-count='" + ddcount + "']").css(dDrop.ddpos);
           case 'dd-create_remove':
             return $(this).remove();
           case 'dd-create_toolenter':

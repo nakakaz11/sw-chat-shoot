@@ -108,9 +108,8 @@ jQuery ($) ->
         console.info "ddcountIs:"+ddcount       # log -------# 相手の総カウント
         switch dDrop.ddmess
           when 'dd-create_mouseup'
-            console.info $(@).get(0)            # log -----------#
-            $(@).css(dDrop.ddpos)
-            $("body").append(@)
+            console.info "ddcountIs:"+ddcount       # log -------# 相手の総カウント
+            $("img.test[data-count='#{ddcount}']").css(dDrop.ddpos)
           when 'dd-create_remove'
             $(@).remove()
           when 'dd-create_toolenter'
