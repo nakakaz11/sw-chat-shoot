@@ -111,9 +111,9 @@ jQuery ($) ->
         #ddMyCountTarget = $("img.test[data-count='#{dDrop.ddcount}']")
         switch dDrop.ddmess
           when 'dd-create_mouseup'
-            console.info 'ddpos多い？', dDrop.ddpos   # log -------#
             #console.info 'カウント:', dDrop.ddcount   # log -------#
             ddMyCountTarget.animate(dDrop.ddpos,"fast","easeOutExpo")
+            #console.info 'ddpos多い？', dDrop.ddpos   # log -------#
           when 'dd-create_remove'
             ddMyCountTarget.remove()
           when 'dd-create_toolenter'
@@ -192,7 +192,7 @@ coffee -wcb *.coffee
           alt:    dragImg.alt
           tit:    dragImg.tit
           ddesc:  dragImg.ddesc
-          ddmess:'dd-create_mouseup'
+          ddmess: 'dd-create_mouseup'
           ddpos:  dragImg.pos
           #ddcount:dragImg.ddcount
         ev.preventDefault()

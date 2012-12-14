@@ -116,7 +116,6 @@ jQuery(function($) {
         ddMyCountTarget = $("img.test[data-count='" + (ddcount - 1) + "']");
         switch (dDrop.ddmess) {
           case 'dd-create_mouseup':
-            console.info('ddpos多い？', dDrop.ddpos);
             return ddMyCountTarget.animate(dDrop.ddpos, "fast", "easeOutExpo");
           case 'dd-create_remove':
             return ddMyCountTarget.remove();
