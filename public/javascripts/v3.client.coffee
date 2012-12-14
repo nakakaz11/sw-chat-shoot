@@ -110,7 +110,7 @@ jQuery ($) ->
         switch dDrop.ddmess
           when 'dd-create_mouseup'
             #console.info ddMyCountTarget.get(0)    # log -------#
-            ddMyCountTarget.css(dDrop.ddpos)
+            ddMyCountTarget.animate(dDrop.ddpos,"fast","easeOutExpo")
           when 'dd-create_remove'
             ddMyCountTarget.remove()
           when 'dd-create_toolenter'
