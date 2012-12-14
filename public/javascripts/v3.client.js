@@ -4,7 +4,7 @@ var tools;
 jQuery(function($) {
   "use strict";
 
-  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, ddcount, delId, f, mousedown, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
+  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, delId, f, mousedown, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
@@ -97,9 +97,8 @@ jQuery(function($) {
       return bullet.v = data.data.v;
     }
   });
-  ddcount = 0;
   _socket.on("dd-create", function(data) {
-    var $dDrop1, dDrop;
+    var $dDrop1, clone, dDrop, infonowana;
     dDrop = _ddMap[data.userId];
     if (dDrop !== undefined) {
       dDrop.ddid = data.dd_dt.ddid;
@@ -111,23 +110,19 @@ jQuery(function($) {
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
       $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "'>").css("opacity", 0.5);
+      clone = $("div.toolbar > img.tools[data-id='" + dDrop.ddid + "']").clone();
+      infonowana = clone;
       return $dDrop1.each(function() {
-        if (dDrop.ddmess === 'dd-create_toolenter') {
-          $(this).css(dDrop.ddpos);
-          $("body").append(this);
-          _socket.emit('dd-create', {
-            ddcount: ddcount
-          });
-          ddcount++;
-        }
-        if (dDrop.ddmess === 'dd-create_mouseup') {
-          $(this).css(dDrop.ddpos);
-          $("body").append(this);
-        }
-        if (dDrop.ddmess === 'dd-create_remove') {
-          return $(this).remove();
-        } else {
-
+        switch (dDrop.ddmess) {
+          case 'dd-create_mouseup':
+            console.info(dDrop.ddpos);
+            console.info($(this).get(0));
+            return $(this).css(dDrop.ddpos);
+          case 'dd-create_remove':
+            return $(this).remove();
+          case 'dd-create_toolenter':
+            $(this).css(dDrop.ddpos);
+            return $("body").append(this);
         }
       });
     }
