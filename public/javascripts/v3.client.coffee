@@ -99,7 +99,6 @@ jQuery ($) ->
       dDrop.userId = data.userId
       dDrop.ddmess = data.dd_dt.ddmess
       dDrop.ddpos  = data.dd_dt.ddpos
-      dDrop.ddcount= data.dd_dt.ddcount
       $dDrop1 = $("<img data-id='#{dDrop.ddid}' class='test' alt='#{dDrop.alt}' title='#{dDrop.tit}' src='#{dDrop.src}' data-description='#{dDrop.ddesc}'>").css("opacity", 0.5)
       #dDrop2 = $("<div class='test'>Move(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
       #clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
@@ -110,7 +109,7 @@ jQuery ($) ->
       $dDrop1.each ->
         if dDrop.ddmess is'dd-create_toolenter'
           $(@).css(dDrop.ddpos)
-          $("body").append(@).attr('data-ddcount',ddcount)
+          $("body").append(@)#.attr('data-ddcount',ddcount)
           _socket.emit 'dd-create',
             ddcount : ddcount
           ddcount++
