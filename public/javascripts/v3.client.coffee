@@ -108,8 +108,8 @@ jQuery ($) ->
         #console.info "ddcountIs:"+ddcount       # log -------# 相手の総カウント
         switch dDrop.ddmess
           when 'dd-create_mouseup'
-            _that = $("img.test").attr("[data-count='#{ddcount}']")
-            console.info _that       # log -------# 相手の総カウント
+            _that = $("img.test[data-count='#{ddcount}']").clone()
+            console.info $(_that).get(0)       # log -------# 相手の総カウント
             $("img.test[data-count='#{ddcount}']").css(dDrop.ddpos)
           when 'dd-create_remove'
             $(@).remove()
@@ -148,7 +148,7 @@ coffee -wcb *.coffee
         dropImg.src    = $own.attr('src')
         dropImg.alt    = $own.attr('alt')
         dropImg.tit    = $own.attr('title')
-        dropImg.ddesc    = $own.attr('data-description')
+        dropImg.ddesc  = $own.attr('data-description')
         _socket.emit 'dd-create',
           ddid:   dropImg.dataId
           src:    dropImg.src
@@ -164,15 +164,15 @@ coffee -wcb *.coffee
           #helper:'original'
         )
       $us.on 'mouseup', (ev)->
-        $own = $(@)
+        $ownUp = $(@)
         #console.info $(@).get(0)      # log -----------#
         sotoFlag = false
-        dragImg.dataId = $own.attr("data-id")
-        dragImg.src    = $own.attr('src')
-        dragImg.alt    = $own.attr('alt')
-        dragImg.tit    = $own.attr('title')
-        dragImg.ddesc  = $own.attr('data-description')
-        dragImg.pos    = $own.position()
+        dragImg.dataId = $ownUp.attr("data-id")
+        dragImg.src    = $ownUp.attr('src')
+        dragImg.alt    = $ownUp.attr('alt')
+        dragImg.tit    = $ownUp.attr('title')
+        dragImg.ddesc  = $ownUp.attr('data-description')
+        dragImg.pos    = $ownUp.position()
         #---送り側--- dragdrop add ----------------------#
         #console.info "dd-create_mouseup:"       # log -----------#
         _socket.emit 'dd-create',
@@ -186,13 +186,13 @@ coffee -wcb *.coffee
         ev.preventDefault()
 
       $us.on 'dblclick', ()->
-        $own = $(@)
-        dragImg.dataId = $own.attr("data-id")
-        dragImg.src    = $own.attr('src')
-        dragImg.alt    = $own.attr('alt')
-        dragImg.tit    = $own.attr('title')
-        dragImg.ddesc  = $own.attr('data-description')
-        dragImg.pos    = $own.position()
+        $ownRm = $(@)
+        dragImg.dataId = $ownRm.attr("data-id")
+        dragImg.src    = $ownRm.attr('src')
+        dragImg.alt    = $ownRm.attr('alt')
+        dragImg.tit    = $ownRm.attr('title')
+        dragImg.ddesc  = $ownRm.attr('data-description')
+        dragImg.pos    = $ownRm.position()
         #---送り側--- dragdrop add ----------------------#
         #console.info "dd-create_remove:"        # log -----------#
         _socket.emit 'dd-create',

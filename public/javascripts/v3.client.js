@@ -115,8 +115,8 @@ jQuery(function($) {
         var _that;
         switch (dDrop.ddmess) {
           case 'dd-create_mouseup':
-            _that = $("img.test").attr("[data-count='" + ddcount + "']");
-            console.info(_that);
+            _that = $("img.test[data-count='" + ddcount + "']").clone();
+            console.info($(_that).get(0));
             return $("img.test[data-count='" + ddcount + "']").css(dDrop.ddpos);
           case 'dd-create_remove':
             return $(this).remove();
@@ -174,14 +174,15 @@ jQuery(function($) {
         return $(this).draggable();
       });
       $us.on('mouseup', function(ev) {
-        $own = $(this);
+        var $ownUp;
+        $ownUp = $(this);
         sotoFlag = false;
-        dragImg.dataId = $own.attr("data-id");
-        dragImg.src = $own.attr('src');
-        dragImg.alt = $own.attr('alt');
-        dragImg.tit = $own.attr('title');
-        dragImg.ddesc = $own.attr('data-description');
-        dragImg.pos = $own.position();
+        dragImg.dataId = $ownUp.attr("data-id");
+        dragImg.src = $ownUp.attr('src');
+        dragImg.alt = $ownUp.attr('alt');
+        dragImg.tit = $ownUp.attr('title');
+        dragImg.ddesc = $ownUp.attr('data-description');
+        dragImg.pos = $ownUp.position();
         _socket.emit('dd-create', {
           ddid: dragImg.dataId,
           src: dragImg.src,
@@ -194,13 +195,14 @@ jQuery(function($) {
         return ev.preventDefault();
       });
       $us.on('dblclick', function() {
-        $own = $(this);
-        dragImg.dataId = $own.attr("data-id");
-        dragImg.src = $own.attr('src');
-        dragImg.alt = $own.attr('alt');
-        dragImg.tit = $own.attr('title');
-        dragImg.ddesc = $own.attr('data-description');
-        dragImg.pos = $own.position();
+        var $ownRm;
+        $ownRm = $(this);
+        dragImg.dataId = $ownRm.attr("data-id");
+        dragImg.src = $ownRm.attr('src');
+        dragImg.alt = $ownRm.attr('alt');
+        dragImg.tit = $ownRm.attr('title');
+        dragImg.ddesc = $ownRm.attr('data-description');
+        dragImg.pos = $ownRm.position();
         _socket.emit('dd-create', {
           ddid: dragImg.dataId,
           src: dragImg.src,
