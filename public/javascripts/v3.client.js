@@ -117,7 +117,6 @@ jQuery(function($) {
         switch (dDrop.ddmess) {
           case 'dd-create_mouseup':
             console.info('ddpos多い？', dDrop.ddpos);
-            console.info('カウント:', dDrop.ddcount);
             return ddMyCountTarget.animate(dDrop.ddpos, "fast", "easeOutExpo");
           case 'dd-create_remove':
             return ddMyCountTarget.remove();
@@ -156,9 +155,9 @@ jQuery(function($) {
       dropImg = {};
       dragImg = {};
       if (sotoFlag) {
-        pos = $own.position();
         $own.addClass("myDropImg");
         $(this).append($own);
+        pos = $own.position();
         dropImg.dataId = $own.attr("data-id");
         dropImg.src = $own.attr('src');
         dropImg.alt = $own.attr('alt');

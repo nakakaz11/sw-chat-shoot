@@ -112,7 +112,7 @@ jQuery ($) ->
         switch dDrop.ddmess
           when 'dd-create_mouseup'
             console.info 'ddpos多い？', dDrop.ddpos   # log -------#
-            console.info 'カウント:', dDrop.ddcount   # log -------#
+            #console.info 'カウント:', dDrop.ddcount   # log -------#
             ddMyCountTarget.animate(dDrop.ddpos,"fast","easeOutExpo")
           when 'dd-create_remove'
             ddMyCountTarget.remove()
@@ -145,9 +145,9 @@ coffee -wcb *.coffee
       dropImg = {}
       dragImg = {}
       if sotoFlag
-        pos = $own.position()
         $own.addClass("myDropImg")
         $(@).append($own)
+        pos = $own.position()
         #---送り側--- dragdrop add ----------------------#
         dropImg.dataId = $own.attr("data-id")
         dropImg.src    = $own.attr('src')
