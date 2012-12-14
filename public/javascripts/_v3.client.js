@@ -120,8 +120,12 @@ jQuery(function($) {
           case 'dd-create_remove':
             return ddMyCountTarget.remove();
           case 'dd-create_toolenter':
-            $(this).css(dDrop.ddpos).attr("data-count", ddcount);
-            $("body").append(this);
+            $(this).attr("data-count", ddcount);
+            $("body").append(this).css(dDrop.ddpos);
+            /*_socket.emit 'dd-create',
+              ddOwnCount : ddcount   # 相手の総カウント追加していくemit
+            */
+
             return ddcount++;
         }
       });
@@ -167,6 +171,11 @@ jQuery(function($) {
           ddmess: 'dd-create_toolenter',
           ddpos: pos
         });
+        /*_socket.on "dd-create", (data) ->
+          dragImg.ddOwnCount = data.dd_dt.ddOwnCount
+          $own.attr("data-count", dragImg.ddOwnCount)
+        */
+
       }
       $us = $("body > img.tools");
       $us.on('mousemove', function() {

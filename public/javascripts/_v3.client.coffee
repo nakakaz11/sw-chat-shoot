@@ -99,6 +99,7 @@ jQuery ($) ->
       dDrop.userId = data.userId
       dDrop.ddmess = data.dd_dt.ddmess
       dDrop.ddpos  = data.dd_dt.ddpos
+      #dDrop.ddcount  = data.dd_dt.ddcount
       $dDrop1 = $("<img data-id='#{dDrop.ddid}' class='test' alt='#{dDrop.alt}' title='#{dDrop.tit}' src='#{dDrop.src}' data-description='#{dDrop.ddesc}' data-userid='#{dDrop.userId}'>").css("opacity", 0.5)
       #dDrop2 = $("<div class='test'>Move(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
       #clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
@@ -106,17 +107,21 @@ jQuery ($) ->
       #console.info dDrop.ddmess            # log -----------#
       $dDrop1.each ->
         ddMyCountTarget = $("img.test[data-count='#{ddcount-1}']")
-        # 相手の総カウント反映_this
+        # ↑相手の総カウント反映_thisのmoveTest （あとでddcount(ddOwnCount)と入れ替え）
+        #ddMyCountTarget = $("img.test[data-count='#{dDrop.ddcount}']")
         switch dDrop.ddmess
           when 'dd-create_mouseup'
-            #console.info ddMyCountTarget.get(0)    # log -------#
+            #console.info 'カウント:', dDrop.ddcount   # log -------#
             ddMyCountTarget.animate(dDrop.ddpos,"fast","easeOutExpo")
+            #console.info 'ddpos多い？', dDrop.ddpos   # log -------#
           when 'dd-create_remove'
             ddMyCountTarget.remove()
           when 'dd-create_toolenter'
-            $(@).css(dDrop.ddpos).attr("data-count",ddcount)
-            $("body").append(@)
-            ddcount++              # 相手の総カウント追加していく
+            $(@).attr("data-count",ddcount)
+            $("body").append(@).css(dDrop.ddpos)
+            ###_socket.emit 'dd-create',
+              ddOwnCount : ddcount   # 相手の総カウント追加していくemit###
+            ddcount++                # 相手の総カウント追加していく
           else return
   ###
 coffee -wcb *.coffee
@@ -157,6 +162,12 @@ coffee -wcb *.coffee
           ddesc:  dropImg.ddesc
           ddmess:'dd-create_toolenter'
           ddpos:  pos
+        #---dd-create_toolenter戻ってきたら ----------------------------#
+        ###_socket.on "dd-create", (data) ->
+          dragImg.ddOwnCount = data.dd_dt.ddOwnCount
+          $own.attr("data-count", dragImg.ddOwnCount)###
+        #console.info "dd-create_:count:"+dragImg.ddOwnCount       # log -----------#
+        #---dd-create_toolenter戻ってきたら ----------------------------#
       $us = $("body > img.tools")
       $us.on 'mousemove', ()->  #'click'
         #console.info "dd-create_mousemove:"        # log -----------#
@@ -173,16 +184,17 @@ coffee -wcb *.coffee
         dragImg.tit    = $ownUp.attr('title')
         dragImg.ddesc  = $ownUp.attr('data-description')
         dragImg.pos    = $ownUp.position()
+        #dragImg.ddcount= $ownUp.attr('data-count')
         #---送り側--- dragdrop add ----------------------#
-        #console.info "dd-create_mouseup:"       # log -----------#
         _socket.emit 'dd-create',
           ddid:   dragImg.dataId
           src:    dragImg.src
           alt:    dragImg.alt
           tit:    dragImg.tit
           ddesc:  dragImg.ddesc
-          ddmess:'dd-create_mouseup'
+          ddmess: 'dd-create_mouseup'
           ddpos:  dragImg.pos
+          #ddcount:dragImg.ddcount
         ev.preventDefault()
 
       $us.on 'dblclick', ()->
@@ -193,8 +205,8 @@ coffee -wcb *.coffee
         dragImg.tit    = $ownRm.attr('title')
         dragImg.ddesc  = $ownRm.attr('data-description')
         dragImg.pos    = $ownRm.position()
+        #dragImg.ddcount= $ownRm.attr('data-count')
         #---送り側--- dragdrop add ----------------------#
-        #console.info "dd-create_remove:"        # log -----------#
         _socket.emit 'dd-create',
           ddid:   dragImg.dataId
           src:    dragImg.src
@@ -202,6 +214,7 @@ coffee -wcb *.coffee
           tit:    dragImg.tit
           ddesc:  dragImg.ddesc
           ddmess: 'dd-create_remove'
+          #ddcount:dragImg.ddcount
         $(@).remove()
       false
   )
