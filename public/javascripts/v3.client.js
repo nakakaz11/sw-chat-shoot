@@ -121,7 +121,7 @@ jQuery(function($) {
           case 'dd-create_remove':
             return $(this).remove();
           case 'dd-create_toolenter':
-            $(this).css(dDrop.ddpos);
+            $(this).css(dDrop.ddpos).attr("data-count", ddcount);
             $("body").append(this);
             return ddcount++;
         }

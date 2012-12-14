@@ -114,7 +114,7 @@ jQuery ($) ->
           when 'dd-create_remove'
             $(@).remove()
           when 'dd-create_toolenter'
-            $(@).css(dDrop.ddpos)
+            $(@).css(dDrop.ddpos).attr("data-count",ddcount)
             $("body").append(@)
             ddcount++                # 相手の総カウント
           else return
