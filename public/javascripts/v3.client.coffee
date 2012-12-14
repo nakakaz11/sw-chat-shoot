@@ -102,25 +102,22 @@ jQuery ($) ->
       $dDrop1 = $("<img data-id='#{dDrop.ddid}' class='test' alt='#{dDrop.alt}' title='#{dDrop.tit}' src='#{dDrop.src}' data-description='#{dDrop.ddesc}' data-userid='#{dDrop.userId}'>").css("opacity", 0.5)
       #dDrop2 = $("<div class='test'>Move(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
       #clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
-      #infonowana = clone
       #console.info clone.get(0)            # log -----------#
-      #console.info "コンソール+testは代入注意(´･_･`) CloneIs:"+ infonowana   # log -----#
       #console.info dDrop.ddmess            # log -----------#
       $dDrop1.each ->
-        if dDrop.ddmess is'dd-create_toolenter'
-          $(@).css(dDrop.ddpos)
-          $("body").append(@)
-          console.info "ddcountIs:"+ddcount
-          ddcount++
-        if dDrop.ddmess is'dd-create_mouseup'
-          #console.info dDrop.ddpos            # log -----------#
-          console.info $(@).get(0)            # log -----------#
-          $(@).css(dDrop.ddpos)
-          $("body").append(@)
-          #$("img.test[data-ddcount='#{dDrop.ddcount}']").css(dDrop.ddpos)
-        if dDrop.ddmess is'dd-create_remove'
-          $(@).remove()
-        else return
+        switch dDrop.ddmess
+          when 'dd-create_mouseup'
+            console.info $(@).get(0)            # log -----------#
+            $(@).css(dDrop.ddpos)
+            $("body").append(@)
+          when 'dd-create_remove'
+            $(@).remove()
+          when 'dd-create_toolenter'
+            console.info "ddcountIs:"+ddcount     # log -----------#
+            $(@).css(dDrop.ddpos)
+            $("body").append(@)
+            ddcount++
+          else return
   ###
 coffee -wcb *.coffee
   ###
@@ -151,7 +148,7 @@ coffee -wcb *.coffee
         dropImg.src    = $own.attr('src')
         dropImg.alt    = $own.attr('alt')
         dropImg.tit    = $own.attr('title')
-        dropImg.ddesc  = $own.attr('data-description')
+        dropImg.ddesc    = $own.attr('data-description')
         _socket.emit 'dd-create',
           ddid:   dropImg.dataId
           src:    dropImg.src
