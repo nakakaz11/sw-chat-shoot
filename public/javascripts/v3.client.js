@@ -110,7 +110,7 @@ jQuery(function($) {
       dDrop.userId = data.userId;
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
-      $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "'>").css("opacity", 0.5);
+      $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "' data-userid='" + dDrop.userId + "'>").css("opacity", 0.5);
       return $dDrop1.each(function() {
         if (dDrop.ddmess === 'dd-create_toolenter') {
           $(this).css(dDrop.ddpos);
@@ -119,6 +119,7 @@ jQuery(function($) {
           ddcount++;
         }
         if (dDrop.ddmess === 'dd-create_mouseup') {
+          console.info($(this).get(0));
           $(this).css(dDrop.ddpos);
           $("body").append(this);
         }

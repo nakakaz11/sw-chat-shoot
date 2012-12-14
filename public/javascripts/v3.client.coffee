@@ -99,7 +99,7 @@ jQuery ($) ->
       dDrop.userId = data.userId
       dDrop.ddmess = data.dd_dt.ddmess
       dDrop.ddpos  = data.dd_dt.ddpos
-      $dDrop1 = $("<img data-id='#{dDrop.ddid}' class='test' alt='#{dDrop.alt}' title='#{dDrop.tit}' src='#{dDrop.src}' data-description='#{dDrop.ddesc}'>").css("opacity", 0.5)
+      $dDrop1 = $("<img data-id='#{dDrop.ddid}' class='test' alt='#{dDrop.alt}' title='#{dDrop.tit}' src='#{dDrop.src}' data-description='#{dDrop.ddesc}' data-userid='#{dDrop.userId}'>").css("opacity", 0.5)
       #dDrop2 = $("<div class='test'>Move(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
       #clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
       #infonowana = clone
@@ -109,12 +109,12 @@ jQuery ($) ->
       $dDrop1.each ->
         if dDrop.ddmess is'dd-create_toolenter'
           $(@).css(dDrop.ddpos)
-          $("body").append(@)#.attr('data-ddcount',ddcount)
+          $("body").append(@)
           console.info "ddcountIs:"+ddcount
           ddcount++
         if dDrop.ddmess is'dd-create_mouseup'
           #console.info dDrop.ddpos            # log -----------#
-          #console.info $(@).get(0)            # log -----------#
+          console.info $(@).get(0)            # log -----------#
           $(@).css(dDrop.ddpos)
           $("body").append(@)
           #$("img.test[data-ddcount='#{dDrop.ddcount}']").css(dDrop.ddpos)
