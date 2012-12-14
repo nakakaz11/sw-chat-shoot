@@ -105,18 +105,18 @@ jQuery ($) ->
       #console.info clone.get(0)            # log -----------#
       #console.info dDrop.ddmess            # log -----------#
       $dDrop1.each ->
+        ddMyCountTarget = $("img.test[data-count='#{ddMyCount-1}']")
+        # 相手の総カウント反映_this
         switch dDrop.ddmess
           when 'dd-create_mouseup'
-            console.info "ddcountIs:"+ddcount       # log -------# 相手の総カウント
-            _that = $("img.test[data-count='#{ddcount-1}']")
-            console.info _that.get(0)       # log -------# 相手の総カウント
-            $("img.test[data-count='#{ddcount-1}']").css(dDrop.ddpos)
+            #console.info ddMyCountTarget.get(0)    # log -------#
+            ddMyCountTarget.css(dDrop.ddpos)
           when 'dd-create_remove'
-            $(@).remove()
+            ddMyCountTarget.remove()
           when 'dd-create_toolenter'
             $(@).css(dDrop.ddpos).attr("data-count",ddcount)
             $("body").append(@)
-            ddcount++                # 相手の総カウント
+            ddcount++              # 相手の総カウント追加していく
           else return
   ###
 coffee -wcb *.coffee
