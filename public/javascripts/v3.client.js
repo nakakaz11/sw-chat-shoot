@@ -110,17 +110,22 @@ jQuery(function($) {
       dDrop.userId = data.userId;
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
+      dDrop.ddcount = data.dd_dt.ddcount;
       $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "' data-userid='" + dDrop.userId + "'>").css("opacity", 0.5);
       return $dDrop1.each(function() {
         var ddMyCountTarget;
-        ddMyCountTarget = $("img.test[data-count='" + (ddcount - 1) + "']");
+        ddMyCountTarget = $("img.test[data-count='" + dDrop.ddcount + "']");
         switch (dDrop.ddmess) {
           case 'dd-create_mouseup':
+            console.info('カウント多い？#{dDrop.ddpos}');
             return ddMyCountTarget.animate(dDrop.ddpos, "fast", "easeOutExpo");
           case 'dd-create_remove':
             return ddMyCountTarget.remove();
           case 'dd-create_toolenter':
             $(this).css(dDrop.ddpos).attr("data-count", ddcount);
+            _socket.emit('dd-create', {
+              ddOwnCount: ddcount
+            });
             $("body").append(this);
             return ddcount++;
         }
@@ -150,8 +155,6 @@ jQuery(function($) {
       dropImg = {};
       dragImg = {};
       if (sotoFlag) {
-        $own.addClass("myDropImg");
-        $(this).append($own);
         pos = $own.position();
         dropImg.dataId = $own.attr("data-id");
         dropImg.src = $own.attr('src');
@@ -166,6 +169,11 @@ jQuery(function($) {
           ddesc: dropImg.ddesc,
           ddmess: 'dd-create_toolenter',
           ddpos: pos
+        });
+        _socket.on("dd-create", function(data) {
+          dragImg.ddcount = data.dd_dt.ddOwnCount;
+          $own.addClass("myDropImg").attr("data-count", dragImg.ddcount);
+          return $(this).append($own);
         });
       }
       $us = $("body > img.tools");
@@ -182,6 +190,7 @@ jQuery(function($) {
         dragImg.tit = $ownUp.attr('title');
         dragImg.ddesc = $ownUp.attr('data-description');
         dragImg.pos = $ownUp.position();
+        dragImg.ddcount = $ownUp.attr('data-count');
         _socket.emit('dd-create', {
           ddid: dragImg.dataId,
           src: dragImg.src,
@@ -189,7 +198,8 @@ jQuery(function($) {
           tit: dragImg.tit,
           ddesc: dragImg.ddesc,
           ddmess: 'dd-create_mouseup',
-          ddpos: dragImg.pos
+          ddpos: dragImg.pos,
+          ddcount: dragImg.ddcount
         });
         return ev.preventDefault();
       });
@@ -202,13 +212,15 @@ jQuery(function($) {
         dragImg.tit = $ownRm.attr('title');
         dragImg.ddesc = $ownRm.attr('data-description');
         dragImg.pos = $ownRm.position();
+        dragImg.ddcount = $ownRm.attr('data-count');
         _socket.emit('dd-create', {
           ddid: dragImg.dataId,
           src: dragImg.src,
           alt: dragImg.alt,
           tit: dragImg.tit,
           ddesc: dragImg.ddesc,
-          ddmess: 'dd-create_remove'
+          ddmess: 'dd-create_remove',
+          ddcount: dragImg.ddcount
         });
         return $(this).remove();
       });
