@@ -99,7 +99,7 @@ jQuery(function($) {
   });
   ddcount = 0;
   _socket.on("dd-create", function(data) {
-    var $dDrop1, dDrop, ddMyCountTarget;
+    var $dDrop1, dDrop;
     dDrop = _ddMap[data.userId];
     if (dDrop !== undefined) {
       dDrop.ddid = data.dd_dt.ddid;
@@ -113,12 +113,11 @@ jQuery(function($) {
       dDrop.ddcount = data.dd_dt.ddcount;
       $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "' data-userid='" + dDrop.userId + "'>").css("opacity", 0.5);
       console.info("dd-back3:", dDrop.ddcount);
-      ddMyCountTarget = $("img.test[data-count='" + dDrop.ddcount + "']");
       switch (dDrop.ddmess) {
         case 'dd-create_mouseup':
-          return ddMyCountTarget.animate(dDrop.ddpos, "fast", "easeOutExpo");
+          return $("img.test[data-count='" + dDrop.ddcount + "']").animate(dDrop.ddpos, "fast", "easeOutExpo");
         case 'dd-create_remove':
-          return ddMyCountTarget.remove();
+          return $("img.test[data-count='" + dDrop.ddcount + "']").remove();
         case 'dd-create_toolenter':
           $dDrop1.css(dDrop.ddpos).attr("data-count", ddcount);
           $("body").append($dDrop1);
