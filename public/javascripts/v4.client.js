@@ -167,20 +167,15 @@ jQuery(function($) {
           ddpos: ui.position
         });
         dropImg = _dropImg;
-        _socket.on("dd-back", function(data) {
-          return dropImg.ddOwnCount = data.dd_dt.ddOwnCount;
-        });
-        /*_socket.on "dd-create", (data) ->
-          dragImg.ddOwnCount = data.dd_dt.ddOwnCount
-          $own.attr("data-count", dragImg.ddOwnCount)
-        */
-
       }
       $us = $("img.tools.myDropImg");
       $us.on('mousemove', function() {
         return $(this).draggable();
       });
       sotoFlag = false;
+      _socket.on("dd-back", function(data) {
+        return dropImg.ddOwnCount = data.dd_dt.ddOwnCount;
+      });
       console.info("dd-create_mouseup:", dropImg.ddOwnCount);
       _socket.emit('dd-create', {
         ddid: dropImg.dataId,
