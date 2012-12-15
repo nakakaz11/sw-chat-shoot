@@ -142,7 +142,6 @@ coffee -wcb *.coffee
     deactivate: (ev,ui) ->
       $own = ui.helper.clone()
       dropImg = {}
-      dragImg = {}
       if sotoFlag
         $own.addClass("myDropImg")
         $(@).append($own)
@@ -167,58 +166,59 @@ coffee -wcb *.coffee
           $own.attr("data-count", dragImg.ddOwnCount)###
         #console.info "dd-create_:count:"+dragImg.ddOwnCount       # log -----------#
         #---dd-create_toolenter戻ってきたら ----------------------------#
-      $us = $("body > img.tools")
-      $us.on 'mousemove', ()->  #'click'
-        console.info "dd-create_mousemove:"        # log -----------#
-        $(@).draggable(
-          #helper:'original'
-        )
-      $us.on 'mouseup', (ev)->
-        $ownUp = $(@)
-        #console.info $(@).get(0)      # log -----------#
-        sotoFlag = false
-        dragImg.dataId = $ownUp.attr("data-id")
-        dragImg.src    = $ownUp.attr('src')
-        dragImg.alt    = $ownUp.attr('alt')
-        dragImg.tit    = $ownUp.attr('title')
-        dragImg.ddesc  = $ownUp.attr('data-description')
-        dragImg.pos    = $ownUp.position()
-        #dragImg.ddcount= $ownUp.attr('data-count')
-        #---送り側--- dragdrop add ----------------------#
-        console.info "dd-create_mouseup:"+dragImg.pos       # log -----------#
-        _socket.emit 'dd-create',
-          ddid:   dragImg.dataId
-          src:    dragImg.src
-          alt:    dragImg.alt
-          tit:    dragImg.tit
-          ddesc:  dragImg.ddesc
-          ddmess:'dd-create_mouseup'
-          ddpos:  dragImg.pos
-          #ddcount:dragImg.ddcount
-        ev.preventDefault()
-
-      $us.on 'dblclick', ()->
-        $ownRm = $(@)
-        dragImg.dataId = $ownRm.attr("data-id")
-        dragImg.src    = $ownRm.attr('src')
-        dragImg.alt    = $ownRm.attr('alt')
-        dragImg.tit    = $ownRm.attr('title')
-        dragImg.ddesc  = $ownRm.attr('data-description')
-        dragImg.pos    = $ownRm.position()
-        #dragImg.ddcount= $ownRm.attr('data-count')
-        #---送り側--- dragdrop add ----------------------#
-        console.info "dd-create_remove:"+dragImg.pos        # log -----------#
-        _socket.emit 'dd-create',
-          ddid:   dragImg.dataId
-          src:    dragImg.src
-          alt:    dragImg.alt
-          tit:    dragImg.tit
-          ddesc:  dragImg.ddesc
-          ddmess: 'dd-create_remove'
-          #ddcount:dragImg.ddcount
-        $(@).remove()
-      false
   )
+  $us = $("body > img.tools")
+  dragImg = {}
+  $us.on 'mousemove', ()->  #'click'
+    console.info "dd-create_mousemove:"        # log -----------#
+    $(@).draggable(
+      #helper:'original'
+    )
+  $us.on 'mouseup', (ev)->
+    $ownUp = $(@)
+    #console.info $(@).get(0)      # log -----------#
+    sotoFlag = false
+    dragImg.dataId = $ownUp.attr("data-id")
+    dragImg.src    = $ownUp.attr('src')
+    dragImg.alt    = $ownUp.attr('alt')
+    dragImg.tit    = $ownUp.attr('title')
+    dragImg.ddesc  = $ownUp.attr('data-description')
+    dragImg.pos    = $ownUp.position()
+    #dragImg.ddcount= $ownUp.attr('data-count')
+    #---送り側--- dragdrop add ----------------------#
+    console.info "dd-create_mouseup:"+dragImg.pos       # log -----------#
+    _socket.emit 'dd-create',
+      ddid:   dragImg.dataId
+      src:    dragImg.src
+      alt:    dragImg.alt
+      tit:    dragImg.tit
+      ddesc:  dragImg.ddesc
+      ddmess:'dd-create_mouseup'
+      ddpos:  dragImg.pos
+      #ddcount:dragImg.ddcount
+    ev.preventDefault()
+
+  $us.on 'dblclick', ()->
+    $ownRm = $(@)
+    dragImg.dataId = $ownRm.attr("data-id")
+    dragImg.src    = $ownRm.attr('src')
+    dragImg.alt    = $ownRm.attr('alt')
+    dragImg.tit    = $ownRm.attr('title')
+    dragImg.ddesc  = $ownRm.attr('data-description')
+    dragImg.pos    = $ownRm.position()
+    #dragImg.ddcount= $ownRm.attr('data-count')
+    #---送り側--- dragdrop add ----------------------#
+    console.info "dd-create_remove:"+dragImg.pos        # log -----------#
+    _socket.emit 'dd-create',
+      ddid:   dragImg.dataId
+      src:    dragImg.src
+      alt:    dragImg.alt
+      tit:    dragImg.tit
+      ddesc:  dragImg.ddesc
+      ddmess: 'dd-create_remove'
+      #ddcount:dragImg.ddcount
+    $(@).remove()
+  false
   #------------------------ dragdrop add ----------------------------------#
   # canvs add -------------------------#
   _socket.on "canvas-create", (data) ->

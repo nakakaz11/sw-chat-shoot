@@ -4,7 +4,7 @@ var tools;
 jQuery(function($) {
   "use strict";
 
-  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, ddcount, delId, f, mousedown, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
+  var $toolbar, $us, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, ddcount, delId, dragImg, f, mousedown, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
@@ -149,10 +149,9 @@ jQuery(function($) {
   $("body").droppable({
     tolerance: 'fit',
     deactivate: function(ev, ui) {
-      var $own, $us, dragImg, dropImg, pos;
+      var $own, dropImg, pos;
       $own = ui.helper.clone();
       dropImg = {};
-      dragImg = {};
       if (sotoFlag) {
         $own.addClass("myDropImg");
         $(this).append($own);
@@ -162,7 +161,7 @@ jQuery(function($) {
         dropImg.alt = $own.attr('alt');
         dropImg.tit = $own.attr('title');
         dropImg.ddesc = $own.attr('data-description');
-        _socket.emit('dd-create', {
+        return _socket.emit('dd-create', {
           ddid: dropImg.dataId,
           src: dropImg.src,
           alt: dropImg.alt,
@@ -177,56 +176,57 @@ jQuery(function($) {
         */
 
       }
-      $us = $("body > img.tools");
-      $us.on('mousemove', function() {
-        console.info("dd-create_mousemove:");
-        return $(this).draggable();
-      });
-      $us.on('mouseup', function(ev) {
-        var $ownUp;
-        $ownUp = $(this);
-        sotoFlag = false;
-        dragImg.dataId = $ownUp.attr("data-id");
-        dragImg.src = $ownUp.attr('src');
-        dragImg.alt = $ownUp.attr('alt');
-        dragImg.tit = $ownUp.attr('title');
-        dragImg.ddesc = $ownUp.attr('data-description');
-        dragImg.pos = $ownUp.position();
-        console.info("dd-create_mouseup:" + dragImg.pos);
-        _socket.emit('dd-create', {
-          ddid: dragImg.dataId,
-          src: dragImg.src,
-          alt: dragImg.alt,
-          tit: dragImg.tit,
-          ddesc: dragImg.ddesc,
-          ddmess: 'dd-create_mouseup',
-          ddpos: dragImg.pos
-        });
-        return ev.preventDefault();
-      });
-      $us.on('dblclick', function() {
-        var $ownRm;
-        $ownRm = $(this);
-        dragImg.dataId = $ownRm.attr("data-id");
-        dragImg.src = $ownRm.attr('src');
-        dragImg.alt = $ownRm.attr('alt');
-        dragImg.tit = $ownRm.attr('title');
-        dragImg.ddesc = $ownRm.attr('data-description');
-        dragImg.pos = $ownRm.position();
-        console.info("dd-create_remove:" + dragImg.pos);
-        _socket.emit('dd-create', {
-          ddid: dragImg.dataId,
-          src: dragImg.src,
-          alt: dragImg.alt,
-          tit: dragImg.tit,
-          ddesc: dragImg.ddesc,
-          ddmess: 'dd-create_remove'
-        });
-        return $(this).remove();
-      });
-      return false;
     }
   });
+  $us = $("body > img.tools");
+  dragImg = {};
+  $us.on('mousemove', function() {
+    console.info("dd-create_mousemove:");
+    return $(this).draggable();
+  });
+  $us.on('mouseup', function(ev) {
+    var $ownUp;
+    $ownUp = $(this);
+    sotoFlag = false;
+    dragImg.dataId = $ownUp.attr("data-id");
+    dragImg.src = $ownUp.attr('src');
+    dragImg.alt = $ownUp.attr('alt');
+    dragImg.tit = $ownUp.attr('title');
+    dragImg.ddesc = $ownUp.attr('data-description');
+    dragImg.pos = $ownUp.position();
+    console.info("dd-create_mouseup:" + dragImg.pos);
+    _socket.emit('dd-create', {
+      ddid: dragImg.dataId,
+      src: dragImg.src,
+      alt: dragImg.alt,
+      tit: dragImg.tit,
+      ddesc: dragImg.ddesc,
+      ddmess: 'dd-create_mouseup',
+      ddpos: dragImg.pos
+    });
+    return ev.preventDefault();
+  });
+  $us.on('dblclick', function() {
+    var $ownRm;
+    $ownRm = $(this);
+    dragImg.dataId = $ownRm.attr("data-id");
+    dragImg.src = $ownRm.attr('src');
+    dragImg.alt = $ownRm.attr('alt');
+    dragImg.tit = $ownRm.attr('title');
+    dragImg.ddesc = $ownRm.attr('data-description');
+    dragImg.pos = $ownRm.position();
+    console.info("dd-create_remove:" + dragImg.pos);
+    _socket.emit('dd-create', {
+      ddid: dragImg.dataId,
+      src: dragImg.src,
+      alt: dragImg.alt,
+      tit: dragImg.tit,
+      ddesc: dragImg.ddesc,
+      ddmess: 'dd-create_remove'
+    });
+    return $(this).remove();
+  });
+  false;
   _socket.on("canvas-create", function(data) {
     var uCanv;
     uCanv = _canvasMap[data.userId];
