@@ -104,7 +104,7 @@ jQuery ($) ->
       #dDrop2 = $("<div class='test'>Move(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
       #clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
       #console.info clone.get(0)            # log -----------#
-      $dDrop1.each ->
+      $("img.test").each ->
         ddMyCountTarget = $("img.test[data-count='#{ddcount-1}']")
         # ↑相手の総カウント反映_thisのmoveTest （あとでddcount(ddOwnCount)と入れ替え）
         #ddMyCountTarget = $("img.test[data-count='#{dDrop.ddcount}']")
@@ -115,8 +115,8 @@ jQuery ($) ->
           when 'dd-create_remove'
             ddMyCountTarget.remove()
           when 'dd-create_toolenter'
-            $(@).css(dDrop.ddpos).attr("data-count",ddcount)
-            $("body").append(@)
+            $dDrop1.css(dDrop.ddpos).attr("data-count",ddcount).addClass("yourDropImg")
+            $("body").append($dDrop1)
             ###_socket.emit 'dd-create',
               ddOwnCount : ddcount   # 相手の総カウント追加していくemit###
             ddcount++              # 相手の総カウント追加していく

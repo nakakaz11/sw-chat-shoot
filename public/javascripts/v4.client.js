@@ -111,7 +111,7 @@ jQuery(function($) {
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
       $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "' data-userid='" + dDrop.userId + "'>").css("opacity", 0.5);
-      return $dDrop1.each(function() {
+      return $("img.test").each(function() {
         var ddMyCountTarget;
         ddMyCountTarget = $("img.test[data-count='" + (ddcount - 1) + "']");
         switch (dDrop.ddmess) {
@@ -120,8 +120,8 @@ jQuery(function($) {
           case 'dd-create_remove':
             return ddMyCountTarget.remove();
           case 'dd-create_toolenter':
-            $(this).css(dDrop.ddpos).attr("data-count", ddcount);
-            $("body").append(this);
+            $dDrop1.css(dDrop.ddpos).attr("data-count", ddcount).addClass("yourDropImg");
+            $("body").append($dDrop1);
             /*_socket.emit 'dd-create',
               ddOwnCount : ddcount   # 相手の総カウント追加していくemit
             */
