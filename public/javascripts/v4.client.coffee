@@ -87,7 +87,7 @@ jQuery ($) ->
       bullet.v = data.data.v
 
   #-------------受け側----------- dragdrop add ----------------------------------#
-  ddcount = 1
+  ddcount = 0
   _socket.on "dd-create", (data) ->
     dDrop = _ddMap[data.userId]
     if dDrop isnt `undefined`
@@ -170,12 +170,22 @@ coffee -wcb *.coffee
       sotoFlag = false
       #---送り側--- dragdrop add ----------------------#
       _socket.emit 'dd-create',
+        ddid:   dropImg.dataId
+        src:    dropImg.src
+        alt:    dropImg.alt
+        tit:    dropImg.tit
+        ddesc:  dropImg.ddesc
         ddmess:'dd-create_mouseup'
         ddpos:  ui.position
         #ddcount:dragImg.ddcount
       #ev.preventDefault()
       $us.on 'dblclick', ()->
         _socket.emit 'dd-create',
+          ddid:   dropImg.dataId
+          src:    dropImg.src
+          alt:    dropImg.alt
+          tit:    dropImg.tit
+          ddesc:  dropImg.ddesc
           ddmess: 'dd-create_remove'
         $(@).remove()
       false

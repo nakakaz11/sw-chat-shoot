@@ -97,7 +97,7 @@ jQuery(function($) {
       return bullet.v = data.data.v;
     }
   });
-  ddcount = 1;
+  ddcount = 0;
   _socket.on("dd-create", function(data) {
     var $dDrop1, dDrop;
     dDrop = _ddMap[data.userId];
@@ -182,11 +182,21 @@ jQuery(function($) {
       console.info("dd-create_mouseup:", ui.position);
       sotoFlag = false;
       _socket.emit('dd-create', {
+        ddid: dropImg.dataId,
+        src: dropImg.src,
+        alt: dropImg.alt,
+        tit: dropImg.tit,
+        ddesc: dropImg.ddesc,
         ddmess: 'dd-create_mouseup',
         ddpos: ui.position
       });
       $us.on('dblclick', function() {
         _socket.emit('dd-create', {
+          ddid: dropImg.dataId,
+          src: dropImg.src,
+          alt: dropImg.alt,
+          tit: dropImg.tit,
+          ddesc: dropImg.ddesc,
           ddmess: 'dd-create_remove'
         });
         return $(this).remove();
