@@ -116,7 +116,7 @@ jQuery ($) ->
           ddMyCountTarget.remove()
         when 'dd-create_toolenter'
           $dDrop1.css(dDrop.ddpos).attr("data-count",ddcount)#.addClass("yourDropImg")
-          $("body").append(@)
+          $("body").append($dDrop1)
           ###_socket.emit 'dd-create',
             ddOwnCount : ddcount   # 相手の総カウント追加していくemit###
           ddcount++              # 相手の総カウント追加していく
