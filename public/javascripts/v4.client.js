@@ -120,8 +120,8 @@ jQuery(function($) {
           case 'dd-create_remove':
             return ddMyCountTarget.remove();
           case 'dd-create_toolenter':
-            $dDrop1.css(dDrop.ddpos).attr("data-count", ddcount);
-            $("body").append($dDrop1);
+            $(this).css(dDrop.ddpos).attr("data-count", ddcount);
+            $("body").append(this);
             /*_socket.emit 'dd-create',
               ddOwnCount : ddcount   # 相手の総カウント追加していくemit
             */
