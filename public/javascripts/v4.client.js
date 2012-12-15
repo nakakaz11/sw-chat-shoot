@@ -144,7 +144,8 @@ jQuery(function($) {
   });
   dropImg = {};
   _socket.on("dd-back", function(data) {
-    return console.info("dd-back1:", data.dd_dt.ddOwnCount);
+    dropImg.ddOwnCount = data.dd_dt.ddOwnCount;
+    return console.info("dd-back1:", data.dd_bk.ddOwnCount);
   });
   console.info("dd-back2:", dropImg.ddOwnCount);
   $("body").droppable({

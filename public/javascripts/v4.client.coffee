@@ -137,8 +137,8 @@ coffee -wcb *.coffee
   dropImg = {}  # obj返し〜 _dropImg
   #---dd-create_toolenter戻ってきたら ----------------------------#
   _socket.on "dd-back", (data) ->
-    #dropImg.ddOwnCount = data.dd_dt.ddOwnCount
-    console.info "dd-back1:", data.dd_dt.ddOwnCount # log -----------#
+    dropImg.ddOwnCount = data.dd_dt.ddOwnCount
+    console.info "dd-back1:", data.dd_bk.ddOwnCount # log -----------#
   console.info "dd-back2:", dropImg.ddOwnCount      # log -----------#
   $("body").droppable(
     tolerance:'fit'
