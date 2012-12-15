@@ -178,10 +178,13 @@ jQuery(function($) {
         return $(this).draggable();
       });
       _socket.on("dd-back", function(data) {
-        dropImg.ddOwnCount = data.dd_dt.ddOwnCount;
-        return console.info("dd-create_mouseup:", data.dd_dt.ddOwnCount);
+        var ddback;
+        ddback = {};
+        ddback.ddOwnCount = data.dd_dt.ddOwnCount;
+        return dropImg.ddOwnCount = ddback.ddOwnCount;
       });
       sotoFlag = false;
+      console.info("dd-create_mouseup:", dropImg.ddOwnCount);
       _socket.emit('dd-create', {
         ddid: dropImg.dataId,
         src: dropImg.src,
