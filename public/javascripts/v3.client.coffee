@@ -176,6 +176,7 @@ coffee -wcb *.coffee
       $us.on 'mouseup', (ev)->
         $ownUp = $(@)
         #console.info $(@).get(0)      # log -----------#
+        console.info "dd-create_mouseup:"+sotoFlag       # log -----------#
         sotoFlag = false
         dragImg.dataId = $ownUp.attr("data-id")
         dragImg.src    = $ownUp.attr('src')
@@ -185,7 +186,6 @@ coffee -wcb *.coffee
         #dragImg.pos    = ui.position
         #dragImg.ddcount= $ownUp.attr('data-count')
         #---送り側--- dragdrop add ----------------------#
-        console.info "dd-create_mouseup:"+ui.position       # log -----------#
         _socket.emit 'dd-create',
           ddid:   dragImg.dataId
           src:    dragImg.src

@@ -183,13 +183,13 @@ jQuery(function($) {
       $us.on('mouseup', function(ev) {
         var $ownUp;
         $ownUp = $(this);
+        console.info("dd-create_mouseup:" + sotoFlag);
         sotoFlag = false;
         dragImg.dataId = $ownUp.attr("data-id");
         dragImg.src = $ownUp.attr('src');
         dragImg.alt = $ownUp.attr('alt');
         dragImg.tit = $ownUp.attr('title');
         dragImg.ddesc = $ownUp.attr('data-description');
-        console.info("dd-create_mouseup:" + ui.position);
         _socket.emit('dd-create', {
           ddid: dragImg.dataId,
           src: dragImg.src,
