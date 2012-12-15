@@ -170,44 +170,44 @@ coffee -wcb *.coffee
           #helper:'original'
         )
       #$us.on 'mouseup', (ev)->
-      console.info "dd-create_mouseup:",ui.position      # log -----------#
-      $ownUp = $(@)
+      console.info "dd-create_mouseup:", ui.position      # log -----------#
+      #$ownUp = $(@)
       #console.info $(@).get(0)      # log -----------#
       sotoFlag = false
-      dragImg.dataId = $ownUp.attr("data-id")
-      dragImg.src    = $ownUp.attr('src')
-      dragImg.alt    = $ownUp.attr('alt')
-      dragImg.tit    = $ownUp.attr('title')
-      dragImg.ddesc  = $ownUp.attr('data-description')
+      #dragImg.dataId = $ownUp.attr("data-id")
+      #dragImg.src    = $ownUp.attr('src')
+      #dragImg.alt    = $ownUp.attr('alt')
+      #dragImg.tit    = $ownUp.attr('title')
+      #dragImg.ddesc  = $ownUp.attr('data-description')
       #dragImg.pos    = ui.position
       #dragImg.ddcount= $ownUp.attr('data-count')
       #---送り側--- dragdrop add ----------------------#
       _socket.emit 'dd-create',
-        ddid:   dragImg.dataId
-        src:    dragImg.src
-        alt:    dragImg.alt
-        tit:    dragImg.tit
-        ddesc:  dragImg.ddesc
+        #ddid:   dragImg.dataId
+        #src:    dragImg.src
+        #alt:    dragImg.alt
+        #tit:    dragImg.tit
+        #ddesc:  dragImg.ddesc
         ddmess:'dd-create_mouseup'
         ddpos:  ui.position
         #ddcount:dragImg.ddcount
       ev.preventDefault()
 
       $us.on 'dblclick', ()->
-        $ownRm = $(@)
+        ###$ownRm = $(@)
         dragImg.dataId = $ownRm.attr("data-id")
         dragImg.src    = $ownRm.attr('src')
         dragImg.alt    = $ownRm.attr('alt')
         dragImg.tit    = $ownRm.attr('title')
         dragImg.ddesc  = $ownRm.attr('data-description')
-        dragImg.pos    = ui.position
+        dragImg.pos    = ui.position###
         #dragImg.ddcount= $ownRm.attr('data-count')
         _socket.emit 'dd-create',
-          ddid:   dragImg.dataId
-          src:    dragImg.src
-          alt:    dragImg.alt
-          tit:    dragImg.tit
-          ddesc:  dragImg.ddesc
+          #ddid:   dropImg.dataId
+          #src:    dropImg.src
+          #alt:    dropImg.alt
+          #tit:    dropImg.tit
+          #ddesc:  dropImg.ddesc
           ddmess: 'dd-create_remove'
         $(@).remove()
       false
