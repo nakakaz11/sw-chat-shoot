@@ -139,7 +139,7 @@ coffee -wcb *.coffee
   #onDrag = () ->            # handle drag
   $("body").droppable(
     tolerance:'fit'
-    deactivate: (ev,ui) ->
+    drop: (ev,ui) ->    #deactivate
       $own = ui.helper.clone()
       dropImg = {}
       if sotoFlag

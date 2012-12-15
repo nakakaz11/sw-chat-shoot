@@ -148,7 +148,7 @@ jQuery(function($) {
   });
   $("body").droppable({
     tolerance: 'fit',
-    deactivate: function(ev, ui) {
+    drop: function(ev, ui) {
       var $own, $us, dragImg, dropImg;
       $own = ui.helper.clone();
       dropImg = {};
