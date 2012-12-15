@@ -156,6 +156,7 @@ jQuery(function($) {
         $own.addClass("myDropImg");
         $(this).append($own);
         pos = $own.position();
+        $own.draggable("disable");
         dropImg.dataId = $own.attr("data-id");
         dropImg.src = $own.attr('src');
         dropImg.alt = $own.attr('alt');
@@ -178,7 +179,7 @@ jQuery(function($) {
       }
     }
   });
-  $us = $("body > img.tools");
+  $us = $("img.myDropImg");
   dragImg = {};
   $us.on('mousemove', function() {
     console.info("dd-create_mousemove:");

@@ -146,6 +146,7 @@ coffee -wcb *.coffee
         $own.addClass("myDropImg")
         $(@).append($own)
         pos = $own.position()
+        $own.draggable("disable")
         #---送り側--- dragdrop add ----------------------#
         dropImg.dataId = $own.attr("data-id")
         dropImg.src    = $own.attr('src')
@@ -167,7 +168,7 @@ coffee -wcb *.coffee
         #console.info "dd-create_:count:"+dragImg.ddOwnCount       # log -----------#
         #---dd-create_toolenter戻ってきたら ----------------------------#
   )
-  $us = $("body > img.tools")
+  $us = $("img.myDropImg")
   dragImg = {}
   $us.on 'mousemove', ()->  #'click'
     console.info "dd-create_mousemove:"        # log -----------#
