@@ -167,6 +167,9 @@ jQuery(function($) {
           ddpos: ui.position
         });
         dropImg = _dropImg;
+        _socket.on("dd-back", function(data) {
+          return dropImg.ddOwnCount = data.dd_dt.ddOwnCount;
+        });
         /*_socket.on "dd-create", (data) ->
           dragImg.ddOwnCount = data.dd_dt.ddOwnCount
           $own.attr("data-count", dragImg.ddOwnCount)
@@ -176,12 +179,6 @@ jQuery(function($) {
       $us = $("img.tools.myDropImg");
       $us.on('mousemove', function() {
         return $(this).draggable();
-      });
-      _socket.on("dd-back", function(data) {
-        var ddback;
-        ddback = {};
-        ddback.ddOwnCount = data.dd_dt.ddOwnCount;
-        return dropImg.ddOwnCount = ddback.ddOwnCount;
       });
       sotoFlag = false;
       console.info("dd-create_mouseup:", dropImg.ddOwnCount);

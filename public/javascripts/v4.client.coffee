@@ -159,6 +159,9 @@ coffee -wcb *.coffee
           ddpos:  ui.position
         dropImg = _dropImg       # obj返し〜 _dropImg
 
+        _socket.on "dd-back", (data) ->
+          dropImg.ddOwnCount = data.dd_dt.ddOwnCount
+
         #---dd-create_toolenter戻ってきたら ----------------------------#
         ###_socket.on "dd-create", (data) ->
           dragImg.ddOwnCount = data.dd_dt.ddOwnCount
@@ -169,10 +172,6 @@ coffee -wcb *.coffee
       $us.on 'mousemove', ()->  #'click'
         $(@).draggable()
       #---送り側--- dragdrop add ----------------------#
-      _socket.on "dd-back", (data) ->
-        ddback = {}
-        ddback.ddOwnCount  = data.dd_dt.ddOwnCount
-        dropImg.ddOwnCount = ddback.ddOwnCount
       sotoFlag = false
       console.info "dd-create_mouseup:", dropImg.ddOwnCount      # log -----------#
       _socket.emit 'dd-create',
