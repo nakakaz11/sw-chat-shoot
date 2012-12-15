@@ -191,6 +191,7 @@ jQuery(function($) {
         dragImg.tit = $ownUp.attr('title');
         dragImg.ddesc = $ownUp.attr('data-description');
         dragImg.pos = $ownUp.position();
+        console.info("dd-create_mouseup:" + dragImg.pos);
         _socket.emit('dd-create', {
           ddid: dragImg.dataId,
           src: dragImg.src,
