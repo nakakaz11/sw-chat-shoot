@@ -180,7 +180,7 @@ jQuery(function($) {
       $us.on('mousemove', function() {
         return $(this).draggable();
       });
-      console.info("dd-create_mouseup:" + ui.position);
+      console.info("dd-create_mouseup:", ui.position);
       $ownUp = $(this);
       sotoFlag = false;
       dragImg.dataId = $ownUp.attr("data-id");
@@ -202,6 +202,11 @@ jQuery(function($) {
         var $ownRm;
         $ownRm = $(this);
         _socket.emit('dd-create', {
+          ddid: $ownRm.attr("data-id"),
+          src: $ownRm.attr('src'),
+          alt: $ownRm.attr('alt'),
+          tit: $ownRm.attr('title'),
+          ddesc: $ownRm.attr('data-description'),
           ddmess: 'dd-create_remove'
         });
         return $(this).remove();

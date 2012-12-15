@@ -104,7 +104,6 @@ jQuery ($) ->
       #dDrop2 = $("<div class='test'>Move(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
       #clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
       #console.info clone.get(0)            # log -----------#
-      #console.info dDrop.ddmess            # log -----------#
       $dDrop1.each ->
         ddMyCountTarget = $("img.test[data-count='#{ddcount-1}']")
         # ↑相手の総カウント反映_thisのmoveTest （あとでddcount(ddOwnCount)と入れ替え）
@@ -136,7 +135,6 @@ coffee -wcb *.coffee
         helper:'clone'
         start:->
           sotoFlag = true  # toolbarから来たか判定
-  #onDrag = () ->            # handle drag
   $("body").droppable(
     tolerance:'fit'
     drop: (ev,ui) ->    #deactivate
@@ -145,7 +143,6 @@ coffee -wcb *.coffee
       if sotoFlag
         $own.addClass("myDropImg")
         $(@).append($own)
-        #pos = $own.position()
         #---送り側--- dragdrop add ----------------------#
         dropImg.dataId = $own.attr("data-id")
         dropImg.src    = $own.attr('src')
@@ -169,12 +166,11 @@ coffee -wcb *.coffee
       $us = $("img.tools.myDropImg")
       dragImg = {}
       $us.on 'mousemove', ()->  #'click'
-        #console.info "dd-create_mousemove:"+ui.position        # log -----------#
         $(@).draggable(
           #helper:'original'
         )
       #$us.on 'mouseup', (ev)->
-      console.info "dd-create_mouseup:"+ui.position      # log -----------#
+      console.info "dd-create_mouseup:",ui.position      # log -----------#
       $ownUp = $(@)
       #console.info $(@).get(0)      # log -----------#
       sotoFlag = false
@@ -207,13 +203,12 @@ coffee -wcb *.coffee
         #dragImg.pos    = ui.position
         #dragImg.ddcount= $ownRm.attr('data-count')
         _socket.emit 'dd-create',
-          #ddid:   dragImg.dataId
-          #src:    dragImg.src
-          #alt:    dragImg.alt
-          #tit:    dragImg.tit
-          #ddesc:  dragImg.ddesc
+          ddid:   $ownRm.attr("data-id")
+          src:    $ownRm.attr('src')
+          alt:    $ownRm.attr('alt')
+          tit:    $ownRm.attr('title')
+          ddesc:  $ownRm.attr('data-description')
           ddmess: 'dd-create_remove'
-          #ddcount:dragImg.ddcount
         $(@).remove()
       false
   )
