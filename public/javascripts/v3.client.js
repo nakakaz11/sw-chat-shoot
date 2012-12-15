@@ -179,6 +179,7 @@ jQuery(function($) {
       }
       $us = $("body > img.tools");
       $us.on('mousemove', function() {
+        console.info("dd-create_mousemove:");
         return $(this).draggable();
       });
       $us.on('mouseup', function(ev) {

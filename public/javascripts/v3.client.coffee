@@ -169,7 +169,7 @@ coffee -wcb *.coffee
         #---dd-create_toolenter戻ってきたら ----------------------------#
       $us = $("body > img.tools")
       $us.on 'mousemove', ()->  #'click'
-        #console.info "dd-create_mousemove:"        # log -----------#
+        console.info "dd-create_mousemove:"        # log -----------#
         $(@).draggable(
           #helper:'original'
         )
