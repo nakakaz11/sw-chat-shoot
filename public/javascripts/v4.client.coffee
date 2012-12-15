@@ -135,7 +135,7 @@ coffee -wcb *.coffee
         helper:'clone'
         start:->
           sotoFlag = true  # toolbarから来たか判定
-  dropImg = {}
+  dropImg = {}             # obj返し〜 _dropImg
   $("body").droppable(
     tolerance:'fit'
     drop: (ev,ui) ->    #deactivate
@@ -172,22 +172,22 @@ coffee -wcb *.coffee
       sotoFlag = false
       #---送り側--- dragdrop add ----------------------#
       _socket.emit 'dd-create',
-        ###ddid:   dropImg.dataId
+        ddid:   dropImg.dataId
         src:    dropImg.src
         alt:    dropImg.alt
         tit:    dropImg.tit
-        ddesc:  dropImg.ddesc###
+        ddesc:  dropImg.ddesc
         ddmess:'dd-create_mouseup'
         ddpos:  ui.position
         #ddcount:dragImg.ddcount
       #ev.preventDefault()
       $us.on 'dblclick', ()->
         _socket.emit 'dd-create',
-          ###ddid:   dropImg.dataId
+          ddid:   dropImg.dataId
           src:    dropImg.src
           alt:    dropImg.alt
           tit:    dropImg.tit
-          ddesc:  dropImg.ddesc###
+          ddesc:  dropImg.ddesc
           ddmess: 'dd-create_remove'
         $(@).remove()
       false

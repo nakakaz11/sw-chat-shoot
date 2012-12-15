@@ -181,25 +181,21 @@ jQuery(function($) {
       console.info("dd-create_mouseup:", dropImg.src);
       sotoFlag = false;
       _socket.emit('dd-create', {
-        /*ddid:   dropImg.dataId
-        src:    dropImg.src
-        alt:    dropImg.alt
-        tit:    dropImg.tit
-        ddesc:  dropImg.ddesc
-        */
-
+        ddid: dropImg.dataId,
+        src: dropImg.src,
+        alt: dropImg.alt,
+        tit: dropImg.tit,
+        ddesc: dropImg.ddesc,
         ddmess: 'dd-create_mouseup',
         ddpos: ui.position
       });
       $us.on('dblclick', function() {
         _socket.emit('dd-create', {
-          /*ddid:   dropImg.dataId
-          src:    dropImg.src
-          alt:    dropImg.alt
-          tit:    dropImg.tit
-          ddesc:  dropImg.ddesc
-          */
-
+          ddid: dropImg.dataId,
+          src: dropImg.src,
+          alt: dropImg.alt,
+          tit: dropImg.tit,
+          ddesc: dropImg.ddesc,
           ddmess: 'dd-create_remove'
         });
         return $(this).remove();
