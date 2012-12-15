@@ -107,10 +107,11 @@ jQuery ($) ->
       #$($dDrop1).each ->
       #ddMyCountTarget = $("img.test[data-count='#{ddcount-1}']")
       # ↑相手の総カウント反映_thisのmoveTest （あとでddcount(ddOwnCount)と入れ替え）
+      console.info "dd-back3:", dDrop.ddcount       # log -----------#
       ddMyCountTarget = $("img.test[data-count='#{dDrop.ddcount}']")
       switch dDrop.ddmess
         when 'dd-create_mouseup'
-          #console.info ddMyCountTarget.get(0)    # log -------#
+          #console.info ddMyCountTarget.get(0)      # log -------#
           ddMyCountTarget.animate(dDrop.ddpos,"fast","easeOutExpo")
         when 'dd-create_remove'
           ddMyCountTarget.remove()
@@ -173,24 +174,24 @@ coffee -wcb *.coffee
       sotoFlag = false
       console.info "dd-back2:", dropBack.ddOwnCount?      # log -----------#
       _socket.emit 'dd-create',
-        ddid:   dropImg.dataId
-        src:    dropImg.src
-        alt:    dropImg.alt
-        tit:    dropImg.tit
-        ddesc:  dropImg.ddesc
-        ddmess:'dd-create_mouseup'
-        ddpos:  ui.position
-        ddcount:dropBack.ddOwnCount
+        ddid:    dropImg.dataId
+        src:     dropImg.src
+        alt:     dropImg.alt
+        tit:     dropImg.tit
+        ddesc:   dropImg.ddesc
+        ddmess: 'dd-create_mouseup'
+        ddpos:   ui.position
+        ddcount: dropBack.ddOwnCount
       #ev.preventDefault()
       $us.on 'dblclick', ()->
         _socket.emit 'dd-create',
-          ddid:   dropImg.dataId
-          src:    dropImg.src
-          alt:    dropImg.alt
-          tit:    dropImg.tit
-          ddesc:  dropImg.ddesc
-          ddmess: 'dd-create_remove'
-          ddcount:dropBack.ddOwnCount
+          ddid:    dropImg.dataId
+          src:     dropImg.src
+          alt:     dropImg.alt
+          tit:     dropImg.tit
+          ddesc:   dropImg.ddesc
+          ddmess:  'dd-create_remove'
+          ddcount: dropBack.ddOwnCount
         $(@).remove()
       false
   )
