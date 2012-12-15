@@ -120,8 +120,7 @@ jQuery(function($) {
           case 'dd-create_remove':
             return ddMyCountTarget.remove();
           case 'dd-create_toolenter':
-            $(this).css(dDrop.ddpos).attr("data-count", ddcount);
-            $("body").append(this);
+            $("body").append(this).css(dDrop.ddpos).attr("data-count", ddcount);
             /*_socket.emit 'dd-create',
               ddOwnCount : ddcount   # 相手の総カウント追加していくemit
             */
@@ -149,12 +148,11 @@ jQuery(function($) {
   $("body").droppable({
     tolerance: 'fit',
     drop: function(ev, ui) {
-      var $own, $us, dragImg, dropImg;
+      var $own, $us, dropImg;
       $own = ui.helper.clone();
       dropImg = {};
       if (sotoFlag) {
-        $own.addClass("myDropImg");
-        $(this).append($own);
+        $(this).append($own).addClass("myDropImg");
         dropImg.dataId = $own.attr("data-id");
         dropImg.src = $own.attr('src');
         dropImg.alt = $own.attr('alt');
@@ -176,7 +174,6 @@ jQuery(function($) {
 
       }
       $us = $("img.tools.myDropImg");
-      dragImg = {};
       $us.on('mousemove', function() {
         return $(this).draggable();
       });
@@ -188,14 +185,6 @@ jQuery(function($) {
       });
       ev.preventDefault();
       $us.on('dblclick', function() {
-        /*$ownRm = $(@)
-        dragImg.dataId = $ownRm.attr("data-id")
-        dragImg.src    = $ownRm.attr('src')
-        dragImg.alt    = $ownRm.attr('alt')
-        dragImg.tit    = $ownRm.attr('title')
-        dragImg.ddesc  = $ownRm.attr('data-description')
-        dragImg.pos    = ui.position
-        */
         _socket.emit('dd-create', {
           ddmess: 'dd-create_remove'
         });
