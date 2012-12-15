@@ -207,7 +207,7 @@ coffee -wcb *.coffee
         dragImg.pos    = $ownRm.position()
         #dragImg.ddcount= $ownRm.attr('data-count')
         #---送り側--- dragdrop add ----------------------#
-        #console.info "dd-create_remove:"        # log -----------#
+        console.info "dd-create_remove:"+dragImg.pos        # log -----------#
         _socket.emit 'dd-create',
           ddid:   dragImg.dataId
           src:    dragImg.src

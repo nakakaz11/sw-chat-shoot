@@ -120,8 +120,8 @@ jQuery(function($) {
           case 'dd-create_remove':
             return ddMyCountTarget.remove();
           case 'dd-create_toolenter':
-            $(this).css(dDrop.ddpos).attr("data-count", ddcount);
-            $("body").append(this);
+            $(this).attr("data-count", ddcount);
+            $("body").append(this).css(dDrop.ddpos);
             /*_socket.emit 'dd-create',
               ddOwnCount : ddcount   # 相手の総カウント追加していくemit
             */
@@ -191,7 +191,6 @@ jQuery(function($) {
         dragImg.tit = $ownUp.attr('title');
         dragImg.ddesc = $ownUp.attr('data-description');
         dragImg.pos = $ownUp.position();
-        console.info("dd-create_mouseup:" + dragImg.pos);
         _socket.emit('dd-create', {
           ddid: dragImg.dataId,
           src: dragImg.src,
@@ -212,7 +211,6 @@ jQuery(function($) {
         dragImg.tit = $ownRm.attr('title');
         dragImg.ddesc = $ownRm.attr('data-description');
         dragImg.pos = $ownRm.position();
-        console.info("dd-create_remove:" + dragImg.pos);
         _socket.emit('dd-create', {
           ddid: dragImg.dataId,
           src: dragImg.src,
