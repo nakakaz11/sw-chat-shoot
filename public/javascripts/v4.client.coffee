@@ -142,7 +142,6 @@ coffee -wcb *.coffee
     _dropBack.ddOwnCount = data.dd_dt.ddOwnCount
     console.info "dd-back1:", _dropBack.ddOwnCount # log -----------#
     dropBack = _dropBack
-  console.info "dd-back2:", dropBack.ddOwnCount      # log -----------#
   $("body").droppable(
     tolerance:'fit'
     drop: (ev,ui) ->    #deactivate
@@ -171,6 +170,7 @@ coffee -wcb *.coffee
         $(@).draggable()
       #---送り側--- dragdrop add ----------------------#
       sotoFlag = false
+      console.info "dd-back2:", dropBack.ddOwnCount      # log -----------#
       _socket.emit 'dd-create',
         ddid:   dropImg.dataId
         src:    dropImg.src

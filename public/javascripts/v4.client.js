@@ -151,7 +151,6 @@ jQuery(function($) {
     console.info("dd-back1:", _dropBack.ddOwnCount);
     return dropBack = _dropBack;
   });
-  console.info("dd-back2:", dropBack.ddOwnCount);
   $("body").droppable({
     tolerance: 'fit',
     drop: function(ev, ui) {
@@ -182,6 +181,7 @@ jQuery(function($) {
         return $(this).draggable();
       });
       sotoFlag = false;
+      console.info("dd-back2:", dropBack.ddOwnCount);
       _socket.emit('dd-create', {
         ddid: dropImg.dataId,
         src: dropImg.src,
