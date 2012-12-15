@@ -174,7 +174,6 @@ jQuery(function($) {
       });
       sotoFlag = false;
       _socket.on("dd-back", function(data) {
-        dropImg.ddOwnCount = data.dd_dt.ddOwnCount;
         return console.info("dd-back1:", data.dd_dt.ddOwnCount);
       });
       console.info("dd-back2:", dropImg.ddOwnCount);
