@@ -87,7 +87,7 @@ jQuery ($) ->
       bullet.v = data.data.v
 
   #-------------受け側----------- dragdrop add ----------------------------------#
-  ddcount = 0
+  ddcount = 1
   _socket.on "dd-create", (data) ->
     dDrop = _ddMap[data.userId]
     if dDrop isnt `undefined`
@@ -105,7 +105,7 @@ jQuery ($) ->
       #clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
       #console.info clone.get(0)            # log -----------#
       $($dDrop1).each ->
-        ddMyCountTarget = $("img.test[data-count='#{ddcount}']")
+        ddMyCountTarget = $("img.test[data-count='#{ddcount-1}']")
         # ↑相手の総カウント反映_thisのmoveTest （あとでddcount(ddOwnCount)と入れ替え）
         #ddMyCountTarget = $("img.test[data-count='#{dDrop.ddcount}']")
         switch dDrop.ddmess

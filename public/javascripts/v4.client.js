@@ -97,7 +97,7 @@ jQuery(function($) {
       return bullet.v = data.data.v;
     }
   });
-  ddcount = 0;
+  ddcount = 1;
   _socket.on("dd-create", function(data) {
     var $dDrop1, dDrop;
     dDrop = _ddMap[data.userId];
@@ -113,7 +113,7 @@ jQuery(function($) {
       $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "' data-userid='" + dDrop.userId + "'>").css("opacity", 0.5);
       return $($dDrop1).each(function() {
         var ddMyCountTarget;
-        ddMyCountTarget = $("img.test[data-count='" + ddcount + "']");
+        ddMyCountTarget = $("img.test[data-count='" + (ddcount - 1) + "']");
         switch (dDrop.ddmess) {
           case 'dd-create_mouseup':
             return ddMyCountTarget.animate(dDrop.ddpos, "fast", "easeOutExpo");
