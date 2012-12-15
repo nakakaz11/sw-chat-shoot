@@ -99,7 +99,7 @@ jQuery(function($) {
   });
   ddcount = 0;
   _socket.on("dd-create", function(data) {
-    var $dDrop1, dDrop;
+    var $dDrop1, dDrop, ddMyCountTarget;
     dDrop = _ddMap[data.userId];
     if (dDrop !== undefined) {
       dDrop.ddid = data.dd_dt.ddid;
@@ -111,24 +111,21 @@ jQuery(function($) {
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
       $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "' data-userid='" + dDrop.userId + "'>").css("opacity", 0.5);
-      return $($dDrop1).each(function() {
-        var ddMyCountTarget;
-        ddMyCountTarget = $("img.test[data-count='" + (ddcount - 1) + "']");
-        switch (dDrop.ddmess) {
-          case 'dd-create_mouseup':
-            return ddMyCountTarget.animate(dDrop.ddpos, "fast", "easeOutExpo");
-          case 'dd-create_remove':
-            return ddMyCountTarget.remove();
-          case 'dd-create_toolenter':
-            $(this).css(dDrop.ddpos).attr("data-count", ddcount);
-            $("body").append(this);
-            /*_socket.emit 'dd-create',
-              ddOwnCount : ddcount   # 相手の総カウント追加していくemit
-            */
+      ddMyCountTarget = $("img.test[data-count='" + (ddcount - 1) + "']");
+      switch (dDrop.ddmess) {
+        case 'dd-create_mouseup':
+          return ddMyCountTarget.animate(dDrop.ddpos, "fast", "easeOutExpo");
+        case 'dd-create_remove':
+          return ddMyCountTarget.remove();
+        case 'dd-create_toolenter':
+          $dDrop1.css(dDrop.ddpos).attr("data-count", ddcount);
+          $("body").append(this);
+          /*_socket.emit 'dd-create',
+            ddOwnCount : ddcount   # 相手の総カウント追加していくemit
+          */
 
-            return ddcount++;
-        }
-      });
+          return ddcount++;
+      }
     }
   });
   /*
@@ -182,21 +179,25 @@ jQuery(function($) {
       console.info("dd-create_mouseup:", ui.position);
       sotoFlag = false;
       _socket.emit('dd-create', {
-        ddid: dropImg.dataId,
-        src: dropImg.src,
-        alt: dropImg.alt,
-        tit: dropImg.tit,
-        ddesc: dropImg.ddesc,
+        /*ddid:   dropImg.dataId
+        src:    dropImg.src
+        alt:    dropImg.alt
+        tit:    dropImg.tit
+        ddesc:  dropImg.ddesc
+        */
+
         ddmess: 'dd-create_mouseup',
         ddpos: ui.position
       });
       $us.on('dblclick', function() {
         _socket.emit('dd-create', {
-          ddid: dropImg.dataId,
-          src: dropImg.src,
-          alt: dropImg.alt,
-          tit: dropImg.tit,
-          ddesc: dropImg.ddesc,
+          /*ddid:   dropImg.dataId
+          src:    dropImg.src
+          alt:    dropImg.alt
+          tit:    dropImg.tit
+          ddesc:  dropImg.ddesc
+          */
+
           ddmess: 'dd-create_remove'
         });
         return $(this).remove();

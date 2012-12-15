@@ -104,23 +104,23 @@ jQuery ($) ->
       #dDrop2 = $("<div class='test'>Move(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
       #clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
       #console.info clone.get(0)            # log -----------#
-      $($dDrop1).each ->
-        ddMyCountTarget = $("img.test[data-count='#{ddcount-1}']")
-        # ↑相手の総カウント反映_thisのmoveTest （あとでddcount(ddOwnCount)と入れ替え）
-        #ddMyCountTarget = $("img.test[data-count='#{dDrop.ddcount}']")
-        switch dDrop.ddmess
-          when 'dd-create_mouseup'
-            #console.info ddMyCountTarget.get(0)    # log -------#
-            ddMyCountTarget.animate(dDrop.ddpos,"fast","easeOutExpo")
-          when 'dd-create_remove'
-            ddMyCountTarget.remove()
-          when 'dd-create_toolenter'
-            $(@).css(dDrop.ddpos).attr("data-count",ddcount)#.addClass("yourDropImg")
-            $("body").append(@)
-            ###_socket.emit 'dd-create',
-              ddOwnCount : ddcount   # 相手の総カウント追加していくemit###
-            ddcount++              # 相手の総カウント追加していく
-          else return
+      #$($dDrop1).each ->
+      ddMyCountTarget = $("img.test[data-count='#{ddcount-1}']")
+      # ↑相手の総カウント反映_thisのmoveTest （あとでddcount(ddOwnCount)と入れ替え）
+      #ddMyCountTarget = $("img.test[data-count='#{dDrop.ddcount}']")
+      switch dDrop.ddmess
+        when 'dd-create_mouseup'
+          #console.info ddMyCountTarget.get(0)    # log -------#
+          ddMyCountTarget.animate(dDrop.ddpos,"fast","easeOutExpo")
+        when 'dd-create_remove'
+          ddMyCountTarget.remove()
+        when 'dd-create_toolenter'
+          $dDrop1.css(dDrop.ddpos).attr("data-count",ddcount)#.addClass("yourDropImg")
+          $("body").append(@)
+          ###_socket.emit 'dd-create',
+            ddOwnCount : ddcount   # 相手の総カウント追加していくemit###
+          ddcount++              # 相手の総カウント追加していく
+        else return
   ###
 coffee -wcb *.coffee
   ###
@@ -170,22 +170,22 @@ coffee -wcb *.coffee
       sotoFlag = false
       #---送り側--- dragdrop add ----------------------#
       _socket.emit 'dd-create',
-        ddid:   dropImg.dataId
+        ###ddid:   dropImg.dataId
         src:    dropImg.src
         alt:    dropImg.alt
         tit:    dropImg.tit
-        ddesc:  dropImg.ddesc
+        ddesc:  dropImg.ddesc###
         ddmess:'dd-create_mouseup'
         ddpos:  ui.position
         #ddcount:dragImg.ddcount
       #ev.preventDefault()
       $us.on 'dblclick', ()->
         _socket.emit 'dd-create',
-          ddid:   dropImg.dataId
+          ###ddid:   dropImg.dataId
           src:    dropImg.src
           alt:    dropImg.alt
           tit:    dropImg.tit
-          ddesc:  dropImg.ddesc
+          ddesc:  dropImg.ddesc###
           ddmess: 'dd-create_remove'
         $(@).remove()
       false
