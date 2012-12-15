@@ -114,8 +114,8 @@ jQuery ($) ->
           when 'dd-create_remove'
             ddMyCountTarget.remove()
           when 'dd-create_toolenter'
-            #$(@).css(dDrop.ddpos).attr("data-count",ddcount)
-            $("body").append(@).css(dDrop.ddpos).attr("data-count",ddcount)
+            $(@).css(dDrop.ddpos).attr("data-count",ddcount)
+            $("body").append( $(@) )
             ###_socket.emit 'dd-create',
               ddOwnCount : ddcount   # 相手の総カウント追加していくemit###
             ddcount++                # 相手の総カウント追加していく
