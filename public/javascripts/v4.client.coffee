@@ -135,6 +135,11 @@ coffee -wcb *.coffee
         start:->
           sotoFlag = true  # toolbarから来たか判定
   dropImg = {}  # obj返し〜 _dropImg
+  #---dd-create_toolenter戻ってきたら ----------------------------#
+  _socket.on "dd-back", (data) ->
+    #dropImg.ddOwnCount = data.dd_dt.ddOwnCount
+    console.info "dd-back1:", data.dd_dt.ddOwnCount # log -----------#
+  console.info "dd-back2:", dropImg.ddOwnCount      # log -----------#
   $("body").droppable(
     tolerance:'fit'
     drop: (ev,ui) ->    #deactivate
@@ -163,12 +168,6 @@ coffee -wcb *.coffee
         $(@).draggable()
       #---送り側--- dragdrop add ----------------------#
       sotoFlag = false
-      #---dd-create_toolenter戻ってきたら ----------------------------#
-      _socket.on "dd-back", (data) ->
-        #dropImg.ddOwnCount = data.dd_dt.ddOwnCount
-        console.info "dd-back1:", data.dd_dt.ddOwnCount # log -----------#
-      console.info "dd-back2:", dropImg.ddOwnCount      # log -----------#
-
       _socket.emit 'dd-create',
         ddid:   dropImg.dataId
         src:    dropImg.src
