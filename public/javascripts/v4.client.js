@@ -174,9 +174,10 @@ jQuery(function($) {
       });
       sotoFlag = false;
       _socket.on("dd-back", function(data) {
-        return dropImg.ddOwnCount = data.dd_dt.ddOwnCount;
+        dropImg.ddOwnCount = data.dd_dt.ddOwnCount;
+        return console.info("dd-back1:", data.dd_dt.ddOwnCount);
       });
-      console.info("dd-create_mouseup:", dropImg.ddOwnCount);
+      console.info("dd-back2:", dropImg.ddOwnCount);
       _socket.emit('dd-create', {
         ddid: dropImg.dataId,
         src: dropImg.src,

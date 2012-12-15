@@ -166,7 +166,8 @@ coffee -wcb *.coffee
       #---dd-create_toolenter戻ってきたら ----------------------------#
       _socket.on "dd-back", (data) ->
         dropImg.ddOwnCount = data.dd_dt.ddOwnCount
-      console.info "dd-create_mouseup:", dropImg.ddOwnCount      # log -----------#
+        console.info "dd-back1:", data.dd_dt.ddOwnCount # log -----------#
+      console.info "dd-back2:", dropImg.ddOwnCount      # log -----------#
 
       _socket.emit 'dd-create',
         ddid:   dropImg.dataId
