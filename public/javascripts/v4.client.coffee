@@ -91,22 +91,23 @@ jQuery ($) ->
   _socket.on "dd-create", (data) ->
     dDrop = _ddMap[data.userId]
     if dDrop isnt `undefined`
-      dDrop.ddid   = data.dd_dt.ddid          #data-id
-      dDrop.src    = data.dd_dt.src
-      dDrop.alt    = data.dd_dt.alt
-      dDrop.tit    = data.dd_dt.tit
-      dDrop.ddesc  = data.dd_dt.ddesc
-      dDrop.userId = data.userId
-      dDrop.ddmess = data.dd_dt.ddmess
-      dDrop.ddpos  = data.dd_dt.ddpos
+      dDrop.ddid    = data.dd_dt.ddid          #data-id
+      dDrop.src     = data.dd_dt.src
+      dDrop.alt     = data.dd_dt.alt
+      dDrop.tit     = data.dd_dt.tit
+      dDrop.ddesc   = data.dd_dt.ddesc
+      dDrop.userId  = data.userId
+      dDrop.ddmess  = data.dd_dt.ddmess
+      dDrop.ddpos   = data.dd_dt.ddpos
+      dDrop.ddcount = data.dd_dt.ddcount
       $dDrop1 = $("<img data-id='#{dDrop.ddid}' class='test' alt='#{dDrop.alt}' title='#{dDrop.tit}' src='#{dDrop.src}' data-description='#{dDrop.ddesc}' data-userid='#{dDrop.userId}'>").css("opacity", 0.5)
       #dDrop2 = $("<div class='test'>Move(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
       #clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
       #console.info clone.get(0)            # log -----------#
       #$($dDrop1).each ->
-      ddMyCountTarget = $("img.test[data-count='#{ddcount-1}']")
+      #ddMyCountTarget = $("img.test[data-count='#{ddcount-1}']")
       # ↑相手の総カウント反映_thisのmoveTest （あとでddcount(ddOwnCount)と入れ替え）
-      #ddMyCountTarget = $("img.test[data-count='#{dDrop.ddcount}']")
+      ddMyCountTarget = $("img.test[data-count='#{dDrop.ddcount}']")
       switch dDrop.ddmess
         when 'dd-create_mouseup'
           #console.info ddMyCountTarget.get(0)    # log -------#
@@ -140,7 +141,7 @@ coffee -wcb *.coffee
   _socket.on "dd-back", (data) ->
     _dropBack = {}
     _dropBack.ddOwnCount = data.dd_dt.ddOwnCount
-    console.info "dd-back1:", _dropBack.ddOwnCount # log -----------#
+    #console.info "dd-back1:", _dropBack.ddOwnCount # log -----------#
     dropBack = _dropBack
   $("body").droppable(
     tolerance:'fit'
@@ -170,7 +171,7 @@ coffee -wcb *.coffee
         $(@).draggable()
       #---送り側--- dragdrop add ----------------------#
       sotoFlag = false
-      console.info "dd-back2:", dropBack.ddOwnCount      # log -----------#
+      console.info "dd-back2:", dropBack.ddOwnCount?      # log -----------#
       _socket.emit 'dd-create',
         ddid:   dropImg.dataId
         src:    dropImg.src
@@ -179,7 +180,7 @@ coffee -wcb *.coffee
         ddesc:  dropImg.ddesc
         ddmess:'dd-create_mouseup'
         ddpos:  ui.position
-        #ddcount:dragImg.ddcount
+        ddcount:dropBack.ddOwnCount
       #ev.preventDefault()
       $us.on 'dblclick', ()->
         _socket.emit 'dd-create',
@@ -189,6 +190,7 @@ coffee -wcb *.coffee
           tit:    dropImg.tit
           ddesc:  dropImg.ddesc
           ddmess: 'dd-create_remove'
+          ddcount:dropBack.ddOwnCount
         $(@).remove()
       false
   )

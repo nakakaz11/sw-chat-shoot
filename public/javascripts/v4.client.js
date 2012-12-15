@@ -110,8 +110,9 @@ jQuery(function($) {
       dDrop.userId = data.userId;
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
+      dDrop.ddcount = data.dd_dt.ddcount;
       $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "' data-userid='" + dDrop.userId + "'>").css("opacity", 0.5);
-      ddMyCountTarget = $("img.test[data-count='" + (ddcount - 1) + "']");
+      ddMyCountTarget = $("img.test[data-count='" + dDrop.ddcount + "']");
       switch (dDrop.ddmess) {
         case 'dd-create_mouseup':
           return ddMyCountTarget.animate(dDrop.ddpos, "fast", "easeOutExpo");
@@ -148,7 +149,6 @@ jQuery(function($) {
     var _dropBack;
     _dropBack = {};
     _dropBack.ddOwnCount = data.dd_dt.ddOwnCount;
-    console.info("dd-back1:", _dropBack.ddOwnCount);
     return dropBack = _dropBack;
   });
   $("body").droppable({
@@ -181,7 +181,7 @@ jQuery(function($) {
         return $(this).draggable();
       });
       sotoFlag = false;
-      console.info("dd-back2:", dropBack.ddOwnCount);
+      console.info("dd-back2:", dropBack.ddOwnCount != null);
       _socket.emit('dd-create', {
         ddid: dropImg.dataId,
         src: dropImg.src,
@@ -189,7 +189,8 @@ jQuery(function($) {
         tit: dropImg.tit,
         ddesc: dropImg.ddesc,
         ddmess: 'dd-create_mouseup',
-        ddpos: ui.position
+        ddpos: ui.position,
+        ddcount: dropBack.ddOwnCount
       });
       $us.on('dblclick', function() {
         _socket.emit('dd-create', {
@@ -198,7 +199,8 @@ jQuery(function($) {
           alt: dropImg.alt,
           tit: dropImg.tit,
           ddesc: dropImg.ddesc,
-          ddmess: 'dd-create_remove'
+          ddmess: 'dd-create_remove',
+          ddcount: dropBack.ddOwnCount
         });
         return $(this).remove();
       });
