@@ -107,10 +107,10 @@ jQuery ($) ->
       #$($dDrop1).each ->
       #ddMyCountTarget = $("img.test[data-count='#{ddcount-1}']")
       # ↑相手の総カウント反映_thisのmoveTest （あとでddcount(ddOwnCount)と入れ替え）
-      console.info "dd-back3:", dDrop.ddcount       # log -----------#
       #ddMyCountTarget = $("img.test[data-count='#{dDrop.ddcount}']")
       switch dDrop.ddmess
         when 'dd-create_mouseup'
+          console.info "dd-back3:", dDrop.ddcount       # log -----------#
           #console.info ddMyCountTarget.get(0)      # log -------#
           $("img.test[data-count='#{dDrop.ddcount}']").animate(dDrop.ddpos,"fast","easeOutExpo")
         when 'dd-create_remove'
