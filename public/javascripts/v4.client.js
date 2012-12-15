@@ -176,12 +176,11 @@ jQuery(function($) {
         });
         dropImg = _dropImg;
       }
-      $us = $("img.tools.myDropImg");
+      $us = $("img.tools.myDropImg").attr("data-count", dropBack.ddOwnCount);
       $us.on('mousemove', function() {
         return $(this).draggable();
       });
       sotoFlag = false;
-      console.info("dd-back2:", dropBack.ddOwnCount);
       _socket.emit('dd-create', {
         ddid: dropImg.dataId,
         src: dropImg.src,
@@ -190,7 +189,7 @@ jQuery(function($) {
         ddesc: dropImg.ddesc,
         ddmess: 'dd-create_mouseup',
         ddpos: ui.position,
-        ddcount: dropBack.ddOwnCount
+        ddcount: ui.attr("data-count")
       });
       $us.on('dblclick', function() {
         _socket.emit('dd-create', {
@@ -200,7 +199,7 @@ jQuery(function($) {
           tit: dropImg.tit,
           ddesc: dropImg.ddesc,
           ddmess: 'dd-create_remove',
-          ddcount: dropBack.ddOwnCount
+          ddcount: ui.attr("data-count")
         });
         return $(this).remove();
       });
