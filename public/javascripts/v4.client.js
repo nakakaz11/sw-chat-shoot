@@ -182,7 +182,7 @@ jQuery(function($) {
         return $(this).draggable();
       });
       sotoFlag = false;
-      console.info("dd-back2:", dropBack.ddOwnCount != null);
+      console.info("dd-back2:", dropBack.ddOwnCount);
       _socket.emit('dd-create', {
         ddid: dropImg.dataId,
         src: dropImg.src,
