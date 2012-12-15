@@ -181,7 +181,7 @@ jQuery(function($) {
         return $(this).draggable();
       });
       sotoFlag = false;
-      _socket.emit('dd-create', {
+      _socket.emit('dd-create', console.info("dd-back2:", $(ui).attr("data-count")), {
         ddid: dropImg.dataId,
         src: dropImg.src,
         alt: dropImg.alt,
