@@ -169,7 +169,7 @@ coffee -wcb *.coffee
       $us = $("img.tools.myDropImg")
       dragImg = {}
       $us.on 'mousemove', ()->  #'click'
-        console.info "dd-create_mousemove:"+ui.position        # log -----------#
+        #console.info "dd-create_mousemove:"+ui.position        # log -----------#
         $(@).draggable(
           #helper:'original'
         )
@@ -182,10 +182,10 @@ coffee -wcb *.coffee
         dragImg.alt    = $ownUp.attr('alt')
         dragImg.tit    = $ownUp.attr('title')
         dragImg.ddesc  = $ownUp.attr('data-description')
-        dragImg.pos    = ui.position
+        #dragImg.pos    = ui.position
         #dragImg.ddcount= $ownUp.attr('data-count')
         #---送り側--- dragdrop add ----------------------#
-        console.info "dd-create_mouseup:"+dragImg.pos       # log -----------#
+        console.info "dd-create_mouseup:"+ui.position       # log -----------#
         _socket.emit 'dd-create',
           ddid:   dragImg.dataId
           src:    dragImg.src
@@ -193,7 +193,7 @@ coffee -wcb *.coffee
           tit:    dragImg.tit
           ddesc:  dragImg.ddesc
           ddmess:'dd-create_mouseup'
-          ddpos:  dragImg.pos
+          ddpos:  ui.position
           #ddcount:dragImg.ddcount
         ev.preventDefault()
 
@@ -204,7 +204,7 @@ coffee -wcb *.coffee
         dragImg.alt    = $ownRm.attr('alt')
         dragImg.tit    = $ownRm.attr('title')
         dragImg.ddesc  = $ownRm.attr('data-description')
-        dragImg.pos    = ui.position
+        #dragImg.pos    = ui.position
         #dragImg.ddcount= $ownRm.attr('data-count')
         #---送り側--- dragdrop add ----------------------#
         console.info "dd-create_remove:"+dragImg.pos        # log -----------#

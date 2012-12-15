@@ -178,7 +178,6 @@ jQuery(function($) {
       $us = $("img.tools.myDropImg");
       dragImg = {};
       $us.on('mousemove', function() {
-        console.info("dd-create_mousemove:" + ui.position);
         return $(this).draggable();
       });
       $us.on('mouseup', function(ev) {
@@ -190,8 +189,7 @@ jQuery(function($) {
         dragImg.alt = $ownUp.attr('alt');
         dragImg.tit = $ownUp.attr('title');
         dragImg.ddesc = $ownUp.attr('data-description');
-        dragImg.pos = ui.position;
-        console.info("dd-create_mouseup:" + dragImg.pos);
+        console.info("dd-create_mouseup:" + ui.position);
         _socket.emit('dd-create', {
           ddid: dragImg.dataId,
           src: dragImg.src,
@@ -199,7 +197,7 @@ jQuery(function($) {
           tit: dragImg.tit,
           ddesc: dragImg.ddesc,
           ddmess: 'dd-create_mouseup',
-          ddpos: dragImg.pos
+          ddpos: ui.position
         });
         return ev.preventDefault();
       });
@@ -211,7 +209,6 @@ jQuery(function($) {
         dragImg.alt = $ownRm.attr('alt');
         dragImg.tit = $ownRm.attr('title');
         dragImg.ddesc = $ownRm.attr('data-description');
-        dragImg.pos = ui.position;
         console.info("dd-create_remove:" + dragImg.pos);
         _socket.emit('dd-create', {
           ddid: dragImg.dataId,
