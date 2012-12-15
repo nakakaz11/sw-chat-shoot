@@ -144,11 +144,13 @@ coffee -wcb *.coffee
         $own.addClass("myDropImg")
         $(@).append($own)
         #---送り側--- dragdrop add ----------------------#
-        dropImg.dataId = $own.attr("data-id")
-        dropImg.src    = $own.attr('src')
-        dropImg.alt    = $own.attr('alt')
-        dropImg.tit    = $own.attr('title')
-        dropImg.ddesc  = $own.attr('data-description')
+        do ()->
+          dropImg.dataId = $own.attr("data-id")
+          dropImg.src    = $own.attr('src')
+          dropImg.alt    = $own.attr('alt')
+          dropImg.tit    = $own.attr('title')
+          dropImg.ddesc  = $own.attr('data-description')
+          return
         _socket.emit 'dd-create',
           ddid:   dropImg.dataId
           src:    dropImg.src

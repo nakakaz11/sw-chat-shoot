@@ -152,11 +152,13 @@ jQuery(function($) {
       if (sotoFlag) {
         $own.addClass("myDropImg");
         $(this).append($own);
-        dropImg.dataId = $own.attr("data-id");
-        dropImg.src = $own.attr('src');
-        dropImg.alt = $own.attr('alt');
-        dropImg.tit = $own.attr('title');
-        dropImg.ddesc = $own.attr('data-description');
+        (function() {
+          dropImg.dataId = $own.attr("data-id");
+          dropImg.src = $own.attr('src');
+          dropImg.alt = $own.attr('alt');
+          dropImg.tit = $own.attr('title');
+          dropImg.ddesc = $own.attr('data-description');
+        })();
         _socket.emit('dd-create', {
           ddid: dropImg.dataId,
           src: dropImg.src,
