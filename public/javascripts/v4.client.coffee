@@ -144,13 +144,11 @@ coffee -wcb *.coffee
         $own.addClass("myDropImg")
         $(@).append($own)
         #---送り側--- dragdrop add ----------------------#
-        do ()->
-          dropImg.dataId = $own.attr("data-id")
-          dropImg.src    = $own.attr('src')
-          dropImg.alt    = $own.attr('alt')
-          dropImg.tit    = $own.attr('title')
-          dropImg.ddesc  = $own.attr('data-description')
-          return
+        dropImg.dataId = $own.attr("data-id")
+        dropImg.src    = $own.attr('src')
+        dropImg.alt    = $own.attr('alt')
+        dropImg.tit    = $own.attr('title')
+        dropImg.ddesc  = $own.attr('data-description')
         _socket.emit 'dd-create',
           ddid:   dropImg.dataId
           src:    dropImg.src
@@ -159,6 +157,7 @@ coffee -wcb *.coffee
           ddesc:  dropImg.ddesc
           ddmess:'dd-create_toolenter'
           ddpos:  ui.position
+        return dropImg
         #---dd-create_toolenter戻ってきたら ----------------------------#
         ###_socket.on "dd-create", (data) ->
           dragImg.ddOwnCount = data.dd_dt.ddOwnCount
