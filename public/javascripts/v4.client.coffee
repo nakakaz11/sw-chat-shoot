@@ -135,29 +135,30 @@ coffee -wcb *.coffee
         helper:'clone'
         start:->
           sotoFlag = true  # toolbarから来たか判定
+  dropImg = {}
   $("body").droppable(
     tolerance:'fit'
     drop: (ev,ui) ->    #deactivate
       $own = ui.helper.clone()
-      dropImg = {}
       if sotoFlag
         $own.addClass("myDropImg")
         $(@).append($own)
         #---送り側--- dragdrop add ----------------------#
-        dropImg.dataId = $own.attr("data-id")
-        dropImg.src    = $own.attr('src')
-        dropImg.alt    = $own.attr('alt')
-        dropImg.tit    = $own.attr('title')
-        dropImg.ddesc  = $own.attr('data-description')
+        _dropImg = {}
+        _dropImg.dataId = $own.attr("data-id")
+        _dropImg.src    = $own.attr('src')
+        _dropImg.alt    = $own.attr('alt')
+        _dropImg.tit    = $own.attr('title')
+        _dropImg.ddesc  = $own.attr('data-description')
         _socket.emit 'dd-create',
-          ddid:   dropImg.dataId
-          src:    dropImg.src
-          alt:    dropImg.alt
-          tit:    dropImg.tit
-          ddesc:  dropImg.ddesc
+          ddid:   _dropImg.dataId
+          src:    _dropImg.src
+          alt:    _dropImg.alt
+          tit:    _dropImg.tit
+          ddesc:  _dropImg.ddesc
           ddmess:'dd-create_toolenter'
           ddpos:  ui.position
-        return dropImg
+        dropImg = _dropImg
         #---dd-create_toolenter戻ってきたら ----------------------------#
         ###_socket.on "dd-create", (data) ->
           dragImg.ddOwnCount = data.dd_dt.ddOwnCount
