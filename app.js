@@ -78,7 +78,6 @@ SwSocket = (function() {
         userId: socket.handshake.userId,
         data: data,
         dd_dt: data,
-        dd_bk: data,
         ca_cr: data
       });
     });

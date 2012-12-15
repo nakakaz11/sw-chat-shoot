@@ -170,8 +170,8 @@ coffee -wcb *.coffee
         $(@).draggable()
       #---送り側--- dragdrop add ----------------------#
       _socket.on "dd-back", (data) ->
-        dropImg.ddOwnCount  = data.dd_bk.ddOwnCount
-      console.info "dd-create_mouseup:", dropImg.ddOwnCount      # log -----------#
+        dropImg.ddOwnCount  = data.dd_dt.ddOwnCount
+        console.info "dd-create_mouseup:", data.dd_dt.ddOwnCount      # log -----------#
       sotoFlag = false
       _socket.emit 'dd-create',
         ddid:   dropImg.dataId

@@ -178,9 +178,9 @@ jQuery(function($) {
         return $(this).draggable();
       });
       _socket.on("dd-back", function(data) {
-        return dropImg.ddOwnCount = data.dd_bk.ddOwnCount;
+        dropImg.ddOwnCount = data.dd_dt.ddOwnCount;
+        return console.info("dd-create_mouseup:", data.dd_dt.ddOwnCount);
       });
-      console.info("dd-create_mouseup:", dropImg.ddOwnCount);
       sotoFlag = false;
       _socket.emit('dd-create', {
         ddid: dropImg.dataId,
