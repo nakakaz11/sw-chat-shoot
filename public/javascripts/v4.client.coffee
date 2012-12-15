@@ -166,7 +166,7 @@ coffee -wcb *.coffee
       $us = $("img.tools.myDropImg")
       $us.on 'mousemove', ()->  #'click'
         $(@).draggable()
-      console.info "dd-create_mouseup:", ui.position      # log -----------#
+      console.info "dd-create_mouseup:", dropImg.src      # log -----------#
       sotoFlag = false
       #---送り側--- dragdrop add ----------------------#
       _socket.emit 'dd-create',

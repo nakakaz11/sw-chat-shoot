@@ -176,7 +176,7 @@ jQuery(function($) {
       $us.on('mousemove', function() {
         return $(this).draggable();
       });
-      console.info("dd-create_mouseup:", ui.position);
+      console.info("dd-create_mouseup:", dropImg.src);
       sotoFlag = false;
       _socket.emit('dd-create', {
         /*ddid:   dropImg.dataId
