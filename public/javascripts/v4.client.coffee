@@ -87,7 +87,7 @@ jQuery ($) ->
       bullet.v = data.data.v
 
   #-------------受け側----------- dragdrop add ----------------------------------#
-  ddcount = 0                       # 相手の総カウント追加していく
+  ddcount = 0
   _socket.on "dd-create", (data) ->
     dDrop = _ddMap[data.userId]
     if dDrop isnt `undefined`
@@ -110,35 +110,39 @@ jQuery ($) ->
         #ddMyCountTarget = $("img.test[data-count='#{dDrop.ddcount}']")
         switch dDrop.ddmess
           when 'dd-create_mouseup'
+            #console.info ddMyCountTarget.get(0)    # log -------#
             ddMyCountTarget.animate(dDrop.ddpos,"fast","easeOutExpo")
           when 'dd-create_remove'
             ddMyCountTarget.remove()
           when 'dd-create_toolenter'
             $(@).css(dDrop.ddpos).attr("data-count",ddcount)
-            $("body").append( $(@) )
+            $("body").append(@)
             ###_socket.emit 'dd-create',
               ddOwnCount : ddcount   # 相手の総カウント追加していくemit###
-            ddcount++                # 相手の総カウント追加していく
+            ddcount++              # 相手の総カウント追加していく
           else return
   ###
 coffee -wcb *.coffee
   ###
-  # dragdrop tool ---------------------------------------------------------#
+  # dragdrop tool --------------------------------------#
   $toolbar = $("div.toolbar")   # toolBarパレットの生成元
   $.each tools, (i, tool) ->     #JSONを$()に展開回し〜
     $("<img>", tool).appendTo($toolbar)
+
   sotoFlag = false    # toolbarから来たか判定
   $("div.toolbar img.tools").draggable
         #appendTo:'div.canvas'
         helper:'clone'
-        start:-> sotoFlag = true  # toolbarから来たか判定
+        start:->
+          sotoFlag = true  # toolbarから来たか判定
   $("body").droppable(
     tolerance:'fit'
     drop: (ev,ui) ->    #deactivate
       $own = ui.helper.clone()
       dropImg = {}
       if sotoFlag
-        $(@).append($own).addClass("myDropImg")
+        $own.addClass("myDropImg")
+        $(@).append($own)
         #---送り側--- dragdrop add ----------------------#
         dropImg.dataId = $own.attr("data-id")
         dropImg.src    = $own.attr('src')
@@ -153,26 +157,57 @@ coffee -wcb *.coffee
           ddesc:  dropImg.ddesc
           ddmess:'dd-create_toolenter'
           ddpos:  ui.position
-          #ddcount:dragImg.ddcount
         #---dd-create_toolenter戻ってきたら ----------------------------#
         ###_socket.on "dd-create", (data) ->
           dragImg.ddOwnCount = data.dd_dt.ddOwnCount
           $own.attr("data-count", dragImg.ddOwnCount)###
+        #console.info "dd-create_:count:"+dragImg.ddOwnCount       # log -----------#
         #---dd-create_toolenter戻ってきたら ----------------------------#
       $us = $("img.tools.myDropImg")
+      dragImg = {}
       $us.on 'mousemove', ()->  #'click'
-        $(@).draggable()
+        $(@).draggable(
+          #helper:'original'
+        )
+      #$us.on 'mouseup', (ev)->
       console.info "dd-create_mouseup:", ui.position      # log -----------#
+      #$ownUp = $(@)
       #console.info $(@).get(0)      # log -----------#
       sotoFlag = false
+      #dragImg.dataId = $ownUp.attr("data-id")
+      #dragImg.src    = $ownUp.attr('src')
+      #dragImg.alt    = $ownUp.attr('alt')
+      #dragImg.tit    = $ownUp.attr('title')
+      #dragImg.ddesc  = $ownUp.attr('data-description')
+      #dragImg.pos    = ui.position
+      #dragImg.ddcount= $ownUp.attr('data-count')
       #---送り側--- dragdrop add ----------------------#
       _socket.emit 'dd-create',
+        #ddid:   dragImg.dataId
+        #src:    dragImg.src
+        #alt:    dragImg.alt
+        #tit:    dragImg.tit
+        #ddesc:  dragImg.ddesc
         ddmess:'dd-create_mouseup'
         ddpos:  ui.position
         #ddcount:dragImg.ddcount
       ev.preventDefault()
+
       $us.on 'dblclick', ()->
+        ###$ownRm = $(@)
+        dragImg.dataId = $ownRm.attr("data-id")
+        dragImg.src    = $ownRm.attr('src')
+        dragImg.alt    = $ownRm.attr('alt')
+        dragImg.tit    = $ownRm.attr('title')
+        dragImg.ddesc  = $ownRm.attr('data-description')
+        dragImg.pos    = ui.position###
+        #dragImg.ddcount= $ownRm.attr('data-count')
         _socket.emit 'dd-create',
+          #ddid:   dropImg.dataId
+          #src:    dropImg.src
+          #alt:    dropImg.alt
+          #tit:    dropImg.tit
+          #ddesc:  dropImg.ddesc
           ddmess: 'dd-create_remove'
         $(@).remove()
       false
