@@ -4,7 +4,7 @@ var tools;
 jQuery(function($) {
   "use strict";
 
-  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, ddcount, delId, dropImg, f, mousedown, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
+  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, ddcount, delId, dropBack, dropImg, f, mousedown, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
   _userMap = {};
   _bulletMap = {};
@@ -143,11 +143,15 @@ jQuery(function($) {
     }
   });
   dropImg = {};
+  dropBack = {};
   _socket.on("dd-back", function(data) {
-    dropImg.ddOwnCount = data.dd_dt.ddOwnCount;
-    return console.info("dd-back1:", data.dd_bk.ddOwnCount);
+    var _dropBack;
+    _dropBack = {};
+    _dropBack.ddOwnCount = data.dd_dt.ddOwnCount;
+    console.info("dd-back1:", _dropBack.ddOwnCount);
+    return dropBack = _dropBack;
   });
-  console.info("dd-back2:", dropImg.ddOwnCount);
+  console.info("dd-back2:", dropBack.ddOwnCount);
   $("body").droppable({
     tolerance: 'fit',
     drop: function(ev, ui) {

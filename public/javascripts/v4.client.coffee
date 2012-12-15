@@ -134,12 +134,15 @@ coffee -wcb *.coffee
         helper:'clone'
         start:->
           sotoFlag = true  # toolbarから来たか判定
-  dropImg = {}  # obj返し〜 _dropImg
+  dropImg = {}   # obj返し〜 _dropImg{}
+  dropBack = {}  # obj返し〜 .ddOwnCount
   #---dd-create_toolenter戻ってきたら ----------------------------#
   _socket.on "dd-back", (data) ->
-    dropImg.ddOwnCount = data.dd_dt.ddOwnCount
-    console.info "dd-back1:", data.dd_bk.ddOwnCount # log -----------#
-  console.info "dd-back2:", dropImg.ddOwnCount      # log -----------#
+    _dropBack = {}
+    _dropBack.ddOwnCount = data.dd_dt.ddOwnCount
+    console.info "dd-back1:", _dropBack.ddOwnCount # log -----------#
+    dropBack = _dropBack
+  console.info "dd-back2:", dropBack.ddOwnCount      # log -----------#
   $("body").droppable(
     tolerance:'fit'
     drop: (ev,ui) ->    #deactivate
