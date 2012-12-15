@@ -199,21 +199,19 @@ coffee -wcb *.coffee
 
       $us.on 'dblclick', ()->
         $ownRm = $(@)
-        dragImg.dataId = $ownRm.attr("data-id")
-        dragImg.src    = $ownRm.attr('src')
-        dragImg.alt    = $ownRm.attr('alt')
-        dragImg.tit    = $ownRm.attr('title')
-        dragImg.ddesc  = $ownRm.attr('data-description')
+        #dragImg.dataId = $ownRm.attr("data-id")
+        #dragImg.src    = $ownRm.attr('src')
+        #dragImg.alt    = $ownRm.attr('alt')
+        #dragImg.tit    = $ownRm.attr('title')
+        #dragImg.ddesc  = $ownRm.attr('data-description')
         #dragImg.pos    = ui.position
         #dragImg.ddcount= $ownRm.attr('data-count')
-        #---送り側--- dragdrop add ----------------------#
-        console.info "dd-create_remove:"+dragImg.pos        # log -----------#
         _socket.emit 'dd-create',
-          ddid:   dragImg.dataId
-          src:    dragImg.src
-          alt:    dragImg.alt
-          tit:    dragImg.tit
-          ddesc:  dragImg.ddesc
+          #ddid:   dragImg.dataId
+          #src:    dragImg.src
+          #alt:    dragImg.alt
+          #tit:    dragImg.tit
+          #ddesc:  dragImg.ddesc
           ddmess: 'dd-create_remove'
           #ddcount:dragImg.ddcount
         $(@).remove()

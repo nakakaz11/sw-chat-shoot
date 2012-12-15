@@ -201,18 +201,7 @@ jQuery(function($) {
       $us.on('dblclick', function() {
         var $ownRm;
         $ownRm = $(this);
-        dragImg.dataId = $ownRm.attr("data-id");
-        dragImg.src = $ownRm.attr('src');
-        dragImg.alt = $ownRm.attr('alt');
-        dragImg.tit = $ownRm.attr('title');
-        dragImg.ddesc = $ownRm.attr('data-description');
-        console.info("dd-create_remove:" + dragImg.pos);
         _socket.emit('dd-create', {
-          ddid: dragImg.dataId,
-          src: dragImg.src,
-          alt: dragImg.alt,
-          tit: dragImg.tit,
-          ddesc: dragImg.ddesc,
           ddmess: 'dd-create_remove'
         });
         return $(this).remove();
