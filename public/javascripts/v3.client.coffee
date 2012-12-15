@@ -140,6 +140,7 @@ coffee -wcb *.coffee
   $("body").droppable(
     tolerance:'fit'
     drop: (ev,ui) ->    #deactivate
+      console.info "dd-create_mouseup:"+sotoFlag       # log -----------#
       $own = ui.helper.clone()
       dropImg = {}
       if sotoFlag
@@ -176,7 +177,6 @@ coffee -wcb *.coffee
       $us.on 'mouseup', (ev)->
         $ownUp = $(@)
         #console.info $(@).get(0)      # log -----------#
-        console.info "dd-create_mouseup:"+sotoFlag       # log -----------#
         sotoFlag = false
         dragImg.dataId = $ownUp.attr("data-id")
         dragImg.src    = $ownUp.attr('src')

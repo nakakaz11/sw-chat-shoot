@@ -150,6 +150,7 @@ jQuery(function($) {
     tolerance: 'fit',
     drop: function(ev, ui) {
       var $own, $us, dragImg, dropImg;
+      console.info("dd-create_mouseup:" + sotoFlag);
       $own = ui.helper.clone();
       dropImg = {};
       if (sotoFlag) {
@@ -183,7 +184,6 @@ jQuery(function($) {
       $us.on('mouseup', function(ev) {
         var $ownUp;
         $ownUp = $(this);
-        console.info("dd-create_mouseup:" + sotoFlag);
         sotoFlag = false;
         dragImg.dataId = $ownUp.attr("data-id");
         dragImg.src = $ownUp.attr('src');
