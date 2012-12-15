@@ -54,7 +54,8 @@ class SwSocket
         userId: socket.handshake.userId
         data: data
         #playmess: data
-        dd_dt: data   # canvs add
+        dd_dt: data   # dd add
+        dd_bk: data   # dd add
         ca_cr: data   # canvs add
 class SwSockClient extends SwSocket  # 一応便宜上 extend
   make: (socket,keyname) ->  # chat with mongoose用
@@ -94,6 +95,7 @@ class SwSockClient extends SwSocket  # 一応便宜上 extend
 p_u = new SwSocket
 b_c = new SwSocket
 d_d = new SwSocket
+d_b = new SwSocket
 c_c = new SwSocket
 d_u = new SwSocket
 p_m = new SwSockClient
@@ -108,6 +110,7 @@ io.sockets.on "connection", (socket) ->
   d_d.make(socket,'dd-create')     # dragdrop add
   socket.json.emit 'dd-create',
     userId : socket.handshake.userId
+  d_b.make(socket,'dd-back')       # dragdrop add
   c_c.make(socket,'canvas-create') # canvs add
   d_u.make(socket,'disconnect')
   p_m.make(socket,'player-message')

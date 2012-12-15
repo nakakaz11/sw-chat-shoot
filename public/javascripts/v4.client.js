@@ -120,10 +120,9 @@ jQuery(function($) {
         case 'dd-create_toolenter':
           $dDrop1.css(dDrop.ddpos).attr("data-count", ddcount);
           $("body").append($dDrop1);
-          /*_socket.emit 'dd-create',
-            ddOwnCount : ddcount   # 相手の総カウント追加していくemit
-          */
-
+          _socket.emit('dd-back', {
+            ddOwnCount: ddcount
+          });
           return ddcount++;
       }
     }
@@ -178,7 +177,10 @@ jQuery(function($) {
       $us.on('mousemove', function() {
         return $(this).draggable();
       });
-      console.info("dd-create_mouseup:", dropImg.src);
+      _socket.on("dd-back", function(data) {
+        return dropImg.ddOwnCount = data.dd_bk.ddOwnCount;
+      });
+      console.info("dd-create_mouseup:", dropImg.ddOwnCount);
       sotoFlag = false;
       _socket.emit('dd-create', {
         ddid: dropImg.dataId,

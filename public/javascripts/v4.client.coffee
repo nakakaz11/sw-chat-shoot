@@ -99,7 +99,6 @@ jQuery ($) ->
       dDrop.userId = data.userId
       dDrop.ddmess = data.dd_dt.ddmess
       dDrop.ddpos  = data.dd_dt.ddpos
-      #dDrop.ddcount  = data.dd_dt.ddcount
       $dDrop1 = $("<img data-id='#{dDrop.ddid}' class='test' alt='#{dDrop.alt}' title='#{dDrop.tit}' src='#{dDrop.src}' data-description='#{dDrop.ddesc}' data-userid='#{dDrop.userId}'>").css("opacity", 0.5)
       #dDrop2 = $("<div class='test'>Move(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
       #clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
@@ -117,9 +116,9 @@ jQuery ($) ->
         when 'dd-create_toolenter'
           $dDrop1.css(dDrop.ddpos).attr("data-count",ddcount)#.addClass("yourDropImg")
           $("body").append($dDrop1)
-          ###_socket.emit 'dd-create',
-            ddOwnCount : ddcount   # 相手の総カウント追加していくemit###
-          ddcount++              # 相手の総カウント追加していく
+          _socket.emit 'dd-back',
+            ddOwnCount : ddcount   # 相手の総カウント追加していくemit
+          ddcount++          # 相手の総カウント +1
         else return
   ###
 coffee -wcb *.coffee
@@ -135,7 +134,7 @@ coffee -wcb *.coffee
         helper:'clone'
         start:->
           sotoFlag = true  # toolbarから来たか判定
-  dropImg = {}             # obj返し〜 _dropImg
+  dropImg = {}  # obj返し〜 _dropImg
   $("body").droppable(
     tolerance:'fit'
     drop: (ev,ui) ->    #deactivate
@@ -158,7 +157,8 @@ coffee -wcb *.coffee
           ddesc:  _dropImg.ddesc
           ddmess:'dd-create_toolenter'
           ddpos:  ui.position
-        dropImg = _dropImg
+        dropImg = _dropImg       # obj返し〜 _dropImg
+
         #---dd-create_toolenter戻ってきたら ----------------------------#
         ###_socket.on "dd-create", (data) ->
           dragImg.ddOwnCount = data.dd_dt.ddOwnCount
@@ -168,9 +168,11 @@ coffee -wcb *.coffee
       $us = $("img.tools.myDropImg")
       $us.on 'mousemove', ()->  #'click'
         $(@).draggable()
-      console.info "dd-create_mouseup:", dropImg.src      # log -----------#
-      sotoFlag = false
       #---送り側--- dragdrop add ----------------------#
+      _socket.on "dd-back", (data) ->
+        dropImg.ddOwnCount  = data.dd_bk.ddOwnCount
+      console.info "dd-create_mouseup:", dropImg.ddOwnCount      # log -----------#
+      sotoFlag = false
       _socket.emit 'dd-create',
         ddid:   dropImg.dataId
         src:    dropImg.src
