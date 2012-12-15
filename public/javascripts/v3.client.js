@@ -149,8 +149,7 @@ jQuery(function($) {
   $("body").droppable({
     tolerance: 'fit',
     drop: function(ev, ui) {
-      var $own, $us, dragImg, dropImg;
-      console.info("dd-create_mouseup:" + sotoFlag);
+      var $own, $ownUp, $us, dragImg, dropImg;
       $own = ui.helper.clone();
       dropImg = {};
       if (sotoFlag) {
@@ -181,26 +180,24 @@ jQuery(function($) {
       $us.on('mousemove', function() {
         return $(this).draggable();
       });
-      $us.on('mouseup', function(ev) {
-        var $ownUp;
-        $ownUp = $(this);
-        sotoFlag = false;
-        dragImg.dataId = $ownUp.attr("data-id");
-        dragImg.src = $ownUp.attr('src');
-        dragImg.alt = $ownUp.attr('alt');
-        dragImg.tit = $ownUp.attr('title');
-        dragImg.ddesc = $ownUp.attr('data-description');
-        _socket.emit('dd-create', {
-          ddid: dragImg.dataId,
-          src: dragImg.src,
-          alt: dragImg.alt,
-          tit: dragImg.tit,
-          ddesc: dragImg.ddesc,
-          ddmess: 'dd-create_mouseup',
-          ddpos: ui.position
-        });
-        return ev.preventDefault();
+      console.info("dd-create_mouseup:" + ui.position);
+      $ownUp = $(this);
+      sotoFlag = false;
+      dragImg.dataId = $ownUp.attr("data-id");
+      dragImg.src = $ownUp.attr('src');
+      dragImg.alt = $ownUp.attr('alt');
+      dragImg.tit = $ownUp.attr('title');
+      dragImg.ddesc = $ownUp.attr('data-description');
+      _socket.emit('dd-create', {
+        ddid: dragImg.dataId,
+        src: dragImg.src,
+        alt: dragImg.alt,
+        tit: dragImg.tit,
+        ddesc: dragImg.ddesc,
+        ddmess: 'dd-create_mouseup',
+        ddpos: ui.position
       });
+      ev.preventDefault();
       $us.on('dblclick', function() {
         var $ownRm;
         $ownRm = $(this);

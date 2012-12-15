@@ -140,7 +140,6 @@ coffee -wcb *.coffee
   $("body").droppable(
     tolerance:'fit'
     drop: (ev,ui) ->    #deactivate
-      console.info "dd-create_mouseup:"+sotoFlag       # log -----------#
       $own = ui.helper.clone()
       dropImg = {}
       if sotoFlag
@@ -174,28 +173,29 @@ coffee -wcb *.coffee
         $(@).draggable(
           #helper:'original'
         )
-      $us.on 'mouseup', (ev)->
-        $ownUp = $(@)
-        #console.info $(@).get(0)      # log -----------#
-        sotoFlag = false
-        dragImg.dataId = $ownUp.attr("data-id")
-        dragImg.src    = $ownUp.attr('src')
-        dragImg.alt    = $ownUp.attr('alt')
-        dragImg.tit    = $ownUp.attr('title')
-        dragImg.ddesc  = $ownUp.attr('data-description')
-        #dragImg.pos    = ui.position
-        #dragImg.ddcount= $ownUp.attr('data-count')
-        #---送り側--- dragdrop add ----------------------#
-        _socket.emit 'dd-create',
-          ddid:   dragImg.dataId
-          src:    dragImg.src
-          alt:    dragImg.alt
-          tit:    dragImg.tit
-          ddesc:  dragImg.ddesc
-          ddmess:'dd-create_mouseup'
-          ddpos:  ui.position
-          #ddcount:dragImg.ddcount
-        ev.preventDefault()
+      #$us.on 'mouseup', (ev)->
+      console.info "dd-create_mouseup:"+ui.position      # log -----------#
+      $ownUp = $(@)
+      #console.info $(@).get(0)      # log -----------#
+      sotoFlag = false
+      dragImg.dataId = $ownUp.attr("data-id")
+      dragImg.src    = $ownUp.attr('src')
+      dragImg.alt    = $ownUp.attr('alt')
+      dragImg.tit    = $ownUp.attr('title')
+      dragImg.ddesc  = $ownUp.attr('data-description')
+      #dragImg.pos    = ui.position
+      #dragImg.ddcount= $ownUp.attr('data-count')
+      #---送り側--- dragdrop add ----------------------#
+      _socket.emit 'dd-create',
+        ddid:   dragImg.dataId
+        src:    dragImg.src
+        alt:    dragImg.alt
+        tit:    dragImg.tit
+        ddesc:  dragImg.ddesc
+        ddmess:'dd-create_mouseup'
+        ddpos:  ui.position
+        #ddcount:dragImg.ddcount
+      ev.preventDefault()
 
       $us.on 'dblclick', ()->
         $ownRm = $(@)
