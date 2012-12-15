@@ -105,7 +105,7 @@ jQuery ($) ->
       #clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
       #console.info clone.get(0)            # log -----------#
       $($dDrop1).each ->
-        ddMyCountTarget = $("img.test[data-count='#{ddcount-1}']")
+        ddMyCountTarget = $("img.test[data-count='#{ddcount}']")
         # ↑相手の総カウント反映_thisのmoveTest （あとでddcount(ddOwnCount)と入れ替え）
         #ddMyCountTarget = $("img.test[data-count='#{dDrop.ddcount}']")
         switch dDrop.ddmess
@@ -115,7 +115,7 @@ jQuery ($) ->
           when 'dd-create_remove'
             ddMyCountTarget.remove()
           when 'dd-create_toolenter'
-            $(@).css(dDrop.ddpos).attr("data-count",ddcount )#.addClass("yourDropImg")
+            $(@).css(dDrop.ddpos).attr("data-count",ddcount)#.addClass("yourDropImg")
             $("body").append(@)
             ###_socket.emit 'dd-create',
               ddOwnCount : ddcount   # 相手の総カウント追加していくemit###
