@@ -103,9 +103,9 @@ jQuery ($) ->
       #dDrop2 = $("<div class='test'>Move(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
       # ↑相手の総カウント反映_thisのmoveTest （あとでddcount(ddOwnCount)と入れ替え）
       #ddMyCountTarget = $("img.test[data-count='#{dDrop.ddcount}']")
+      console.info "dd-CountID1:", dDrop.ddcount       # log -----------#
       switch dDrop.ddmess
         when 'dd-create_mouseup'
-          console.info "dd-CountID:", dDrop.ddcount       # log -----------#
           $("img.test[data-id='#{dDrop.ddid}'][data-count='#{dDrop.ddcount}']")
             .animate(dDrop.ddpos,"fast","easeOutExpo")
         when 'dd-create_remove'

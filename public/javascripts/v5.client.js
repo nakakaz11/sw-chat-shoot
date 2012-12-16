@@ -111,9 +111,9 @@ jQuery(function($) {
       dDrop.ddpos = data.dd_dt.ddpos;
       dDrop.ddcount = data.dd_dt.ddOwnCount;
       $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "' data-userid='" + dDrop.userId + "' data-count='" + dDrop.ddcount + "'>").css("opacity", 0.5);
+      console.info("dd-CountID1:", dDrop.ddcount);
       switch (dDrop.ddmess) {
         case 'dd-create_mouseup':
-          console.info("dd-CountID:", dDrop.ddcount);
           return $("img.test[data-id='" + dDrop.ddid + "'][data-count='" + dDrop.ddcount + "']").animate(dDrop.ddpos, "fast", "easeOutExpo");
         case 'dd-create_remove':
           return $("img.test[data-id='" + dDrop.ddid + "'][data-count='" + dDrop.ddcount + "']").remove();
