@@ -171,8 +171,9 @@ coffee -wcb *.coffee
       $us = $("img.tools.myDropImg")
       $us.one 'mousemove', ()->  #'click'
         $(@).draggable()
+        $(@).attr("data-count",dropBack.ddOwnCount)
       sotoFlag = false
-      _$sendCount = $(ui.helper).attr("data-count",dropBack.ddOwnCount)
+      _$sendCount = $(ui.helper)
       console.info "dd-back2:", _$sendCount.get(0)      # log -----------#
       _socket.emit 'dd-create',
         ddid:      dropImg.dataId
