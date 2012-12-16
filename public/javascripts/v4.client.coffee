@@ -99,12 +99,11 @@ jQuery ($) ->
       dDrop.userId  = data.userId
       dDrop.ddmess  = data.dd_dt.ddmess
       dDrop.ddpos   = data.dd_dt.ddpos
-      dDrop.ddcount = data.dd_dt.ddcount
+      #dDrop.ddcount = data.dd_dt.ddcount
       $dDrop1 = $("<img data-id='#{dDrop.ddid}' class='test' alt='#{dDrop.alt}' title='#{dDrop.tit}' src='#{dDrop.src}' data-description='#{dDrop.ddesc}' data-userid='#{dDrop.userId}'>").css("opacity", 0.5)
       #dDrop2 = $("<div class='test'>Move(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
       #clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
       #console.info clone.get(0)            # log -----------#
-      #$($dDrop1).each ->
       #ddMyCountTarget = $("img.test[data-count='#{ddcount-1}']")
       # ↑相手の総カウント反映_thisのmoveTest （あとでddcount(ddOwnCount)と入れ替え）
       #ddMyCountTarget = $("img.test[data-count='#{dDrop.ddcount}']")
