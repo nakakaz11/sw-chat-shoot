@@ -114,6 +114,9 @@ jQuery(function($) {
       $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "' data-userid='" + dDrop.userId + "'>").css("opacity", 0.5);
       switch (dDrop.ddmess) {
         case 'dd-create_mouseup':
+          if (!$dDrop1) {
+            $("body").append($dDrop1);
+          }
           console.info("dd-back3:", dDrop.ddcount);
           return $("img.test[data-count='" + dDrop.ddcount + "']").animate(dDrop.ddpos, "fast", "easeOutExpo");
         case 'dd-create_remove':

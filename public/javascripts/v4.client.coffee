@@ -109,8 +109,9 @@ jQuery ($) ->
       #ddMyCountTarget = $("img.test[data-count='#{dDrop.ddcount}']")
       switch dDrop.ddmess
         when 'dd-create_mouseup'
+          if not $dDrop1
+            $("body").append($dDrop1)
           console.info "dd-back3:", dDrop.ddcount       # log -----------#
-          #console.info ddMyCountTarget.get(0)      # log -------#
           $("img.test[data-count='#{dDrop.ddcount}']").animate(dDrop.ddpos,"fast","easeOutExpo")
         when 'dd-create_remove'
           $("img.test[data-count='#{dDrop.ddcount}']").remove()
@@ -151,7 +152,6 @@ coffee -wcb *.coffee
       if sotoFlag
         $own.addClass("myDropImg")
         $(@).append($own)
-        #---送り側--- dragdrop add ----------------------#
         _dropImg = {}
         _dropImg.dataId = $own.attr("data-id")
         _dropImg.src    = $own.attr('src')
