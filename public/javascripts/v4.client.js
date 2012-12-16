@@ -155,7 +155,7 @@ jQuery(function($) {
   $("body").droppable({
     tolerance: 'fit',
     drop: function(ev, ui) {
-      var $own, $us, _dropImg;
+      var $own, $us, _$hoge, _dropImg;
       $own = ui.helper.clone();
       if (sotoFlag) {
         $own.addClass("myDropImg");
@@ -182,6 +182,8 @@ jQuery(function($) {
         return $(this).draggable();
       });
       sotoFlag = false;
+      _$hoge = $(ui.helper).attr("data-count", dropBack.ddOwnCount);
+      console.info("dd-back2:", _$hoge.get(0));
       _socket.emit('dd-create', {
         ddid: dropImg.dataId,
         src: dropImg.src,
@@ -190,12 +192,7 @@ jQuery(function($) {
         ddesc: dropImg.ddesc,
         ddmess: 'dd-create_mouseup',
         ddpos: ui.position,
-        ddcount: function() {
-          var _$hoge;
-          _$hoge = $(ui.helper).attr("data-count", dropBack.ddOwnCount);
-          console.info("dd-back2:", _$hoge.get(0));
-          return _$hoge;
-        }
+        ddcount: _$hoge.attr("data-count")
       });
       $us.on('dblclick', function() {
         _socket.emit('dd-create', {
