@@ -99,7 +99,7 @@ jQuery ($) ->
       dDrop.userId  = data.userId
       dDrop.ddmess  = data.dd_dt.ddmess
       dDrop.ddpos   = data.dd_dt.ddpos
-      #dDrop.ddcount = data.dd_dt.ddcount
+      dDrop.ddcount = data.dd_dt.ddcount
       $dDrop1 = $("<img data-id='#{dDrop.ddid}' class='test' alt='#{dDrop.alt}' title='#{dDrop.tit}' src='#{dDrop.src}' data-description='#{dDrop.ddesc}' data-userid='#{dDrop.userId}'>").css("opacity", 0.5)
       #dDrop2 = $("<div class='test'>Move(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
       #clone = $("div.toolbar > img.tools[data-id='#{dDrop.ddid}']").clone()
@@ -169,11 +169,11 @@ coffee -wcb *.coffee
         #$own.attr("data-count",dropBack.ddOwnCount)
       $us = $("img.tools.myDropImg")
       $us.one 'mousemove', ()->  #'click'
-        $(@).draggable().attr("data-count",dropBack.ddOwnCount)
+        $(@).draggable()
       #---送り側--- dragdrop add ----------------------#
       sotoFlag = false
       _socket.emit 'dd-create',
-        console.info "dd-back2:", $(ui.helper).get(0)      # log -----------#
+        console.info "dd-back2:", $(ui.helper).get(0).attr("data-count",dropBack.ddOwnCount)      # log -----------#
         ddid:      dropImg.dataId
         src:       dropImg.src
         alt:       dropImg.alt
@@ -181,7 +181,7 @@ coffee -wcb *.coffee
         ddesc:     dropImg.ddesc
         ddmess:   'dd-create_mouseup'
         ddpos:     ui.position
-        #ddcount:   ui.helper.attr("data-count")
+        ddcount:   dropBack.ddOwnCount
       #ev.preventDefault()
       $us.on 'dblclick', ()->
         _socket.emit 'dd-create',
@@ -191,7 +191,7 @@ coffee -wcb *.coffee
           tit:     dropImg.tit
           ddesc:   dropImg.ddesc
           ddmess:  'dd-create_remove'
-          #ddcount: ui.helper.attr("data-count")
+          ddcount:   dropBack.ddOwnCount
         $(@).remove()
       false
   )

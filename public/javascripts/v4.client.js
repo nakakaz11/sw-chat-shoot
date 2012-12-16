@@ -110,6 +110,7 @@ jQuery(function($) {
       dDrop.userId = data.userId;
       dDrop.ddmess = data.dd_dt.ddmess;
       dDrop.ddpos = data.dd_dt.ddpos;
+      dDrop.ddcount = data.dd_dt.ddcount;
       $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "' data-userid='" + dDrop.userId + "'>").css("opacity", 0.5);
       switch (dDrop.ddmess) {
         case 'dd-create_mouseup':
@@ -178,17 +179,18 @@ jQuery(function($) {
       }
       $us = $("img.tools.myDropImg");
       $us.one('mousemove', function() {
-        return $(this).draggable().attr("data-count", dropBack.ddOwnCount);
+        return $(this).draggable();
       });
       sotoFlag = false;
-      _socket.emit('dd-create', console.info("dd-back2:", $(ui.helper).get(0)), {
+      _socket.emit('dd-create', console.info("dd-back2:", $(ui.helper).get(0).attr("data-count", dropBack.ddOwnCount)), {
         ddid: dropImg.dataId,
         src: dropImg.src,
         alt: dropImg.alt,
         tit: dropImg.tit,
         ddesc: dropImg.ddesc,
         ddmess: 'dd-create_mouseup',
-        ddpos: ui.position
+        ddpos: ui.position,
+        ddcount: dropBack.ddOwnCount
       });
       $us.on('dblclick', function() {
         _socket.emit('dd-create', {
@@ -197,7 +199,8 @@ jQuery(function($) {
           alt: dropImg.alt,
           tit: dropImg.tit,
           ddesc: dropImg.ddesc,
-          ddmess: 'dd-create_remove'
+          ddmess: 'dd-create_remove',
+          ddcount: dropBack.ddOwnCount
         });
         return $(this).remove();
       });
