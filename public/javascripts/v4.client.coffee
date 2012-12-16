@@ -174,7 +174,7 @@ coffee -wcb *.coffee
       #---送り側--- dragdrop add ----------------------#
       sotoFlag = false
       _socket.emit 'dd-create',
-        console.info "dd-back2:", ui.helper.attr("data-count")      # log -----------#
+        console.info "dd-back2:", ui.helper      # log -----------#
         ddid:      dropImg.dataId
         src:       dropImg.src
         alt:       dropImg.alt
