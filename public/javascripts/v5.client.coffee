@@ -101,7 +101,7 @@ jQuery ($) ->
       dDrop.ddcount = data.dd_dt.ddOwnCount
       $dDrop1 = $("<img data-id='#{dDrop.ddid}' class='test' alt='#{dDrop.alt}' title='#{dDrop.tit}' src='#{dDrop.src}' data-description='#{dDrop.ddesc}' data-userid='#{dDrop.userId}' data-count='#{dDrop.ddcount}'>").css("opacity", 0.5)
       #ddMyCountTarget = $("img.test[data-count='#{dDrop.ddcount}']")
-      console.info "dd-CountID1:", dDrop.ddcount       # log -----------#
+      #console.info "dd-CountID1:", dDrop.ddcount       # log -----------#
       switch dDrop.ddmess
         when 'dd-create_mouseup'
           $("img.test[data-userid='#{dDrop.userId}'][data-count='#{dDrop.ddcount}']")
@@ -163,7 +163,7 @@ coffee -wcb *.coffee
       $us.one 'mousemove', ()->  #'click'
         $(@).draggable()
       _$sendCount = $(ui.helper)
-      console.info "dd-MoveEle:", _$sendCount.get(0)      # log -----------#
+      #console.info "dd-MoveEle:", _$sendCount.get(0)      # log -----------#
       _socket.emit 'dd-create',
         ddid:         dropImg.dataId
         src:          dropImg.src

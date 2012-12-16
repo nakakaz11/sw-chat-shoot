@@ -111,7 +111,6 @@ jQuery(function($) {
       dDrop.ddpos = data.dd_dt.ddpos;
       dDrop.ddcount = data.dd_dt.ddOwnCount;
       $dDrop1 = $("<img data-id='" + dDrop.ddid + "' class='test' alt='" + dDrop.alt + "' title='" + dDrop.tit + "' src='" + dDrop.src + "' data-description='" + dDrop.ddesc + "' data-userid='" + dDrop.userId + "' data-count='" + dDrop.ddcount + "'>").css("opacity", 0.5);
-      console.info("dd-CountID1:", dDrop.ddcount);
       switch (dDrop.ddmess) {
         case 'dd-create_mouseup':
           return $("img.test[data-userid='" + dDrop.userId + "'][data-count='" + dDrop.ddcount + "']").animate(dDrop.ddpos, "fast", "easeOutExpo");
@@ -175,7 +174,6 @@ jQuery(function($) {
         return $(this).draggable();
       });
       _$sendCount = $(ui.helper);
-      console.info("dd-MoveEle:", _$sendCount.get(0));
       _socket.emit('dd-create', {
         ddid: dropImg.dataId,
         src: dropImg.src,
