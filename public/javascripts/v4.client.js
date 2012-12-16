@@ -138,6 +138,7 @@ jQuery(function($) {
   });
   sotoFlag = false;
   $("div.toolbar img.tools").draggable({
+    appendTo: 'body',
     helper: 'clone',
     start: function() {
       return sotoFlag = true;
@@ -154,12 +155,11 @@ jQuery(function($) {
   });
   $("body").droppable({
     tolerance: 'fit',
-    drop: function(ev, ui) {
-      var $own, $us, _$hoge, _dropImg;
+    activate: function(ev, ui) {
+      var $own, _dropImg;
       $own = ui.helper.clone();
       if (sotoFlag) {
         $own.addClass("myDropImg");
-        $(this).append($own);
         _dropImg = {};
         _dropImg.dataId = $own.attr("data-id");
         _dropImg.src = $own.attr('src');
@@ -176,14 +176,18 @@ jQuery(function($) {
           ddpos: ui.position
         });
         dropImg = _dropImg;
+        return $(this).append($own);
       }
+    },
+    drop: function(ev, ui) {
+      var $us, _$sendCount;
       $us = $("img.tools.myDropImg");
       $us.one('mousemove', function() {
         return $(this).draggable();
       });
       sotoFlag = false;
-      _$hoge = $(ui.helper).attr("data-count", dropBack.ddOwnCount);
-      console.info("dd-back2:", _$hoge.get(0));
+      _$sendCount = $(ui.helper).attr("data-count", dropBack.ddOwnCount);
+      console.info("dd-back2:", _$sendCount.get(0));
       _socket.emit('dd-create', {
         ddid: dropImg.dataId,
         src: dropImg.src,
@@ -192,7 +196,7 @@ jQuery(function($) {
         ddesc: dropImg.ddesc,
         ddmess: 'dd-create_mouseup',
         ddpos: ui.position,
-        ddcount: _$hoge != null ? _$hoge.attr("data-count") : void 0
+        ddcount: _$sendCount != null ? _$sendCount.attr("data-count") : void 0
       });
       $us.on('dblclick', function() {
         _socket.emit('dd-create', {
@@ -202,7 +206,7 @@ jQuery(function($) {
           tit: dropImg.tit,
           ddesc: dropImg.ddesc,
           ddmess: 'dd-create_remove',
-          ddcount: _$hoge != null ? _$hoge.attr("data-count") : void 0
+          ddcount: _$sendCount != null ? _$sendCount.attr("data-count") : void 0
         });
         return $(this).remove();
       });

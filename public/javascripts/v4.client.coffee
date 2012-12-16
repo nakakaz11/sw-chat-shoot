@@ -131,7 +131,7 @@ coffee -wcb *.coffee
 
   sotoFlag = false    # toolbarから来たか判定
   $("div.toolbar img.tools").draggable
-        #appendTo:'div.canvas'
+        appendTo:'body'
         helper:'clone'
         start:->
           sotoFlag = true  # toolbarから来たか判定
@@ -145,11 +145,10 @@ coffee -wcb *.coffee
     dropBack = _dropBack
   $("body").droppable(
     tolerance:'fit'
-    drop: (ev,ui) ->    #deactivate
+    activate: (ev,ui) ->
       $own = ui.helper.clone()
       if sotoFlag
         $own.addClass("myDropImg")
-        $(@).append($own)
         #---送り側--- dragdrop add ----------------------#
         _dropImg = {}
         _dropImg.dataId = $own.attr("data-id")
@@ -166,13 +165,15 @@ coffee -wcb *.coffee
           ddmess:'dd-create_toolenter'
           ddpos:  ui.position
         dropImg = _dropImg       # obj返し〜 _dropImg
+        $(@).append($own)
+    drop: (ev,ui) ->
       $us = $("img.tools.myDropImg")
       $us.one 'mousemove', ()->  #'click'
         $(@).draggable()
       #---送り側--- dragdrop add ----------------------#
       sotoFlag = false
-      _$hoge = $(ui.helper).attr("data-count",dropBack.ddOwnCount)
-      console.info "dd-back2:", _$hoge.get(0)      # log -----------#
+      _$sendCount = $(ui.helper).attr("data-count",dropBack.ddOwnCount)
+      console.info "dd-back2:", _$sendCount.get(0)      # log -----------#
       _socket.emit 'dd-create',
         ddid:      dropImg.dataId
         src:       dropImg.src
@@ -181,7 +182,7 @@ coffee -wcb *.coffee
         ddesc:     dropImg.ddesc
         ddmess:   'dd-create_mouseup'
         ddpos:     ui.position
-        ddcount:   _$hoge?.attr("data-count")
+        ddcount:   _$sendCount?.attr("data-count")
           #dropBack.ddOwnCount
       #ev.preventDefault()
       $us.on 'dblclick', ()->
@@ -192,7 +193,7 @@ coffee -wcb *.coffee
           tit:     dropImg.tit
           ddesc:   dropImg.ddesc
           ddmess:  'dd-create_remove'
-          ddcount: _$hoge?.attr("data-count")  #dropBack.ddOwnCount
+          ddcount: _$sendCount?.attr("data-count")  #dropBack.ddOwnCount
         $(@).remove()
       false
   )
