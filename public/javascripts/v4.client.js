@@ -160,6 +160,7 @@ jQuery(function($) {
       $own = ui.helper.clone();
       if (sotoFlag) {
         $own.addClass("myDropImg");
+        $(this).append($own);
         _dropImg = {};
         _dropImg.dataId = $own.attr("data-id");
         _dropImg.src = $own.attr('src');
@@ -175,8 +176,7 @@ jQuery(function($) {
           ddmess: 'dd-create_toolenter',
           ddpos: ui.position
         });
-        dropImg = _dropImg;
-        return $(this).append($own);
+        return dropImg = _dropImg;
       }
     },
     drop: function(ev, ui) {

@@ -149,6 +149,7 @@ coffee -wcb *.coffee
       $own = ui.helper.clone()
       if sotoFlag
         $own.addClass("myDropImg")
+        $(@).append($own)
         #---送り側--- dragdrop add ----------------------#
         _dropImg = {}
         _dropImg.dataId = $own.attr("data-id")
@@ -165,7 +166,6 @@ coffee -wcb *.coffee
           ddmess:'dd-create_toolenter'
           ddpos:  ui.position
         dropImg = _dropImg       # obj返し〜 _dropImg
-        $(@).append($own)
     drop: (ev,ui) ->
       #---送り側--- dragdrop add ----------------------#
       $us = $("img.tools.myDropImg")
