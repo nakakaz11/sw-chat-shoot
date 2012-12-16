@@ -105,10 +105,12 @@ jQuery ($) ->
       #ddMyCountTarget = $("img.test[data-count='#{dDrop.ddcount}']")
       switch dDrop.ddmess
         when 'dd-create_mouseup'
-          console.info "dd-back3:", dDrop.ddcount       # log -----------#
-          $("img.test[data-id='#{dDrop.ddid}'][data-count='#{dDrop.ddcount}']").animate(dDrop.ddpos,"fast","easeOutExpo")
+          console.info "dd-CountID:", dDrop.ddcount       # log -----------#
+          $("img.test[data-id='#{dDrop.ddid}'][data-count='#{dDrop.ddcount}']")
+            .animate(dDrop.ddpos,"fast","easeOutExpo")
         when 'dd-create_remove'
-          $("img.test[data-id='#{dDrop.ddid}'][data-count='#{dDrop.ddcount}']").remove()
+          $("img.test[data-id='#{dDrop.ddid}'][data-count='#{dDrop.ddcount}']")
+            .remove()
         when 'dd-create_toolenter'
           $dDrop1.css(dDrop.ddpos)
           $("body").append($dDrop1)
@@ -116,7 +118,7 @@ jQuery ($) ->
   ###
 coffee -wcb *.coffee
   ###
-  # dragdrop tool --------------------------------------#
+  # dragdrop tool ------------------------------#
   $toolbar = $("div.toolbar")   # toolBarパレットの生成元
   $.each tools, (i, tool) ->     #JSONを$()に展開回し〜
     $("<img>", tool).appendTo($toolbar)
@@ -124,17 +126,18 @@ coffee -wcb *.coffee
   sotoFlag = false    # toolbarから来たか判定
   dropImg = {}   # obj返し〜 _dropImg{}
   ddcount = 0
-  # dragdrop tool --------------------------------------#
   $("div.toolbar img.tools").draggable
         appendTo:'body'
         helper:'clone'
         start:->
           sotoFlag = true  # toolbarから来たか判定
+  # dragdrop tool ------------------------------#
   $("body").droppable(
     tolerance:'fit'
     #deactivate: (ev,ui) ->
     drop: (ev,ui) ->
       $own = ui.helper.clone()
+      #---送り側--- dragdrop drop ----------------------#
       if sotoFlag
         $own.addClass("myDropImg")
         $(@).append($own)
@@ -156,13 +159,13 @@ coffee -wcb *.coffee
         dropImg = _dropImg                # obj返し〜 _dropImg
         $own.attr("data-count",ddcount)   # drop 追加していくカウント attr
         ddcount++
-      #---送り側--- dragdrop add ----------------------#
+      #---送り側--- dragdrop move ----------------------#
       $us = $("img.tools.myDropImg")
       $us.one 'mousemove', ()->  #'click'
         $(@).draggable()
       sotoFlag = false
       _$sendCount = $(ui.helper)
-      console.info "dd-back2:", _$sendCount.get(0)      # log -----------#
+      console.info "dd-MoveEle:", _$sendCount.get(0)      # log -----------#
       _socket.emit 'dd-create',
         ddid:         dropImg.dataId
         src:          dropImg.src
