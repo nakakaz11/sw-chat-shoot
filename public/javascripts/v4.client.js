@@ -180,9 +180,7 @@ jQuery(function($) {
           ddpos: ui.position
         });
         dropImg = _dropImg;
-        if (dropBack != null) {
-          $(ui.helper).attr("data-count", dropBack.ddOwnCount);
-        }
+        $(ui.helper).attr("data-count", dropBack.ddOwnCount);
       }
       $us = $("img.tools.myDropImg");
       $us.one('mousemove', function() {

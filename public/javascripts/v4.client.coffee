@@ -168,8 +168,7 @@ coffee -wcb *.coffee
           ddmess:'dd-create_toolenter'
           ddpos:  ui.position
         dropImg = _dropImg       # obj返し〜 _dropImg
-        if dropBack?
-          $(ui.helper).attr("data-count",dropBack.ddOwnCount)
+        $(ui.helper).attr("data-count",dropBack.ddOwnCount)
       #---送り側--- dragdrop add ----------------------#
       $us = $("img.tools.myDropImg")
       $us.one 'mousemove', ()->  #'click'
