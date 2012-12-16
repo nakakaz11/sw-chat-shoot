@@ -214,11 +214,13 @@ coffee -wcb *.coffee
       bullet = _bulletMap[data.userId]
       bullet.element.remove()
       delete _bulletMap[data.userId]
-       # dragdrop add あとで。
       uCanv = _canvasMap[data.userId]
       uCanv.element.remove()
       delete _canvasMap[data.userId]
-      return _isUserCanvas = false   # flag
+      _isUserCanvas = false   # flag
+      # dragdrop disconnect
+      delete _ddMap[data.userId]
+      $("img.test[data-userid='#{data.userId}']").remove()
 
   # myPlayerの初期値
   _keyMap = []

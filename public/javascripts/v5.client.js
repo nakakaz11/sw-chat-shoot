@@ -237,7 +237,9 @@ jQuery(function($) {
       uCanv = _canvasMap[data.userId];
       uCanv.element.remove();
       delete _canvasMap[data.userId];
-      return _isUserCanvas = false;
+      _isUserCanvas = false;
+      delete _ddMap[data.userId];
+      return $("img.test[data-userid='" + data.userId + "']").remove();
     }
   });
   _keyMap = [];
