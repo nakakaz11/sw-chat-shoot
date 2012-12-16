@@ -145,7 +145,8 @@ coffee -wcb *.coffee
     dropBack = _dropBack
   $("body").droppable(
     tolerance:'fit'
-    deactivate: (ev,ui) ->
+    #deactivate: (ev,ui) ->
+    drop: (ev,ui) ->
       $own = ui.helper.clone()
       if sotoFlag
         $own.addClass("myDropImg")
@@ -166,7 +167,6 @@ coffee -wcb *.coffee
           ddmess:'dd-create_toolenter'
           ddpos:  ui.position
         dropImg = _dropImg       # obj返し〜 _dropImg
-    drop: (ev,ui) ->
       #---送り側--- dragdrop add ----------------------#
       $us = $("img.tools.myDropImg")
       $us.one 'mousemove', ()->  #'click'

@@ -155,8 +155,8 @@ jQuery(function($) {
   });
   $("body").droppable({
     tolerance: 'fit',
-    deactivate: function(ev, ui) {
-      var $own, _dropImg;
+    drop: function(ev, ui) {
+      var $own, $us, _$sendCount, _dropImg;
       $own = ui.helper.clone();
       if (sotoFlag) {
         $own.addClass("myDropImg");
@@ -176,11 +176,8 @@ jQuery(function($) {
           ddmess: 'dd-create_toolenter',
           ddpos: ui.position
         });
-        return dropImg = _dropImg;
+        dropImg = _dropImg;
       }
-    },
-    drop: function(ev, ui) {
-      var $us, _$sendCount;
       $us = $("img.tools.myDropImg");
       $us.one('mousemove', function() {
         return $(this).draggable();
