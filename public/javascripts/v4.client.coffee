@@ -131,11 +131,6 @@ coffee -wcb *.coffee
     $("<img>", tool).appendTo($toolbar)
 
   sotoFlag = false    # toolbarから来たか判定
-  $("div.toolbar img.tools").draggable
-        appendTo:'body'
-        helper:'clone'
-        start:->
-          sotoFlag = true  # toolbarから来たか判定
   dropImg = {}   # obj返し〜 _dropImg{}
   dropBack = {}  # obj返し〜 .ddOwnCount
   #---dd-create_toolenter戻ってきたら ----------------------------#
@@ -144,6 +139,12 @@ coffee -wcb *.coffee
     _dropBack.ddOwnCount = data.dd_dt.ddOwnCount
     console.info "dd-back1:", _dropBack.ddOwnCount # log -----------#
     dropBack = _dropBack
+  # dragdrop tool --------------------------------------#
+  $("div.toolbar img.tools").draggable
+        appendTo:'body'
+        helper:'clone'
+        start:->
+          sotoFlag = true  # toolbarから来たか判定
   $("body").droppable(
     tolerance:'fit'
     #deactivate: (ev,ui) ->
@@ -167,11 +168,12 @@ coffee -wcb *.coffee
           ddmess:'dd-create_toolenter'
           ddpos:  ui.position
         dropImg = _dropImg       # obj返し〜 _dropImg
+        if dropBack?
+          $own.attr("data-count",dropBack.ddOwnCount)
       #---送り側--- dragdrop add ----------------------#
       $us = $("img.tools.myDropImg")
       $us.one 'mousemove', ()->  #'click'
         $(@).draggable()
-        $(@).attr("data-count",dropBack.ddOwnCount)
       sotoFlag = false
       _$sendCount = $(ui.helper)
       console.info "dd-back2:", _$sendCount.get(0)      # log -----------#

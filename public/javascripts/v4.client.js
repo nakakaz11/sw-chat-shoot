@@ -140,13 +140,6 @@ jQuery(function($) {
     return $("<img>", tool).appendTo($toolbar);
   });
   sotoFlag = false;
-  $("div.toolbar img.tools").draggable({
-    appendTo: 'body',
-    helper: 'clone',
-    start: function() {
-      return sotoFlag = true;
-    }
-  });
   dropImg = {};
   dropBack = {};
   _socket.on("dd-back", function(data) {
@@ -155,6 +148,13 @@ jQuery(function($) {
     _dropBack.ddOwnCount = data.dd_dt.ddOwnCount;
     console.info("dd-back1:", _dropBack.ddOwnCount);
     return dropBack = _dropBack;
+  });
+  $("div.toolbar img.tools").draggable({
+    appendTo: 'body',
+    helper: 'clone',
+    start: function() {
+      return sotoFlag = true;
+    }
   });
   $("body").droppable({
     tolerance: 'fit',
@@ -180,11 +180,13 @@ jQuery(function($) {
           ddpos: ui.position
         });
         dropImg = _dropImg;
+        if (dropBack != null) {
+          $own.attr("data-count", dropBack.ddOwnCount);
+        }
       }
       $us = $("img.tools.myDropImg");
       $us.one('mousemove', function() {
-        $(this).draggable();
-        return $(this).attr("data-count", dropBack.ddOwnCount);
+        return $(this).draggable();
       });
       sotoFlag = false;
       _$sendCount = $(ui.helper);
