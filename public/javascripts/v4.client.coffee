@@ -173,7 +173,6 @@ coffee -wcb *.coffee
       #---送り側--- dragdrop add ----------------------#
       sotoFlag = false
       _socket.emit 'dd-create',
-        console.info "dd-back2:", $(ui.helper).get(0).attr("data-count",dropBack.ddOwnCount)      # log -----------#
         ddid:      dropImg.dataId
         src:       dropImg.src
         alt:       dropImg.alt
@@ -181,7 +180,11 @@ coffee -wcb *.coffee
         ddesc:     dropImg.ddesc
         ddmess:   'dd-create_mouseup'
         ddpos:     ui.position
-        ddcount:   dropBack.ddOwnCount
+        ddcount:->
+          _$hoge = $(ui.helper).attr("data-count",dropBack.ddOwnCount)
+          console.info "dd-back2:", _$hoge.get(0)      # log -----------#
+          return _$hoge
+          #dropBack.ddOwnCount
       #ev.preventDefault()
       $us.on 'dblclick', ()->
         _socket.emit 'dd-create',
