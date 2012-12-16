@@ -181,7 +181,7 @@ jQuery(function($) {
         });
         dropImg = _dropImg;
         if (dropBack != null) {
-          $own.attr("data-count", dropBack.ddOwnCount);
+          $($own).attr("data-count", dropBack.ddOwnCount);
         }
       }
       $us = $("img.tools.myDropImg");
