@@ -145,8 +145,7 @@ coffee -wcb *.coffee
     dropBack = _dropBack
   $("body").droppable(
     tolerance:'fit'
-    activate: (ev,ui) ->
-    drop: (ev,ui) ->
+    deactivate: (ev,ui) ->
       $own = ui.helper.clone()
       if sotoFlag
         $own.addClass("myDropImg")
@@ -167,10 +166,11 @@ coffee -wcb *.coffee
           ddpos:  ui.position
         dropImg = _dropImg       # obj返し〜 _dropImg
         $(@).append($own)
+    drop: (ev,ui) ->
+      #---送り側--- dragdrop add ----------------------#
       $us = $("img.tools.myDropImg")
       $us.one 'mousemove', ()->  #'click'
         $(@).draggable()
-      #---送り側--- dragdrop add ----------------------#
       sotoFlag = false
       _$sendCount = $(ui.helper).attr("data-count",dropBack.ddOwnCount)
       console.info "dd-back2:", _$sendCount.get(0)      # log -----------#
