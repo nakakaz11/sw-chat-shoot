@@ -166,7 +166,6 @@ coffee -wcb *.coffee
           ddmess:'dd-create_toolenter'
           ddpos:  ui.position
         dropImg = _dropImg       # obj返し〜 _dropImg
-        #$own.attr("data-count",dropBack.ddOwnCount)
       $us = $("img.tools.myDropImg")
       $us.one 'mousemove', ()->  #'click'
         $(@).draggable()
@@ -182,7 +181,7 @@ coffee -wcb *.coffee
         ddesc:     dropImg.ddesc
         ddmess:   'dd-create_mouseup'
         ddpos:     ui.position
-        ddcount:   _$hoge.attr("data-count")
+        ddcount:   _$hoge?.attr("data-count")
           #dropBack.ddOwnCount
       #ev.preventDefault()
       $us.on 'dblclick', ()->
@@ -193,7 +192,7 @@ coffee -wcb *.coffee
           tit:     dropImg.tit
           ddesc:   dropImg.ddesc
           ddmess:  'dd-create_remove'
-          ddcount:   dropBack.ddOwnCount
+          ddcount: _$hoge?.attr("data-count")  #dropBack.ddOwnCount
         $(@).remove()
       false
   )

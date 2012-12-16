@@ -192,7 +192,7 @@ jQuery(function($) {
         ddesc: dropImg.ddesc,
         ddmess: 'dd-create_mouseup',
         ddpos: ui.position,
-        ddcount: _$hoge.attr("data-count")
+        ddcount: _$hoge != null ? _$hoge.attr("data-count") : void 0
       });
       $us.on('dblclick', function() {
         _socket.emit('dd-create', {
@@ -202,7 +202,7 @@ jQuery(function($) {
           tit: dropImg.tit,
           ddesc: dropImg.ddesc,
           ddmess: 'dd-create_remove',
-          ddcount: dropBack.ddOwnCount
+          ddcount: _$hoge != null ? _$hoge.attr("data-count") : void 0
         });
         return $(this).remove();
       });
