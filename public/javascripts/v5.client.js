@@ -169,11 +169,11 @@ jQuery(function($) {
         $own.attr("data-count", ddcount);
         ddcount++;
       }
+      sotoFlag = false;
       $us = $("img.tools.myDropImg");
       $us.one('mousemove', function() {
         return $(this).draggable();
       });
-      sotoFlag = false;
       _$sendCount = $(ui.helper);
       console.info("dd-MoveEle:", _$sendCount.get(0));
       _socket.emit('dd-create', {
@@ -186,7 +186,7 @@ jQuery(function($) {
         ddpos: ui.position,
         ddOwnCount: _$sendCount.attr("data-count")
       });
-      $us.on('dblclick', function() {
+      $us.on('dblclick', function(ev) {
         _socket.emit('dd-create', {
           ddid: dropImg.dataId,
           src: dropImg.src,
@@ -194,9 +194,10 @@ jQuery(function($) {
           tit: dropImg.tit,
           ddesc: dropImg.ddesc,
           ddmess: 'dd-create_remove',
-          ddOwnCount: _$sendCount.attr("data-count")
+          ddOwnCount: $(this).attr("data-count")
         });
-        return $(this).remove();
+        $(this).remove();
+        return ev.preventDefault();
       });
       return false;
     }

@@ -158,10 +158,10 @@ coffee -wcb *.coffee
         $own.attr("data-count",ddcount)   # drop 追加していくカウント attr
         ddcount++
       #---送り側--- dragdrop move ----------------------#
+      sotoFlag = false
       $us = $("img.tools.myDropImg")
       $us.one 'mousemove', ()->  #'click'
         $(@).draggable()
-      sotoFlag = false
       _$sendCount = $(ui.helper)
       console.info "dd-MoveEle:", _$sendCount.get(0)      # log -----------#
       _socket.emit 'dd-create',
@@ -174,8 +174,7 @@ coffee -wcb *.coffee
         ddpos:        ui.position
         ddOwnCount:  _$sendCount.attr("data-count")
           #dropBack.ddOwnCount
-      #ev.preventDefault()
-      $us.on 'dblclick', ()->
+      $us.on 'dblclick', (ev)->
         _socket.emit 'dd-create',
           ddid:       dropImg.dataId
           src:        dropImg.src
@@ -183,8 +182,9 @@ coffee -wcb *.coffee
           tit:        dropImg.tit
           ddesc:      dropImg.ddesc
           ddmess:     'dd-create_remove'
-          ddOwnCount: _$sendCount.attr("data-count")
+          ddOwnCount: $(@).attr("data-count")
         $(@).remove()
+        ev.preventDefault()
       false
   )
   #------------------------ dragdrop add ----------------------------------#
