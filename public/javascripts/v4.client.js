@@ -149,6 +149,7 @@ jQuery(function($) {
     var _dropBack;
     _dropBack = {};
     _dropBack.ddOwnCount = data.dd_dt.ddOwnCount;
+    console.info("dd-back1:", _dropBack.ddOwnCount);
     return dropBack = _dropBack;
   });
   $("body").droppable({
@@ -175,14 +176,13 @@ jQuery(function($) {
           ddpos: ui.position
         });
         dropImg = _dropImg;
-        $own.attr("data-count", dropBack.ddOwnCount);
       }
       $us = $("img.tools.myDropImg");
-      $us.on('mousemove', function() {
-        return $(this).draggable();
+      $us.one('mousemove', function() {
+        return $(this).draggable().attr("data-count", dropBack.ddOwnCount);
       });
       sotoFlag = false;
-      _socket.emit('dd-create', console.info("dd-back2:", ui.helper), {
+      _socket.emit('dd-create', console.info("dd-back2:", $(ui.helper).get(0)), {
         ddid: dropImg.dataId,
         src: dropImg.src,
         alt: dropImg.alt,

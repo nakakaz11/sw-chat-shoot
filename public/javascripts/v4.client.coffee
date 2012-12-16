@@ -142,7 +142,7 @@ coffee -wcb *.coffee
   _socket.on "dd-back", (data) ->
     _dropBack = {}
     _dropBack.ddOwnCount = data.dd_dt.ddOwnCount
-    #console.info "dd-back1:", _dropBack.ddOwnCount # log -----------#
+    console.info "dd-back1:", _dropBack.ddOwnCount # log -----------#
     dropBack = _dropBack
   $("body").droppable(
     tolerance:'fit'
@@ -167,14 +167,14 @@ coffee -wcb *.coffee
           ddmess:'dd-create_toolenter'
           ddpos:  ui.position
         dropImg = _dropImg       # obj返し〜 _dropImg
-        $own.attr("data-count",dropBack.ddOwnCount)
+        #$own.attr("data-count",dropBack.ddOwnCount)
       $us = $("img.tools.myDropImg")
-      $us.on 'mousemove', ()->  #'click'
-        $(@).draggable()
+      $us.one 'mousemove', ()->  #'click'
+        $(@).draggable().attr("data-count",dropBack.ddOwnCount)
       #---送り側--- dragdrop add ----------------------#
       sotoFlag = false
       _socket.emit 'dd-create',
-        console.info "dd-back2:", ui.helper      # log -----------#
+        console.info "dd-back2:", $(ui.helper).get(0)      # log -----------#
         ddid:      dropImg.dataId
         src:       dropImg.src
         alt:       dropImg.alt
