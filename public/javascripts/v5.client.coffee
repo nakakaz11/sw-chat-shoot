@@ -437,6 +437,27 @@ tools = [  #------------- define toolset (JSON, e.g. from database)... ---------
   title: "rainbow"
   src: "http://cdn1.iconfinder.com/data/icons/iconsland-weather/PNG/48x48/Rainbow.png"
   "data-description": "rainbow in photo"
+,
+  "data-id": 6
+  class: "tools"
+  alt: "mac icon"
+  title: "mac icon"
+  src: "http://cdn1.iconfinder.com/data/icons/gadgets/48/MBP.png"
+  "data-description": "macbook pro"
+,
+  "data-id": 7
+  class: "tools"
+  alt: "flag"
+  title: "flag"
+  src: "http://cdn1.iconfinder.com/data/icons/realistiK-new/48x48/apps/kiten.png"
+  "data-description": "japan icon"
+,
+  "data-id": 8
+  class: "tools"
+  alt: "face"
+  title: "face"
+  src: "http://cdn1.iconfinder.com/data/icons/humano2/48x48/emotes/face-plain.png"
+  "data-description": "rplain icon"
 ]
 
 # coffee -wcb *.coffee
