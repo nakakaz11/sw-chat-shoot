@@ -182,7 +182,7 @@ coffee -wcb *.coffee
         ddesc:     dropImg.ddesc
         ddmess:   'dd-create_mouseup'
         ddpos:     ui.position
-        ddcount:   ui.helper.attr("data-count")
+        #ddcount:   ui.helper.attr("data-count")
       #ev.preventDefault()
       $us.on 'dblclick', ()->
         _socket.emit 'dd-create',
@@ -192,7 +192,7 @@ coffee -wcb *.coffee
           tit:     dropImg.tit
           ddesc:   dropImg.ddesc
           ddmess:  'dd-create_remove'
-          ddcount: ui.helper.attr("data-count")
+          #ddcount: ui.helper.attr("data-count")
         $(@).remove()
       false
   )

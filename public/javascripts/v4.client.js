@@ -189,8 +189,7 @@ jQuery(function($) {
         tit: dropImg.tit,
         ddesc: dropImg.ddesc,
         ddmess: 'dd-create_mouseup',
-        ddpos: ui.position,
-        ddcount: ui.helper.attr("data-count")
+        ddpos: ui.position
       });
       $us.on('dblclick', function() {
         _socket.emit('dd-create', {
@@ -199,8 +198,7 @@ jQuery(function($) {
           alt: dropImg.alt,
           tit: dropImg.tit,
           ddesc: dropImg.ddesc,
-          ddmess: 'dd-create_remove',
-          ddcount: ui.helper.attr("data-count")
+          ddmess: 'dd-create_remove'
         });
         return $(this).remove();
       });
