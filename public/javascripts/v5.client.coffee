@@ -100,16 +100,14 @@ jQuery ($) ->
       dDrop.ddpos   = data.dd_dt.ddpos
       dDrop.ddcount = data.dd_dt.ddOwnCount
       $dDrop1 = $("<img data-id='#{dDrop.ddid}' class='test' alt='#{dDrop.alt}' title='#{dDrop.tit}' src='#{dDrop.src}' data-description='#{dDrop.ddesc}' data-userid='#{dDrop.userId}' data-count='#{dDrop.ddcount}'>").css("opacity", 0.5)
-      #dDrop2 = $("<div class='test'>Move(uId:#{dDrop.userId}/ddid:#{dDrop.ddid})</div>")
-      # ↑相手の総カウント反映_thisのmoveTest （あとでddcount(ddOwnCount)と入れ替え）
       #ddMyCountTarget = $("img.test[data-count='#{dDrop.ddcount}']")
       console.info "dd-CountID1:", dDrop.ddcount       # log -----------#
       switch dDrop.ddmess
         when 'dd-create_mouseup'
-          $("img.test[data-id='#{dDrop.ddid}'][data-count='#{dDrop.ddcount}']")
+          $("img.test[data-userid='#{dDrop.userId}'][data-count='#{dDrop.ddcount}']")
             .animate(dDrop.ddpos,"fast","easeOutExpo")
         when 'dd-create_remove'
-          $("img.test[data-id='#{dDrop.ddid}'][data-count='#{dDrop.ddcount}']")
+          $("img.test[data-userid='#{dDrop.userId}'][data-count='#{dDrop.ddcount}']")
             .remove()
         when 'dd-create_toolenter'
           $dDrop1.css(dDrop.ddpos)

@@ -114,9 +114,9 @@ jQuery(function($) {
       console.info("dd-CountID1:", dDrop.ddcount);
       switch (dDrop.ddmess) {
         case 'dd-create_mouseup':
-          return $("img.test[data-id='" + dDrop.ddid + "'][data-count='" + dDrop.ddcount + "']").animate(dDrop.ddpos, "fast", "easeOutExpo");
+          return $("img.test[data-userid='" + dDrop.userId + "'][data-count='" + dDrop.ddcount + "']").animate(dDrop.ddpos, "fast", "easeOutExpo");
         case 'dd-create_remove':
-          return $("img.test[data-id='" + dDrop.ddid + "'][data-count='" + dDrop.ddcount + "']").remove();
+          return $("img.test[data-userid='" + dDrop.userId + "'][data-count='" + dDrop.ddcount + "']").remove();
         case 'dd-create_toolenter':
           $dDrop1.css(dDrop.ddpos);
           return $("body").append($dDrop1);
