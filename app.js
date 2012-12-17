@@ -173,8 +173,7 @@ io.sockets.on("connection", function(socket) {
   b_c.make(socket, 'bullet-create');
   d_d.make(socket, 'dd-create');
   socket.json.emit('dd-create', {
-    userId: socket.handshake.userId,
-    myId: _myId
+    userId: socket.handshake.userId
   });
   c_c.make(socket, 'canvas-create');
   d_u.make(socket, 'disconnect');
