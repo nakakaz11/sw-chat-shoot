@@ -57,10 +57,8 @@ jQuery ($) ->
         #dd: 'dd test!'
         #ddmess: null
         userId: data.userId
-        myId  : data.myId
       _ddMap[data.userId] = dDrop        # dragdropのobj代入
       console.info 'UserId:' , dDrop.userId
-      console.info 'myId1:' , data.myId
       # uCanv 作成/初期化---------------------#
       uCanv =                            # uCanv 作成/初期化
          ###c_x: 0
@@ -118,7 +116,7 @@ jQuery ($) ->
         else return
   # 自分のID〜〜 ------------------------------#
   _socket.on "dd-back", (data) ->
-    _myId = data.myId
+    _myId = data.myId.userId
 
   ###
 coffee -wcb *.coffee

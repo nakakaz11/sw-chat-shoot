@@ -178,6 +178,9 @@ io.sockets.on("connection", function(socket) {
     userId: socket.handshake.userId
   });
   d_b.make(socket, 'dd-back');
+  socket.json.emit('dd-back', {
+    userId: socket.handshake.userId
+  });
   c_c.make(socket, 'canvas-create');
   d_u.make(socket, 'disconnect');
   p_m.make(socket, 'player-message');

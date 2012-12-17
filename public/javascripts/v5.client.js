@@ -60,12 +60,10 @@ jQuery(function($) {
       $("body").append(bullet.element);
       _bulletMap[data.userId] = bullet;
       dDrop = {
-        userId: data.userId,
-        myId: data.myId
+        userId: data.userId
       };
       _ddMap[data.userId] = dDrop;
       console.info('UserId:', dDrop.userId);
-      console.info('myId1:', data.myId);
       uCanv = {
         /*c_x: 0
         c_y: 0
@@ -122,7 +120,7 @@ jQuery(function($) {
     }
   });
   _socket.on("dd-back", function(data) {
-    return _myId = data.myId;
+    return _myId = data.myId.userId;
   });
   /*
   coffee -wcb *.coffee

@@ -111,6 +111,8 @@ io.sockets.on "connection", (socket) ->
   socket.json.emit 'dd-create',
     userId : socket.handshake.userId
   d_b.make(socket,'dd-back')       # dragdrop add
+  socket.json.emit 'dd-back',
+    userId : socket.handshake.userId
   c_c.make(socket,'canvas-create') # canvs add
   d_u.make(socket,'disconnect')
   p_m.make(socket,'player-message')
