@@ -119,10 +119,13 @@ jQuery(function($) {
     }
   });
   _socket.on("dd-back", function(data) {
-    return _myId.mid = data.myId;
+    _myId.mid = data.myId;
+    console.info("_myId:", _myId.mid);
+    console.info("_myUserIC:", _myId.userI, _myId.userC);
+    return $("img.test").each(function() {
+      return $("img.test[data-userid='" + _myId.userI + "'][data-count='" + _myId.userC + "']").addClass('outImage');
+    });
   });
-  console.info("test::", _myId.userI, _myId.userC);
-  $("img.test[data-userid='" + _myId.userI + "'][data-count='" + _myId.userC + "']").addClass('outImage');
   /*
   coffee -wcb *.coffee
   */
