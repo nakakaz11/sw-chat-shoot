@@ -81,9 +81,7 @@ jQuery(function($) {
     user.y = data.data.y;
     user.rotate = data.data.rotate;
     user.v = data.data.v;
-    updateCss(user);
-    console.info("_myUserIC:", _myId.userI, _myId.userC);
-    return $("img.test[data-userid='" + _myId.userI + "'][data-count='" + _myId.userC + "']").addClass('outImage');
+    return updateCss(user);
   });
   _socket.on("bullet-create", function(data) {
     var bullet;
@@ -121,7 +119,11 @@ jQuery(function($) {
     }
   });
   _socket.on("dd-back", function(data) {
-    return _myId.mid = data.myId;
+    _myId.mid = data.myId;
+    _myId.userI = data.userI;
+    _myId.userC = data.userC;
+    console.info("_myUserIC:", _myId.userI, _myId.userC);
+    return $("img.test[data-userid='" + _myId.userI + "'][data-count='" + _myId.userC + "']").addClass('outImage');
   });
   /*
   coffee -wcb *.coffee
@@ -375,14 +377,16 @@ jQuery(function($) {
         location.href = "/gameover";
       }
       $("img.myDropImg").each(function() {
-        var myPos, __myId;
+        var myPos;
         myPos = $(this).position();
         if (myPos.left < bullet.x && bullet.x < myPos.left + 50 && myPos.top < bullet.y && bullet.y < myPos.top + 50) {
           $(this).wrap($("<div class='out'>(´･_･`):OUT...</div>"));
-          __myId = {};
-          __myId.userI = $(this).attr("data-userid");
-          __myId.userC = $(this).attr("data-count");
-          return _myId = __myId;
+          _myId.userI = $(this).attr("data-userid");
+          _myId.userC = $(this).attr("data-count");
+          return _socket.emit("dd-back", {
+            userI: _myId.userI,
+            userC: _myId.userC
+          });
         } else {
 
         }

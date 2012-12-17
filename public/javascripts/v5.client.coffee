@@ -79,11 +79,6 @@ jQuery ($) ->
 
     updateCss(user)  # 相手のplayer
 
-    #-------- 自分のIDへ〜〜 ------------------------------#
-    #console.info "_myId:", _myId.mid       # log -----------#
-    console.info "_myUserIC:", _myId.userI, _myId.userC        # log -----------#
-    $("img.test[data-userid='#{_myId.userI}'][data-count='#{_myId.userC}']")
-      .addClass('outImage')
 
   _socket.on "bullet-create", (data) ->
     bullet = _bulletMap[data.userId]
@@ -123,6 +118,13 @@ jQuery ($) ->
   #-------- 自分のIDへ〜〜 ------------------------------#
   _socket.on "dd-back", (data) ->
     _myId.mid = data.myId
+    _myId.userI = data.userI
+    _myId.userC = data.userC
+    console.info "_myUserIC:", _myId.userI, _myId.userC        # log -----------#
+    #console.info "_myId:", _myId.mid       # log -----------#
+    $("img.test[data-userid='#{_myId.userI}'][data-count='#{_myId.userC}']")
+      .addClass('outImage')
+  #-------- 自分のIDへ〜〜 ------------------------------#
   ###
 coffee -wcb *.coffee
   ###
@@ -350,10 +352,11 @@ coffee -wcb *.coffee
         myPos = $(@).position()
         if myPos.left < bullet.x and bullet.x < myPos.left + 50 and myPos.top < bullet.y and bullet.y < myPos.top + 50
           $(@).wrap($("<div class='out'>(´･_･`):OUT...</div>"))      #   tes自分
-          __myId = {}
-          __myId.userI = $(@).attr("data-userid")
-          __myId.userC = $(@).attr("data-count")
-          _myId = __myId
+          _myId.userI = $(@).attr("data-userid")
+          _myId.userC = $(@).attr("data-count")
+          _socket.emit "dd-back",
+            userI : _myId.userI
+            userC : _myId.userC
         else return
     updateCss(_bullet) # 自分のbullet
     updateCss(_player) # 自分のplayer
