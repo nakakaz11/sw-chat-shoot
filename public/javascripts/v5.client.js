@@ -373,11 +373,14 @@ jQuery(function($) {
         location.href = "/gameover";
       }
       $("img.myDropImg").each(function() {
-        var myPos;
+        var myPos, userC, userI;
         myPos = $(this).position();
         if (myPos.left < bullet.x && bullet.x < myPos.left + 50 && myPos.top < bullet.y && bullet.y < myPos.top + 50) {
           $(this).wrap($("<div class='out'>(´･_･`):OUT...</div>"));
-          return $("img.test[data-userid='" + ($(this).attr("data-userid")) + "'][data-count='" + ($(this).attr("data-count")) + "']").addClass('outImage');
+          userI = $(this).attr("data-userid");
+          userC = $(this).attr("data-count");
+          console.info("test::", userI, userC);
+          return $("img.test[data-userid='" + userI + "'][data-count='" + userC + "']").addClass('outImage');
         } else {
 
         }

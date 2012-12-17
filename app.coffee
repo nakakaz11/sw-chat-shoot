@@ -110,7 +110,7 @@ io.sockets.on "connection", (socket) ->
   d_d.make(socket,'dd-create')     # dragdrop add
   socket.json.emit 'dd-create',
     userId : socket.handshake.userId
-  d_b.make(socket,'dd-back')       # dragdrop add
+  d_b.make(socket,'dd-back')       # dragdrop myId
   socket.json.emit 'dd-back',
     myId : socket.handshake.userId
   c_c.make(socket,'canvas-create') # canvs add
