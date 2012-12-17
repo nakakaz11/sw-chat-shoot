@@ -331,10 +331,10 @@ coffee -wcb *.coffee
       updatePosition(bullet)
       updateCss(bullet)
       # 衝突判定 DragDrop
-      $("img.myDropImg").each ->
+      $("img.test").each ->
         myPos = $(@).position()
         if myPos.x < bullet.x and bullet.x < myPos.x + 50 and myPos.y < bullet.y and bullet.y < myPos.y + 50
-          console.info "dropImg:myPos:", myPos                       # log -----------#
+          console.info "test:myPos:", myPos                       # log -----------#
           $(@).css({"background":"#3CB371"})                #   tes
         else return
       # 衝突判定 Shooting　相手のbulletが自分の_playerに当たったらif

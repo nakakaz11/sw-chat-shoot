@@ -369,11 +369,11 @@ jQuery(function($) {
       bullet = _bulletMap[key];
       updatePosition(bullet);
       updateCss(bullet);
-      $("img.myDropImg").each(function() {
+      $("img.test").each(function() {
         var myPos;
         myPos = $(this).position();
         if (myPos.x < bullet.x && bullet.x < myPos.x + 50 && myPos.y < bullet.y && bullet.y < myPos.y + 50) {
-          console.info("dropImg:myPos:", myPos);
+          console.info("test:myPos:", myPos);
           return $(this).css({
             "background": "#3CB371"
           });
