@@ -98,6 +98,7 @@ jQuery(function($) {
   _socket.on("dd-create", function(data) {
     var $dDrop1, dDrop;
     dDrop = _ddMap[data.userId];
+    myId = data.myId;
     if (dDrop !== undefined) {
       dDrop.ddid = data.dd_dt.ddid;
       dDrop.src = data.dd_dt.src;

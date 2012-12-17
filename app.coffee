@@ -101,8 +101,10 @@ d_u = new SwSocket
 p_m = new SwSockClient
 # DO it -------#
 _userId = 0
+_myId = null
 io.sockets.on "connection", (socket) ->
   socket.handshake.userId = _userId
+  _myId = _userId
   _userId++
 # connection -------------------------#
   p_u.make(socket,'player-update')
@@ -110,6 +112,7 @@ io.sockets.on "connection", (socket) ->
   d_d.make(socket,'dd-create')     # dragdrop add
   socket.json.emit 'dd-create',
     userId : socket.handshake.userId
+    myId   : _myId
 #  d_b.make(socket,'dd-back')       # dragdrop add
   c_c.make(socket,'canvas-create') # canvs add
   d_u.make(socket,'disconnect')

@@ -92,6 +92,7 @@ jQuery ($) ->
   #-------------受け側----------- dragdrop add ----------------------------------#
   _socket.on "dd-create", (data) ->
     dDrop = _ddMap[data.userId]
+    myId = data.myId
     if dDrop isnt `undefined`
       dDrop.ddid    = data.dd_dt.ddid          #data-id
       dDrop.src     = data.dd_dt.src
