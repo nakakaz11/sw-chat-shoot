@@ -1,5 +1,5 @@
 body {
-  padding: 0 50px 50px 50px;
+  /*padding: 0 50px 50px 50px;*/
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: #e8dfd8;
     color: #98918a;
@@ -8,6 +8,9 @@ body {
 
 a {
   color: #00B7FF;
+}
+#wrap {
+    padding: 0 10px 10px 10px;
 }
 /* ------------------------------------------------------------
   Clearfix
