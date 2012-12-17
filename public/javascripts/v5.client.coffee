@@ -2,7 +2,7 @@
 jQuery ($) ->
   "use strict"
   _socket = io.connect()
-  _myId = null
+  _myId = {}
   _userMap = {}
   _bulletMap = {}
   _ddMap = {}
@@ -114,13 +114,12 @@ jQuery ($) ->
           $dDrop1.css(dDrop.ddpos)
           $("body").append($dDrop1)
         else return
-  # 自分のID〜〜 ------------------------------#
+  #-------- 自分のIDへ〜〜 ------------------------------#
   _socket.on "dd-back", (data) ->
-    _myId = data.myId
-  userI = null
-  userC = null
-  console.info "test::", userI, userC                      # log -----------#
-  $("img.test[data-userid='#{userI}'][data-count='#{userC}']").addClass('outImage')
+    _myId.mid = data.myId
+  console.info "test::", _myId.userI, _myId.userC        # log -----------#
+  $("img.test[data-userid='#{_myId.userI}'][data-count='#{_myId.userC}']")
+    .addClass('outImage')
 
   ###
 coffee -wcb *.coffee
@@ -148,7 +147,7 @@ coffee -wcb *.coffee
       #console.info 'myId2:' , _myId
       if sotoFlag
         $own.addClass("myDropImg")
-        $own.attr("data-userid",_myId)
+        $own.attr("data-userid",_myId.mid)
         $(@).append($own)
         _dropImg = {}
         _dropImg.dataId = $own.attr("data-id")
@@ -349,8 +348,8 @@ coffee -wcb *.coffee
         myPos = $(@).position()
         if myPos.left < bullet.x and bullet.x < myPos.left + 50 and myPos.top < bullet.y and bullet.y < myPos.top + 50
           $(@).wrap($("<div class='out'>(´･_･`):OUT...</div>"))      #   tes自分
-          userI = $(@).attr("data-userid")
-          userC = $(@).attr("data-count")
+          _myId.userI = $(@).attr("data-userid")
+          _myId.userC = $(@).attr("data-count")
         else return
     updateCss(_bullet) # 自分のbullet
     updateCss(_player) # 自分のplayer
