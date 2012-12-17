@@ -120,7 +120,7 @@ jQuery(function($) {
     }
   });
   _socket.on("dd-back", function(data) {
-    return _myId = data.myId.userId;
+    return _myId = data.myId;
   });
   /*
   coffee -wcb *.coffee

@@ -78,7 +78,6 @@ SwSocket = (function() {
         userId: socket.handshake.userId,
         data: data,
         dd_dt: data,
-        myId: socket.handshake.userId,
         ca_cr: data
       });
     });
@@ -179,7 +178,7 @@ io.sockets.on("connection", function(socket) {
   });
   d_b.make(socket, 'dd-back');
   socket.json.emit('dd-back', {
-    userId: socket.handshake.userId
+    myId: socket.handshake.userId
   });
   c_c.make(socket, 'canvas-create');
   d_u.make(socket, 'disconnect');

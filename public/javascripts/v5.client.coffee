@@ -116,7 +116,7 @@ jQuery ($) ->
         else return
   # 自分のID〜〜 ------------------------------#
   _socket.on "dd-back", (data) ->
-    _myId = data.myId.userId
+    _myId = data.myId
 
   ###
 coffee -wcb *.coffee
