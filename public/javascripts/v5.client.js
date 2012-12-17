@@ -81,7 +81,12 @@ jQuery(function($) {
     user.y = data.data.y;
     user.rotate = data.data.rotate;
     user.v = data.data.v;
-    return updateCss(user);
+    updateCss(user);
+    console.info("_myId:", _myId.mid);
+    console.info("_myUserIC:", _myId.userI, _myId.userC);
+    return $("img.test").each(function() {
+      return $("img.test[data-userid='" + _myId.userI + "'][data-count='" + _myId.userC + "']").addClass('outImage');
+    });
   });
   _socket.on("bullet-create", function(data) {
     var bullet;
@@ -119,12 +124,7 @@ jQuery(function($) {
     }
   });
   _socket.on("dd-back", function(data) {
-    _myId.mid = data.myId;
-    console.info("_myId:", _myId.mid);
-    console.info("_myUserIC:", _myId.userI, _myId.userC);
-    return $("img.test").each(function() {
-      return $("img.test[data-userid='" + _myId.userI + "'][data-count='" + _myId.userC + "']").addClass('outImage');
-    });
+    return _myId.mid = data.myId;
   });
   /*
   coffee -wcb *.coffee
