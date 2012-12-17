@@ -127,7 +127,7 @@ jQuery(function($) {
     _myIC.userI = data.dd_x.userI;
     _myIC.userC = data.dd_x.userC;
     console.info("_myUserIC:", _myIC.userI, _myIC.userC);
-    return $("img.test[data-userid='" + _myIC.userI + "'][data-count='" + _myIC.userC + "']").addClass('outImage');
+    return $("img.test[data-userid='" + _myIC.userI + "'][data-count='" + _myIC.userC + "']").attr("src", "../images/out.png").addClass('outImage');
   });
   /*
   coffee -wcb *.coffee

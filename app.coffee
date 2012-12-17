@@ -52,11 +52,11 @@ class SwSocket
     socket.on keyname, (data) ->
       socket.broadcast.emit keyname ,    #.json
         userId: socket.handshake.userId
-        data: data
+        data:   data
         #playmess: data
-        dd_dt: data   # dd add
-        dd_x: data
-        ca_cr: data   # canvs add
+        dd_dt:  data   # dd add
+        dd_x:   data
+        ca_cr:  data   # canvs add
 class SwSockClient extends SwSocket  # 一応便宜上 extend
   make: (socket,keyname) ->  # chat with mongoose用
     #super(socket,keyname)  # 親make()

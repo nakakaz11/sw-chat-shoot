@@ -111,9 +111,9 @@ img.bullet{
     float:left;
 }
 .outImage {
-    background-image:url(../images/out.png);
+    /*background-image:url(../images/out.png);
    	background-position:top;
-   	background-repeat:repeat-x;
+   	background-repeat:repeat-x;*/
 }
 
 /* dragdrop */

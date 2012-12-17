@@ -126,6 +126,7 @@ jQuery ($) ->
     _myIC.userC = data.dd_x.userC
     console.info "_myUserIC:", _myIC.userI, _myIC.userC        # log -----------#
     $("img.test[data-userid='#{_myIC.userI}'][data-count='#{_myIC.userC}']")
+      .attr("src","../images/out.png")
       .addClass('outImage')
   #-------- 自分のIDへ〜〜 ------------------------------#
   ###
