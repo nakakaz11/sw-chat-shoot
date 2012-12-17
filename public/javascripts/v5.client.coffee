@@ -3,6 +3,7 @@ jQuery ($) ->
   "use strict"
   _socket = io.connect()
   _myId = {}
+  _myIC = {}
   _userMap = {}
   _bulletMap = {}
   _ddMap = {}
@@ -118,11 +119,13 @@ jQuery ($) ->
   #-------- 自分のIDへ〜〜 ------------------------------#
   _socket.on "dd-back", (data) ->
     _myId.mid = data.myId
-    _myId.userI = data.userI
-    _myId.userC = data.userC
     console.info "_myId:", _myId.mid       # log -----------#
-    console.info "_myUserIC:", _myId.userI, _myId.userC        # log -----------#
-    $("img.test[data-userid='#{_myId.userI}'][data-count='#{_myId.userC}']")
+
+  _socket.on "dd-x", (data) ->
+    _myIC.userI = data.dd_x.userI
+    _myIC.userC = data.dd_x.userC
+    console.info "_myUserIC:", _myIC.userI, _myIC.userC        # log -----------#
+    $("img.test[data-userid='#{_myIC.userI}'][data-count='#{_myIC.userC}']")
       .addClass('outImage')
   #-------- 自分のIDへ〜〜 ------------------------------#
   ###
@@ -354,7 +357,7 @@ coffee -wcb *.coffee
           $(@).wrap($("<div class='out'>(´･_･`):OUT...</div>"))      #   tes自分
           _userI = $(@).attr("data-userid")
           _userC = $(@).attr("data-count")
-          _socket.emit "dd-back",
+          _socket.emit "dd-x",
             userI : _userI
             userC : _userC
         else return

@@ -4,9 +4,10 @@ var tools;
 jQuery(function($) {
   "use strict";
 
-  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, ddcount, delId, dropImg, f, mousedown, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _myId, _player, _socket, _userMap;
+  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, ddcount, delId, dropImg, f, mousedown, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _myIC, _myId, _player, _socket, _userMap;
   _socket = io.connect();
   _myId = {};
+  _myIC = {};
   _userMap = {};
   _bulletMap = {};
   _ddMap = {};
@@ -120,11 +121,13 @@ jQuery(function($) {
   });
   _socket.on("dd-back", function(data) {
     _myId.mid = data.myId;
-    _myId.userI = data.userI;
-    _myId.userC = data.userC;
-    console.info("_myId:", _myId.mid);
-    console.info("_myUserIC:", _myId.userI, _myId.userC);
-    return $("img.test[data-userid='" + _myId.userI + "'][data-count='" + _myId.userC + "']").addClass('outImage');
+    return console.info("_myId:", _myId.mid);
+  });
+  _socket.on("dd-x", function(data) {
+    _myIC.userI = data.dd_x.userI;
+    _myIC.userC = data.dd_x.userC;
+    console.info("_myUserIC:", _myIC.userI, _myIC.userC);
+    return $("img.test[data-userid='" + _myIC.userI + "'][data-count='" + _myIC.userC + "']").addClass('outImage');
   });
   /*
   coffee -wcb *.coffee
@@ -384,7 +387,7 @@ jQuery(function($) {
           $(this).wrap($("<div class='out'>(´･_･`):OUT...</div>"));
           _userI = $(this).attr("data-userid");
           _userC = $(this).attr("data-count");
-          return _socket.emit("dd-back", {
+          return _socket.emit("dd-x", {
             userI: _userI,
             userC: _userC
           });
