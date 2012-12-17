@@ -348,13 +348,12 @@ coffee -wcb *.coffee
           __myId = {}
           __myId.userI = $(@).attr("data-userid")
           __myId.userC = $(@).attr("data-count")
-          _myId = __myId
           #-------- 自分のIDへ〜〜 ------------------------------#
           #console.info "_myId:", _myId.mid       # log -----------#
-          $("img.test").each ->
-            console.info "_myUserIC:", _myId.userI, _myId.userC        # log -----------#
-            $("img.test[data-userid='#{_myId.userI}'][data-count='#{_myId.userC}']")
-              .addClass('outImage')
+          console.info "_myUserIC:", __myId.userI, __myId.userC        # log -----------#
+          $("img.test[data-userid='#{__myId.userI}'][data-count='#{__myId.userC}']")
+            .addClass('outImage')
+          _myId = __myId
         else return
     updateCss(_bullet) # 自分のbullet
     updateCss(_player) # 自分のplayer
