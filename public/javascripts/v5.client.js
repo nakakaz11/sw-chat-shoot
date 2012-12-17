@@ -76,10 +76,6 @@ jQuery(function($) {
       _isUserCanvas = true;
     } else {
       user = _userMap[data.userId];
-      $("img.test").each(function() {
-        console.info("_myUserIC:", _myId.userI, _myId.userC);
-        return $("img.test[data-userid='" + _myId.userI + "'][data-count='" + _myId.userC + "']").addClass('outImage');
-      });
     }
     user.x = data.data.x;
     user.y = data.data.y;
@@ -384,7 +380,11 @@ jQuery(function($) {
           __myId = {};
           __myId.userI = $(this).attr("data-userid");
           __myId.userC = $(this).attr("data-count");
-          return _myId = __myId;
+          _myId = __myId;
+          return $("img.test").each(function() {
+            console.info("_myUserIC:", _myId.userI, _myId.userC);
+            return $("img.test[data-userid='" + _myId.userI + "'][data-count='" + _myId.userC + "']").addClass('outImage');
+          });
         } else {
 
         }

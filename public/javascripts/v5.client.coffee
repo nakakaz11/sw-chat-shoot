@@ -71,12 +71,6 @@ jQuery ($) ->
 
     else
       user = _userMap[data.userId]      # もうあったら廻してuserObj更新
-      #-------- 自分のIDへ〜〜 ------------------------------#
-      #console.info "_myId:", _myId.mid       # log -----------#
-      $("img.test").each ->
-        console.info "_myUserIC:", _myId.userI, _myId.userC        # log -----------#
-        $("img.test[data-userid='#{_myId.userI}'][data-count='#{_myId.userC}']")
-          .addClass('outImage')
 
     user.x = data.data.x
     user.y = data.data.y
@@ -355,6 +349,12 @@ coffee -wcb *.coffee
           __myId.userI = $(@).attr("data-userid")
           __myId.userC = $(@).attr("data-count")
           _myId = __myId
+          #-------- 自分のIDへ〜〜 ------------------------------#
+          #console.info "_myId:", _myId.mid       # log -----------#
+          $("img.test").each ->
+            console.info "_myUserIC:", _myId.userI, _myId.userC        # log -----------#
+            $("img.test[data-userid='#{_myId.userI}'][data-count='#{_myId.userC}']")
+              .addClass('outImage')
         else return
     updateCss(_bullet) # 自分のbullet
     updateCss(_player) # 自分のplayer
