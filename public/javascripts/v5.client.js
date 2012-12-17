@@ -369,9 +369,6 @@ jQuery(function($) {
       bullet = _bulletMap[key];
       updatePosition(bullet);
       updateCss(bullet);
-      if (_player.x < bullet.x && bullet.x < _player.x + 50 && _player.y < bullet.y && bullet.y < _player.y + 50) {
-        location.href = "/gameover";
-      }
       $("img.myDropImg").each(function() {
         var myPos;
         myPos = $(this).position();
@@ -381,9 +378,12 @@ jQuery(function($) {
             "background": "#3CB371"
           });
         } else {
-          return null;
+
         }
       });
+      if (_player.x < bullet.x && bullet.x < _player.x + 50 && _player.y < bullet.y && bullet.y < _player.y + 50) {
+        location.href = "/gameover";
+      }
     }
     updateCss(_bullet);
     updateCss(_player);
