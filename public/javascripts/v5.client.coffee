@@ -352,12 +352,11 @@ coffee -wcb *.coffee
         myPos = $(@).position()
         if myPos.left < bullet.x and bullet.x < myPos.left + 50 and myPos.top < bullet.y and bullet.y < myPos.top + 50
           $(@).wrap($("<div class='out'>(´･_･`):OUT...</div>"))      #   tes自分
-          __myId = {}
-          __myId.userI = $(@).attr("data-userid")
-          __myId.userC = $(@).attr("data-count")
+          _userI = $(@).attr("data-userid")
+          _userC = $(@).attr("data-count")
           _socket.emit "dd-back",
-            userI : __myId.userI
-            userC : __myId.userC
+            userI : _userI
+            userC : _userC
         else return
     updateCss(_bullet) # 自分のbullet
     updateCss(_player) # 自分のplayer
