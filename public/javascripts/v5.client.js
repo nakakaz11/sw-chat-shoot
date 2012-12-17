@@ -81,7 +81,9 @@ jQuery(function($) {
     user.y = data.data.y;
     user.rotate = data.data.rotate;
     user.v = data.data.v;
-    return updateCss(user);
+    updateCss(user);
+    console.info("_myUserIC:", _myId.userI, _myId.userC);
+    return $("img.test[data-userid='" + _myId.userI + "'][data-count='" + _myId.userC + "']").addClass('outImage');
   });
   _socket.on("bullet-create", function(data) {
     var bullet;
@@ -380,8 +382,6 @@ jQuery(function($) {
           __myId = {};
           __myId.userI = $(this).attr("data-userid");
           __myId.userC = $(this).attr("data-count");
-          console.info("_myUserIC:", __myId.userI, __myId.userC);
-          $("img.test[data-userid='" + __myId.userI + "'][data-count='" + __myId.userC + "']").addClass('outImage');
           return _myId = __myId;
         } else {
 
