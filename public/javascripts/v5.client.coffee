@@ -71,6 +71,12 @@ jQuery ($) ->
 
     else
       user = _userMap[data.userId]      # もうあったら廻してuserObj更新
+      #-------- 自分のIDへ〜〜 ------------------------------#
+      #console.info "_myId:", _myId.mid       # log -----------#
+      $("img.test").each ->
+        console.info "_myUserIC:", _myId.userI, _myId.userC        # log -----------#
+        $("img.test[data-userid='#{_myId.userI}'][data-count='#{_myId.userC}']")
+          .addClass('outImage')
 
     user.x = data.data.x
     user.y = data.data.y
@@ -79,11 +85,6 @@ jQuery ($) ->
 
     updateCss(user)  # 相手のplayer
 
-    #-------- 自分のIDへ〜〜 ------------------------------#
-    console.info "_myId:", _myId.mid       # log -----------#
-    $("img.test").each ->
-      $("img.test[data-userid='#{_myId.userI}'][data-count='#{_myId.userC}']")
-        .addClass('outImage')
 
   _socket.on "bullet-create", (data) ->
     bullet = _bulletMap[data.userId]
@@ -354,7 +355,6 @@ coffee -wcb *.coffee
           __myId.userI = $(@).attr("data-userid")
           __myId.userC = $(@).attr("data-count")
           _myId = __myId
-          console.info "_myUserIC:", _myId.userI, _myId.userC        # log -----------#
         else return
     updateCss(_bullet) # 自分のbullet
     updateCss(_player) # 自分のplayer
