@@ -81,7 +81,6 @@ jQuery ($) ->
 
     #-------- 自分のIDへ〜〜 ------------------------------#
     console.info "_myId:", _myId.mid       # log -----------#
-    console.info "_myUserIC:", _myId.userI, _myId.userC        # log -----------#
     $("img.test").each ->
       $("img.test[data-userid='#{_myId.userI}'][data-count='#{_myId.userC}']")
         .addClass('outImage')
@@ -351,8 +350,11 @@ coffee -wcb *.coffee
         myPos = $(@).position()
         if myPos.left < bullet.x and bullet.x < myPos.left + 50 and myPos.top < bullet.y and bullet.y < myPos.top + 50
           $(@).wrap($("<div class='out'>(´･_･`):OUT...</div>"))      #   tes自分
-          _myId.userI = $(@).attr("data-userid")
-          _myId.userC = $(@).attr("data-count")
+          __myId = {}
+          __myId.userI = $(@).attr("data-userid")
+          __myId.userC = $(@).attr("data-count")
+          _myId = __myId
+          console.info "_myUserIC:", _myId.userI, _myId.userC        # log -----------#
         else return
     updateCss(_bullet) # 自分のbullet
     updateCss(_player) # 自分のplayer

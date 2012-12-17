@@ -83,7 +83,6 @@ jQuery(function($) {
     user.v = data.data.v;
     updateCss(user);
     console.info("_myId:", _myId.mid);
-    console.info("_myUserIC:", _myId.userI, _myId.userC);
     return $("img.test").each(function() {
       return $("img.test[data-userid='" + _myId.userI + "'][data-count='" + _myId.userC + "']").addClass('outImage');
     });
@@ -378,12 +377,15 @@ jQuery(function($) {
         location.href = "/gameover";
       }
       $("img.myDropImg").each(function() {
-        var myPos;
+        var myPos, __myId;
         myPos = $(this).position();
         if (myPos.left < bullet.x && bullet.x < myPos.left + 50 && myPos.top < bullet.y && bullet.y < myPos.top + 50) {
           $(this).wrap($("<div class='out'>(´･_･`):OUT...</div>"));
-          _myId.userI = $(this).attr("data-userid");
-          return _myId.userC = $(this).attr("data-count");
+          __myId = {};
+          __myId.userI = $(this).attr("data-userid");
+          __myId.userC = $(this).attr("data-count");
+          _myId = __myId;
+          return console.info("_myUserIC:", _myId.userI, _myId.userC);
         } else {
 
         }
