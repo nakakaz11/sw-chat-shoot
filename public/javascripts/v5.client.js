@@ -63,7 +63,6 @@ jQuery(function($) {
         userId: data.userId
       };
       _ddMap[data.userId] = dDrop;
-      console.info('UserId:', dDrop.userId);
       uCanv = {
         /*c_x: 0
         c_y: 0
@@ -145,9 +144,9 @@ jQuery(function($) {
     drop: function(ev, ui) {
       var $own, $us, _$sendCount, _dropImg;
       $own = ui.helper.clone();
-      console.info('myId2:', _myId);
       if (sotoFlag) {
         $own.addClass("myDropImg");
+        $own.attr("data-userid", _myId);
         $(this).append($own);
         _dropImg = {};
         _dropImg.dataId = $own.attr("data-id");
