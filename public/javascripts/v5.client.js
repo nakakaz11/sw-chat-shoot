@@ -4,8 +4,9 @@ var tools;
 jQuery(function($) {
   "use strict";
 
-  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, ddcount, delId, dropImg, f, mousedown, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
+  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, ddcount, delId, dropImg, f, mousedown, myId, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
   _socket = io.connect();
+  myId = null;
   _userMap = {};
   _bulletMap = {};
   _ddMap = {};
@@ -62,7 +63,8 @@ jQuery(function($) {
         userId: data.userId
       };
       _ddMap[data.userId] = dDrop;
-      console.info('myId', dDrop.userId);
+      console.info('UserId:', dDrop.userId);
+      myId = dDrop.userId;
       uCanv = {
         /*c_x: 0
         c_y: 0
@@ -141,6 +143,7 @@ jQuery(function($) {
     drop: function(ev, ui) {
       var $own, $us, _$sendCount, _dropImg;
       $own = ui.helper.clone();
+      console.info('myId:', myId);
       if (sotoFlag) {
         $own.addClass("myDropImg");
         $(this).append($own);

@@ -2,6 +2,7 @@
 jQuery ($) ->
   "use strict"
   _socket = io.connect()
+  myId = null
   _userMap = {}
   _bulletMap = {}
   _ddMap = {}
@@ -58,7 +59,8 @@ jQuery ($) ->
         #ddpos: null
         userId: data.userId
       _ddMap[data.userId] = dDrop        # dragdropのobj代入
-      console.info 'myId' , dDrop.userId
+      console.info 'UserId:' , dDrop.userId
+      myId = dDrop.userId
       # uCanv 作成/初期化---------------------#
       uCanv =                            # uCanv 作成/初期化
          ###c_x: 0
@@ -137,6 +139,7 @@ coffee -wcb *.coffee
     drop: (ev,ui) ->
       $own = ui.helper.clone()
       #---送り側--- dragdrop drop ----------------------#
+      console.info 'myId:' , myId
       if sotoFlag
         $own.addClass("myDropImg")
         #$own.attr("data-userid",)
