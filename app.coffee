@@ -55,7 +55,7 @@ class SwSocket
         data: data
         #playmess: data
         dd_dt: data   # dd add
-        #dd_bk: data   # dd add
+        myId: socket.handshake.userId
         ca_cr: data   # canvs add
 class SwSockClient extends SwSocket  # 一応便宜上 extend
   make: (socket,keyname) ->  # chat with mongoose用
@@ -101,10 +101,8 @@ d_u = new SwSocket
 p_m = new SwSockClient
 # DO it -------#
 _userId = 0
-_myId = null
 io.sockets.on "connection", (socket) ->
   socket.handshake.userId = _userId
-  _myId = _userId
   _userId++
 # connection -------------------------#
   p_u.make(socket,'player-update')

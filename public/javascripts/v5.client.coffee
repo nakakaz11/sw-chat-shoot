@@ -56,10 +56,11 @@ jQuery ($) ->
       dDrop =
         #dd: 'dd test!'
         #ddmess: null
-        #ddpos: null
         userId: data.userId
+        myId  : data.myId
       _ddMap[data.userId] = dDrop        # dragdropのobj代入
       console.info 'UserId:' , dDrop.userId
+      console.info 'myId1:' , dDrop.myId
       myId = dDrop.userId
       # uCanv 作成/初期化---------------------#
       uCanv =                            # uCanv 作成/初期化
@@ -140,7 +141,7 @@ coffee -wcb *.coffee
     drop: (ev,ui) ->
       $own = ui.helper.clone()
       #---送り側--- dragdrop drop ----------------------#
-      console.info 'myId:' , myId
+      console.info 'myId2:' , myId
       if sotoFlag
         $own.addClass("myDropImg")
         #$own.attr("data-userid",)

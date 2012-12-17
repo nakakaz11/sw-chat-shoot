@@ -60,10 +60,12 @@ jQuery(function($) {
       $("body").append(bullet.element);
       _bulletMap[data.userId] = bullet;
       dDrop = {
-        userId: data.userId
+        userId: data.userId,
+        myId: data.myId
       };
       _ddMap[data.userId] = dDrop;
       console.info('UserId:', dDrop.userId);
+      console.info('myId1:', dDrop.myId);
       myId = dDrop.userId;
       uCanv = {
         /*c_x: 0
@@ -144,7 +146,7 @@ jQuery(function($) {
     drop: function(ev, ui) {
       var $own, $us, _$sendCount, _dropImg;
       $own = ui.helper.clone();
-      console.info('myId:', myId);
+      console.info('myId2:', myId);
       if (sotoFlag) {
         $own.addClass("myDropImg");
         $(this).append($own);
