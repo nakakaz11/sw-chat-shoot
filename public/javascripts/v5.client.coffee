@@ -118,10 +118,10 @@ jQuery ($) ->
   #-------- 自分のIDへ〜〜 ------------------------------#
   _socket.on "dd-back", (data) ->
     _myId.mid = data.myId
-    _myId.userI = data.dd_bk.userI
-    _myId.userC = data.dd_bk.userC
+    _myId.userI = data.userI
+    _myId.userC = data.userC
+    console.info "_myId:", _myId.mid       # log -----------#
     console.info "_myUserIC:", _myId.userI, _myId.userC        # log -----------#
-    #console.info "_myId:", _myId.mid       # log -----------#
     $("img.test[data-userid='#{_myId.userI}'][data-count='#{_myId.userC}']")
       .addClass('outImage')
   #-------- 自分のIDへ〜〜 ------------------------------#

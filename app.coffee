@@ -55,7 +55,7 @@ class SwSocket
         data: data
         #playmess: data
         dd_dt: data   # dd add
-        dd_bk: data
+        #dd_bk: data
         ca_cr: data   # canvs add
 class SwSockClient extends SwSocket  # 一応便宜上 extend
   make: (socket,keyname) ->  # chat with mongoose用

@@ -120,8 +120,9 @@ jQuery(function($) {
   });
   _socket.on("dd-back", function(data) {
     _myId.mid = data.myId;
-    _myId.userI = data.dd_bk.userI;
-    _myId.userC = data.dd_bk.userC;
+    _myId.userI = data.userI;
+    _myId.userC = data.userC;
+    console.info("_myId:", _myId.mid);
     console.info("_myUserIC:", _myId.userI, _myId.userC);
     return $("img.test[data-userid='" + _myId.userI + "'][data-count='" + _myId.userC + "']").addClass('outImage');
   });
