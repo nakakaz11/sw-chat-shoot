@@ -375,8 +375,8 @@ jQuery(function($) {
       $("img.myDropImg").each(function() {
         var myPos;
         myPos = $(this).position();
-        console.info("dropImg:myPos:", myPos);
         if (myPos.x < bullet.x && bullet.x < myPos.x + 50 && myPos.y < bullet.y && bullet.y < myPos.y + 50) {
+          console.info("dropImg:myPos:", myPos);
           return $(this).css({
             "background": "#3CB371"
           });
