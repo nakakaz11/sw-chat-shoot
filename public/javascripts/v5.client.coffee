@@ -117,6 +117,10 @@ jQuery ($) ->
   # 自分のID〜〜 ------------------------------#
   _socket.on "dd-back", (data) ->
     _myId = data.myId
+  userI = null
+  userC = null
+  console.info "test::", userI, userC                      # log -----------#
+  $("img.test[data-userid='#{userI}'][data-count='#{userC}']").addClass('outImage')
 
   ###
 coffee -wcb *.coffee
@@ -347,8 +351,6 @@ coffee -wcb *.coffee
           $(@).wrap($("<div class='out'>(´･_･`):OUT...</div>"))      #   tes自分
           userI = $(@).attr("data-userid")
           userC = $(@).attr("data-count")
-          console.info "test::", userI, userC                      # log -----------#
-          $("img.test[data-userid='#{userI}'][data-count='#{userC}']").addClass('outImage')
         else return
     updateCss(_bullet) # 自分のbullet
     updateCss(_player) # 自分のplayer

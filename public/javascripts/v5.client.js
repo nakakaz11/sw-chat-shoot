@@ -4,7 +4,7 @@ var tools;
 jQuery(function($) {
   "use strict";
 
-  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, ddcount, delId, dropImg, f, mousedown, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _myId, _player, _socket, _userMap;
+  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, ddcount, delId, dropImg, f, mousedown, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, userC, userI, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _myId, _player, _socket, _userMap;
   _socket = io.connect();
   _myId = null;
   _userMap = {};
@@ -121,6 +121,10 @@ jQuery(function($) {
   _socket.on("dd-back", function(data) {
     return _myId = data.myId;
   });
+  userI = null;
+  userC = null;
+  console.info("test::", userI, userC);
+  $("img.test[data-userid='" + userI + "'][data-count='" + userC + "']").addClass('outImage');
   /*
   coffee -wcb *.coffee
   */
@@ -373,14 +377,12 @@ jQuery(function($) {
         location.href = "/gameover";
       }
       $("img.myDropImg").each(function() {
-        var myPos, userC, userI;
+        var myPos;
         myPos = $(this).position();
         if (myPos.left < bullet.x && bullet.x < myPos.left + 50 && myPos.top < bullet.y && bullet.y < myPos.top + 50) {
           $(this).wrap($("<div class='out'>(´･_･`):OUT...</div>"));
           userI = $(this).attr("data-userid");
-          userC = $(this).attr("data-count");
-          console.info("test::", userI, userC);
-          return $("img.test[data-userid='" + userI + "'][data-count='" + userC + "']").addClass('outImage');
+          return userC = $(this).attr("data-count");
         } else {
 
         }
