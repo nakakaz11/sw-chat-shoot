@@ -326,10 +326,9 @@ coffee -wcb *.coffee
       bullet = _bulletMap[key]
       updatePosition(bullet)
       updateCss(bullet)
-                                       # dragdrop add あとで。
       # 衝突判定 jump
-      location.href = "/gameover"  if _player.x < bullet.x and bullet.x < _player.x + 50 and _player.y < bullet.y and bullet.y < _player.y + 50
-                                       # dragdrop add あとで。
+      if _player.x < bullet.x and bullet.x < _player.x + 50 and _player.y < bullet.y and bullet.y < _player.y + 50
+        location.href = "/gameover"  # あうとぉ。
 
     updateCss(_bullet) # 自分のbullet
     updateCss(_player) # 自分のplayer
