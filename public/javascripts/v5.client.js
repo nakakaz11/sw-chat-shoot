@@ -369,10 +369,13 @@ jQuery(function($) {
       bullet = _bulletMap[key];
       updatePosition(bullet);
       updateCss(bullet);
-      $("img.test").each(function() {
+      if (_player.x < bullet.x && bullet.x < _player.x + 50 && _player.y < bullet.y && bullet.y < _player.y + 50) {
+        location.href = "/gameover";
+      }
+      $("img.myDropImg").each(function() {
         var myPos;
         myPos = $(this).position();
-        if (myPos.x < bullet.x && bullet.x < myPos.x + 50 && myPos.y < bullet.y && bullet.y < myPos.y + 50) {
+        if (myPos.left < bullet.x && bullet.x < myPos.left + 50 && myPos.top < bullet.y && bullet.y < myPos.top + 50) {
           console.info("test:myPos:", myPos);
           return $(this).css({
             "background": "#3CB371"
@@ -381,9 +384,6 @@ jQuery(function($) {
 
         }
       });
-      if (_player.x < bullet.x && bullet.x < _player.x + 50 && _player.y < bullet.y && bullet.y < _player.y + 50) {
-        location.href = "/gameover";
-      }
     }
     updateCss(_bullet);
     updateCss(_player);

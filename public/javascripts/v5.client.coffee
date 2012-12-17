@@ -330,16 +330,16 @@ coffee -wcb *.coffee
       bullet = _bulletMap[key]
       updatePosition(bullet)
       updateCss(bullet)
-      # 衝突判定 DragDrop
-      $("img.test").each ->
-        myPos = $(@).position()
-        if myPos.x < bullet.x and bullet.x < myPos.x + 50 and myPos.y < bullet.y and bullet.y < myPos.y + 50
-          console.info "test:myPos:", myPos                       # log -----------#
-          $(@).css({"background":"#3CB371"})                #   tes
-        else return
       # 衝突判定 Shooting　相手のbulletが自分の_playerに当たったらif
       if _player.x < bullet.x and bullet.x < _player.x + 50 and _player.y < bullet.y and bullet.y < _player.y + 50
         location.href = "/gameover"  # あうとぉ。
+      # 衝突判定 DragDrop
+      $("img.myDropImg").each ->
+        myPos = $(@).position()
+        if myPos.left < bullet.x and bullet.x < myPos.left + 50 and myPos.top < bullet.y and bullet.y < myPos.top + 50
+          console.info "test:myPos:", myPos                       # log -----------#
+          $(@).css({"background":"#3CB371"})                #   tes
+        else return
     updateCss(_bullet) # 自分のbullet
     updateCss(_player) # 自分のplayer
 
