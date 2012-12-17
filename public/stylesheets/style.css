@@ -99,12 +99,12 @@ img.bullet{
 }
 
 .out {
-    padding: 0.5em;
-    margin: 0 0.5em;
+    padding: 0.2em 0.5em;
+    margin: 0.3em;
     color: #fff;
-    text-shadow: 1px 1px 0px #583131;
+    text-shadow: 1px 1px 0px #ebcfcf;
     background-color: #ea6375;
-    border: 1px solid #ebcfcf;
+    border: 3px solid #f2d4d6;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
