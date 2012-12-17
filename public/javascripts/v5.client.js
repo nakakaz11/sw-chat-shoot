@@ -36,7 +36,7 @@ jQuery(function($) {
   };
   mycoord.innerHTML = "MyCanvas ";
   _socket.on("player-update", function(data) {
-    var bullet, dDrop, uCanv, user;
+    var bullet, uCanv, user;
     if (_userMap[data.userId] === undefined) {
       user = {
         x: 0,
@@ -58,15 +58,14 @@ jQuery(function($) {
       bullet.element = $("<img src=\"/images/bullet.png\" class=\"bullet\" />").attr("data-user-id", user.userId);
       $("body").append(bullet.element);
       _bulletMap[data.userId] = bullet;
-      dDrop = {
-        /*dd: 'dd test!'
+      /*dDrop =
+        dd: 'dd test!'
         ddmess: null
         ddpos: null
-        */
-
         userId: data.userId
-      };
-      _ddMap[data.userId] = dDrop;
+      _ddMap[data.userId] = dDrop
+      */
+
       uCanv = {
         /*c_x: 0
         c_y: 0

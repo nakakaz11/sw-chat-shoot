@@ -52,12 +52,12 @@ jQuery ($) ->
       _bulletMap[data.userId] = bullet   # 対戦相手のobj代入
 
       # dDrop 作成/初期化---------------------#
-      dDrop =
-        ###dd: 'dd test!'
+      ###dDrop =
+        dd: 'dd test!'
         ddmess: null
-        ddpos: null###
+        ddpos: null
         userId: data.userId
-      _ddMap[data.userId] = dDrop        # dragdropのobj代入
+      _ddMap[data.userId] = dDrop###        # dragdropのobj代入
       # uCanv 作成/初期化---------------------#
       uCanv =                            # uCanv 作成/初期化
          ###c_x: 0
@@ -138,6 +138,7 @@ coffee -wcb *.coffee
       #---送り側--- dragdrop drop ----------------------#
       if sotoFlag
         $own.addClass("myDropImg")
+        #$own.attr("data-userid",)
         $(@).append($own)
         _dropImg = {}
         _dropImg.dataId = $own.attr("data-id")
