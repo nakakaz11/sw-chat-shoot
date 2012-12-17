@@ -110,6 +110,11 @@ img.bullet{
     border-radius: 5px;
     float:left;
 }
+.outImage {
+    background-image:url(../images/out.png);
+   	background-position:top;
+   	background-repeat:repeat-x;
+}
 
 /* dragdrop */
 .toolbar {

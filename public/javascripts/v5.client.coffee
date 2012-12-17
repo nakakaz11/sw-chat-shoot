@@ -337,8 +337,9 @@ coffee -wcb *.coffee
       $("img.myDropImg").each ->
         myPos = $(@).position()
         if myPos.left < bullet.x and bullet.x < myPos.left + 50 and myPos.top < bullet.y and bullet.y < myPos.top + 50
-          console.info "test:myPos:", myPos                       # log -----------#
-          $(@).wrap($("<div class='out'>(´･_･`):OUT...</div>"))               #   tes
+          #console.info "test:myPos:", myPos                       # log -----------#
+          $(@).wrap($("<div class='out'>(´･_･`):OUT...</div>"))      #   tes自分
+          $("img.test[data-userid='#{$(@).attr("data-userid")}'][data-count='#{$(@).attr("data-count")}']").addClass('outImage')
         else return
     updateCss(_bullet) # 自分のbullet
     updateCss(_player) # 自分のplayer

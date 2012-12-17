@@ -376,8 +376,8 @@ jQuery(function($) {
         var myPos;
         myPos = $(this).position();
         if (myPos.left < bullet.x && bullet.x < myPos.left + 50 && myPos.top < bullet.y && bullet.y < myPos.top + 50) {
-          console.info("test:myPos:", myPos);
-          return $(this).wrap($("<div class='out'>(´･_･`)OUT...</div>"));
+          $(this).wrap($("<div class='out'>(´･_･`):OUT...</div>"));
+          return $("img.test[data-userid='" + ($(this).attr("data-userid")) + "'][data-count='" + ($(this).attr("data-count")) + "']").addClass('outImage');
         } else {
 
         }
