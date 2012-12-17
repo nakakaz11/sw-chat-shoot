@@ -338,7 +338,7 @@ coffee -wcb *.coffee
         myPos = $(@).position()
         if myPos.left < bullet.x and bullet.x < myPos.left + 50 and myPos.top < bullet.y and bullet.y < myPos.top + 50
           console.info "test:myPos:", myPos                       # log -----------#
-          $(@).css({"background":"#3CB371"})                #   tes
+          $(@).wrap($("<div class='out'>(´･_･`):OUT...</div>"))               #   tes
         else return
     updateCss(_bullet) # 自分のbullet
     updateCss(_player) # 自分のplayer

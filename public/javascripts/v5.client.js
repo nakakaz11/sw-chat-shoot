@@ -377,9 +377,7 @@ jQuery(function($) {
         myPos = $(this).position();
         if (myPos.left < bullet.x && bullet.x < myPos.left + 50 && myPos.top < bullet.y && bullet.y < myPos.top + 50) {
           console.info("test:myPos:", myPos);
-          return $(this).css({
-            "background": "#3CB371"
-          });
+          return $(this).wrap($("<div class='out'>(´･_･`)OUT...</div>"));
         } else {
 
         }

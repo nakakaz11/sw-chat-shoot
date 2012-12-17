@@ -98,6 +98,19 @@ img.bullet{
     border: 3px solid #eb98d9;
 }
 
+.out {
+    padding: 0.5em;
+    margin: 0 0.5em;
+    color: #fff;
+    text-shadow: 1px 1px 0px #583131;
+    background-color: #ea6375;
+    border: 1px solid #ebcfcf;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    float:left;
+}
+
 /* dragdrop */
 .toolbar {
   background-color: #eae3db;
