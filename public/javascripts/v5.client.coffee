@@ -2,7 +2,7 @@
 jQuery ($) ->
   "use strict"
   _socket = io.connect()
-  myId = null
+  _myId = null
   _userMap = {}
   _bulletMap = {}
   _ddMap = {}
@@ -60,8 +60,7 @@ jQuery ($) ->
         myId  : data.myId
       _ddMap[data.userId] = dDrop        # dragdropのobj代入
       console.info 'UserId:' , dDrop.userId
-      console.info 'myId1:' , dDrop.myId
-      myId = dDrop.userId
+      console.info 'myId1:' , data.myId
       # uCanv 作成/初期化---------------------#
       uCanv =                            # uCanv 作成/初期化
          ###c_x: 0
@@ -93,7 +92,6 @@ jQuery ($) ->
   #-------------受け側----------- dragdrop add ----------------------------------#
   _socket.on "dd-create", (data) ->
     dDrop = _ddMap[data.userId]
-    myId = data.myId
     if dDrop isnt `undefined`
       dDrop.ddid    = data.dd_dt.ddid          #data-id
       dDrop.src     = data.dd_dt.src
@@ -118,6 +116,10 @@ jQuery ($) ->
           $dDrop1.css(dDrop.ddpos)
           $("body").append($dDrop1)
         else return
+  # 自分のID〜〜 ------------------------------#
+  _socket.on "dd-back", (data) ->
+    _myId = data.myId
+
   ###
 coffee -wcb *.coffee
   ###
@@ -141,7 +143,7 @@ coffee -wcb *.coffee
     drop: (ev,ui) ->
       $own = ui.helper.clone()
       #---送り側--- dragdrop drop ----------------------#
-      console.info 'myId2:' , myId
+      console.info 'myId2:' , _myId
       if sotoFlag
         $own.addClass("myDropImg")
         #$own.attr("data-userid",)

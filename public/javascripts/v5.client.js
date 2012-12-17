@@ -4,9 +4,9 @@ var tools;
 jQuery(function($) {
   "use strict";
 
-  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, ddcount, delId, dropImg, f, mousedown, myId, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _player, _socket, _userMap;
+  var $toolbar, canvas, canvasHtml, chat, coord, createCtxU, ctx, ctxU, ddcount, delId, dropImg, f, mousedown, mycoord, sotoFlag, updateCss, updatePosCanv, updatePosition, _bullet, _bulletMap, _canvasMap, _ddMap, _isSpaceKeyUp, _isUserCanvas, _keyMap, _myId, _player, _socket, _userMap;
   _socket = io.connect();
-  myId = null;
+  _myId = null;
   _userMap = {};
   _bulletMap = {};
   _ddMap = {};
@@ -65,8 +65,7 @@ jQuery(function($) {
       };
       _ddMap[data.userId] = dDrop;
       console.info('UserId:', dDrop.userId);
-      console.info('myId1:', dDrop.myId);
-      myId = dDrop.userId;
+      console.info('myId1:', data.myId);
       uCanv = {
         /*c_x: 0
         c_y: 0
@@ -100,7 +99,6 @@ jQuery(function($) {
   _socket.on("dd-create", function(data) {
     var $dDrop1, dDrop;
     dDrop = _ddMap[data.userId];
-    myId = data.myId;
     if (dDrop !== undefined) {
       dDrop.ddid = data.dd_dt.ddid;
       dDrop.src = data.dd_dt.src;
@@ -122,6 +120,9 @@ jQuery(function($) {
           return $("body").append($dDrop1);
       }
     }
+  });
+  _socket.on("dd-back", function(data) {
+    return _myId = data.myId;
   });
   /*
   coffee -wcb *.coffee
@@ -146,7 +147,7 @@ jQuery(function($) {
     drop: function(ev, ui) {
       var $own, $us, _$sendCount, _dropImg;
       $own = ui.helper.clone();
-      console.info('myId2:', myId);
+      console.info('myId2:', _myId);
       if (sotoFlag) {
         $own.addClass("myDropImg");
         $(this).append($own);
