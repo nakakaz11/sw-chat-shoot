@@ -145,6 +145,7 @@ coffee -wcb *.coffee
         _dropImg.alt    = $own.attr('alt')
         _dropImg.tit    = $own.attr('title')
         _dropImg.ddesc  = $own.attr('data-description')
+        #_dropImg.uipos  = ui.position # とりあえず直近のDropの位置をbulletに送る
         _socket.emit 'dd-create',
           ddid:        _dropImg.dataId
           src:         _dropImg.src
@@ -236,6 +237,9 @@ coffee -wcb *.coffee
     v: 0
     rotate: 0
     element: $("#my-bullet")
+  ###_myCurrentDrop =                 # とりあえず直近のDropの位置（dropImg）をbulletにもってくる
+    x : dropImg.uipos.left
+    y : dropImg.uipos.top###
 
   updatePosition = (unit) -> # user用のTween  Class
     unit.x += unit.v * Math.cos(unit.rotate * Math.PI / 180)
@@ -326,10 +330,16 @@ coffee -wcb *.coffee
       bullet = _bulletMap[key]
       updatePosition(bullet)
       updateCss(bullet)
-      # 衝突判定 jump
+      # 衝突判定 Shooting　相手のbulletが自分の_playerに当たったらif
       if _player.x < bullet.x and bullet.x < _player.x + 50 and _player.y < bullet.y and bullet.y < _player.y + 50
         location.href = "/gameover"  # あうとぉ。
-
+      # 衝突判定 DragDrop
+      $("img.myDropImg").each ->
+        myPos = $(@).position()
+        console.info "dropImg:myPos:", myPos                       # log -----------#
+        if myPos.x < bullet.x and bullet.x < myPos.x + 50 and myPos.y < bullet.y and bullet.y < myPos.y + 50
+          $(@).css({"background":"#3CB371"})                #   tes
+        else null
     updateCss(_bullet) # 自分のbullet
     updateCss(_player) # 自分のplayer
 

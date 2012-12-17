@@ -255,6 +255,11 @@ jQuery(function($) {
     rotate: 0,
     element: $("#my-bullet")
   };
+  /*_myCurrentDrop =                 # とりあえず直近のDropの位置（dropImg）をbulletにもってくる
+    x : dropImg.uipos.left
+    y : dropImg.uipos.top
+  */
+
   updatePosition = function(unit) {
     unit.x += unit.v * Math.cos(unit.rotate * Math.PI / 180);
     return unit.y += unit.v * Math.sin(unit.rotate * Math.PI / 180);
@@ -367,6 +372,18 @@ jQuery(function($) {
       if (_player.x < bullet.x && bullet.x < _player.x + 50 && _player.y < bullet.y && bullet.y < _player.y + 50) {
         location.href = "/gameover";
       }
+      $("img.myDropImg").each(function() {
+        var myPos;
+        myPos = $(this).position();
+        console.info("dropImg:myPos:", myPos);
+        if (myPos.x < bullet.x && bullet.x < myPos.x + 50 && myPos.y < bullet.y && bullet.y < myPos.y + 50) {
+          return $(this).css({
+            "background": "#3CB371"
+          });
+        } else {
+          return null;
+        }
+      });
     }
     updateCss(_bullet);
     updateCss(_player);
