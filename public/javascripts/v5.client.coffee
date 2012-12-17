@@ -52,12 +52,13 @@ jQuery ($) ->
       _bulletMap[data.userId] = bullet   # 対戦相手のobj代入
 
       # dDrop 作成/初期化---------------------#
-      ###dDrop =
-        dd: 'dd test!'
-        ddmess: null
-        ddpos: null
+      dDrop =
+        #dd: 'dd test!'
+        #ddmess: null
+        #ddpos: null
         userId: data.userId
-      _ddMap[data.userId] = dDrop###        # dragdropのobj代入
+      _ddMap[data.userId] = dDrop        # dragdropのobj代入
+      console.info 'myId' , dDrop.userId
       # uCanv 作成/初期化---------------------#
       uCanv =                            # uCanv 作成/初期化
          ###c_x: 0
