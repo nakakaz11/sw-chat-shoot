@@ -500,10 +500,10 @@ tools = [  #------------- define toolset (JSON, e.g. from database)... ---------
 ,
   "data-id": 10
   class: "tools"
-  alt: "music"
-  title: "music"
-  src: "http://cdn1.iconfinder.com/data/icons/all_google_icons_symbols_by_carlosjj-du/48/music_xth-lb.png"
-  "data-description": "music icon"
+  alt: "blackcat"
+  title: "blackcat"
+  src: "http://cdn1.iconfinder.com/data/icons/hallowen_linux/48/Black_Cat.png"
+  "data-description": "animal black cat icon"
 ]
 
 # coffee -wcb *.coffee
