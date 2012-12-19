@@ -384,7 +384,8 @@ jQuery(function($) {
         var myPos, _userC, _userI;
         myPos = $(this).position();
         if (myPos.left < bullet.x && bullet.x < myPos.left + 50 && myPos.top < bullet.y && bullet.y < myPos.top + 50) {
-          $(this).removeClass('box2d').wrap($("<div class='out'>(´･_･`):OUT...</div>"));
+          $(this).removeClass('box2d');
+          $(this).wrap($("<div class='out'>(´･_･`):OUT...</div>"));
           _userI = $(this).attr("data-userid");
           _userC = $(this).attr("data-count");
           return _socket.emit("dd-x", {
@@ -521,12 +522,20 @@ tools = [
     alt: "face",
     title: "face",
     src: "http://cdn1.iconfinder.com/data/icons/humano2/48x48/emotes/face-plain.png",
-    "data-description": "rplain icon",
+    "data-description": "rplain icon"
+  }, {
     "data-id": 9,
     "class": "tools",
     alt: "flower",
     title: "flower",
     src: "http://cdn1.iconfinder.com/data/icons/CrystalClear/48x48/apps/licq.png",
     "data-description": "flower icon"
+  }, {
+    "data-id": 10,
+    "class": "tools",
+    alt: "music",
+    title: "music",
+    src: "http://cdn1.iconfinder.com/data/icons/all_google_icons_symbols_by_carlosjj-du/48/music_xth-lb.png",
+    "data-description": "music icon"
   }
 ];

@@ -355,7 +355,8 @@ coffee -wcb *.coffee
       $("img.myDropImg").each ->
         myPos = $(@).position()
         if myPos.left < bullet.x and bullet.x < myPos.left + 50 and myPos.top < bullet.y and bullet.y < myPos.top + 50
-          $(@).removeClass('box2d').wrap($("<div class='out'>(´･_･`):OUT...</div>"))
+          $(@).removeClass('box2d')
+          $(@).wrap($("<div class='out'>(´･_･`):OUT...</div>"))
           _userI = $(@).attr("data-userid")
           _userC = $(@).attr("data-count")
           _socket.emit "dd-x",
@@ -489,12 +490,20 @@ tools = [  #------------- define toolset (JSON, e.g. from database)... ---------
   title: "face"
   src: "http://cdn1.iconfinder.com/data/icons/humano2/48x48/emotes/face-plain.png"
   "data-description": "rplain icon"
+,
   "data-id": 9
   class: "tools"
   alt: "flower"
   title: "flower"
   src: "http://cdn1.iconfinder.com/data/icons/CrystalClear/48x48/apps/licq.png"
   "data-description": "flower icon"
+,
+  "data-id": 10
+  class: "tools"
+  alt: "music"
+  title: "music"
+  src: "http://cdn1.iconfinder.com/data/icons/all_google_icons_symbols_by_carlosjj-du/48/music_xth-lb.png"
+  "data-description": "music icon"
 ]
 
 # coffee -wcb *.coffee
