@@ -355,7 +355,7 @@ coffee -wcb *.coffee
       $("img.myDropImg").each ->
         myPos = $(@).position()
         if myPos.left < bullet.x and bullet.x < myPos.left + 50 and myPos.top < bullet.y and bullet.y < myPos.top + 50
-          $(@).wrap($("<div class='out box2d'>(´･_･`):OUT...</div>"))      #   tes自分
+          $(@).wrap($("<div class='out'>(´･_･`):OUT...</div>"))      #   tes自分
           _userI = $(@).attr("data-userid")
           _userC = $(@).attr("data-count")
           _socket.emit "dd-x",

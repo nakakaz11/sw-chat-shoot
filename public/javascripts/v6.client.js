@@ -384,7 +384,7 @@ jQuery(function($) {
         var myPos, _userC, _userI;
         myPos = $(this).position();
         if (myPos.left < bullet.x && bullet.x < myPos.left + 50 && myPos.top < bullet.y && bullet.y < myPos.top + 50) {
-          $(this).wrap($("<div class='out box2d'>(´･_･`):OUT...</div>"));
+          $(this).wrap($("<div class='out'>(´･_･`):OUT...</div>"));
           _userI = $(this).attr("data-userid");
           _userC = $(this).attr("data-count");
           return _socket.emit("dd-x", {
