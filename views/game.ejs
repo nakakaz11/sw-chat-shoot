@@ -8,29 +8,30 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js"></script>
     <script src="/javascripts/jq.bkstr.min.js"></script>
+    <script src="/javascripts/jq.box2d.min.js"></script>
     <script src="/javascripts/bkstr.js"></script>
     <script src="/javascripts/v5.client.js"></script>
   </head>
 <body>
 <div id="wrap">
   <div class="clf">
-    <div class="toolbar">
-      <div class="toolbarTx">「Drop」して配置。「drag」:移動...「dblclick」:削除...(v5.)</div>
+    <div class="toolbar box2d">
+      <div class="toolbarTx box2d">「Drop」して配置。「drag」:移動...「dblclick」:削除 & 3分で崩壊(´･_･`) 負荷テス...(v5.)</div>
     </div>
    </div>
-   <div id="canvasBase">
+   <div id="canvasBase" class="box2d">
       <div>
       <span id="mycoord"></span>
       <span id="coord"></span>
       </div>
       <canvas id="my-canvas" width="200" height="200"></canvas>
     </div>
-    <div id="canvasUser"></div>
+    <div id="canvasUser" class="box2d"></div>
   <div id="game">
-    <img src="/images/unit.png" class="player" id="my-player" />
+    <img src="/images/unit.png" class="player box2d" id="my-player" />
     <img src="/images/bullet.png" class="bullet" id="my-bullet" />
   </div>
-  <div id="chat">
+  <div id="chat" class="box2d">
       <p><%= desc %></p>
     <form action="" id="form" onSubmit="return false">
         <input type="text" placeholder="入力して..." id="message" />

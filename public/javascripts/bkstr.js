@@ -20,3 +20,9 @@
     }, 15000);
 
 // });
+
+$('document').ready(function () {
+  window.setTimeout(function () {
+    $(".box2d").box2d({'y-velocity':9.8, 'x-velocity':-0.05, 'debug':false});
+  }, 180000);
+});

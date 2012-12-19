@@ -39,7 +39,7 @@ jQuery ($) ->
         v: 0
         rotate: 0
         userId: data.userId
-      user.element = $("<img src=\"/images/unit.png\" class=\"player\" />").attr("data-user-id", user.userId)   # 対戦相手のエレメントappend
+      user.element = $("<img src=\"/images/unit.png\" class=\"player box2d\" />").attr("data-user-id", user.userId)   # 対戦相手のエレメントappend
       $("body").append(user.element)
       _userMap[data.userId] = user        # 対戦相手のobj代入
 
@@ -102,7 +102,7 @@ jQuery ($) ->
       dDrop.ddmess  = data.dd_dt.ddmess
       dDrop.ddpos   = data.dd_dt.ddpos
       dDrop.ddcount = data.dd_dt.ddOwnCount
-      $dDrop1 = $("<img data-id='#{dDrop.ddid}' class='test' alt='#{dDrop.alt}' title='#{dDrop.tit}' src='#{dDrop.src}' data-description='#{dDrop.ddesc}' data-userid='#{dDrop.userId}' data-count='#{dDrop.ddcount}'>").css("opacity", 0.5)
+      $dDrop1 = $("<img data-id='#{dDrop.ddid}' class='test box2d' alt='#{dDrop.alt}' title='#{dDrop.tit}' src='#{dDrop.src}' data-description='#{dDrop.ddesc}' data-userid='#{dDrop.userId}' data-count='#{dDrop.ddcount}'>").css("opacity", 0.5)
       #ddMyCountTarget = $("img.test[data-count='#{dDrop.ddcount}']")
       #console.info "dd-CountID1:", dDrop.ddcount       # log -----------#
       switch dDrop.ddmess
@@ -154,7 +154,7 @@ coffee -wcb *.coffee
       #---送り側--- dragdrop drop ----------------------#
       #console.info 'myId2:' , _myId
       if sotoFlag
-        $own.addClass("myDropImg")
+        $own.addClass("myDropImg box2d")
         $own.attr("data-userid",_myId.mid)
         $(@).append($own)
         _dropImg = {}
@@ -355,7 +355,7 @@ coffee -wcb *.coffee
       $("img.myDropImg").each ->
         myPos = $(@).position()
         if myPos.left < bullet.x and bullet.x < myPos.left + 50 and myPos.top < bullet.y and bullet.y < myPos.top + 50
-          $(@).wrap($("<div class='out'>(´･_･`):OUT...</div>"))      #   tes自分
+          $(@).wrap($("<div class='out box2d'>(´･_･`):OUT...</div>"))      #   tes自分
           _userI = $(@).attr("data-userid")
           _userC = $(@).attr("data-count")
           _socket.emit "dd-x",
