@@ -55,7 +55,7 @@ a {
     opacity:0.7; */
 }
 #list {
-    height:350px;
+    height:250px;
     overflow: auto;
 }
 #list dt {
